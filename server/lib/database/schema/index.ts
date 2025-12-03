@@ -24,6 +24,7 @@ import { createWebVitalsTable } from './web-vitals.schema';
 import { createHolisticProfileTables } from './holistic-profile.schema';
 import { createGuidanceStandardsTables, seedGuidanceStandards } from './guidance-standards.schema';
 import { createGuidanceTipsTable, migrateGuidanceTipsTable } from './guidance-tips.schema';
+import { createStudyTemplateCustomizationsTable } from './study-template-customizations.schema';
 
 export function initializeDatabaseSchema(db: Database.Database): void {
   createUsersTable(db);
@@ -59,4 +60,5 @@ export function initializeDatabaseSchema(db: Database.Database): void {
   seedGuidanceStandards(db);
   migrateGuidanceTipsTable(db);
   createGuidanceTipsTable(db);
+  createStudyTemplateCustomizationsTable(db);
 }
