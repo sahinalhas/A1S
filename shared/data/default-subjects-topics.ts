@@ -20,6 +20,11 @@ export const DEFAULT_SUBJECTS: SubjectData[] = [
     topics: [],
   },
   {
+    name: 'Haftalık Tekrar',
+    category: 'Okul',
+    topics: [],
+  },
+  {
     name: 'Kitap Okuma',
     category: 'Okul',
     topics: [],
