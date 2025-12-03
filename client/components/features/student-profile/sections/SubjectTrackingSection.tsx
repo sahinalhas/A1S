@@ -85,8 +85,8 @@ export default function SubjectTrackingSection({
 
   const categories = useMemo(() => {
     const cats = new Set(subjects.map((s) => s.category).filter(Boolean));
-    // Remove 'School' category if it exists
-    cats.delete('School');
+    // Remove 'Okul' category if it exists
+    cats.delete('Okul');
     const categoriesArray = Array.from(cats) as string[];
     
     // Sort categories in specific order: LGS, TYT, AYT, YDT
@@ -114,7 +114,7 @@ export default function SubjectTrackingSection({
   }, [categories, selectedCategory]);
 
   const filteredSubjects = useMemo(() => {
-    return subjects.filter((s) => s.category === selectedCategory && s.category !== 'School');
+    return subjects.filter((s) => s.category === selectedCategory && s.category !== 'Okul');
   }, [subjects, selectedCategory]);
 
   const getTopicProgress = (topicId: string) => {
