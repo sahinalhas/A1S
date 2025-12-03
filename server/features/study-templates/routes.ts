@@ -1,9 +1,6 @@
-import { Router, RequestHandler } from 'express';
-import { requireSecureAuth } from '../../middleware/auth.middleware.js';
+import { RequestHandler } from 'express';
 import * as customizationRepo from './repository/customizations.repository.js';
 import type { TemplateCustomization } from './types.js';
-
-const router = Router();
 
 export const saveTemplateCustomization: RequestHandler = (req, res) => {
   try {
@@ -36,17 +33,3 @@ export const getTemplateCustomization: RequestHandler = (req, res) => {
     res.status(500).json({ success: false, error: 'Özelleştirme yüklenemedi' });
   }
 };
-
-router.post(
-  '/students/:studentId/templates/:templateId/customizations',
-  requireSecureAuth,
-  saveTemplateCustomization
-);
-
-router.get(
-  '/students/:studentId/templates/:templateId/customizations',
-  requireSecureAuth,
-  getTemplateCustomization
-);
-
-export default router;

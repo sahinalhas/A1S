@@ -6,6 +6,7 @@ import { validateSchoolAccess } from '../../middleware/school-access.middleware.
 import { validateBody, validateParams } from '../../middleware/zod-validation.middleware.js';
 import * as studentsRoutes from './routes/students.routes.js';
 import * as unifiedProfileRoutes from './routes/unified-profile.routes.js';
+import * as customizationRoutes from '../study-templates/routes.js';
 import {
   StudentSchema,
   BulkStudentSaveSchema,
@@ -31,5 +32,8 @@ router.get("/:id/unified-profile", validateParams(StudentIdParamSchema), unified
 router.post("/:id/initialize-profiles", requireRoleSecure(['counselor']), validateParams(StudentIdParamSchema), unifiedProfileRoutes.initializeProfiles);
 router.post("/:id/recalculate-scores", requireRoleSecure(['counselor']), validateParams(StudentIdParamSchema), unifiedProfileRoutes.recalculateScores);
 router.get("/:id/quality-report", validateParams(StudentIdParamSchema), unifiedProfileRoutes.getQualityReport);
+
+router.post("/:studentId/templates/:templateId/customizations", customizationRoutes.saveTemplateCustomization);
+router.get("/:studentId/templates/:templateId/customizations", customizationRoutes.getTemplateCustomization);
 
 export default router;

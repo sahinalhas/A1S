@@ -1010,6 +1010,16 @@ export async function applyScheduleTemplate(
     
     await saveWeeklySlots(allSlots);
 
+    // Backend'e özelleştirmeyi kaydet
+    if (customization) {
+      try {
+        await apiClient.post(`/students/${studentId}/templates/${templateId}/customizations`, customization);
+      } catch (error) {
+        console.error('Error saving customization to backend:', error);
+        // Devam et - özelleştirme frontende kaydedildi
+      }
+    }
+
     const customizationCount = customizationSlots.length;
     const baseDescription = `${template.estimatedWeeklyHours} saatlik program eklendi`;
     const customDescription = customizationCount > 0 
