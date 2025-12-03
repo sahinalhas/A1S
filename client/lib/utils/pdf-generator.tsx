@@ -509,7 +509,7 @@ const WeeklyPlanDocument: React.FC<WeeklyPlanDocumentProps> = ({
                     </View>
                     <View style={styles.colCategorySubject}>
                       <Text style={styles.subjectText}>
-                        {category} - {subject?.name?.substring(0, 10) || '...'}
+                        {category && category !== 'Okul' && category !== '-' ? `${category} - ` : ''}{subject?.name?.substring(0, 10) || '...'}
                       </Text>
                     </View>
                     <View style={styles.colTopic}>
@@ -1009,7 +1009,7 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
               const subject = subjects.find(s => s.id === slot.subjectId);
               const duration = toMinutes(slot.end) - toMinutes(slot.start);
               const isLast = idx === daySlots.length - 1 && emptyRowsNeeded === 0;
-              const subjectLabel = subject?.category 
+              const subjectLabel = subject?.category && subject.category !== 'Okul'
                 ? `${subject.category} - ${subject?.name || '-'}`
                 : subject?.name || '-';
               return (
