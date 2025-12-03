@@ -1,0 +1,15 @@
+export const NAVIGATION_LABELS = {
+ STUDENT_MANAGEMENT: 'Öğrenci Portföyü',
+ COURSES_AND_TOPICS: 'Dersler & Konular',
+ SETTINGS: 'Profil & Ayarlar',
+ MEETINGS: 'Görüşme & Randevu',
+ SURVEYS: 'Ölçek & Anketler',
+ REPORTS: 'Analiz & Raporlar',
+ ACTIVITIES: 'Etkinlikler',
+ RISK_INTERVENTION: 'Risk ve Müdahale Takip',
+ PERFORMANCE_STATISTICS: 'Performans & İstatistik',
+ HOME_PAGE: 'Gösterge Paneli',
+ AI_ASSISTANT: 'AI Asistanım',
+ EXAMS: 'Sınav & Denemeler',
+ CONTENT_LIBRARY: 'İçerik Kütüphanesi',
+} as const;

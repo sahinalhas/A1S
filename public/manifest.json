@@ -1,0 +1,62 @@
+{
+  "name": "Rehber360 - Öğrenci Rehberlik Sistemi",
+  "short_name": "Rehber360",
+  "description": "Kapsamlı öğrenci rehberlik ve yönetim sistemi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#8b5cf6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Öğrenciler",
+      "short_name": "Öğrenciler",
+      "description": "Öğrenci listesi",
+      "url": "/ogrenci",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Görüşmeler",
+      "short_name": "Görüşmeler",
+      "description": "Rehberlik görüşmeleri",
+      "url": "/gorusmeler",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Risk Dashboard",
+      "short_name": "Risk",
+      "description": "Risk değerlendirme dashboard'u",
+      "url": "/risk",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
