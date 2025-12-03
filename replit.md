@@ -26,9 +26,15 @@ Türkiye'deki rehber öğretmenler için yapay zeka destekli kapsamlı rehberlik
 npm run dev  # Zaten çalışıyor: http://localhost:5000
 
 # Production Build
-npm run build
+npm run build  # Not: Replit'te memory sınırlaması nedeniyle build Replit Deploy sırasında yapılmalı
 npm start
 ```
+
+### 📦 Deployment (Replit)
+- Deployment hedefi: **Autoscale** (stateless web uygulamaları için)
+- Build komutu: `npm run build`
+- Run komutu: `node dist/server/production.mjs`
+- Replit UI'dan "Deploy" butonuna tıklayarak production'a alınabilir
 
 ### 🔐 Güvenlik Notları (Production İçin)
 - SESSION_SECRET ve ENCRYPTION_KEY production'da değiştirilmeli
