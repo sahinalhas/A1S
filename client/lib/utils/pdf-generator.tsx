@@ -593,18 +593,10 @@ const WeeklyPlanDocument: React.FC<WeeklyPlanDocumentProps> = ({
 
         <View style={styles.mainContent}>
           <View style={styles.column}>
-            {dayPairs.map((pair, idx) => (
-              <View key={`left-${idx}`}>
-                {renderDaySection(pair[0] as typeof DAYS[0])}
-              </View>
-            ))}
+            {dayPairs.map((pair) => renderDaySection(pair[0]))}
           </View>
           <View style={styles.column}>
-            {dayPairs.map((pair, idx) => pair[1] && (
-              <View key={`right-${idx}`}>
-                {renderDaySection(pair[1] as typeof DAYS[0])}
-              </View>
-            ))}
+            {dayPairs.map((pair) => pair[1] ? renderDaySection(pair[1]) : <View key="empty" />)}
           </View>
         </View>
 

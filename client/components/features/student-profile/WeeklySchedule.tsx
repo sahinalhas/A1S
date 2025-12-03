@@ -524,21 +524,7 @@ export default function WeeklySchedule({ sid }: { sid: string }) {
  const students = loadStudents();
  const student = students.find(s => s.id === sid);
  const fullName = student ? `${student.name || ''} ${student.surname || ''}`.trim() : undefined;
- 
- // Filter out Okul (School) category slots
- const filteredSlots = sortedSlots.filter(slot => {
- const subject = subjects.find(s => s.id === slot.subjectId);
- return subject?.category !== 'Okul';
- });
- 
- // Recalculate total minutes for filtered slots
- const filteredTotalMin = filteredSlots.reduce((sum, slot) => {
- const start = toMin(slot.start);
- const end = toMin(slot.end);
- return sum + (end - start);
- }, 0);
- 
- await generateWeeklySchedulePDF(filteredSlots, subjects, filteredTotalMin, sid, fullName, fullName, { download: true, print: false });
+ await generateWeeklySchedulePDF(sortedSlots, subjects, totalMin, sid, fullName, fullName, { download: true, print: false });
  toast.success("PDF başarıyla indirildi");
  } catch (error) {
  console.error('PDF oluşturma hatası:', error);
