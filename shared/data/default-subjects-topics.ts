@@ -8,7 +8,7 @@ export interface TopicData {
 
 export interface SubjectData {
   name: string;
-  category: 'School' | 'LGS' | 'TYT' | 'AYT' | 'YDT';
+  category: 'Okul' | 'LGS' | 'TYT' | 'AYT' | 'YDT';
   topics: TopicData[];
 }
 
@@ -16,57 +16,57 @@ export const DEFAULT_SUBJECTS: SubjectData[] = [
   // ==================== OKUL (LİSE) - SADECE DERS ADI ====================
   {
     name: 'Matematik',
-    category: 'School',
+    category: 'Okul',
     topics: []
   },
   {
     name: 'Türkçe',
-    category: 'School',
+    category: 'Okul',
     topics: []
   },
   {
     name: 'Fen Bilimleri',
-    category: 'School',
+    category: 'Okul',
     topics: []
   },
   {
     name: 'Sosyal Bilgiler',
-    category: 'School',
+    category: 'Okul',
     topics: []
   },
   {
     name: 'T.C. İnkılâp Tarihi ve Atatürkçülük',
-    category: 'School',
+    category: 'Okul',
     topics: []
   },
   {
     name: 'Yabancı Dil',
-    category: 'School',
+    category: 'Okul',
     topics: []
   },
   {
     name: 'Din Kültürü ve Ahlak Bilgisi',
-    category: 'School',
+    category: 'Okul',
     topics: []
   },
   {
     name: 'Beden Eğitimi',
-    category: 'School',
-    topics: []
-  },
-  {
-    name: 'Görsel Sanatlar',
-    category: 'School',
-    topics: []
-  },
-  {
-    name: 'Teknoloji ve Tasarım',
-    category: 'School',
+    category: 'Okul',
     topics: []
   },
   {
     name: 'Müzik',
-    category: 'School',
+    category: 'Okul',
+    topics: []
+  },
+  {
+    name: 'Görsel Sanatlar',
+    category: 'Okul',
+    topics: []
+  },
+  {
+    name: 'Teknoloji ve Tasarım',
+    category: 'Okul',
     topics: []
   },
 
