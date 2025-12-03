@@ -377,15 +377,15 @@ export default function EnhancedCompleteSessionDialog({
                 </TabsList>
 
                 <TabsContent value="summary" className="space-y-3 mt-3">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="flex flex-row gap-2 items-start">
                     <FormField
                       control={form.control}
                       name="exitTime"
                       render={({ field }) => (
-                        <FormItem>
+                        <FormItem className="w-24 flex-shrink-0">
                           <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1">
                             <Clock className="h-3 w-3 text-violet-500" />
-                            Çıkış Saati <span className="text-rose-500">*</span>
+                            Çıkış <span className="text-rose-500">*</span>
                           </FormLabel>
                           <FormControl>
                             <Input 
@@ -403,7 +403,7 @@ export default function EnhancedCompleteSessionDialog({
                       control={form.control}
                       name="topic"
                       render={({ field }) => (
-                        <FormItem className="sm:col-span-2">
+                        <FormItem className="flex-1 min-w-0">
                           <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300">
                             Görüşme Konusu <span className="text-rose-500">*</span>
                           </FormLabel>
@@ -511,7 +511,7 @@ export default function EnhancedCompleteSessionDialog({
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
-                              <PopoverContent className="w-auto p-0" align="start">
+                              <PopoverContent className="w-auto p-0 z-[100]" align="start" side="bottom" sideOffset={4}>
                                 <Calendar
                                   mode="single"
                                   selected={field.value}
@@ -527,6 +527,7 @@ export default function EnhancedCompleteSessionDialog({
                                     return date < today;
                                   }}
                                   initialFocus
+                                  className="rounded-lg"
                                 />
                               </PopoverContent>
                             </Popover>
