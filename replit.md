@@ -3,7 +3,41 @@
 ## Proje Özeti
 Türkiye'deki rehber öğretmenler için yapay zeka destekli kapsamlı rehberlik sistemi. Öğrenci takibi, analiz, risk öngörüsü, müdahale planlama ve veli iletişimi.
 
-## Son Güncelleme (2 Aralık 2024) - Frontend-Backend AI Endpoint Uyumu
+## Son Güncelleme (3 Aralık 2024) - Replit Ortamı Kurulumu Tamamlandı
+
+### ✅ Replit Entegrasyonu
+- **Node.js 20** kuruldu
+- **npm dependencies** yüklendi (React 18, Vite 7, Express 5, TypeScript, vb.)
+- **SQLite Database** hazırlandı (`./data/database.db`)
+- **Dev Workflow** yapılandırıldı: `npm run dev` (port 5000, webview)
+- **Production Deployment** yapılandırıldı: autoscale deployment
+- **Vite Proxy Ayarı**: `allowedHosts: true` zaten yapılandırılmış
+- **Production Build Fix**: `server/node-build.ts` async/await desteği eklendi
+
+### 📊 Başlangıç Durumu
+- ✅ Default admin kullanıcı oluşturuldu: `rehber@okul.edu.tr` / `rehber123`
+- ✅ Database şemaları başlatıldı (46 ders, 320 konu, 15 anket, 71 kariyer profili)
+- ✅ AI Provider: Ollama (local) - Cloud API keyleri ayarlanmamış
+- ✅ Tüm schedulers başlatıldı (analytics, auto-complete, daily action plans, guidance tips)
+
+### 🚀 Çalıştırma
+```bash
+# Development
+npm run dev  # Zaten çalışıyor: http://localhost:5000
+
+# Production Build
+npm run build
+npm start
+```
+
+### 🔐 Güvenlik Notları (Production İçin)
+- SESSION_SECRET ve ENCRYPTION_KEY production'da değiştirilmeli
+- AI provider API keyleri (OPENAI_API_KEY veya GEMINI_API_KEY) ayarlanmalı
+- Default admin şifresi değiştirilmeli
+
+---
+
+## Önceki Güncelleme (2 Aralık 2024) - Frontend-Backend AI Endpoint Uyumu
 
 ### ✅ Tamamlanan: AI API Endpoint Konsolidasyonu
 
