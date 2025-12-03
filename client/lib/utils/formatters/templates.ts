@@ -898,20 +898,25 @@ function createCustomizationSlots(
     return newSubject.id;
   };
 
+  // Tüm çakışmaları kontrol etmek için ders blokları + özelleştirmeler
+  let allBlockedSlots = [...templateSlots];
+
   if (customization.dailyRepetition?.enabled) {
     const duration = customization.dailyRepetition.durationMinutes || 30;
     const subjectId = findOrCreateSubject('Günlük Tekrar', 'Genel');
     
     for (let day = 1; day <= 5; day++) {
-      const time = findNonConflictingTime(day, '20:00', duration, templateSlots);
-      slots.push({
+      const time = findNonConflictingTime(day, '20:00', duration, allBlockedSlots);
+      const newSlot = {
         id: crypto.randomUUID(),
         studentId,
         day: day as 1 | 2 | 3 | 4 | 5 | 6 | 7,
         start: time.start,
         end: time.end,
         subjectId
-      });
+      };
+      slots.push(newSlot);
+      allBlockedSlots.push(newSlot);
     }
   }
 
@@ -920,15 +925,17 @@ function createCustomizationSlots(
     const day = customization.weeklyRepetition.day || 6;
     const subjectId = findOrCreateSubject('Haftalık Tekrar', 'Genel');
     
-    const time = findNonConflictingTime(day, '09:00', duration, templateSlots);
-    slots.push({
+    const time = findNonConflictingTime(day, '09:00', duration, allBlockedSlots);
+    const newSlot = {
       id: crypto.randomUUID(),
       studentId,
       day,
       start: time.start,
       end: time.end,
       subjectId
-    });
+    };
+    slots.push(newSlot);
+    allBlockedSlots.push(newSlot);
   }
 
   if (customization.bookReading?.enabled) {
@@ -938,40 +945,46 @@ function createCustomizationSlots(
     
     for (let i = 0; i < daysPerWeek; i++) {
       const day = (i % 7) + 1;
-      const time = findNonConflictingTime(day, '21:00', duration, templateSlots);
-      slots.push({
+      const time = findNonConflictingTime(day, '21:00', duration, allBlockedSlots);
+      const newSlot = {
         id: crypto.randomUUID(),
         studentId,
         day: day as 1 | 2 | 3 | 4 | 5 | 6 | 7,
         start: time.start,
         end: time.end,
         subjectId
-      });
+      };
+      slots.push(newSlot);
+      allBlockedSlots.push(newSlot);
     }
   }
 
   if (customization.questionSolving?.enabled) {
     const subjectId = findOrCreateSubject('Soru Çözümü', 'Genel');
     
-    const time1 = findNonConflictingTime(3, '19:00', 60, templateSlots);
-    slots.push({
+    const time1 = findNonConflictingTime(3, '19:00', 60, allBlockedSlots);
+    const slot1 = {
       id: crypto.randomUUID(),
       studentId,
-      day: 3,
+      day: 3 as 1 | 2 | 3 | 4 | 5 | 6 | 7,
       start: time1.start,
       end: time1.end,
       subjectId
-    });
+    };
+    slots.push(slot1);
+    allBlockedSlots.push(slot1);
     
-    const time2 = findNonConflictingTime(5, '19:00', 60, templateSlots);
-    slots.push({
+    const time2 = findNonConflictingTime(5, '19:00', 60, allBlockedSlots);
+    const slot2 = {
       id: crypto.randomUUID(),
       studentId,
-      day: 5,
+      day: 5 as 1 | 2 | 3 | 4 | 5 | 6 | 7,
       start: time2.start,
       end: time2.end,
       subjectId
-    });
+    };
+    slots.push(slot2);
+    allBlockedSlots.push(slot2);
   }
 
   if (customization.mockExam?.enabled) {
@@ -979,15 +992,17 @@ function createCustomizationSlots(
     const day = customization.mockExam.day || 7;
     const subjectId = findOrCreateSubject('Deneme Sınavı', 'Genel');
     
-    const time = findNonConflictingTime(day, '09:00', duration, templateSlots);
-    slots.push({
+    const time = findNonConflictingTime(day, '09:00', duration, allBlockedSlots);
+    const newSlot = {
       id: crypto.randomUUID(),
       studentId,
       day,
       start: time.start,
       end: time.end,
       subjectId
-    });
+    };
+    slots.push(newSlot);
+    allBlockedSlots.push(newSlot);
   }
 
   return { slots, subjects: subjectsToAdd };
