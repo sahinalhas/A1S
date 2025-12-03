@@ -818,10 +818,58 @@ function addMinutesToTime(time: string, minutes: number): string {
   return `${String(newHours).padStart(2, '0')}:${String(newMins).padStart(2, '0')}`;
 }
 
+function timeToMinutes(time: string): number {
+  const [hours, minutes] = time.split(':').map(Number);
+  return hours * 60 + minutes;
+}
+
+function hasTimeConflict(slot1: WeeklySlot, slot2: WeeklySlot): boolean {
+  if (slot1.day !== slot2.day) return false;
+  
+  const slot1Start = timeToMinutes(slot1.start);
+  const slot1End = timeToMinutes(slot1.end);
+  const slot2Start = timeToMinutes(slot2.start);
+  const slot2End = timeToMinutes(slot2.end);
+  
+  return !(slot1End <= slot2Start || slot2End <= slot1Start);
+}
+
+function findNonConflictingTime(
+  day: number,
+  preferredStart: string,
+  duration: number,
+  templateSlots: WeeklySlot[]
+): { start: string; end: string } {
+  const candidateTimes = [
+    '08:00', '09:00', '10:00', '11:00', '12:00',
+    '13:00', '14:00', '15:00', '16:00', '17:00',
+    '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'
+  ];
+
+  for (const time of candidateTimes) {
+    const testSlot = {
+      day: day as 1 | 2 | 3 | 4 | 5 | 6 | 7,
+      start: time,
+      end: addMinutesToTime(time, duration)
+    };
+
+    const conflicts = templateSlots.filter(
+      s => s.day === day && hasTimeConflict(testSlot as WeeklySlot, s)
+    );
+
+    if (conflicts.length === 0) {
+      return { start: time, end: addMinutesToTime(time, duration) };
+    }
+  }
+
+  return { start: preferredStart, end: addMinutesToTime(preferredStart, duration) };
+}
+
 function createCustomizationSlots(
   studentId: string,
   customization: TemplateCustomization,
-  existingSubjects: StudySubject[]
+  existingSubjects: StudySubject[],
+  templateSlots: WeeklySlot[] = []
 ): { slots: WeeklySlot[], subjects: StudySubject[] } {
   const slots: WeeklySlot[] = [];
   const subjectsToAdd: StudySubject[] = [];
@@ -853,12 +901,13 @@ function createCustomizationSlots(
     const subjectId = findOrCreateSubject('Günlük Tekrar', 'Genel');
     
     for (let day = 1; day <= 5; day++) {
+      const time = findNonConflictingTime(day, '20:00', duration, templateSlots);
       slots.push({
         id: crypto.randomUUID(),
         studentId,
         day: day as 1 | 2 | 3 | 4 | 5 | 6 | 7,
-        start: '20:00',
-        end: addMinutesToTime('20:00', duration),
+        start: time.start,
+        end: time.end,
         subjectId
       });
     }
@@ -869,12 +918,13 @@ function createCustomizationSlots(
     const day = customization.weeklyRepetition.day || 6;
     const subjectId = findOrCreateSubject('Haftalık Tekrar', 'Genel');
     
+    const time = findNonConflictingTime(day, '11:00', duration, templateSlots);
     slots.push({
       id: crypto.randomUUID(),
       studentId,
       day,
-      start: '11:00',
-      end: addMinutesToTime('11:00', duration),
+      start: time.start,
+      end: time.end,
       subjectId
     });
   }
@@ -886,12 +936,13 @@ function createCustomizationSlots(
     
     for (let i = 0; i < daysPerWeek; i++) {
       const day = (i % 7) + 1;
+      const time = findNonConflictingTime(day, '21:00', duration, templateSlots);
       slots.push({
         id: crypto.randomUUID(),
         studentId,
         day: day as 1 | 2 | 3 | 4 | 5 | 6 | 7,
-        start: '21:00',
-        end: addMinutesToTime('21:00', duration),
+        start: time.start,
+        end: time.end,
         subjectId
       });
     }
@@ -900,20 +951,23 @@ function createCustomizationSlots(
   if (customization.questionSolving?.enabled) {
     const subjectId = findOrCreateSubject('Soru Çözümü', 'Genel');
     
+    const time1 = findNonConflictingTime(3, '19:00', 60, templateSlots);
     slots.push({
       id: crypto.randomUUID(),
       studentId,
       day: 3,
-      start: '19:00',
-      end: '20:00',
+      start: time1.start,
+      end: time1.end,
       subjectId
     });
+    
+    const time2 = findNonConflictingTime(5, '19:00', 60, templateSlots);
     slots.push({
       id: crypto.randomUUID(),
       studentId,
       day: 5,
-      start: '19:00',
-      end: '20:00',
+      start: time2.start,
+      end: time2.end,
       subjectId
     });
   }
@@ -923,12 +977,13 @@ function createCustomizationSlots(
     const day = customization.mockExam.day || 7;
     const subjectId = findOrCreateSubject('Deneme Sınavı', 'Genel');
     
+    const time = findNonConflictingTime(day, '10:00', duration, templateSlots);
     slots.push({
       id: crypto.randomUUID(),
       studentId,
       day,
-      start: '10:00',
-      end: addMinutesToTime('10:00', duration),
+      start: time.start,
+      end: time.end,
       subjectId
     });
   }
@@ -995,7 +1050,7 @@ export async function applyScheduleTemplate(
     let customizationSlots: WeeklySlot[] = [];
     if (customization) {
       const allExistingSubjects = [...existingSubjects, ...subjectsToAdd];
-      const customResult = createCustomizationSlots(studentId, customization, allExistingSubjects);
+      const customResult = createCustomizationSlots(studentId, customization, allExistingSubjects, newSlots);
       customizationSlots = customResult.slots;
       subjectsToAdd.push(...customResult.subjects);
     }
