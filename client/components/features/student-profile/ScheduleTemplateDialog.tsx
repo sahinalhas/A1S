@@ -14,12 +14,14 @@ import { Checkbox } from "@/components/atoms/Checkbox";
 import { Label } from "@/components/atoms/Label";
 import { ScrollArea } from "@/components/organisms/ScrollArea";
 import { Separator } from "@/components/atoms/Separator";
-import { FileText, Clock, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { FileText, Clock, AlertTriangle, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import {
  getScheduleTemplates,
  applyScheduleTemplate,
  type ScheduleTemplate,
 } from "@/lib/storage";
+import type { TemplateCustomization } from "@/lib/types/study.types";
+import TemplateCustomizationPanel from "./TemplateCustomizationPanel";
 import { toast } from "sonner";
 
 export default function ScheduleTemplateDialog({
@@ -34,6 +36,8 @@ export default function ScheduleTemplateDialog({
  const [replaceExisting, setReplaceExisting] = useState(false);
  const [applying, setApplying] = useState(false);
  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+ const [step, setStep] = useState<"template-selection" | "customization">("template-selection");
+ const [customization, setCustomization] = useState<TemplateCustomization>({});
 
  const templates = getScheduleTemplates();
  const selected = templates.find((t) => t.id === selectedTemplate);
@@ -41,6 +45,19 @@ export default function ScheduleTemplateDialog({
  const filteredTemplates = selectedCategory === null 
  ? templates 
  : templates.filter((t) => t.category === selectedCategory);
+
+ const handleTemplateSelect = (templateId: string) => {
+ setSelectedTemplate(templateId);
+ };
+
+ const handleProceedToCustomization = () => {
+ if (!selectedTemplate) {
+ toast.error("Lütfen bir şablon seçin");
+ return;
+ }
+ setCustomization({});
+ setStep("customization");
+ };
 
  const handleApply = async () => {
  if (!selectedTemplate) {
@@ -54,9 +71,13 @@ export default function ScheduleTemplateDialog({
  setOpen(false);
  setSelectedTemplate(null);
  setReplaceExisting(false);
+ setStep("template-selection");
+ setCustomization({});
  onApplied?.();
+ toast.success("Şablon başarıyla uygulandı");
  } catch (error) {
  console.error("Error applying template:", error);
+ toast.error("Şablon uygulanırken hata oluştu");
  } finally {
  setApplying(false);
  }
@@ -104,14 +125,20 @@ export default function ScheduleTemplateDialog({
  Şablon Kullan
  </Button>
  </DialogTrigger>
- <DialogContent className="max-w-4xl max-h-[80vh]">
+ <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
  <DialogHeader>
- <DialogTitle>Program Şablonları</DialogTitle>
+ <DialogTitle>
+ {step === "template-selection" ? "Program Şablonları" : "Şablonu Özelleştir"}
+ </DialogTitle>
  <DialogDescription>
- Hazır program şablonlarından birini seçip hızlıca başlayın
+ {step === "template-selection"
+ ? "Hazır program şablonlarından birini seçip hızlıca başlayın"
+ : "Seçtiğiniz şablonu ihtiyaçlarınıza göre özelleştirin"}
  </DialogDescription>
  </DialogHeader>
 
+ {step === "template-selection" ? (
+ <>
  <div className="mb-4 flex flex-wrap gap-2">
  <Badge 
  variant={selectedCategory === null ? "default" : "outline"}
@@ -143,7 +170,7 @@ export default function ScheduleTemplateDialog({
  ?"border-primary bg-primary/5"
  :"border-border"
  }`}
- onClick={() => setSelectedTemplate(template.id)}
+ onClick={() => handleTemplateSelect(template.id)}
  >
  <div className="flex items-start justify-between gap-2 mb-2">
  <div className="flex-1 min-w-0">
@@ -283,10 +310,40 @@ export default function ScheduleTemplateDialog({
  <Button variant="outline" onClick={() => setOpen(false)}>
  İptal
  </Button>
- <Button onClick={handleApply} disabled={!selectedTemplate || applying}>
+ <Button 
+ onClick={handleProceedToCustomization} 
+ disabled={!selectedTemplate}
+ className="gap-2"
+ >
+ Özelleştir
+ <ChevronRight className="h-4 w-4" />
+ </Button>
+ </DialogFooter>
+ </>
+ ) : (
+ <>
+ <div className="max-h-[calc(85vh-200px)] overflow-y-auto pr-4">
+ <TemplateCustomizationPanel
+ customization={customization}
+ onCustomizationChange={setCustomization}
+ />
+ </div>
+
+ <DialogFooter>
+ <Button 
+ variant="outline" 
+ onClick={() => setStep("template-selection")}
+ className="gap-2"
+ >
+ <ChevronLeft className="h-4 w-4" />
+ Geri Dön
+ </Button>
+ <Button onClick={handleApply} disabled={applying}>
  {applying ?"Uygulanıyor..." :"Şablonu Uygula"}
  </Button>
  </DialogFooter>
+ </>
+ )}
  </DialogContent>
  </Dialog>
  );
