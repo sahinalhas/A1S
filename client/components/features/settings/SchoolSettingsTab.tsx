@@ -82,6 +82,10 @@ export default function SchoolSettingsTab() {
       toast.error("Okul adı gereklidir");
       return;
     }
+    if (!editingSchool.code?.trim()) {
+      toast.error("Kurum kodu gereklidir (MEBBIS aktarımı için zorunlu)");
+      return;
+    }
 
     setIsLoading(true);
     try {
@@ -177,6 +181,10 @@ export default function SchoolSettingsTab() {
   const handleCreateSchool = async () => {
     if (!newSchool.name?.trim()) {
       toast.error("Okul adı gereklidir");
+      return;
+    }
+    if (!newSchool.code?.trim()) {
+      toast.error("Kurum kodu gereklidir (MEBBIS aktarımı için zorunlu)");
       return;
     }
 
@@ -330,23 +338,23 @@ export default function SchoolSettingsTab() {
                             className="bg-secondary"
                           />
                         </div>
-                        <div className="grid grid-cols-2 gap-2">
-                          <div className="space-y-1">
-                            <Label className="text-xs font-semibold text-muted-foreground">Kodu</Label>
-                            <Input
-                              value={editingSchool.code || ""}
-                              onChange={(e) => setEditingSchool({ ...editingSchool, code: e.target.value })}
-                              className="bg-secondary"
-                            />
-                          </div>
-                          <div className="space-y-1">
-                            <Label className="text-xs font-semibold text-muted-foreground">Telefon</Label>
-                            <Input
-                              value={editingSchool.phone || ""}
-                              onChange={(e) => setEditingSchool({ ...editingSchool, phone: e.target.value })}
-                              className="bg-secondary"
-                            />
-                          </div>
+                        <div className="space-y-1">
+                          <Label className="text-xs font-semibold text-muted-foreground">Kurum Kodu (MEBBIS) *</Label>
+                          <Input
+                            value={editingSchool.code || ""}
+                            onChange={(e) => setEditingSchool({ ...editingSchool, code: e.target.value })}
+                            className="bg-secondary"
+                            placeholder="Örn: 715044"
+                          />
+                          <p className="text-xs text-muted-foreground">MEBBIS sistemindeki kurum kodunuzu girin</p>
+                        </div>
+                        <div className="space-y-1">
+                          <Label className="text-xs font-semibold text-muted-foreground">Telefon</Label>
+                          <Input
+                            value={editingSchool.phone || ""}
+                            onChange={(e) => setEditingSchool({ ...editingSchool, phone: e.target.value })}
+                            className="bg-secondary"
+                          />
                         </div>
                         <div className="space-y-1">
                           <Label className="text-xs font-semibold text-muted-foreground">Adres</Label>
@@ -447,7 +455,7 @@ export default function SchoolSettingsTab() {
                             <h3 className="font-bold text-base group-hover:text-primary transition-colors">{school.name}</h3>
                           </div>
                           {school.code && (
-                            <p className="text-xs text-muted-foreground ml-7">#{school.code}</p>
+                            <p className="text-xs text-muted-foreground ml-7">Kurum Kodu: {school.code}</p>
                           )}
                         </div>
                         <div className="flex items-center gap-2">
@@ -582,16 +590,17 @@ export default function SchoolSettingsTab() {
                 onChange={(e) => setNewSchool({ ...newSchool, name: e.target.value })}
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="newSchoolCode">Kurum Kodu (MEBBIS) *</Label>
+              <Input
+                id="newSchoolCode"
+                placeholder="Örn: 715044"
+                value={newSchool.code || ""}
+                onChange={(e) => setNewSchool({ ...newSchool, code: e.target.value })}
+              />
+              <p className="text-xs text-muted-foreground">MEBBIS sistemindeki kurum kodunuzu girin. MEBBIS aktarımı için zorunludur.</p>
+            </div>
             <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label htmlFor="newSchoolCode">Okul Kodu</Label>
-                <Input
-                  id="newSchoolCode"
-                  placeholder="Kod girin"
-                  value={newSchool.code || ""}
-                  onChange={(e) => setNewSchool({ ...newSchool, code: e.target.value })}
-                />
-              </div>
               <div className="space-y-2">
                 <Label htmlFor="newSchoolPhone">Telefon</Label>
                 <Input
