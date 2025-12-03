@@ -129,12 +129,12 @@ export default function ScheduleTemplateDialog({
           Şablon Kullan
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>
+      <DialogContent className={step === "template-selection" ? "max-w-4xl max-h-[85vh] overflow-y-auto" : "max-w-lg max-h-[85vh] overflow-y-auto"}>
+        <DialogHeader className="pb-2">
+          <DialogTitle className="text-lg">
             {step === "template-selection" ? "Program Şablonları" : "Şablonu Özelleştir"}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-xs">
             {step === "template-selection"
               ? "Hazır program şablonlarından birini seçip hızlıca başlayın"
               : "Seçtiğiniz şablonu ihtiyaçlarınıza göre özelleştirin"}
@@ -298,14 +298,14 @@ export default function ScheduleTemplateDialog({
           </>
         ) : (
           <>
-            <div className="max-h-[calc(85vh-200px)] overflow-y-auto pr-4">
+            <div className="py-2">
               <TemplateCustomizationPanel
                 customization={customization}
                 onCustomizationChange={setCustomization}
               />
             </div>
 
-            <DialogFooter>
+            <DialogFooter className="pt-2">
               <Button 
                 variant="outline" 
                 onClick={() => setStep("template-selection")}
