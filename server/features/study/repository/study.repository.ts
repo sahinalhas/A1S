@@ -49,7 +49,7 @@ function ensureInitialized(): void {
       ORDER BY ws.day, ws.startTime
     `),
     insertWeeklySlot: db.prepare(`
-      INSERT INTO weekly_slots (id, studentId, day, startTime, endTime, subjectId)
+      INSERT OR REPLACE INTO weekly_slots (id, studentId, day, startTime, endTime, subjectId)
       VALUES (?, ?, ?, ?, ?, ?)
     `),
     updateWeeklySlot: db.prepare(`
