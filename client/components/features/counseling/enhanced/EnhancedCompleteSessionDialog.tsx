@@ -377,15 +377,14 @@ export default function EnhancedCompleteSessionDialog({
                 </TabsList>
 
                 <TabsContent value="summary" className="space-y-3 mt-3">
-                  <div className="flex flex-row gap-2 items-start">
+                  <div className="flex flex-row gap-2 items-end">
                     <FormField
                       control={form.control}
                       name="exitTime"
                       render={({ field }) => (
-                        <FormItem className="w-24 flex-shrink-0">
-                          <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1">
-                            <Clock className="h-3 w-3 text-violet-500" />
-                            Çıkış <span className="text-rose-500">*</span>
+                        <FormItem className="w-28 flex-shrink-0 space-y-1">
+                          <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                            Çıkış Saati <span className="text-rose-500">*</span>
                           </FormLabel>
                           <FormControl>
                             <Input 
@@ -403,7 +402,7 @@ export default function EnhancedCompleteSessionDialog({
                       control={form.control}
                       name="topic"
                       render={({ field }) => (
-                        <FormItem className="flex-1 min-w-0">
+                        <FormItem className="flex-1 min-w-0 space-y-1">
                           <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300">
                             Görüşme Konusu <span className="text-rose-500">*</span>
                           </FormLabel>
