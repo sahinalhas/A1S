@@ -428,7 +428,32 @@ export class MEBBISAutomationService {
       // Sayfanın tam yüklenmesini bekle
       await this.wait(2000);
       
-      logger.info('Step 1: Clicking RPD Hizmetleri Veri Girişi...', 'MEBBISAutomation');
+      // Elementin görünür olmasını bekle
+      logger.info('Waiting for e-Rehberlik Modülü to be visible...', 'MEBBISAutomation');
+      try {
+        await this.page.waitForFunction(
+          () => {
+            const element = Array.from(document.querySelectorAll('td')).find(
+              td => td.getAttribute('title') === 'e-Rehberlik Modülü'
+            );
+            return element && (element as HTMLElement).offsetParent !== null;
+          },
+          { timeout: 10000 }
+        );
+      } catch (e) {
+        logger.warn('Element wait timed out, attempting direct click...', 'MEBBISAutomation');
+      }
+      
+      logger.info('Step 1: Clicking e-Rehberlik Modülü...', 'MEBBISAutomation');
+      await this.retry(
+        () => this.clickByXPath("//td[@title='e-Rehberlik Modülü']"),
+        3,
+        2000,
+        'e-Rehberlik Modülü click'
+      );
+      await this.wait(1500);
+      
+      logger.info('Step 2: Clicking RPD Hizmetleri Veri Girişi...', 'MEBBISAutomation');
       await this.retry(
         () => this.clickByXPath("//td[@title='RPD Hizmetleri Veri Girişi']"),
         2,
@@ -437,7 +462,7 @@ export class MEBBISAutomationService {
       );
       await this.wait(1200);
       
-      logger.info('Step 2: Clicking Bireysel Veri Girişi...', 'MEBBISAutomation');
+      logger.info('Step 3: Clicking Bireysel Veri Girişi...', 'MEBBISAutomation');
       await this.retry(
         () => this.clickByXPath("//td[@title='Bireysel Veri Girişi']"),
         2,
