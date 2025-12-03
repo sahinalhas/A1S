@@ -50,14 +50,14 @@ import {
 } from "@/lib/storage";
 import { apiClient } from "@/lib/api/core/client";
 
-type Category ="LGS" |"TYT" |"AYT" |"YDT" |"School";
+type Category ="LGS" |"TYT" |"AYT" |"YDT" |"Okul";
 
 const CATEGORIES: { id: Category; label: string; icon: any; gradient: string; color: string }[] = [
  { id:"LGS", label:"LGS", icon: BookOpen, gradient:"from-blue-500 to-cyan-500", color:"text-blue-600 dark:text-blue-400" },
  { id:"TYT", label:"TYT", icon: GraduationCap, gradient:"from-purple-500 to-pink-500", color:"text-purple-600 dark:text-purple-400" },
  { id:"AYT", label:"AYT", icon: Sparkles, gradient:"from-orange-500 to-red-500", color:"text-orange-600 dark:text-orange-400" },
  { id:"YDT", label:"YDT", icon: Globe, gradient:"from-green-500 to-emerald-500", color:"text-green-600 dark:text-green-400" },
- { id:"School", label:"Okul", icon: School, gradient:"from-slate-500 to-gray-600", color:"text-slate-600 dark:text-slate-400" },
+ { id:"Okul", label:"Okul", icon: School, gradient:"from-slate-500 to-gray-600", color:"text-slate-600 dark:text-slate-400" },
 ];
 
 export default function Courses() {
@@ -118,8 +118,8 @@ export default function Courses() {
  };
 
  const filteredSubjects = useMemo(() => {
- if (selectedCategory === "School") {
- return subjects.filter((s) => s.category === "School" || !s.category);
+ if (selectedCategory === "Okul") {
+ return subjects.filter((s) => s.category === "Okul" || !s.category);
  }
  return subjects.filter((s) => s.category === selectedCategory);
  }, [subjects, selectedCategory]);
