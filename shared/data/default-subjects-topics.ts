@@ -20,42 +20,27 @@ export const DEFAULT_SUBJECTS: SubjectData[] = [
     topics: []
   },
   {
-    name: 'Fizik',
+    name: 'Türkçe',
     category: 'School',
     topics: []
   },
   {
-    name: 'Kimya',
+    name: 'Fen Bilimleri',
     category: 'School',
     topics: []
   },
   {
-    name: 'Biyoloji',
+    name: 'Sosyal Bilgiler',
     category: 'School',
     topics: []
   },
   {
-    name: 'Türk Dili ve Edebiyatı',
+    name: 'T.C. İnkılâp Tarihi ve Atatürkçülük',
     category: 'School',
     topics: []
   },
   {
-    name: 'Tarih',
-    category: 'School',
-    topics: []
-  },
-  {
-    name: 'Coğrafya',
-    category: 'School',
-    topics: []
-  },
-  {
-    name: 'Felsefe',
-    category: 'School',
-    topics: []
-  },
-  {
-    name: 'İngilizce',
+    name: 'Yabancı Dil',
     category: 'School',
     topics: []
   },
@@ -71,6 +56,11 @@ export const DEFAULT_SUBJECTS: SubjectData[] = [
   },
   {
     name: 'Görsel Sanatlar',
+    category: 'School',
+    topics: []
+  },
+  {
+    name: 'Teknoloji ve Tasarım',
     category: 'School',
     topics: []
   },
