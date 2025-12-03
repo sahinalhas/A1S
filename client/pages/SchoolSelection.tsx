@@ -213,10 +213,10 @@ export default function SchoolSelection() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="schoolCode">Okul Kodu (Opsiyonel)</Label>
+                    <Label htmlFor="schoolCode">Kurum Kodu (MEBBIS) *</Label>
                     <Input
                       id="schoolCode"
-                      placeholder="Örn: 123456"
+                      placeholder="Örn: 715044"
                       value={newSchoolCode}
                       onChange={(e) => setNewSchoolCode(e.target.value)}
                     />
