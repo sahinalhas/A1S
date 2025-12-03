@@ -487,7 +487,7 @@ export default function Rehber360Layout() {
  setTimeout(() => {
  setSearchOpen(false);
  setSearchQuery("");
- }, 300);
+ }, 50);
  }}
  />
  {searchQuery && searchQuery.length >= 2 && (
