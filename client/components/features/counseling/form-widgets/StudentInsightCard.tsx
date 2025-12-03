@@ -1,84 +1,77 @@
 import { MessageSquare, Calendar, AlertTriangle, Sparkles } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/organisms/Card";
 import { Badge } from "@/components/atoms/Badge";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale/tr";
 
 interface StudentInsightCardProps {
- studentName: string;
- className: string;
- lastSession?: {
- date: string;
- topic: string;
- };
- totalSessions?: number;
- riskLevel?: 'Düşük' | 'Orta' | 'Yüksek' | 'Kritik';
+  studentName: string;
+  className: string;
+  lastSession?: {
+    date: string;
+    topic: string;
+  };
+  totalSessions?: number;
+  riskLevel?: 'Düşük' | 'Orta' | 'Yüksek' | 'Kritik';
 }
 
 export default function StudentInsightCard({ 
- studentName, 
- className, 
- lastSession,
- totalSessions = 0,
- riskLevel
+  studentName, 
+  className, 
+  lastSession,
+  totalSessions = 0,
+  riskLevel
 }: StudentInsightCardProps) {
- const getRiskColor = (risk?: string) => {
- switch (risk) {
- case 'Kritik': return 'destructive';
- case 'Yüksek': return 'destructive';
- case 'Orta': return 'default';
- case 'Düşük': return 'secondary';
- default: return 'secondary';
- }
- };
+  const getRiskColor = (risk?: string) => {
+    switch (risk) {
+      case 'Kritik': return 'destructive';
+      case 'Yüksek': return 'destructive';
+      case 'Orta': return 'default';
+      case 'Düşük': return 'secondary';
+      default: return 'secondary';
+    }
+  };
 
- return (
- <Card className="border border-violet-200/40 dark:border-violet-800/30 bg-white/40 dark:bg-slate-900/40">
- <CardHeader className="pb-3">
- <CardTitle className="text-sm flex items-center gap-2">
- <div className="p-1 rounded-lg bg-violet-100/50 dark:bg-violet-900/20">
- <Sparkles className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400" />
- </div>
- <span className="font-semibold text-violet-700 dark:text-violet-300">
- Öğrenci Bilgileri
- </span>
- </CardTitle>
- </CardHeader>
- <CardContent className="space-y-3">
- <div className="p-2.5 rounded-lg bg-slate-50/60 dark:bg-slate-800/40">
- <p className="font-semibold text-base text-slate-800 dark:text-slate-100">{studentName}</p>
- <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5">{className}</p>
- </div>
+  return (
+    <div className="border border-violet-200/50 dark:border-violet-800/30 rounded-lg bg-white/60 dark:bg-slate-900/40 p-3 space-y-2.5">
+      <div className="flex items-center gap-1.5 text-xs font-medium text-violet-600 dark:text-violet-400">
+        <Sparkles className="h-3 w-3" />
+        <span>Öğrenci Bilgileri</span>
+      </div>
 
- {riskLevel && (
- <div className="flex items-center gap-2 p-2.5 rounded-lg bg-orange-50/60 dark:bg-orange-950/15 border border-orange-200/30 dark:border-orange-800/20">
- <AlertTriangle className="h-3.5 w-3.5 text-orange-600 dark:text-orange-400" />
- <span className="text-xs font-medium text-slate-700 dark:text-slate-300">Risk:</span>
- <Badge variant={getRiskColor(riskLevel)} className="text-xs">{riskLevel}</Badge>
- </div>
- )}
+      <div className="p-2 rounded-md bg-slate-50/80 dark:bg-slate-800/40">
+        <p className="font-medium text-sm text-slate-800 dark:text-slate-100">{studentName}</p>
+        <p className="text-[11px] text-slate-500 dark:text-slate-400">{className}</p>
+      </div>
 
- <div className="flex items-center gap-2 p-2.5 rounded-lg bg-blue-50/60 dark:bg-blue-950/15 border border-blue-200/30 dark:border-blue-800/20">
- <MessageSquare className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
- <span className="text-xs font-medium text-slate-700 dark:text-slate-300">Toplam Görüşme:</span>
- <span className="font-semibold text-sm text-blue-700 dark:text-blue-300">{totalSessions}</span>
- </div>
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 text-xs">
+          <MessageSquare className="h-3 w-3 text-blue-500" />
+          <span className="text-slate-600 dark:text-slate-400">Görüşme:</span>
+          <span className="font-semibold text-blue-600 dark:text-blue-400">{totalSessions}</span>
+        </div>
 
- {lastSession && (
- <div className="pt-2 border-t border-violet-200/30 dark:border-violet-800/20">
- <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Son Görüşme</p>
- <div className="flex items-start gap-2 p-2.5 rounded-lg bg-purple-50/60 dark:bg-purple-950/15 border border-purple-200/30 dark:border-purple-800/20">
- <Calendar className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400 mt-0.5 flex-shrink-0" />
- <div className="text-sm">
- <p className="font-medium text-slate-800 dark:text-slate-100">{lastSession.topic}</p>
- <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
- {format(new Date(lastSession.date), 'dd MMMM yyyy', { locale: tr })}
- </p>
- </div>
- </div>
- </div>
- )}
- </CardContent>
- </Card>
- );
+        {riskLevel && (
+          <div className="flex items-center gap-1.5 text-xs">
+            <AlertTriangle className="h-3 w-3 text-orange-500" />
+            <Badge variant={getRiskColor(riskLevel)} className="text-[10px] px-1.5 py-0">{riskLevel}</Badge>
+          </div>
+        )}
+      </div>
+
+      {lastSession && (
+        <div className="pt-2 border-t border-slate-200/60 dark:border-slate-700/40">
+          <div className="flex items-start gap-1.5">
+            <Calendar className="h-3 w-3 text-purple-500 mt-0.5 shrink-0" />
+            <div className="min-w-0">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">Son görüşme</p>
+              <p className="text-xs font-medium text-slate-700 dark:text-slate-200 truncate">{lastSession.topic}</p>
+              <p className="text-[10px] text-slate-400">
+                {format(new Date(lastSession.date), 'd MMM yyyy', { locale: tr })}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
