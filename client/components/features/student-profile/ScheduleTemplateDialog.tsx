@@ -33,7 +33,6 @@ export default function ScheduleTemplateDialog({
 }) {
  const [open, setOpen] = useState(false);
  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
- const [replaceExisting, setReplaceExisting] = useState(false);
  const [applying, setApplying] = useState(false);
  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
  const [step, setStep] = useState<"template-selection" | "customization">("template-selection");
@@ -73,12 +72,11 @@ export default function ScheduleTemplateDialog({
  await applyScheduleTemplate(
  selectedTemplate, 
  studentId, 
- replaceExisting, 
+ true,
  hasCustomizations ? customization : undefined
  );
  setOpen(false);
  setSelectedTemplate(null);
- setReplaceExisting(false);
  setStep("template-selection");
  setCustomization({});
  onApplied?.();
