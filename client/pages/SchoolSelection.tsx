@@ -134,10 +134,7 @@ export default function SchoolSelection() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <button
-                        onClick={() => handleSelectSchool(school)}
-                        className="w-full group"
-                      >
+                      <button onClick={() => handleSelectSchool(school)} className="w-full group">
                         <Card className="border hover:border-primary/50 hover:shadow-md transition-all duration-200 cursor-pointer bg-card">
                           <CardContent className="p-4 flex items-center gap-4">
                             <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
@@ -213,10 +210,10 @@ export default function SchoolSelection() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="schoolCode">Kurum Kodu (MEBBIS) *</Label>
+                    <Label htmlFor="schoolCode">Kurum Kodu *</Label>
                     <Input
                       id="schoolCode"
-                      placeholder="Örn: 715044"
+                      placeholder="Örn: 455044"
                       value={newSchoolCode}
                       onChange={(e) => setNewSchoolCode(e.target.value)}
                     />

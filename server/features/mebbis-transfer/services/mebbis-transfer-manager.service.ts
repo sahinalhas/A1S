@@ -82,19 +82,20 @@ export class MEBBISTransferManager {
         { transferId, sessionCount: sessions.length }
       );
 
-      // Database'den okulun kurum kodunu al
+      // Database'den okulun kurum kodunu ve adını al
       const db = getDatabase();
-      const school = db.prepare('SELECT code FROM schools WHERE id = ?').get(transferState.schoolId) as { code: string | null } | undefined;
+      const school = db.prepare('SELECT code, name FROM schools WHERE id = ?').get(transferState.schoolId) as { code: string | null; name: string } | undefined;
       const schoolCode = school?.code || null;
+      const schoolName = school?.name || null;
       
       if (!schoolCode) {
-        logger.warn(`School ${transferState.schoolId} has no kurum kodu set, MEBBIS may select wrong school`, 'MEBBISTransferManager');
+        logger.warn(`School ${transferState.schoolId} has no kurum kodu set, will try to match by school name: ${schoolName}`, 'MEBBISTransferManager');
       } else {
         logger.info(`Using kurum kodu ${schoolCode} for MEBBIS school selection`, 'MEBBISTransferManager');
       }
       
-      // Set school code on automation service for school selection during QR login
-      this.automation.setSchoolCode(schoolCode);
+      // Set school code and name on automation service for school selection during QR login
+      this.automation.setSchoolCode(schoolCode, schoolName);
 
       logger.info('Initializing browser...', 'MEBBISTransferManager');
       await this.automation.initialize();
