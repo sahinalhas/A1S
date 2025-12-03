@@ -79,6 +79,8 @@ export default function ScheduleTemplateDialog({
 
  const getCategoryColor = (category: string) => {
  switch (category) {
+ case"Okul":
+ return"bg-teal-100 text-teal-800";
  case"LGS":
  return"bg-purple-100 text-purple-800";
  case"TYT":
@@ -118,7 +120,7 @@ export default function ScheduleTemplateDialog({
  >
  Tümü
  </Badge>
- {["LGS", "TYT", "AYT", "YDT"].map((cat) => (
+ {["Okul", "LGS", "TYT", "AYT", "YDT"].map((cat) => (
  <Badge
  key={cat}
  variant={selectedCategory === cat ? "default" : "outline"}

@@ -12,6 +12,420 @@ import {
 import { apiClient } from "../../api/core/client";
 
 const SCHEDULE_TEMPLATES: ScheduleTemplate[] = [
+  // ========== OKUL DERSLERİ ŞABLONLARI ==========
+  {
+    id: 'okul-5-sinif-hafif',
+    name: '5. Sınıf Hafif Program',
+    description: 'Günde 1-1.5 saat dengeli tekrar - Dikkat süresi 25-30 dk bloklar, oyunlaştırma destekli',
+    category: 'Okul',
+    estimatedWeeklyHours: 7,
+    difficulty: 'Kolay',
+    tags: ['okul', '5.sınıf', 'hafif', 'başlangıç', 'dikkat-geliştirme'],
+    subjects: [
+      { id: 'mat-5', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-5', name: 'Türkçe', category: 'Okul' },
+      { id: 'fen-5', name: 'Fen Bilimleri', category: 'Okul' },
+      { id: 'sos-5', name: 'Sosyal Bilgiler', category: 'Okul' },
+      { id: 'ing-5', name: 'İngilizce', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:00', end: '16:30', subjectId: 'mat-5' },
+      { day: 1, start: '17:00', end: '17:30', subjectId: 'tur-5' },
+      { day: 2, start: '16:00', end: '16:30', subjectId: 'fen-5' },
+      { day: 2, start: '17:00', end: '17:30', subjectId: 'ing-5' },
+      { day: 3, start: '16:00', end: '16:30', subjectId: 'mat-5' },
+      { day: 3, start: '17:00', end: '17:30', subjectId: 'sos-5' },
+      { day: 4, start: '16:00', end: '16:30', subjectId: 'tur-5' },
+      { day: 4, start: '17:00', end: '17:30', subjectId: 'fen-5' },
+      { day: 5, start: '16:00', end: '16:30', subjectId: 'mat-5' },
+      { day: 5, start: '17:00', end: '17:30', subjectId: 'ing-5' },
+      { day: 6, start: '10:00', end: '11:00', subjectId: 'mat-5' },
+      { day: 6, start: '14:00', end: '15:00', subjectId: 'tur-5' }
+    ]
+  },
+  {
+    id: 'okul-5-sinif-dengeli',
+    name: '5. Sınıf Dengeli Program',
+    description: 'Günde 1.5-2 saat - Görsel ve işitsel öğrenme teknikleri, aktif katılım odaklı',
+    category: 'Okul',
+    estimatedWeeklyHours: 11,
+    difficulty: 'Orta',
+    tags: ['okul', '5.sınıf', 'dengeli', 'aktif-öğrenme', 'çoklu-zeka'],
+    subjects: [
+      { id: 'mat-5', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-5', name: 'Türkçe', category: 'Okul' },
+      { id: 'fen-5', name: 'Fen Bilimleri', category: 'Okul' },
+      { id: 'sos-5', name: 'Sosyal Bilgiler', category: 'Okul' },
+      { id: 'ing-5', name: 'İngilizce', category: 'Okul' },
+      { id: 'din-5', name: 'Din Kültürü', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:00', end: '16:45', subjectId: 'mat-5' },
+      { day: 1, start: '17:00', end: '17:45', subjectId: 'tur-5' },
+      { day: 2, start: '16:00', end: '16:45', subjectId: 'fen-5' },
+      { day: 2, start: '17:00', end: '17:45', subjectId: 'ing-5' },
+      { day: 3, start: '16:00', end: '16:45', subjectId: 'mat-5' },
+      { day: 3, start: '17:00', end: '17:45', subjectId: 'sos-5' },
+      { day: 4, start: '16:00', end: '16:45', subjectId: 'tur-5' },
+      { day: 4, start: '17:00', end: '17:45', subjectId: 'din-5' },
+      { day: 5, start: '16:00', end: '16:45', subjectId: 'mat-5' },
+      { day: 5, start: '17:00', end: '17:45', subjectId: 'fen-5' },
+      { day: 6, start: '10:00', end: '11:30', subjectId: 'mat-5' },
+      { day: 6, start: '14:00', end: '15:00', subjectId: 'tur-5' },
+      { day: 7, start: '10:00', end: '11:00', subjectId: 'ing-5' }
+    ]
+  },
+  {
+    id: 'okul-6-sinif-hafif',
+    name: '6. Sınıf Hafif Program',
+    description: 'Günde 1.5 saat - Kavram haritaları ve not alma teknikleri ile destekli öğrenme',
+    category: 'Okul',
+    estimatedWeeklyHours: 9,
+    difficulty: 'Kolay',
+    tags: ['okul', '6.sınıf', 'hafif', 'kavram-haritası', 'not-alma'],
+    subjects: [
+      { id: 'mat-6', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-6', name: 'Türkçe', category: 'Okul' },
+      { id: 'fen-6', name: 'Fen Bilimleri', category: 'Okul' },
+      { id: 'sos-6', name: 'Sosyal Bilgiler', category: 'Okul' },
+      { id: 'ing-6', name: 'İngilizce', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:00', end: '16:45', subjectId: 'mat-6' },
+      { day: 1, start: '17:00', end: '17:45', subjectId: 'tur-6' },
+      { day: 2, start: '16:00', end: '16:45', subjectId: 'fen-6' },
+      { day: 2, start: '17:00', end: '17:30', subjectId: 'ing-6' },
+      { day: 3, start: '16:00', end: '16:45', subjectId: 'mat-6' },
+      { day: 3, start: '17:00', end: '17:45', subjectId: 'sos-6' },
+      { day: 4, start: '16:00', end: '16:45', subjectId: 'tur-6' },
+      { day: 4, start: '17:00', end: '17:30', subjectId: 'fen-6' },
+      { day: 5, start: '16:00', end: '16:45', subjectId: 'mat-6' },
+      { day: 5, start: '17:00', end: '17:30', subjectId: 'ing-6' },
+      { day: 6, start: '10:00', end: '11:00', subjectId: 'mat-6' },
+      { day: 6, start: '14:00', end: '15:00', subjectId: 'tur-6' }
+    ]
+  },
+  {
+    id: 'okul-6-sinif-dengeli',
+    name: '6. Sınıf Dengeli Program',
+    description: 'Günde 2 saat - Interleaving (karışık) çalışma tekniği ile uzun süreli hafıza',
+    category: 'Okul',
+    estimatedWeeklyHours: 13,
+    difficulty: 'Orta',
+    tags: ['okul', '6.sınıf', 'dengeli', 'interleaving', 'uzun-süreli-hafıza'],
+    subjects: [
+      { id: 'mat-6', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-6', name: 'Türkçe', category: 'Okul' },
+      { id: 'fen-6', name: 'Fen Bilimleri', category: 'Okul' },
+      { id: 'sos-6', name: 'Sosyal Bilgiler', category: 'Okul' },
+      { id: 'ing-6', name: 'İngilizce', category: 'Okul' },
+      { id: 'din-6', name: 'Din Kültürü', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:00', end: '17:00', subjectId: 'mat-6' },
+      { day: 1, start: '17:30', end: '18:15', subjectId: 'tur-6' },
+      { day: 2, start: '16:00', end: '17:00', subjectId: 'fen-6' },
+      { day: 2, start: '17:30', end: '18:15', subjectId: 'ing-6' },
+      { day: 3, start: '16:00', end: '17:00', subjectId: 'mat-6' },
+      { day: 3, start: '17:30', end: '18:15', subjectId: 'sos-6' },
+      { day: 4, start: '16:00', end: '17:00', subjectId: 'tur-6' },
+      { day: 4, start: '17:30', end: '18:15', subjectId: 'din-6' },
+      { day: 5, start: '16:00', end: '17:00', subjectId: 'mat-6' },
+      { day: 5, start: '17:30', end: '18:15', subjectId: 'fen-6' },
+      { day: 6, start: '10:00', end: '11:30', subjectId: 'mat-6' },
+      { day: 6, start: '14:00', end: '15:30', subjectId: 'tur-6' },
+      { day: 7, start: '10:00', end: '11:00', subjectId: 'fen-6' }
+    ]
+  },
+  {
+    id: 'okul-7-sinif-hafif',
+    name: '7. Sınıf Hafif Program',
+    description: 'Günde 1.5-2 saat - Cornell not sistemi ve özet çıkarma teknikleri',
+    category: 'Okul',
+    estimatedWeeklyHours: 10,
+    difficulty: 'Kolay',
+    tags: ['okul', '7.sınıf', 'hafif', 'cornell-not', 'özet-çıkarma'],
+    subjects: [
+      { id: 'mat-7', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-7', name: 'Türkçe', category: 'Okul' },
+      { id: 'fen-7', name: 'Fen Bilimleri', category: 'Okul' },
+      { id: 'sos-7', name: 'Sosyal Bilgiler', category: 'Okul' },
+      { id: 'ing-7', name: 'İngilizce', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:00', end: '17:00', subjectId: 'mat-7' },
+      { day: 1, start: '17:30', end: '18:15', subjectId: 'tur-7' },
+      { day: 2, start: '16:00', end: '17:00', subjectId: 'fen-7' },
+      { day: 2, start: '17:30', end: '18:00', subjectId: 'ing-7' },
+      { day: 3, start: '16:00', end: '17:00', subjectId: 'mat-7' },
+      { day: 3, start: '17:30', end: '18:15', subjectId: 'sos-7' },
+      { day: 4, start: '16:00', end: '17:00', subjectId: 'tur-7' },
+      { day: 4, start: '17:30', end: '18:00', subjectId: 'fen-7' },
+      { day: 5, start: '16:00', end: '17:00', subjectId: 'mat-7' },
+      { day: 5, start: '17:30', end: '18:00', subjectId: 'ing-7' },
+      { day: 6, start: '10:00', end: '11:30', subjectId: 'mat-7' },
+      { day: 6, start: '14:00', end: '15:00', subjectId: 'tur-7' }
+    ]
+  },
+  {
+    id: 'okul-7-sinif-dengeli',
+    name: '7. Sınıf Dengeli Program',
+    description: 'Günde 2-2.5 saat - Pomodoro + Spaced Repetition ile pekiştirmeli öğrenme',
+    category: 'Okul',
+    estimatedWeeklyHours: 16,
+    difficulty: 'Orta',
+    tags: ['okul', '7.sınıf', 'dengeli', 'pomodoro', 'spaced-repetition'],
+    subjects: [
+      { id: 'mat-7', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-7', name: 'Türkçe', category: 'Okul' },
+      { id: 'fen-7', name: 'Fen Bilimleri', category: 'Okul' },
+      { id: 'sos-7', name: 'Sosyal Bilgiler', category: 'Okul' },
+      { id: 'ing-7', name: 'İngilizce', category: 'Okul' },
+      { id: 'din-7', name: 'Din Kültürü', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:00', end: '17:15', subjectId: 'mat-7' },
+      { day: 1, start: '17:45', end: '18:45', subjectId: 'tur-7' },
+      { day: 2, start: '16:00', end: '17:15', subjectId: 'fen-7' },
+      { day: 2, start: '17:45', end: '18:30', subjectId: 'ing-7' },
+      { day: 3, start: '16:00', end: '17:15', subjectId: 'mat-7' },
+      { day: 3, start: '17:45', end: '18:45', subjectId: 'sos-7' },
+      { day: 4, start: '16:00', end: '17:15', subjectId: 'tur-7' },
+      { day: 4, start: '17:45', end: '18:30', subjectId: 'din-7' },
+      { day: 5, start: '16:00', end: '17:15', subjectId: 'mat-7' },
+      { day: 5, start: '17:45', end: '18:30', subjectId: 'fen-7' },
+      { day: 6, start: '10:00', end: '12:00', subjectId: 'mat-7' },
+      { day: 6, start: '14:00', end: '15:30', subjectId: 'tur-7' },
+      { day: 7, start: '10:00', end: '11:30', subjectId: 'fen-7' }
+    ]
+  },
+  {
+    id: 'okul-7-sinif-yogun',
+    name: '7. Sınıf Yoğun Program',
+    description: 'Günde 3 saat - LGS hazırlık öncesi kapsamlı çalışma, soru çözümü ağırlıklı',
+    category: 'Okul',
+    estimatedWeeklyHours: 20,
+    difficulty: 'Yoğun',
+    tags: ['okul', '7.sınıf', 'yoğun', 'lgs-hazırlık', 'soru-çözümü'],
+    subjects: [
+      { id: 'mat-7', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-7', name: 'Türkçe', category: 'Okul' },
+      { id: 'fen-7', name: 'Fen Bilimleri', category: 'Okul' },
+      { id: 'sos-7', name: 'Sosyal Bilgiler', category: 'Okul' },
+      { id: 'ing-7', name: 'İngilizce', category: 'Okul' },
+      { id: 'din-7', name: 'Din Kültürü', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:00', end: '17:30', subjectId: 'mat-7' },
+      { day: 1, start: '18:00', end: '19:00', subjectId: 'tur-7' },
+      { day: 2, start: '16:00', end: '17:30', subjectId: 'fen-7' },
+      { day: 2, start: '18:00', end: '19:00', subjectId: 'mat-7' },
+      { day: 3, start: '16:00', end: '17:30', subjectId: 'tur-7' },
+      { day: 3, start: '18:00', end: '19:00', subjectId: 'sos-7' },
+      { day: 4, start: '16:00', end: '17:30', subjectId: 'mat-7' },
+      { day: 4, start: '18:00', end: '19:00', subjectId: 'ing-7' },
+      { day: 5, start: '16:00', end: '17:30', subjectId: 'fen-7' },
+      { day: 5, start: '18:00', end: '19:00', subjectId: 'din-7' },
+      { day: 6, start: '09:00', end: '11:00', subjectId: 'mat-7' },
+      { day: 6, start: '14:00', end: '16:00', subjectId: 'tur-7' },
+      { day: 7, start: '10:00', end: '12:00', subjectId: 'fen-7' },
+      { day: 7, start: '14:00', end: '15:30', subjectId: 'sos-7' }
+    ]
+  },
+  {
+    id: 'okul-8-sinif-hafif',
+    name: '8. Sınıf Hafif Program',
+    description: 'Günde 2 saat - Okul derslerini takip etmeye odaklı, hafif tempo',
+    category: 'Okul',
+    estimatedWeeklyHours: 12,
+    difficulty: 'Kolay',
+    tags: ['okul', '8.sınıf', 'hafif', 'okul-takibi', 'stressiz'],
+    subjects: [
+      { id: 'mat-8', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-8', name: 'Türkçe', category: 'Okul' },
+      { id: 'fen-8', name: 'Fen Bilimleri', category: 'Okul' },
+      { id: 'sos-8', name: 'Sosyal Bilgiler', category: 'Okul' },
+      { id: 'ing-8', name: 'İngilizce', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:00', end: '17:00', subjectId: 'mat-8' },
+      { day: 1, start: '17:30', end: '18:30', subjectId: 'tur-8' },
+      { day: 2, start: '16:00', end: '17:00', subjectId: 'fen-8' },
+      { day: 2, start: '17:30', end: '18:15', subjectId: 'ing-8' },
+      { day: 3, start: '16:00', end: '17:00', subjectId: 'mat-8' },
+      { day: 3, start: '17:30', end: '18:30', subjectId: 'sos-8' },
+      { day: 4, start: '16:00', end: '17:00', subjectId: 'tur-8' },
+      { day: 4, start: '17:30', end: '18:15', subjectId: 'fen-8' },
+      { day: 5, start: '16:00', end: '17:00', subjectId: 'mat-8' },
+      { day: 5, start: '17:30', end: '18:15', subjectId: 'ing-8' },
+      { day: 6, start: '10:00', end: '11:30', subjectId: 'mat-8' },
+      { day: 6, start: '14:00', end: '15:30', subjectId: 'tur-8' }
+    ]
+  },
+  {
+    id: 'okul-8-sinif-dengeli',
+    name: '8. Sınıf Dengeli Program',
+    description: 'Günde 2.5 saat - Okul + LGS paralel hazırlık, konu tekrarı ve pekiştirme',
+    category: 'Okul',
+    estimatedWeeklyHours: 17,
+    difficulty: 'Orta',
+    tags: ['okul', '8.sınıf', 'dengeli', 'lgs-paralel', 'konu-tekrarı'],
+    subjects: [
+      { id: 'mat-8', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-8', name: 'Türkçe', category: 'Okul' },
+      { id: 'fen-8', name: 'Fen Bilimleri', category: 'Okul' },
+      { id: 'sos-8', name: 'Sosyal Bilgiler', category: 'Okul' },
+      { id: 'ing-8', name: 'İngilizce', category: 'Okul' },
+      { id: 'din-8', name: 'Din Kültürü', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:00', end: '17:15', subjectId: 'mat-8' },
+      { day: 1, start: '17:45', end: '19:00', subjectId: 'tur-8' },
+      { day: 2, start: '16:00', end: '17:15', subjectId: 'fen-8' },
+      { day: 2, start: '17:45', end: '18:45', subjectId: 'mat-8' },
+      { day: 3, start: '16:00', end: '17:15', subjectId: 'tur-8' },
+      { day: 3, start: '17:45', end: '18:45', subjectId: 'sos-8' },
+      { day: 4, start: '16:00', end: '17:15', subjectId: 'mat-8' },
+      { day: 4, start: '17:45', end: '18:30', subjectId: 'ing-8' },
+      { day: 5, start: '16:00', end: '17:15', subjectId: 'fen-8' },
+      { day: 5, start: '17:45', end: '18:30', subjectId: 'din-8' },
+      { day: 6, start: '09:30', end: '11:30', subjectId: 'mat-8' },
+      { day: 6, start: '14:00', end: '15:30', subjectId: 'tur-8' },
+      { day: 7, start: '10:00', end: '11:30', subjectId: 'fen-8' },
+      { day: 7, start: '14:00', end: '15:00', subjectId: 'sos-8' }
+    ]
+  },
+  {
+    id: 'okul-lise-9-hafif',
+    name: '9. Sınıf Hafif Program',
+    description: 'Günde 2 saat - Lise adaptasyonu, temel kavramlar ve çalışma alışkanlığı',
+    category: 'Okul',
+    estimatedWeeklyHours: 12,
+    difficulty: 'Kolay',
+    tags: ['okul', '9.sınıf', 'lise', 'adaptasyon', 'temel-kavramlar'],
+    subjects: [
+      { id: 'mat-9', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-9', name: 'Türk Dili ve Edebiyatı', category: 'Okul' },
+      { id: 'fiz-9', name: 'Fizik', category: 'Okul' },
+      { id: 'kim-9', name: 'Kimya', category: 'Okul' },
+      { id: 'biy-9', name: 'Biyoloji', category: 'Okul' },
+      { id: 'tar-9', name: 'Tarih', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:30', end: '17:30', subjectId: 'mat-9' },
+      { day: 1, start: '18:00', end: '19:00', subjectId: 'tur-9' },
+      { day: 2, start: '16:30', end: '17:30', subjectId: 'fiz-9' },
+      { day: 2, start: '18:00', end: '18:45', subjectId: 'kim-9' },
+      { day: 3, start: '16:30', end: '17:30', subjectId: 'mat-9' },
+      { day: 3, start: '18:00', end: '18:45', subjectId: 'tar-9' },
+      { day: 4, start: '16:30', end: '17:30', subjectId: 'tur-9' },
+      { day: 4, start: '18:00', end: '18:45', subjectId: 'biy-9' },
+      { day: 5, start: '16:30', end: '17:30', subjectId: 'mat-9' },
+      { day: 5, start: '18:00', end: '18:45', subjectId: 'fiz-9' },
+      { day: 6, start: '10:00', end: '11:30', subjectId: 'mat-9' },
+      { day: 6, start: '14:00', end: '15:00', subjectId: 'tur-9' }
+    ]
+  },
+  {
+    id: 'okul-lise-9-dengeli',
+    name: '9. Sınıf Dengeli Program',
+    description: 'Günde 2.5 saat - Sayısal ve sözel dersler arası denge, aktif öğrenme',
+    category: 'Okul',
+    estimatedWeeklyHours: 15,
+    difficulty: 'Orta',
+    tags: ['okul', '9.sınıf', 'lise', 'dengeli', 'aktif-öğrenme'],
+    subjects: [
+      { id: 'mat-9', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-9', name: 'Türk Dili ve Edebiyatı', category: 'Okul' },
+      { id: 'fiz-9', name: 'Fizik', category: 'Okul' },
+      { id: 'kim-9', name: 'Kimya', category: 'Okul' },
+      { id: 'biy-9', name: 'Biyoloji', category: 'Okul' },
+      { id: 'tar-9', name: 'Tarih', category: 'Okul' },
+      { id: 'cog-9', name: 'Coğrafya', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:30', end: '17:45', subjectId: 'mat-9' },
+      { day: 1, start: '18:15', end: '19:15', subjectId: 'tur-9' },
+      { day: 2, start: '16:30', end: '17:45', subjectId: 'fiz-9' },
+      { day: 2, start: '18:15', end: '19:00', subjectId: 'kim-9' },
+      { day: 3, start: '16:30', end: '17:45', subjectId: 'mat-9' },
+      { day: 3, start: '18:15', end: '19:00', subjectId: 'tar-9' },
+      { day: 4, start: '16:30', end: '17:45', subjectId: 'tur-9' },
+      { day: 4, start: '18:15', end: '19:00', subjectId: 'biy-9' },
+      { day: 5, start: '16:30', end: '17:45', subjectId: 'mat-9' },
+      { day: 5, start: '18:15', end: '19:00', subjectId: 'cog-9' },
+      { day: 6, start: '10:00', end: '12:00', subjectId: 'mat-9' },
+      { day: 6, start: '14:00', end: '15:30', subjectId: 'fiz-9' },
+      { day: 7, start: '10:00', end: '11:00', subjectId: 'tur-9' }
+    ]
+  },
+  {
+    id: 'okul-lise-10-dengeli',
+    name: '10. Sınıf Dengeli Program',
+    description: 'Günde 2.5-3 saat - TYT temel konuları ve okul paralel çalışma',
+    category: 'Okul',
+    estimatedWeeklyHours: 18,
+    difficulty: 'Orta',
+    tags: ['okul', '10.sınıf', 'lise', 'tyt-temel', 'paralel-çalışma'],
+    subjects: [
+      { id: 'mat-10', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-10', name: 'Türk Dili ve Edebiyatı', category: 'Okul' },
+      { id: 'fiz-10', name: 'Fizik', category: 'Okul' },
+      { id: 'kim-10', name: 'Kimya', category: 'Okul' },
+      { id: 'biy-10', name: 'Biyoloji', category: 'Okul' },
+      { id: 'tar-10', name: 'Tarih', category: 'Okul' },
+      { id: 'cog-10', name: 'Coğrafya', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:30', end: '18:00', subjectId: 'mat-10' },
+      { day: 1, start: '18:30', end: '19:30', subjectId: 'tur-10' },
+      { day: 2, start: '16:30', end: '18:00', subjectId: 'fiz-10' },
+      { day: 2, start: '18:30', end: '19:15', subjectId: 'kim-10' },
+      { day: 3, start: '16:30', end: '18:00', subjectId: 'mat-10' },
+      { day: 3, start: '18:30', end: '19:15', subjectId: 'tar-10' },
+      { day: 4, start: '16:30', end: '18:00', subjectId: 'tur-10' },
+      { day: 4, start: '18:30', end: '19:15', subjectId: 'biy-10' },
+      { day: 5, start: '16:30', end: '18:00', subjectId: 'mat-10' },
+      { day: 5, start: '18:30', end: '19:15', subjectId: 'cog-10' },
+      { day: 6, start: '09:30', end: '11:30', subjectId: 'mat-10' },
+      { day: 6, start: '14:00', end: '16:00', subjectId: 'fiz-10' },
+      { day: 7, start: '10:00', end: '11:30', subjectId: 'tur-10' }
+    ]
+  },
+  {
+    id: 'okul-lise-11-dengeli',
+    name: '11. Sınıf Dengeli Program',
+    description: 'Günde 3 saat - YKS hazırlığına geçiş, AYT konularına giriş',
+    category: 'Okul',
+    estimatedWeeklyHours: 21,
+    difficulty: 'Orta',
+    tags: ['okul', '11.sınıf', 'lise', 'yks-geçiş', 'ayt-başlangıç'],
+    subjects: [
+      { id: 'mat-11', name: 'Matematik', category: 'Okul' },
+      { id: 'tur-11', name: 'Türk Dili ve Edebiyatı', category: 'Okul' },
+      { id: 'fiz-11', name: 'Fizik', category: 'Okul' },
+      { id: 'kim-11', name: 'Kimya', category: 'Okul' },
+      { id: 'biy-11', name: 'Biyoloji', category: 'Okul' },
+      { id: 'tar-11', name: 'Tarih', category: 'Okul' }
+    ],
+    slots: [
+      { day: 1, start: '16:00', end: '17:30', subjectId: 'mat-11' },
+      { day: 1, start: '18:00', end: '19:30', subjectId: 'tur-11' },
+      { day: 2, start: '16:00', end: '17:30', subjectId: 'fiz-11' },
+      { day: 2, start: '18:00', end: '19:00', subjectId: 'kim-11' },
+      { day: 3, start: '16:00', end: '17:30', subjectId: 'mat-11' },
+      { day: 3, start: '18:00', end: '19:00', subjectId: 'tar-11' },
+      { day: 4, start: '16:00', end: '17:30', subjectId: 'tur-11' },
+      { day: 4, start: '18:00', end: '19:00', subjectId: 'biy-11' },
+      { day: 5, start: '16:00', end: '17:30', subjectId: 'mat-11' },
+      { day: 5, start: '18:00', end: '19:00', subjectId: 'fiz-11' },
+      { day: 6, start: '09:00', end: '11:30', subjectId: 'mat-11' },
+      { day: 6, start: '14:00', end: '16:00', subjectId: 'fiz-11' },
+      { day: 7, start: '10:00', end: '12:00', subjectId: 'tur-11' },
+      { day: 7, start: '14:00', end: '15:30', subjectId: 'kim-11' }
+    ]
+  },
+  // ========== LGS ŞABLONLARI ==========
   {
     id: 'lgs-light',
     name: 'LGS Hafif Program',

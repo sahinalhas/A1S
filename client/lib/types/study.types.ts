@@ -67,7 +67,7 @@ export type ScheduleTemplate = {
  id: string;
  name: string;
  description: string;
- category: 'LGS' | 'TYT' | 'AYT' | 'YDT' | 'YKS' | 'Özel';
+ category: 'Okul' | 'LGS' | 'TYT' | 'AYT' | 'YDT' | 'YKS' | 'Özel';
  slots: Omit<WeeklySlot, 'id' | 'studentId'>[];
  subjects: {
  id: string;
