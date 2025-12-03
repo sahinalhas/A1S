@@ -6,12 +6,13 @@ export class MEBBISAutomationService {
   private browser: Browser | null = null;
   private page: Page | null = null;
   private isInitialized = false;
-  private schoolId: string | null = null;
+  private schoolCode: string | null = null;
   private readonly MAX_RETRIES = 3;
   private readonly RETRY_DELAY = 2000;
 
-  setSchoolId(schoolId: string | null): void {
-    this.schoolId = schoolId;
+  setSchoolCode(schoolCode: string | null): void {
+    this.schoolCode = schoolCode;
+    logger.info(`School code set for MEBBIS: ${schoolCode}`, 'MEBBISAutomation');
   }
 
   private async wait(ms: number): Promise<void> {
@@ -258,69 +259,103 @@ export class MEBBISAutomationService {
     }
   }
 
-  async selectActiveSchool(schoolId?: string): Promise<void> {
+  async selectActiveSchool(schoolCode?: string): Promise<void> {
     if (!this.page) {
       throw new Error('Browser not initialized');
     }
 
     try {
-      logger.info(`Attempting to select active school${schoolId ? ` (schoolId: ${schoolId})` : ''}...`, 'MEBBISAutomation');
+      // schoolCode parametresi yoksa, instance field'ını kullan
+      const targetSchoolCode = schoolCode || this.schoolCode;
+      
+      logger.info(`Attempting to select active school${targetSchoolCode ? ` (kurum kodu: ${targetSchoolCode})` : ''}...`, 'MEBBISAutomation');
       
       // Dropdown'ın yüklenmesini bekle
       await this.page.waitForSelector('#drp_okul', { timeout: 10000 });
       
-      // schoolId parametresi yoksa, instance field'ını kullan
-      const targetSchoolId = schoolId || this.schoolId;
+      // Mevcut dropdown seçeneklerini logla
+      const dropdownOptions = await this.page.evaluate(() => {
+        const dropdown = document.getElementById('drp_okul') as HTMLSelectElement;
+        if (!dropdown) return [];
+        return Array.from(dropdown.querySelectorAll('option')).map(opt => ({
+          value: opt.value,
+          text: opt.textContent?.trim() || ''
+        }));
+      });
+      logger.info(`Available schools in dropdown: ${JSON.stringify(dropdownOptions)}`, 'MEBBISAutomation');
       
       let selectedSchoolValue: string | null = null;
       
-      if (targetSchoolId) {
-        // Database'den schoolId ile okul bilgisini al ve eşleştir
-        logger.info(`Looking for school with ID: ${targetSchoolId}`, 'MEBBISAutomation');
+      if (targetSchoolCode) {
+        // Kurum kodu ile MEBBIS dropdown'undan okul seç
+        logger.info(`Looking for school with kurum kodu: ${targetSchoolCode}`, 'MEBBISAutomation');
         
-        selectedSchoolValue = await this.page.evaluate((schoolIdToMatch: string) => {
+        selectedSchoolValue = await this.page.evaluate((codeToMatch: string) => {
           const dropdown = document.getElementById('drp_okul') as HTMLSelectElement;
           if (!dropdown) return null;
           
           // Dropdown'daki tüm option'ları kontrol et
           const options = Array.from(dropdown.querySelectorAll('option'));
           
-          // Option değeri schoolId ile eşleşirse seç
+          // Option değeri kurum kodu ile eşleşirse seç
           for (const option of options) {
-            if (option.value === schoolIdToMatch && option.value !== '-1') {
+            if (option.value === codeToMatch && option.value !== '-1') {
               return option.value;
             }
           }
           
-          // Tam eşleşme yoksa, dropdown'da seçili olan değeri al
-          const selectedOption = dropdown.querySelector('option[selected="selected"]') as HTMLOptionElement;
-          if (selectedOption && selectedOption.value !== '-1') {
-            return selectedOption.value;
-          }
-          
-          // Son çare: ilk geçerli option'ı al
-          for (const option of options) {
-            if (option.value !== '-1' && option.textContent?.trim()) {
-              return option.value;
-            }
-          }
-          
+          // Eşleşme bulunamadı
           return null;
-        }, targetSchoolId);
+        }, targetSchoolCode);
+        
+        if (!selectedSchoolValue) {
+          logger.warn(`School code ${targetSchoolCode} not found in dropdown, falling back to first valid option`, 'MEBBISAutomation');
+          // Kurum kodu bulunamadıysa, ilk geçerli okulu seç (İlçe MEM hariç)
+          selectedSchoolValue = await this.page.evaluate(() => {
+            const dropdown = document.getElementById('drp_okul') as HTMLSelectElement;
+            if (!dropdown) return null;
+            
+            const options = Array.from(dropdown.querySelectorAll('option'));
+            for (const option of options) {
+              // "-1" ve "İlçe Milli Eğitim Müdürlüğü" gibi seçenekleri atla
+              const text = option.textContent?.trim() || '';
+              if (option.value !== '-1' && 
+                  !text.toLowerCase().includes('müdürlüğü') && 
+                  !text.toLowerCase().includes('mudurluğu')) {
+                return option.value;
+              }
+            }
+            
+            // Eğer hala bulunamadıysa, -1 hariç ilk seçeneği al
+            for (const option of options) {
+              if (option.value !== '-1' && option.textContent?.trim()) {
+                return option.value;
+              }
+            }
+            
+            return null;
+          });
+        }
       } else {
-        // schoolId yoksa, dropdown'da seçili olan değeri bul (selected="selected" olan option)
+        // schoolCode yoksa, dropdown'da okul seç (İlçe MEM hariç)
+        logger.warn('No school code provided, selecting first valid school from dropdown', 'MEBBISAutomation');
         selectedSchoolValue = await this.page.evaluate(() => {
           const dropdown = document.getElementById('drp_okul') as HTMLSelectElement;
           if (!dropdown) return null;
           
-          // Zaten seçili olan option'ı bul
-          const selectedOption = dropdown.querySelector('option[selected="selected"]') as HTMLOptionElement;
-          if (selectedOption) {
-            return selectedOption.value;
+          const options = Array.from(dropdown.querySelectorAll('option'));
+          
+          // İlk gerçek okulu bul (İlçe MEM değil)
+          for (const option of options) {
+            const text = option.textContent?.trim() || '';
+            if (option.value !== '-1' && 
+                !text.toLowerCase().includes('müdürlüğü') && 
+                !text.toLowerCase().includes('mudurluğu')) {
+              return option.value;
+            }
           }
           
-          // Eğer seçili option yoksa, ilk option'ı (placeholder hariç) al
-          const options = Array.from(dropdown.querySelectorAll('option'));
+          // Son çare: -1 hariç ilk seçenek
           for (const option of options) {
             if (option.value !== '-1' && option.textContent?.trim()) {
               return option.value;
@@ -333,7 +368,7 @@ export class MEBBISAutomationService {
 
       if (!selectedSchoolValue || selectedSchoolValue === '-1') {
         logger.warn('No school found to select', 'MEBBISAutomation');
-        throw new Error('Seçilebilecek okul bulunamadı');
+        throw new Error('Seçilebilecek okul bulunamadı. Lütfen okul ayarlarından kurum kodunu kontrol edin.');
       }
 
       logger.info(`Selected school value: ${selectedSchoolValue}`, 'MEBBISAutomation');
