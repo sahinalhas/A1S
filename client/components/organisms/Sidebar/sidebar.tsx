@@ -485,7 +485,7 @@ const SidebarGroupContent = React.forwardRef<
  <div
  ref={ref}
  data-sidebar="group-content"
- className={cn("w-full text-sm", className)}
+ className={cn("w-full text-base", className)}
  {...props}
  />
 ));
@@ -518,7 +518,7 @@ const SidebarMenuItem = React.forwardRef<
 SidebarMenuItem.displayName ="SidebarMenuItem";
 
 const sidebarMenuButtonVariants = cva(
-"peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]: data-[state=open]: group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+"peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-base font-medium outline-none ring-sidebar-ring focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-semibold data-[active=true]:text-sidebar-accent-foreground data-[state=open]: data-[state=open]: group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
  {
  variants: {
  variant: {
@@ -527,9 +527,9 @@ const sidebarMenuButtonVariants = cva(
 "bg-background",
  },
  size: {
- default:"h-8 text-sm",
- sm:"h-7 text-xs",
- lg:"h-12 text-sm group-data-[collapsible=icon]:!p-0",
+ default:"h-9",
+ sm:"h-8 text-sm",
+ lg:"h-12 group-data-[collapsible=icon]:!p-0",
  },
  },
  defaultVariants: {
@@ -728,10 +728,9 @@ const SidebarMenuSubButton = React.forwardRef<
  data-size={size}
  data-active={isActive}
  className={cn(
-"flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-none ring-sidebar-ring focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground",
-"data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground",
- size ==="sm" &&"text-xs",
- size ==="md" &&"text-sm",
+"flex h-8 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-base font-medium text-sidebar-foreground outline-none ring-sidebar-ring focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground",
+"data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground data-[active=true]:font-semibold",
+ size ==="sm" &&"h-7 text-sm font-medium",
 "group-data-[collapsible=icon]:hidden",
  className,
  )}
