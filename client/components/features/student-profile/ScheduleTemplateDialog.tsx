@@ -67,14 +67,21 @@ export default function ScheduleTemplateDialog({
 
  setApplying(true);
  try {
- await applyScheduleTemplate(selectedTemplate, studentId, replaceExisting);
+ const hasCustomizations = Object.values(customization).some(
+ (opt) => opt && typeof opt === 'object' && 'enabled' in opt && opt.enabled
+ );
+ await applyScheduleTemplate(
+ selectedTemplate, 
+ studentId, 
+ replaceExisting, 
+ hasCustomizations ? customization : undefined
+ );
  setOpen(false);
  setSelectedTemplate(null);
  setReplaceExisting(false);
  setStep("template-selection");
  setCustomization({});
  onApplied?.();
- toast.success("Şablon başarıyla uygulandı");
  } catch (error) {
  console.error("Error applying template:", error);
  toast.error("Şablon uygulanırken hata oluştu");

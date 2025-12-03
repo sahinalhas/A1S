@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import type { ScheduleTemplate, WeeklySlot, StudySubject } from "../../types/study.types";
+import type { ScheduleTemplate, WeeklySlot, StudySubject, TemplateCustomization } from "../../types/study.types";
 import { 
   loadSubjects, 
   loadSubjectsAsync, 
@@ -810,10 +810,137 @@ export function getTemplatesByCategory(category?: string): ScheduleTemplate[] {
   return SCHEDULE_TEMPLATES.filter(t => t.category === category);
 }
 
+function addMinutesToTime(time: string, minutes: number): string {
+  const [hours, mins] = time.split(':').map(Number);
+  const totalMinutes = hours * 60 + mins + minutes;
+  const newHours = Math.floor(totalMinutes / 60) % 24;
+  const newMins = totalMinutes % 60;
+  return `${String(newHours).padStart(2, '0')}:${String(newMins).padStart(2, '0')}`;
+}
+
+function createCustomizationSlots(
+  studentId: string,
+  customization: TemplateCustomization,
+  existingSubjects: StudySubject[]
+): { slots: WeeklySlot[], subjects: StudySubject[] } {
+  const slots: WeeklySlot[] = [];
+  const subjectsToAdd: StudySubject[] = [];
+
+  const findOrCreateSubject = (name: string, category: string): string => {
+    const existing = existingSubjects.find(s => 
+      s.name.toLowerCase() === name.toLowerCase()
+    );
+    if (existing) return existing.id;
+
+    const alreadyAdded = subjectsToAdd.find(s => 
+      s.name.toLowerCase() === name.toLowerCase()
+    );
+    if (alreadyAdded) return alreadyAdded.id;
+
+    const newSubject: StudySubject = {
+      id: crypto.randomUUID(),
+      name,
+      category: category as any,
+      code: name.toLowerCase().replace(/\s+/g, '-'),
+      description: 'Özelleştirmeden eklendi'
+    };
+    subjectsToAdd.push(newSubject);
+    return newSubject.id;
+  };
+
+  if (customization.dailyRepetition?.enabled) {
+    const duration = customization.dailyRepetition.durationMinutes || 30;
+    const subjectId = findOrCreateSubject('Günlük Tekrar', 'Genel');
+    
+    for (let day = 1; day <= 5; day++) {
+      slots.push({
+        id: crypto.randomUUID(),
+        studentId,
+        day: day as 1 | 2 | 3 | 4 | 5 | 6 | 7,
+        start: '20:00',
+        end: addMinutesToTime('20:00', duration),
+        subjectId
+      });
+    }
+  }
+
+  if (customization.weeklyRepetition?.enabled) {
+    const duration = customization.weeklyRepetition.durationMinutes || 60;
+    const day = customization.weeklyRepetition.day || 6;
+    const subjectId = findOrCreateSubject('Haftalık Tekrar', 'Genel');
+    
+    slots.push({
+      id: crypto.randomUUID(),
+      studentId,
+      day,
+      start: '11:00',
+      end: addMinutesToTime('11:00', duration),
+      subjectId
+    });
+  }
+
+  if (customization.bookReading?.enabled) {
+    const duration = customization.bookReading.durationMinutes || 30;
+    const daysPerWeek = Math.min(customization.bookReading.daysPerWeek || 3, 7);
+    const subjectId = findOrCreateSubject('Kitap Okuma', 'Genel');
+    
+    for (let i = 0; i < daysPerWeek; i++) {
+      const day = (i % 7) + 1;
+      slots.push({
+        id: crypto.randomUUID(),
+        studentId,
+        day: day as 1 | 2 | 3 | 4 | 5 | 6 | 7,
+        start: '21:00',
+        end: addMinutesToTime('21:00', duration),
+        subjectId
+      });
+    }
+  }
+
+  if (customization.questionSolving?.enabled) {
+    const subjectId = findOrCreateSubject('Soru Çözümü', 'Genel');
+    
+    slots.push({
+      id: crypto.randomUUID(),
+      studentId,
+      day: 3,
+      start: '19:00',
+      end: '20:00',
+      subjectId
+    });
+    slots.push({
+      id: crypto.randomUUID(),
+      studentId,
+      day: 5,
+      start: '19:00',
+      end: '20:00',
+      subjectId
+    });
+  }
+
+  if (customization.mockExam?.enabled) {
+    const duration = customization.mockExam.durationMinutes || 120;
+    const day = customization.mockExam.day || 7;
+    const subjectId = findOrCreateSubject('Deneme Sınavı', 'Genel');
+    
+    slots.push({
+      id: crypto.randomUUID(),
+      studentId,
+      day,
+      start: '10:00',
+      end: addMinutesToTime('10:00', duration),
+      subjectId
+    });
+  }
+
+  return { slots, subjects: subjectsToAdd };
+}
+
 export async function applyScheduleTemplate(
   templateId: string,
   studentId: string,
-  replaceExisting: boolean = false
+  replaceExisting: boolean = false,
+  customization?: TemplateCustomization
 ): Promise<void> {
   const template = SCHEDULE_TEMPLATES.find(t => t.id === templateId);
   if (!template) {
@@ -855,11 +982,6 @@ export async function applyScheduleTemplate(
         subjectIdMap.set(templateSubject.id, newSubject.id);
       }
     }
-    
-    if (subjectsToAdd.length > 0) {
-      const allSubjects = [...existingSubjects, ...subjectsToAdd];
-      await saveSubjects(allSubjects);
-    }
 
     const newSlots: WeeklySlot[] = template.slots.map(templateSlot => ({
       id: crypto.randomUUID(),
@@ -869,14 +991,33 @@ export async function applyScheduleTemplate(
       end: templateSlot.end,
       subjectId: subjectIdMap.get(templateSlot.subjectId) || templateSlot.subjectId
     }));
+
+    let customizationSlots: WeeklySlot[] = [];
+    if (customization) {
+      const allExistingSubjects = [...existingSubjects, ...subjectsToAdd];
+      const customResult = createCustomizationSlots(studentId, customization, allExistingSubjects);
+      customizationSlots = customResult.slots;
+      subjectsToAdd.push(...customResult.subjects);
+    }
+    
+    if (subjectsToAdd.length > 0) {
+      const allSubjects = [...existingSubjects, ...subjectsToAdd];
+      await saveSubjects(allSubjects);
+    }
     
     const existingSlots = replaceExisting ? [] : loadWeeklySlots();
-    const allSlots = [...existingSlots, ...newSlots];
+    const allSlots = [...existingSlots, ...newSlots, ...customizationSlots];
     
     await saveWeeklySlots(allSlots);
 
+    const customizationCount = customizationSlots.length;
+    const baseDescription = `${template.estimatedWeeklyHours} saatlik program eklendi`;
+    const customDescription = customizationCount > 0 
+      ? `${baseDescription} + ${customizationCount} özelleştirme bloğu`
+      : baseDescription;
+
     toast.success(`"${template.name}" şablonu uygulandı`, {
-      description: `${template.estimatedWeeklyHours} saatlik program eklendi`
+      description: customDescription
     });
   } catch (error) {
     console.error('Error applying template:', error);
