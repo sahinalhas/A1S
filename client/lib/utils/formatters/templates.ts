@@ -840,25 +840,27 @@ function findNonConflictingTime(
   duration: number,
   templateSlots: WeeklySlot[]
 ): { start: string; end: string } {
-  const candidateTimes = [
-    '08:00', '09:00', '10:00', '11:00', '12:00',
-    '13:00', '14:00', '15:00', '16:00', '17:00',
-    '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'
-  ];
+  // Hafta sonu (6-7) için gündüz saatleri, hafta içi (1-5) için akşam saatleri
+  const candidateTimes = (day === 6 || day === 7)
+    ? ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'] // Hafta sonu gündüz
+    : ['16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']; // Hafta içi akşam
+
+  const daySlots = templateSlots.filter(s => s.day === day);
 
   for (const time of candidateTimes) {
-    const testSlot = {
-      day: day as 1 | 2 | 3 | 4 | 5 | 6 | 7,
-      start: time,
-      end: addMinutesToTime(time, duration)
-    };
+    const endTime = addMinutesToTime(time, duration);
+    const testStart = timeToMinutes(time);
+    const testEnd = timeToMinutes(endTime);
 
-    const conflicts = templateSlots.filter(
-      s => s.day === day && hasTimeConflict(testSlot as WeeklySlot, s)
-    );
+    const hasConflict = daySlots.some(slot => {
+      const slotStart = timeToMinutes(slot.start);
+      const slotEnd = timeToMinutes(slot.end);
+      // Çakışma: slot'lar arasında zaman örtüşüyor mu?
+      return !(testEnd <= slotStart || testStart >= slotEnd);
+    });
 
-    if (conflicts.length === 0) {
-      return { start: time, end: addMinutesToTime(time, duration) };
+    if (!hasConflict) {
+      return { start: time, end: endTime };
     }
   }
 
@@ -918,7 +920,7 @@ function createCustomizationSlots(
     const day = customization.weeklyRepetition.day || 6;
     const subjectId = findOrCreateSubject('Haftalık Tekrar', 'Genel');
     
-    const time = findNonConflictingTime(day, '11:00', duration, templateSlots);
+    const time = findNonConflictingTime(day, '09:00', duration, templateSlots);
     slots.push({
       id: crypto.randomUUID(),
       studentId,
@@ -977,7 +979,7 @@ function createCustomizationSlots(
     const day = customization.mockExam.day || 7;
     const subjectId = findOrCreateSubject('Deneme Sınavı', 'Genel');
     
-    const time = findNonConflictingTime(day, '10:00', duration, templateSlots);
+    const time = findNonConflictingTime(day, '09:00', duration, templateSlots);
     slots.push({
       id: crypto.randomUUID(),
       studentId,
