@@ -44,22 +44,88 @@ function normalizeStatus(value: unknown): 'active' | 'inactive' | 'graduated' {
 
 export function normalizeStudentData(student: StudentInput): Student {
   const normalized: Student = {
+    // Required fields
     id: student.id ? String(student.id).trim() : '',
     name: student.name ? String(student.name).trim() : '',
     surname: student.surname ? String(student.surname).trim() : '',
-    email: student.email ? String(student.email).trim() : undefined,
-    phone: student.phone ? String(student.phone).trim() : undefined,
-    birthDate: (student.birthDate as string | undefined) || undefined,
-    address: student.address ? String(student.address).trim() : undefined,
-    class: student.class ? String(student.class).trim() : undefined,
     enrollmentDate: (student.enrollmentDate as string | undefined) || new Date().toISOString().split('T')[0],
+    
+    // Education Information
+    class: student.class ? String(student.class).trim() : undefined,
+    studentNumber: student.studentNumber ? String(student.studentNumber).trim() : undefined,
+    gender: normalizeGender(student.gender),
+    birthDate: (student.birthDate as string | undefined) || undefined,
+    birthPlace: student.birthPlace ? String(student.birthPlace).trim() : undefined,
+    tcIdentityNo: student.tcIdentityNo ? String(student.tcIdentityNo).trim() : undefined,
+    
+    // Contact Information
+    phone: student.phone ? String(student.phone).trim() : undefined,
+    email: student.email ? String(student.email).trim() : undefined,
+    address: student.address ? String(student.address).trim() : undefined,
+    province: student.province ? String(student.province).trim() : undefined,
+    district: student.district ? String(student.district).trim() : undefined,
+    
+    // Mother Information
+    motherName: student.motherName ? String(student.motherName).trim() : undefined,
+    motherEducation: student.motherEducation ? String(student.motherEducation).trim() : undefined,
+    motherOccupation: student.motherOccupation ? String(student.motherOccupation).trim() : undefined,
+    motherEmail: student.motherEmail ? String(student.motherEmail).trim() : undefined,
+    motherPhone: student.motherPhone ? String(student.motherPhone).trim() : undefined,
+    motherVitalStatus: (student.motherVitalStatus as 'Sağ' | 'Vefat Etmiş' | undefined) || undefined,
+    motherLivingStatus: (student.motherLivingStatus as 'Birlikte' | 'Ayrı' | undefined) || undefined,
+    
+    // Father Information
+    fatherName: student.fatherName ? String(student.fatherName).trim() : undefined,
+    fatherEducation: student.fatherEducation ? String(student.fatherEducation).trim() : undefined,
+    fatherOccupation: student.fatherOccupation ? String(student.fatherOccupation).trim() : undefined,
+    fatherEmail: student.fatherEmail ? String(student.fatherEmail).trim() : undefined,
+    fatherPhone: student.fatherPhone ? String(student.fatherPhone).trim() : undefined,
+    fatherVitalStatus: (student.fatherVitalStatus as 'Sağ' | 'Vefat Etmiş' | undefined) || undefined,
+    fatherLivingStatus: (student.fatherLivingStatus as 'Birlikte' | 'Ayrı' | undefined) || undefined,
+    
+    // Guardian Information
+    guardianName: student.guardianName ? String(student.guardianName).trim() : undefined,
+    guardianRelation: student.guardianRelation ? String(student.guardianRelation).trim() : undefined,
+    guardianPhone: student.guardianPhone ? String(student.guardianPhone).trim() : undefined,
+    guardianEmail: student.guardianEmail ? String(student.guardianEmail).trim() : undefined,
+    
+    // Family Structure
+    numberOfSiblings: typeof student.numberOfSiblings === 'number' ? student.numberOfSiblings : undefined,
+    
+    // Living Situation
+    livingWith: student.livingWith ? String(student.livingWith).trim() : undefined,
+    homeRentalStatus: student.homeRentalStatus ? String(student.homeRentalStatus).trim() : undefined,
+    homeHeatingType: student.homeHeatingType ? String(student.homeHeatingType).trim() : undefined,
+    transportationToSchool: student.transportationToSchool ? String(student.transportationToSchool).trim() : undefined,
+    studentWorkStatus: student.studentWorkStatus ? String(student.studentWorkStatus).trim() : undefined,
+    
+    // System Information
     status: normalizeStatus(student.status),
     avatar: (student.avatar as string | undefined) || undefined,
     parentContact: student.parentContact ? String(student.parentContact).trim() : undefined,
     notes: student.notes ? String(student.notes).trim() : undefined,
-    gender: normalizeGender(student.gender),
-    risk: normalizeRisk(student.risk),
     schoolId: (student.schoolId as string | undefined) || undefined,
+    
+    // Assessment Information
+    risk: normalizeRisk(student.risk),
+    counselor: student.counselor ? String(student.counselor).trim() : undefined,
+    tags: Array.isArray(student.tags) ? student.tags : undefined,
+    
+    // General Information
+    interests: Array.isArray(student.interests) ? student.interests : undefined,
+    healthNote: student.healthNote ? String(student.healthNote).trim() : undefined,
+    bloodType: student.bloodType ? String(student.bloodType).trim() : undefined,
+    
+    // Additional Profile Information
+    languageSkills: student.languageSkills ? String(student.languageSkills).trim() : undefined,
+    hobbiesDetailed: student.hobbiesDetailed ? String(student.hobbiesDetailed).trim() : undefined,
+    extracurricularActivities: student.extracurricularActivities ? String(student.extracurricularActivities).trim() : undefined,
+    studentExpectations: student.studentExpectations ? String(student.studentExpectations).trim() : undefined,
+    familyExpectations: student.familyExpectations ? String(student.familyExpectations).trim() : undefined,
+    
+    // Legacy fields
+    primaryLearningStyle: student.primaryLearningStyle ? String(student.primaryLearningStyle).trim() : undefined,
+    englishScore: typeof student.englishScore === 'number' ? student.englishScore : undefined,
   };
   
   return normalized;

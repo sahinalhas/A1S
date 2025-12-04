@@ -60,6 +60,69 @@ export function createStudentsTables(db: Database.Database): void {
     console.warn('Warning creating schoolId index:', err.message);
   }
 
+  // Migration: Add extended student profile columns
+  const extendedColumns = [
+    // Identity & Location
+    'birthPlace TEXT',
+    'tcIdentityNo TEXT',
+    'province TEXT',
+    'district TEXT',
+    // Mother Information
+    'motherName TEXT',
+    'motherEducation TEXT',
+    'motherOccupation TEXT',
+    'motherEmail TEXT',
+    'motherPhone TEXT',
+    'motherVitalStatus TEXT',
+    'motherLivingStatus TEXT',
+    // Father Information
+    'fatherName TEXT',
+    'fatherEducation TEXT',
+    'fatherOccupation TEXT',
+    'fatherEmail TEXT',
+    'fatherPhone TEXT',
+    'fatherVitalStatus TEXT',
+    'fatherLivingStatus TEXT',
+    // Guardian Information
+    'guardianName TEXT',
+    'guardianRelation TEXT',
+    'guardianPhone TEXT',
+    'guardianEmail TEXT',
+    // Family Structure
+    'numberOfSiblings INTEGER',
+    // Living Situation
+    'livingWith TEXT',
+    'homeRentalStatus TEXT',
+    'homeHeatingType TEXT',
+    'transportationToSchool TEXT',
+    'studentWorkStatus TEXT',
+    // Assessment
+    'counselor TEXT',
+    'tags TEXT',
+    // General Information
+    'interests TEXT',
+    'healthNote TEXT',
+    'bloodType TEXT',
+    // Additional Profile
+    'languageSkills TEXT',
+    'hobbiesDetailed TEXT',
+    'extracurricularActivities TEXT',
+    'studentExpectations TEXT',
+    'familyExpectations TEXT',
+  ];
+
+  for (const columnDef of extendedColumns) {
+    const columnName = columnDef.split(' ')[0];
+    try {
+      db.exec(`ALTER TABLE students ADD COLUMN ${columnDef};`);
+      console.log(`✅ Added column ${columnName} to students table`);
+    } catch (err: any) {
+      if (!err.message?.includes('duplicate column')) {
+        console.warn(`Warning adding ${columnName} column:`, err.message);
+      }
+    }
+  }
+
   db.exec(`
     CREATE TABLE IF NOT EXISTS student_documents (
       id TEXT PRIMARY KEY,

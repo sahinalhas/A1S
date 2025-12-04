@@ -26,33 +26,50 @@ function ensureInitialized(): void {
   
   const db = getDatabase();
   
+  // Extended fields for student profile
+  const extendedFields = [
+    'id', 'name', 'surname', 'email', 'phone', 'birthDate', 'birthPlace', 'tcIdentityNo',
+    'address', 'province', 'district', 'class', 'studentNumber', 'enrollmentDate', 'status', 
+    'avatar', 'parentContact', 'notes', 'gender', 'risk', 'schoolId',
+    // Mother info
+    'motherName', 'motherEducation', 'motherOccupation', 'motherEmail', 'motherPhone', 
+    'motherVitalStatus', 'motherLivingStatus',
+    // Father info
+    'fatherName', 'fatherEducation', 'fatherOccupation', 'fatherEmail', 'fatherPhone',
+    'fatherVitalStatus', 'fatherLivingStatus',
+    // Guardian info
+    'guardianName', 'guardianRelation', 'guardianPhone', 'guardianEmail',
+    // Family & living
+    'numberOfSiblings', 'livingWith', 'homeRentalStatus', 'homeHeatingType', 
+    'transportationToSchool', 'studentWorkStatus',
+    // Assessment
+    'counselor', 'tags', 'interests',
+    // Health & additional
+    'healthNote', 'bloodType', 'languageSkills', 'hobbiesDetailed', 
+    'extracurricularActivities', 'studentExpectations', 'familyExpectations',
+    // Legacy
+    'primaryLearningStyle', 'englishScore'
+  ];
+  
+  const fieldPlaceholders = extendedFields.map(() => '?').join(', ');
+  const updateClause = extendedFields
+    .filter(f => f !== 'id')
+    .map(f => `${f} = excluded.${f}`)
+    .join(', ');
+  
   statements = {
     getStudentsBySchool: db.prepare('SELECT * FROM students WHERE schoolId = ? ORDER BY name, surname'),
     getStudent: db.prepare('SELECT * FROM students WHERE id = ?'),
     getStudentByIdAndSchool: db.prepare('SELECT * FROM students WHERE id = ? AND schoolId = ?'),
     insertStudent: db.prepare(`
-      INSERT INTO students (id, name, surname, email, phone, birthDate, address, class, studentNumber, enrollmentDate, status, avatar, parentContact, notes, gender, risk, schoolId)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO students (${extendedFields.join(', ')})
+      VALUES (${fieldPlaceholders})
     `),
     upsertStudent: db.prepare(`
-      INSERT INTO students (id, name, surname, email, phone, birthDate, address, class, studentNumber, enrollmentDate, status, avatar, parentContact, notes, gender, risk, schoolId)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO students (${extendedFields.join(', ')})
+      VALUES (${fieldPlaceholders})
       ON CONFLICT(id) DO UPDATE SET
-        name = excluded.name,
-        surname = excluded.surname,
-        email = excluded.email,
-        phone = excluded.phone,
-        birthDate = excluded.birthDate,
-        address = excluded.address,
-        class = excluded.class,
-        studentNumber = excluded.studentNumber,
-        status = excluded.status,
-        avatar = excluded.avatar,
-        parentContact = excluded.parentContact,
-        notes = excluded.notes,
-        gender = excluded.gender,
-        risk = excluded.risk,
-        schoolId = excluded.schoolId,
+        ${updateClause},
         updated_at = CURRENT_TIMESTAMP
     `),
     updateStudent: db.prepare(`
@@ -196,12 +213,8 @@ export function saveStudents(students: Student[]): void {
           throw new Error(`Invalid student data: missing required fields (id: ${student.id}, name: ${student.name}, surname: ${student.surname})`);
         }
         
-        statements!.upsertStudent.run(
-          student.id, student.name, student.surname, student.email, student.phone,
-          student.birthDate, student.address, student.class, student.studentNumber,
-          student.enrollmentDate, student.status, student.avatar,
-          student.parentContact, student.notes, student.gender, student.risk, student.schoolId
-        );
+        const values = getStudentFieldValues(student);
+        statements!.upsertStudent.run(...values);
       }
     });
     
@@ -257,12 +270,8 @@ export function saveStudentsForSchool(students: Student[], schoolId: string): vo
         // schoolId'yi zorunlu olarak ayarla
         const studentWithSchool = { ...student, schoolId };
         
-        statements!.upsertStudent.run(
-          studentWithSchool.id, studentWithSchool.name, studentWithSchool.surname, studentWithSchool.email, studentWithSchool.phone,
-          studentWithSchool.birthDate, studentWithSchool.address, studentWithSchool.class, studentWithSchool.studentNumber,
-          studentWithSchool.enrollmentDate, studentWithSchool.status, studentWithSchool.avatar,
-          studentWithSchool.parentContact, studentWithSchool.notes, studentWithSchool.gender, studentWithSchool.risk, studentWithSchool.schoolId
-        );
+        const values = getStudentFieldValues(studentWithSchool);
+        statements!.upsertStudent.run(...values);
       }
     });
     
@@ -271,6 +280,39 @@ export function saveStudentsForSchool(students: Student[], schoolId: string): vo
     console.error('Database error in saveStudentsForSchool:', error);
     throw error;
   }
+}
+
+/**
+ * Get student field values in the correct order for prepared statements.
+ */
+function getStudentFieldValues(student: Student): unknown[] {
+  return [
+    student.id, student.name, student.surname, student.email, student.phone,
+    student.birthDate, student.birthPlace, student.tcIdentityNo,
+    student.address, student.province, student.district, student.class, student.studentNumber,
+    student.enrollmentDate, student.status, student.avatar, student.parentContact, student.notes,
+    student.gender, student.risk, student.schoolId,
+    // Mother info
+    student.motherName, student.motherEducation, student.motherOccupation, student.motherEmail,
+    student.motherPhone, student.motherVitalStatus, student.motherLivingStatus,
+    // Father info
+    student.fatherName, student.fatherEducation, student.fatherOccupation, student.fatherEmail,
+    student.fatherPhone, student.fatherVitalStatus, student.fatherLivingStatus,
+    // Guardian info
+    student.guardianName, student.guardianRelation, student.guardianPhone, student.guardianEmail,
+    // Family & living
+    student.numberOfSiblings, student.livingWith, student.homeRentalStatus, student.homeHeatingType,
+    student.transportationToSchool, student.studentWorkStatus,
+    // Assessment
+    student.counselor, 
+    student.tags ? JSON.stringify(student.tags) : null,
+    student.interests ? JSON.stringify(student.interests) : null,
+    // Health & additional
+    student.healthNote, student.bloodType, student.languageSkills, student.hobbiesDetailed,
+    student.extracurricularActivities, student.studentExpectations, student.familyExpectations,
+    // Legacy
+    student.primaryLearningStyle, student.englishScore
+  ];
 }
 
 /**
@@ -290,12 +332,8 @@ export function saveStudent(student: Student): void {
   
   try {
     ensureInitialized();
-    statements!.upsertStudent.run(
-      student.id, student.name, student.surname, student.email, student.phone,
-      student.birthDate, student.address, student.class, student.studentNumber,
-      student.enrollmentDate, student.status, student.avatar,
-      student.parentContact, student.notes, student.gender, student.risk, student.schoolId
-    );
+    const values = getStudentFieldValues(student);
+    statements!.upsertStudent.run(...values);
   } catch (error) {
     console.error('Error saving student:', error);
     throw error;
