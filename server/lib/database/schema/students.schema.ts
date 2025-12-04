@@ -109,6 +109,8 @@ export function createStudentsTables(db: Database.Database): void {
     'extracurricularActivities TEXT',
     'studentExpectations TEXT',
     'familyExpectations TEXT',
+    // Discipline History
+    'disiplinCezalari TEXT',
   ];
 
   for (const columnDef of extendedColumns) {

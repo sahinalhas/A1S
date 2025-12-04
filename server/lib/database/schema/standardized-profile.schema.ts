@@ -163,12 +163,12 @@ CREATE TABLE IF NOT EXISTS motivation_profiles (
   id TEXT PRIMARY KEY,
   studentId TEXT NOT NULL,
   assessmentDate TEXT NOT NULL,
-  primaryMotivationSources TEXT, -- JSON array
+  primaryMotivationSources TEXT, -- JSON array (UI: primaryMotivators)
   academicMotivation INTEGER,
   socialMotivation INTEGER,
   achievementMotivation INTEGER,
-  intrinsicMotivation INTEGER,
-  extrinsicMotivation INTEGER,
+  intrinsicMotivation INTEGER, -- UI: intrinsicMotivationLevel
+  extrinsicMotivation INTEGER, -- UI: extrinsicMotivationLevel
   hasShortTermGoals INTEGER DEFAULT 0,
   hasLongTermGoals INTEGER DEFAULT 0,
   goalClarityLevel INTEGER,
@@ -184,6 +184,8 @@ CREATE TABLE IF NOT EXISTS motivation_profiles (
   longTermGoals TEXT, -- Text field (added in migration 024)
   obstacles TEXT, -- Text field (added in migration 024)
   supportNeeds TEXT, -- Text field (added in migration 024)
+  studentExpectations TEXT, -- Student's own expectations for future
+  familyExpectations TEXT, -- Family's expectations from student
   additionalNotes TEXT,
   assessedBy TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -196,18 +198,37 @@ CREATE TABLE IF NOT EXISTS risk_protective_profiles (
   id TEXT PRIMARY KEY,
   studentId TEXT NOT NULL,
   assessmentDate TEXT NOT NULL,
+  -- Risk levels (TEXT enum for backward compatibility)
   academicRiskLevel TEXT CHECK (academicRiskLevel IN ('DÜŞÜK', 'ORTA', 'YÜKSEK', 'KRİTİK')),
   behavioralRiskLevel TEXT CHECK (behavioralRiskLevel IN ('DÜŞÜK', 'ORTA', 'YÜKSEK', 'KRİTİK')),
   socialEmotionalRiskLevel TEXT CHECK (socialEmotionalRiskLevel IN ('DÜŞÜK', 'ORTA', 'YÜKSEK', 'KRİTİK')),
   attendanceRiskLevel TEXT CHECK (attendanceRiskLevel IN ('DÜŞÜK', 'ORTA', 'YÜKSEK', 'KRİTİK')),
   dropoutRisk TEXT CHECK (dropoutRisk IN ('DÜŞÜK', 'ORTA', 'YÜKSEK', 'KRİTİK')),
-  activeProtectiveFactors TEXT, -- JSON array
+  -- Numeric risk levels (1-10 scale for UI sliders)
+  overallRiskLevel INTEGER, -- UI: overallRiskLevel (1-10)
+  academicRiskLevelInt INTEGER, -- UI: academicRiskLevel (1-10)
+  behavioralRiskLevelInt INTEGER, -- UI: behavioralRiskLevel (1-10)
+  emotionalRiskLevel INTEGER, -- UI: emotionalRiskLevel (1-10)
+  socialRiskLevel INTEGER, -- UI: socialRiskLevel (1-10)
+  -- Protective factor levels (1-10 scale)
+  familySupport INTEGER, -- UI: familySupport (1-10)
+  peerSupport INTEGER, -- UI: peerSupport (1-10)
+  schoolEngagement INTEGER, -- UI: schoolEngagement (1-10)
+  resilienceLevel INTEGER, -- UI: resilienceLevel (1-10)
+  copingSkills INTEGER, -- UI: copingSkills (1-10)
+  -- Risk and protective factors (JSON arrays)
+  activeProtectiveFactors TEXT, -- JSON array (UI: protectiveFactors)
+  identifiedRiskFactors TEXT, -- JSON array (UI: identifiedRiskFactors)
   academicRiskFactors TEXT,
   behavioralRiskFactors TEXT,
   socialRiskFactors TEXT,
   familyRiskFactors TEXT,
   overallRiskScore INTEGER,
   recommendedInterventions TEXT, -- JSON array
+  -- Assessment and planning
+  riskAssessmentNotes TEXT, -- UI: riskAssessmentNotes
+  interventionPlan TEXT, -- UI: interventionPlan
+  monitoringFrequency TEXT, -- UI: monitoringFrequency ('GÜN', 'HAFTA', 'AY', 'ÜÇAY', 'YARI_YIL')
   assignedCounselor TEXT,
   parentNotified INTEGER DEFAULT 0,
   nextAssessmentDate TEXT,
@@ -388,6 +409,18 @@ CREATE INDEX IF NOT EXISTS idx_student_interests_student ON student_interests(st
 CREATE INDEX IF NOT EXISTS idx_student_interests_date ON student_interests(assessmentDate);
 `;
 
+function safeAddColumn(db: any, tableName: string, columnDef: string): void {
+  const columnName = columnDef.split(' ')[0];
+  try {
+    db.exec(`ALTER TABLE ${tableName} ADD COLUMN ${columnDef}`);
+    console.log(`✅ Migration: Added ${columnName} to ${tableName}`);
+  } catch (err: any) {
+    if (!err.message?.includes('duplicate column')) {
+      console.warn(`Warning adding ${columnName} to ${tableName}:`, err.message);
+    }
+  }
+}
+
 export const initStandardizedProfileTables = (db: any) => {
   db.exec(createAcademicProfileTable);
   db.exec(createSocialEmotionalProfileTable);
@@ -405,4 +438,32 @@ export const initStandardizedProfileTables = (db: any) => {
   db.exec(createStudentSocioeconomicTable);
   db.exec(createStudentInterestsTable);
   db.exec(createIndexes);
+
+  // Migration: Add new columns to motivation_profiles
+  safeAddColumn(db, 'motivation_profiles', 'studentExpectations TEXT');
+  safeAddColumn(db, 'motivation_profiles', 'familyExpectations TEXT');
+
+  // Migration: Add new columns to risk_protective_profiles
+  const riskColumns = [
+    'overallRiskLevel INTEGER',
+    'academicRiskLevelInt INTEGER',
+    'behavioralRiskLevelInt INTEGER',
+    'emotionalRiskLevel INTEGER',
+    'socialRiskLevel INTEGER',
+    'familySupport INTEGER',
+    'peerSupport INTEGER',
+    'schoolEngagement INTEGER',
+    'resilienceLevel INTEGER',
+    'copingSkills INTEGER',
+    'identifiedRiskFactors TEXT',
+    'riskAssessmentNotes TEXT',
+    'interventionPlan TEXT',
+    'monitoringFrequency TEXT',
+  ];
+
+  for (const columnDef of riskColumns) {
+    safeAddColumn(db, 'risk_protective_profiles', columnDef);
+  }
+
+  console.log('✅ Standardized profile tables and migrations completed');
 };
