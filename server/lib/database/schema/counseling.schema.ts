@@ -20,10 +20,20 @@ export function createCounselingTables(db: Database.Database): void {
       type TEXT NOT NULL CHECK (type IN ('Bireysel', 'Grup', 'Veli')),
       note TEXT NOT NULL,
       plan TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
+  `);
+
+  safeAddColumn(db, 'meeting_notes', 'schoolId', 'TEXT');
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_meeting_notes_schoolId ON meeting_notes(schoolId);`);
+  db.exec(`
+    UPDATE meeting_notes 
+    SET schoolId = (SELECT schoolId FROM students WHERE students.id = meeting_notes.studentId)
+    WHERE schoolId IS NULL AND studentId IS NOT NULL
   `);
 
   db.exec(`
@@ -74,7 +84,7 @@ export function createCounselingTables(db: Database.Database): void {
   `);
 
   safeAddColumn(db, 'counseling_sessions', 'schoolId', "TEXT DEFAULT 'school-default-001'");
-  
+
   db.exec(`UPDATE counseling_sessions SET schoolId = 'school-default-001' WHERE schoolId IS NULL OR schoolId = ''`);
   db.exec(`CREATE INDEX IF NOT EXISTS idx_counseling_sessions_schoolId ON counseling_sessions(schoolId)`);
 
@@ -83,11 +93,21 @@ export function createCounselingTables(db: Database.Database): void {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       sessionId TEXT NOT NULL,
       studentId TEXT NOT NULL,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (sessionId) REFERENCES counseling_sessions (id) ON DELETE CASCADE,
       FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE,
       UNIQUE(sessionId, studentId)
     );
+  `);
+
+  safeAddColumn(db, 'counseling_session_students', 'schoolId', 'TEXT');
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_counseling_session_students_schoolId ON counseling_session_students(schoolId);`);
+  db.exec(`
+    UPDATE counseling_session_students 
+    SET schoolId = (SELECT schoolId FROM students WHERE students.id = counseling_session_students.studentId)
+    WHERE schoolId IS NULL AND studentId IS NOT NULL
   `);
 
   db.exec(`
@@ -108,10 +128,20 @@ export function createCounselingTables(db: Database.Database): void {
       notes TEXT,
       createdBy TEXT,
       createdAt TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
+  `);
+
+  safeAddColumn(db, 'parent_meetings', 'schoolId', 'TEXT');
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_parent_meetings_schoolId ON parent_meetings(schoolId);`);
+  db.exec(`
+    UPDATE parent_meetings 
+    SET schoolId = (SELECT schoolId FROM students WHERE students.id = parent_meetings.studentId)
+    WHERE schoolId IS NULL AND studentId IS NOT NULL
   `);
 
   db.exec(`
@@ -134,10 +164,20 @@ export function createCounselingTables(db: Database.Database): void {
       notes TEXT,
       createdBy TEXT,
       createdAt TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
+  `);
+
+  safeAddColumn(db, 'home_visits', 'schoolId', 'TEXT');
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_home_visits_schoolId ON home_visits(schoolId);`);
+  db.exec(`
+    UPDATE home_visits 
+    SET schoolId = (SELECT schoolId FROM students WHERE students.id = home_visits.studentId)
+    WHERE schoolId IS NULL AND studentId IS NOT NULL
   `);
 
   db.exec(`
@@ -159,10 +199,20 @@ export function createCounselingTables(db: Database.Database): void {
       description TEXT,
       participantNames TEXT,
       outcomes TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
+  `);
+
+  safeAddColumn(db, 'family_participation', 'schoolId', 'TEXT');
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_family_participation_schoolId ON family_participation(schoolId);`);
+  db.exec(`
+    UPDATE family_participation 
+    SET schoolId = (SELECT schoolId FROM students WHERE students.id = family_participation.studentId)
+    WHERE schoolId IS NULL AND studentId IS NOT NULL
   `);
 
   safeAddColumn(db, 'family_participation', 'eventName', 'TEXT');
@@ -193,10 +243,20 @@ export function createCounselingTables(db: Database.Database): void {
       studentIds TEXT,
       status TEXT NOT NULL CHECK (status IN ('pending', 'completed', 'cancelled')) DEFAULT 'pending',
       notificationSent BOOLEAN DEFAULT FALSE,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (sessionId) REFERENCES counseling_sessions (id) ON DELETE SET NULL
+      FOREIGN KEY (sessionId) REFERENCES counseling_sessions (id) ON DELETE SET NULL,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
+  `);
+
+  safeAddColumn(db, 'counseling_reminders', 'schoolId', 'TEXT');
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_counseling_reminders_schoolId ON counseling_reminders(schoolId);`);
+  db.exec(`
+    UPDATE counseling_reminders 
+    SET schoolId = (SELECT schoolId FROM counseling_sessions WHERE counseling_sessions.id = counseling_reminders.sessionId)
+    WHERE schoolId IS NULL AND sessionId IS NOT NULL
   `);
 
   db.exec(`
@@ -210,10 +270,20 @@ export function createCounselingTables(db: Database.Database): void {
       actionItems TEXT NOT NULL,
       notes TEXT,
       completedDate TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (sessionId) REFERENCES counseling_sessions (id) ON DELETE SET NULL
+      FOREIGN KEY (sessionId) REFERENCES counseling_sessions (id) ON DELETE SET NULL,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
+  `);
+
+  safeAddColumn(db, 'counseling_follow_ups', 'schoolId', 'TEXT');
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_counseling_follow_ups_schoolId ON counseling_follow_ups(schoolId);`);
+  db.exec(`
+    UPDATE counseling_follow_ups 
+    SET schoolId = (SELECT schoolId FROM counseling_sessions WHERE counseling_sessions.id = counseling_follow_ups.sessionId)
+    WHERE schoolId IS NULL AND sessionId IS NOT NULL
   `);
 
   db.exec(`
@@ -227,10 +297,20 @@ export function createCounselingTables(db: Database.Database): void {
       recommendations TEXT,
       followUpRequired BOOLEAN DEFAULT FALSE,
       followUpDate TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (sessionId) REFERENCES counseling_sessions (id) ON DELETE CASCADE
+      FOREIGN KEY (sessionId) REFERENCES counseling_sessions (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
+  `);
+
+  safeAddColumn(db, 'counseling_outcomes', 'schoolId', 'TEXT');
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_counseling_outcomes_schoolId ON counseling_outcomes(schoolId);`);
+  db.exec(`
+    UPDATE counseling_outcomes 
+    SET schoolId = (SELECT schoolId FROM counseling_sessions WHERE counseling_sessions.id = counseling_outcomes.sessionId)
+    WHERE schoolId IS NULL AND sessionId IS NOT NULL
   `);
 
   db.exec(`
@@ -241,14 +321,24 @@ export function createCounselingTables(db: Database.Database): void {
       relationshipType TEXT NOT NULL CHECK(relationshipType IN ('FRIEND', 'CLOSE_FRIEND', 'STUDY_PARTNER', 'ACQUAINTANCE', 'CONFLICT')),
       relationshipStrength INTEGER DEFAULT 5,
       notes TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
-      FOREIGN KEY (peerId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (peerId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
 
     CREATE INDEX IF NOT EXISTS idx_peer_relationships_student ON peer_relationships(studentId);
     CREATE INDEX IF NOT EXISTS idx_peer_relationships_peer ON peer_relationships(peerId);
     CREATE INDEX IF NOT EXISTS idx_peer_relationships_type ON peer_relationships(relationshipType);
+    CREATE INDEX IF NOT EXISTS idx_peer_relationships_schoolId ON peer_relationships(schoolId);
+  `);
+
+  safeAddColumn(db, 'peer_relationships', 'schoolId', 'TEXT');
+  db.exec(`
+    UPDATE peer_relationships 
+    SET schoolId = (SELECT schoolId FROM students WHERE students.id = peer_relationships.studentId)
+    WHERE schoolId IS NULL AND studentId IS NOT NULL
   `);
 }
