@@ -3,7 +3,52 @@
 ## Proje Özeti
 Türkiye'deki rehber öğretmenler için yapay zeka destekli kapsamlı rehberlik sistemi. Öğrenci takibi, analiz, risk öngörüsü, müdahale planlama ve veli iletişimi.
 
-## Son Güncelleme (3 Aralık 2024) - Replit Ortamı Kurulumu Tamamlandı
+## Son Güncelleme (4 Aralık 2024) - UI-Database Alan Uyumsuzluğu Düzeltmesi
+
+### ✅ Tamamlanan: Veritabanı Şeması ve UI Form Senkronizasyonu
+
+#### Problem
+- UI formlarında kullanılan bazı alanlar veritabanı şemasında yoktu
+- Frontend ve backend arasında alan adı uyumsuzlukları vardı
+- Risk/protective profilleri için sayısal ve enum değer karışıklığı vardı
+
+#### Çözümler
+
+**1. Students Tablosu**
+- `disiplinCezalari` TEXT sütunu eklendi (DisciplineSection desteği için)
+
+**2. Motivation Profiles Tablosu**
+- `studentExpectations` TEXT sütunu eklendi
+- `familyExpectations` TEXT sütunu eklendi
+
+**3. Risk/Protective Profiles Tablosu - Genişletilmiş**
+- Sayısal risk seviyeleri (1-10 ölçeği): `overallRiskLevel`, `academicRiskLevelInt`, `behavioralRiskLevelInt`, `emotionalRiskLevel`, `socialRiskLevel`
+- Koruyucu faktör seviyeleri: `familySupport`, `peerSupport`, `schoolEngagement`, `resilienceLevel`, `copingSkills`
+- Müdahale alanları: `interventionPlan`, `monitoringFrequency`, `riskAssessmentNotes`, `identifiedRiskFactors`
+
+**4. Alan Adı Eşleştirmeleri (API Routes)**
+| UI Alan Adı | Veritabanı Sütunu |
+|-------------|-------------------|
+| primaryMotivators | primaryMotivationSources |
+| intrinsicMotivationLevel | intrinsicMotivation |
+| extrinsicMotivationLevel | extrinsicMotivation |
+| protectiveFactors | activeProtectiveFactors |
+
+#### Tasarım Kararları
+- TEXT enum sütunları ('DÜŞÜK', 'ORTA', 'YÜKSEK', 'KRİTİK') geriye dönük uyumluluk için korundu
+- UI slider'ları için INTEGER sütunları (1-10 ölçeği) eklendi
+- Migration'lar idempotent: try-catch ile duplicate column tespiti
+
+#### Etkilenen Dosyalar
+- `server/lib/database/schema/students.schema.ts`
+- `server/lib/database/schema/standardized-profile.schema.ts`
+- `server/features/standardized-profile/repository/standardized-profile.repository.ts`
+- `server/features/standardized-profile/routes/standardized-profile.routes.ts`
+- `shared/types/standardized-profile.types.ts`
+
+---
+
+## Önceki Güncelleme (3 Aralık 2024) - Replit Ortamı Kurulumu Tamamlandı
 
 ### ✅ Replit Entegrasyonu
 - **Node.js 20** kuruldu
