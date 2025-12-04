@@ -1097,6 +1097,17 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
   const leftDays = WEEKLY_DAYS.slice(0, 4);
   const rightDays = WEEKLY_DAYS.slice(4);
 
+  // Aylık takvim oluştur
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  const today = currentDate.getDate();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const monthName = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'][month];
+  
+  // Takvim günlerini render et
+  const calendarDays = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+
   return (
     <Document>
       <Page size="A4" style={weeklyScheduleStyles.weeklyPage}>
@@ -1135,6 +1146,29 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
           </View>
           <View style={weeklyScheduleStyles.column}>
             {rightDays.map(renderDaySection)}
+          </View>
+        </View>
+
+        {/* Monthly Success Tracker */}
+        <View style={weeklyScheduleStyles.successTrackerSection}>
+          <Text style={weeklyScheduleStyles.trackerTitle}>Aylık Başarı Takibi - {monthName} {year}</Text>
+          <View style={weeklyScheduleStyles.monthCalendar}>
+            {calendarDays.map((day) => {
+              const isDayPassed = day <= today;
+              return (
+                <View 
+                  key={day} 
+                  style={isDayPassed ? [weeklyScheduleStyles.calendarDayBox, weeklyScheduleStyles.calendarDayFilled] : weeklyScheduleStyles.calendarDayBox}
+                >
+                  <Text style={weeklyScheduleStyles.calendarDayNumber}>{day}</Text>
+                </View>
+              );
+            })}
+          </View>
+          <View style={weeklyScheduleStyles.progressSummary}>
+            <Text style={weeklyScheduleStyles.progressText}>
+              İlerleme: {today}/{daysInMonth} ({Math.round((today / daysInMonth) * 100)}%)
+            </Text>
           </View>
         </View>
 
