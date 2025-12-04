@@ -36,7 +36,7 @@ export interface StudentResponse extends Student {
   name: string;
   surname: string;
   enrollmentDate: string;
-  status: 'active' | 'inactive' | 'graduated';
+  status?: 'active' | 'inactive' | 'graduated';
 }
 
 export type GetStudentsResponse = ApiResponse<StudentResponse[]>;
