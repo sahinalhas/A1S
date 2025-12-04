@@ -25,7 +25,8 @@ export const StudentSchema = z.object({
   tcIdentityNo: z.string()
     .regex(/^\d{11}$/, 'TC Identity No must be 11 digits')
     .optional()
-    .nullable(),
+    .nullable()
+    .or(z.literal('')),
 
   // Contact Information
   phone: z.string().max(20).optional().nullable(),
