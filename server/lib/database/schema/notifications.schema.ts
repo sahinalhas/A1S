@@ -1,5 +1,31 @@
 import type Database from 'better-sqlite3';
 
+function columnExists(db: Database.Database, tableName: string, columnName: string): boolean {
+  const columns = db.prepare(`PRAGMA table_info(${tableName})`).all() as Array<{ name: string }>;
+  return columns.some(col => col.name === columnName);
+}
+
+function safeAddSchoolIdColumn(db: Database.Database, tableName: string): void {
+  if (!columnExists(db, tableName, 'schoolId')) {
+    try {
+      db.exec(`ALTER TABLE ${tableName} ADD COLUMN schoolId TEXT`);
+      console.log(`✅ Migration: Added schoolId column to ${tableName}`);
+    } catch (err: any) {
+      if (!err.message?.includes('duplicate column')) {
+        console.warn(`Warning adding schoolId to ${tableName}:`, err.message);
+      }
+    }
+  }
+  
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_${tableName}_schoolId ON ${tableName}(schoolId)`);
+  } catch (err: any) {
+    if (!err.message?.includes('already exists')) {
+      console.warn(`Warning creating schoolId index on ${tableName}:`, err.message);
+    }
+  }
+}
+
 export function createNotificationTables(db: Database.Database): void {
   // Notification Logs - Tüm gönderilen bildirimler
   db.exec(`
@@ -24,9 +50,11 @@ export function createNotificationTables(db: Database.Database): void {
       deliveredAt TEXT,
       readAt TEXT,
       failureReason TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -51,9 +79,11 @@ export function createNotificationTables(db: Database.Database): void {
       weeklyDigest BOOLEAN DEFAULT FALSE,
       monthlyReport BOOLEAN DEFAULT FALSE,
       language TEXT DEFAULT 'tr',
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      UNIQUE(userId, userType)
+      UNIQUE(userId, userType),
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -88,9 +118,11 @@ export function createNotificationTables(db: Database.Database): void {
       createdBy TEXT,
       lastAccessedAt TEXT,
       accessCount INTEGER DEFAULT 0,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -107,8 +139,10 @@ export function createNotificationTables(db: Database.Database): void {
       lastRun TEXT,
       status TEXT NOT NULL DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'PAUSED', 'COMPLETED', 'CANCELLED')),
       taskData TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -133,4 +167,33 @@ export function createNotificationTables(db: Database.Database): void {
     CREATE INDEX IF NOT EXISTS idx_scheduled_tasks_status ON scheduled_tasks(status);
     CREATE INDEX IF NOT EXISTS idx_scheduled_tasks_next_run ON scheduled_tasks(nextRun);
   `);
+
+  // Migration: Add schoolId to existing tables
+  const tablesToMigrate = [
+    'notification_logs',
+    'notification_preferences',
+    'parent_access_tokens',
+    'scheduled_tasks'
+  ];
+  
+  for (const tableName of tablesToMigrate) {
+    safeAddSchoolIdColumn(db, tableName);
+  }
+
+  // Populate schoolId from students table for notification_logs and parent_access_tokens
+  try {
+    db.exec(`
+      UPDATE notification_logs 
+      SET schoolId = (SELECT schoolId FROM students WHERE students.id = notification_logs.studentId)
+      WHERE schoolId IS NULL AND studentId IS NOT NULL
+    `);
+    db.exec(`
+      UPDATE parent_access_tokens 
+      SET schoolId = (SELECT schoolId FROM students WHERE students.id = parent_access_tokens.studentId)
+      WHERE schoolId IS NULL AND studentId IS NOT NULL
+    `);
+    console.log('✅ Migration: Populated schoolId from students for notification tables');
+  } catch (err: any) {
+    console.warn('Warning populating schoolId for notification tables:', err.message);
+  }
 }

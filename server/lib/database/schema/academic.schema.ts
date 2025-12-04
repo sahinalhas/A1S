@@ -2,6 +2,32 @@ import type Database from 'better-sqlite3';
 import { randomUUID } from 'crypto';
 import { DEFAULT_SUBJECTS } from '../../../../shared/data/default-subjects-topics';
 
+function columnExists(db: Database.Database, tableName: string, columnName: string): boolean {
+  const columns = db.prepare(`PRAGMA table_info(${tableName})`).all() as Array<{ name: string }>;
+  return columns.some(col => col.name === columnName);
+}
+
+function safeAddSchoolIdColumn(db: Database.Database, tableName: string): void {
+  if (!columnExists(db, tableName, 'schoolId')) {
+    try {
+      db.exec(`ALTER TABLE ${tableName} ADD COLUMN schoolId TEXT`);
+      console.log(`✅ Migration: Added schoolId column to ${tableName}`);
+    } catch (err: any) {
+      if (!err.message?.includes('duplicate column')) {
+        console.warn(`Warning adding schoolId to ${tableName}:`, err.message);
+      }
+    }
+  }
+  
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_${tableName}_schoolId ON ${tableName}(schoolId)`);
+  } catch (err: any) {
+    if (!err.message?.includes('already exists')) {
+      console.warn(`Warning creating schoolId index on ${tableName}:`, err.message);
+    }
+  }
+}
+
 export function createAcademicTables(db: Database.Database): void {
   db.exec(`
     CREATE TABLE IF NOT EXISTS academic_records (
@@ -12,8 +38,10 @@ export function createAcademicTables(db: Database.Database): void {
       year INTEGER,
       exams TEXT,
       notes TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -24,8 +52,10 @@ export function createAcademicTables(db: Database.Database): void {
       date TEXT NOT NULL,
       title TEXT NOT NULL,
       status TEXT NOT NULL CHECK (status IN ('Planlandı', 'Devam', 'Tamamlandı')),
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -75,10 +105,12 @@ export function createAcademicTables(db: Database.Database): void {
       questionsSolved INTEGER DEFAULT 0,
       questionsCorrect INTEGER DEFAULT 0,
       questionsWrong INTEGER DEFAULT 0,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
       FOREIGN KEY (topicId) REFERENCES topics (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE,
       UNIQUE(studentId, topicId)
     );
   `);
@@ -127,9 +159,11 @@ export function createAcademicTables(db: Database.Database): void {
       examType TEXT,
       deadline TEXT,
       status TEXT DEFAULT 'active',
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -143,9 +177,11 @@ export function createAcademicTables(db: Database.Database): void {
       duration INTEGER,
       notes TEXT,
       efficiency REAL,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
-      FOREIGN KEY (topicId) REFERENCES topics (id) ON DELETE CASCADE
+      FOREIGN KEY (topicId) REFERENCES topics (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -157,9 +193,11 @@ export function createAcademicTables(db: Database.Database): void {
       content TEXT,
       category TEXT,
       tags TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -171,10 +209,12 @@ export function createAcademicTables(db: Database.Database): void {
       dueDate TEXT NOT NULL,
       status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'completed', 'overdue')),
       notes TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
-      FOREIGN KEY (topicId) REFERENCES topics (id) ON DELETE CASCADE
+      FOREIGN KEY (topicId) REFERENCES topics (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -225,9 +265,11 @@ export function createAcademicTables(db: Database.Database): void {
       counselorNotes TEXT,
       actionPlan TEXT,
       notes TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -265,9 +307,11 @@ export function createAcademicTables(db: Database.Database): void {
       status TEXT NOT NULL DEFAULT 'Açık',
       recordedBy TEXT NOT NULL,
       notes TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -281,11 +325,45 @@ export function createAcademicTables(db: Database.Database): void {
       notes TEXT,
       recordedBy TEXT,
       parentNotified BOOLEAN DEFAULT FALSE,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
+
+  // Migration: Add schoolId to existing tables
+  const tablesToMigrate = [
+    'academic_records',
+    'interventions', 
+    'progress',
+    'academic_goals',
+    'study_sessions',
+    'notes',
+    'study_assignments',
+    'exam_results',
+    'behavior_incidents',
+    'attendance_records'
+  ];
+  
+  for (const tableName of tablesToMigrate) {
+    safeAddSchoolIdColumn(db, tableName);
+  }
+
+  // Populate schoolId from students table for existing records
+  try {
+    for (const tableName of tablesToMigrate) {
+      db.exec(`
+        UPDATE ${tableName} 
+        SET schoolId = (SELECT schoolId FROM students WHERE students.id = ${tableName}.studentId)
+        WHERE schoolId IS NULL AND studentId IS NOT NULL
+      `);
+    }
+    console.log('✅ Migration: Populated schoolId from students for academic tables');
+  } catch (err: any) {
+    console.warn('Warning populating schoolId for academic tables:', err.message);
+  }
 }
 
 export function seedSubjectsAndTopics(db: Database.Database): void {

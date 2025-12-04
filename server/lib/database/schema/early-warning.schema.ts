@@ -1,5 +1,31 @@
 import type Database from 'better-sqlite3';
 
+function columnExists(db: Database.Database, tableName: string, columnName: string): boolean {
+  const columns = db.prepare(`PRAGMA table_info(${tableName})`).all() as Array<{ name: string }>;
+  return columns.some(col => col.name === columnName);
+}
+
+function safeAddSchoolIdColumn(db: Database.Database, tableName: string): void {
+  if (!columnExists(db, tableName, 'schoolId')) {
+    try {
+      db.exec(`ALTER TABLE ${tableName} ADD COLUMN schoolId TEXT`);
+      console.log(`✅ Migration: Added schoolId column to ${tableName}`);
+    } catch (err: any) {
+      if (!err.message?.includes('duplicate column')) {
+        console.warn(`Warning adding schoolId to ${tableName}:`, err.message);
+      }
+    }
+  }
+  
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_${tableName}_schoolId ON ${tableName}(schoolId)`);
+  } catch (err: any) {
+    if (!err.message?.includes('already exists')) {
+      console.warn(`Warning creating schoolId index on ${tableName}:`, err.message);
+    }
+  }
+}
+
 export function createEarlyWarningTables(db: Database.Database): void {
   // Risk Score History - Öğrenci risk skorları geçmişi
   db.exec(`
@@ -15,9 +41,11 @@ export function createEarlyWarningTables(db: Database.Database): void {
       riskLevel TEXT NOT NULL CHECK (riskLevel IN ('DÜŞÜK', 'ORTA', 'YÜKSEK', 'KRİTİK')),
       dataPoints TEXT,
       calculationMethod TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -41,9 +69,11 @@ export function createEarlyWarningTables(db: Database.Database): void {
       resolvedAt TEXT,
       resolution TEXT,
       notes TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -68,10 +98,12 @@ export function createEarlyWarningTables(db: Database.Database): void {
       effectiveness TEXT,
       followUpDate TEXT,
       notes TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
-      FOREIGN KEY (alertId) REFERENCES early_warning_alerts (id) ON DELETE SET NULL
+      FOREIGN KEY (alertId) REFERENCES early_warning_alerts (id) ON DELETE SET NULL,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -103,9 +135,11 @@ export function createEarlyWarningTables(db: Database.Database): void {
       similarInterventions TEXT,
       evaluatedBy TEXT,
       evaluatedAt TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -128,9 +162,11 @@ export function createEarlyWarningTables(db: Database.Database): void {
       respondedBy TEXT,
       respondedAt TEXT,
       status TEXT NOT NULL DEFAULT 'YENİ' CHECK (status IN ('YENİ', 'İNCELENDİ', 'YANIT_VERİLDİ', 'KAPALI')),
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -155,10 +191,12 @@ export function createEarlyWarningTables(db: Database.Database): void {
       resolution TEXT,
       status TEXT NOT NULL DEFAULT 'OPEN' CHECK (status IN ('OPEN', 'IN_PROGRESS', 'RESOLVED', 'ESCALATED_FURTHER')),
       notificationsSent TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
-      FOREIGN KEY (alertId) REFERENCES early_warning_alerts (id) ON DELETE SET NULL
+      FOREIGN KEY (alertId) REFERENCES early_warning_alerts (id) ON DELETE SET NULL,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -191,4 +229,32 @@ export function createEarlyWarningTables(db: Database.Database): void {
     CREATE INDEX IF NOT EXISTS idx_escalation_logs_type ON escalation_logs(escalationType);
     CREATE INDEX IF NOT EXISTS idx_escalation_logs_risk ON escalation_logs(riskLevel);
   `);
+
+  // Migration: Add schoolId to existing tables
+  const tablesToMigrate = [
+    'risk_score_history',
+    'early_warning_alerts',
+    'intervention_recommendations',
+    'intervention_effectiveness',
+    'parent_feedback',
+    'escalation_logs'
+  ];
+  
+  for (const tableName of tablesToMigrate) {
+    safeAddSchoolIdColumn(db, tableName);
+  }
+
+  // Populate schoolId from students table for existing records
+  try {
+    for (const tableName of tablesToMigrate) {
+      db.exec(`
+        UPDATE ${tableName} 
+        SET schoolId = (SELECT schoolId FROM students WHERE students.id = ${tableName}.studentId)
+        WHERE schoolId IS NULL AND studentId IS NOT NULL
+      `);
+    }
+    console.log('✅ Migration: Populated schoolId from students for early warning tables');
+  } catch (err: any) {
+    console.warn('Warning populating schoolId for early warning tables:', err.message);
+  }
 }
