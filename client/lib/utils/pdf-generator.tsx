@@ -1103,10 +1103,25 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
   const month = currentDate.getMonth();
   const today = currentDate.getDate();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const remainingDays = daysInMonth - today;
   const monthName = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'][month];
+  const nextMonthName = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'][(month + 1) % 12];
   
-  // Takvim günlerini render et
-  const calendarDays = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  // Takvim günlerini render et - ayın sonu 7 günden az ise gelecek ayı da ekle
+  const calendarDays: Array<{ day: number; isCurrentMonth: boolean; monthLabel: string }> = [];
+  
+  // Mevcut ayın günleri
+  for (let i = 1; i <= daysInMonth; i++) {
+    calendarDays.push({ day: i, isCurrentMonth: true, monthLabel: monthName });
+  }
+  
+  // Eğer ayın sonu 7 günden az ise gelecek ayı da ekle
+  if (remainingDays < 7) {
+    const nextMonthDays = 7 - remainingDays;
+    for (let i = 1; i <= nextMonthDays; i++) {
+      calendarDays.push({ day: i, isCurrentMonth: false, monthLabel: nextMonthName });
+    }
+  }
 
   return (
     <Document>
@@ -1151,16 +1166,16 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
 
         {/* Monthly Success Tracker */}
         <View style={weeklyScheduleStyles.successTrackerSection}>
-          <Text style={weeklyScheduleStyles.trackerTitle}>Aylık Başarı Takibi - {monthName} {year}</Text>
+          <Text style={weeklyScheduleStyles.trackerTitle}>Aylık Başarı Takibi - {monthName} {year}{remainingDays < 7 ? ` / ${nextMonthName}` : ''}</Text>
           <View style={weeklyScheduleStyles.monthCalendar}>
-            {calendarDays.map((day) => {
-              const isDayPassed = day <= today;
+            {calendarDays.map((dayObj, idx) => {
+              const isDayPassed = dayObj.isCurrentMonth && dayObj.day <= today;
               return (
                 <View 
-                  key={day} 
+                  key={`${dayObj.monthLabel}-${dayObj.day}`}
                   style={isDayPassed ? [weeklyScheduleStyles.calendarDayBox, weeklyScheduleStyles.calendarDayFilled] : weeklyScheduleStyles.calendarDayBox}
                 >
-                  <Text style={weeklyScheduleStyles.calendarDayNumber}>{day}</Text>
+                  <Text style={weeklyScheduleStyles.calendarDayNumber}>{dayObj.day}</Text>
                 </View>
               );
             })}
