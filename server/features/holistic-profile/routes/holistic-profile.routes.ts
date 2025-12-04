@@ -72,6 +72,61 @@ router.delete('/strengths/:id', (req, res) => {
   }
 });
 
+// SOCIAL RELATIONS routes
+router.get('/social-relations/student/:studentId', (req, res) => {
+  try {
+    const { studentId } = req.params;
+    const relations = service.getStudentSocialRelations(studentId);
+    res.json(relations);
+  } catch (error) {
+    console.error('Error fetching social relations:', error);
+    res.status(500).json({ error: 'Failed to fetch social relations' });
+  }
+});
+
+router.get('/social-relations/student/:studentId/latest', (req, res) => {
+  try {
+    const { studentId } = req.params;
+    const relation = service.getLatestStudentSocialRelation(studentId);
+    res.json(relation);
+  } catch (error) {
+    console.error('Error fetching latest social relation:', error);
+    res.status(500).json({ error: 'Failed to fetch latest social relation' });
+  }
+});
+
+router.post('/social-relations', (req, res) => {
+  try {
+    const relation = service.createSocialRelation(req.body);
+    res.status(201).json(relation);
+  } catch (error) {
+    console.error('Error creating social relation:', error);
+    res.status(500).json({ error: 'Failed to create social relation' });
+  }
+});
+
+router.put('/social-relations/:id', (req, res) => {
+  try {
+    const { id } = req.params;
+    const relation = service.updateSocialRelation(id, req.body);
+    res.json(relation);
+  } catch (error) {
+    console.error('Error updating social relation:', error);
+    res.status(500).json({ error: 'Failed to update social relation' });
+  }
+});
+
+router.delete('/social-relations/:id', (req, res) => {
+  try {
+    const { id } = req.params;
+    service.deleteSocialRelation(id);
+    res.status(204).send();
+  } catch (error) {
+    console.error('Error deleting social relation:', error);
+    res.status(500).json({ error: 'Failed to delete social relation' });
+  }
+});
+
 // INTERESTS routes
 router.get('/interests/student/:studentId', (req, res) => {
   try {

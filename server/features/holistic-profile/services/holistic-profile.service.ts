@@ -1,11 +1,13 @@
 import { randomUUID } from 'crypto';
 import * as strengthsRepo from '../repository/strengths.repository.js';
+import * as socialRelationsRepo from '../repository/social-relations.repository.js';
 import * as interestsRepo from '../repository/interests.repository.js';
 import * as futureVisionRepo from '../repository/future-vision.repository.js';
 import * as selCompetenciesRepo from '../repository/sel-competencies.repository.js';
 import * as socioeconomicRepo from '../repository/socioeconomic.repository.js';
 import type {
   StudentStrength,
+  StudentSocialRelation,
   StudentInterest,
   StudentFutureVision,
   StudentSELCompetency,
@@ -38,6 +40,34 @@ export function updateStrength(id: string, updates: Partial<StudentStrength>) {
 
 export function deleteStrength(id: string) {
   strengthsRepo.deleteStrength(id);
+}
+
+// Social Relations Services
+export function getStudentSocialRelations(studentId: string) {
+  return socialRelationsRepo.getSocialRelationsByStudent(studentId);
+}
+
+export function getLatestStudentSocialRelation(studentId: string) {
+  return socialRelationsRepo.getLatestSocialRelationByStudent(studentId);
+}
+
+export function createSocialRelation(data: Omit<StudentSocialRelation, 'id' | 'created_at' | 'updated_at'>) {
+  const relation: StudentSocialRelation = {
+    id: randomUUID(),
+    ...data,
+    assessmentDate: data.assessmentDate || new Date().toISOString()
+  };
+  socialRelationsRepo.insertSocialRelation(relation);
+  return relation;
+}
+
+export function updateSocialRelation(id: string, updates: Partial<StudentSocialRelation>) {
+  socialRelationsRepo.updateSocialRelation(id, updates);
+  return socialRelationsRepo.getSocialRelationById(id);
+}
+
+export function deleteSocialRelation(id: string) {
+  socialRelationsRepo.deleteSocialRelation(id);
 }
 
 // Interests Services
@@ -157,6 +187,7 @@ export function deleteSocioeconomic(id: string) {
 export function getStudentHolisticProfile(studentId: string) {
   return {
     strengths: getLatestStudentStrength(studentId),
+    socialRelations: getLatestStudentSocialRelation(studentId),
     interests: getLatestStudentInterest(studentId),
     futureVision: getLatestStudentFutureVision(studentId),
     selCompetencies: getLatestStudentSELCompetency(studentId),
