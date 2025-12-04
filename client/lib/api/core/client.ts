@@ -148,16 +148,19 @@ class ApiClient {
  return this.interceptors;
  }
 
+ private extractData<TResponse>(response: TResponse): TResponse {
+ if (response && typeof response === 'object' && 'data' in response && !Array.isArray(response)) {
+ return (response as any).data as TResponse;
+ }
+ return response;
+ }
+
  async get<TResponse = unknown>(
  endpoint: string,
  config: Omit<ApiRequestConfig, 'method' | 'body'> = {}
  ): Promise<TResponse> {
  const response = await this.request<TResponse>(endpoint, { ...config, method: 'GET' });
- // Eğer response { data: ... } formatındaysa, data'yı döndür
- if (response && typeof response === 'object' && 'data' in response && !Array.isArray(response)) {
- return (response as any).data as TResponse;
- }
- return response;
+ return this.extractData(response);
  }
 
  async post<TResponse = unknown, TBody = unknown>(
@@ -165,7 +168,8 @@ class ApiClient {
  body?: TBody,
  config: Omit<ApiRequestConfig<TBody>, 'method' | 'body'> = {}
  ): Promise<TResponse> {
- return this.request<TResponse, TBody>(endpoint, { ...config, method: 'POST', body });
+ const response = await this.request<TResponse, TBody>(endpoint, { ...config, method: 'POST', body });
+ return this.extractData(response);
  }
 
  async put<TResponse = unknown, TBody = unknown>(
@@ -173,14 +177,16 @@ class ApiClient {
  body?: TBody,
  config: Omit<ApiRequestConfig<TBody>, 'method' | 'body'> = {}
  ): Promise<TResponse> {
- return this.request<TResponse, TBody>(endpoint, { ...config, method: 'PUT', body });
+ const response = await this.request<TResponse, TBody>(endpoint, { ...config, method: 'PUT', body });
+ return this.extractData(response);
  }
 
  async delete<TResponse = unknown>(
  endpoint: string,
  config: Omit<ApiRequestConfig, 'method' | 'body'> = {}
  ): Promise<TResponse> {
- return this.request<TResponse>(endpoint, { ...config, method: 'DELETE' });
+ const response = await this.request<TResponse>(endpoint, { ...config, method: 'DELETE' });
+ return this.extractData(response);
  }
 
  async patch<TResponse = unknown, TBody = unknown>(
@@ -188,7 +194,8 @@ class ApiClient {
  body?: TBody,
  config: Omit<ApiRequestConfig<TBody>, 'method' | 'body'> = {}
  ): Promise<TResponse> {
- return this.request<TResponse, TBody>(endpoint, { ...config, method: 'PATCH', body });
+ const response = await this.request<TResponse, TBody>(endpoint, { ...config, method: 'PATCH', body });
+ return this.extractData(response);
  }
 }
 
