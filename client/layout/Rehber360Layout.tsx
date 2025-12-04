@@ -52,6 +52,7 @@ import { NotificationCenter } from "@/components/features/notifications";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { loadSettings, updateSettings, SETTINGS_KEY, AppSettings } from "@/lib/app-settings";
 import { useQuery } from "@tanstack/react-query";
+import { apiClient } from "@/lib/api/core/client";
 import { Input } from "@/components/atoms/Input";
 import { Card } from "@/components/organisms/Card";
 import { ScrollArea } from "@/components/organisms/ScrollArea";
@@ -205,9 +206,9 @@ export default function Rehber360Layout() {
  if (!searchQuery.trim() || searchQuery.length < 2) {
  return { students: [], counselingSessions: [], surveys: [], pages: [] };
  }
- const response = await fetch(`/api/search/global?q=${encodeURIComponent(searchQuery)}`);
- if (!response.ok) throw new Error('Failed to fetch search results');
- return response.json();
+ return apiClient.get(`/api/search/global?q=${encodeURIComponent(searchQuery)}`, {
+ showErrorToast: false
+ });
  },
  enabled: searchQuery.length >= 2,
  });
