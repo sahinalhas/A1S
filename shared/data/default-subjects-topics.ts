@@ -15,21 +15,6 @@ export interface SubjectData {
 export const DEFAULT_SUBJECTS: SubjectData[] = [
   // ==================== OKUL (LİSE) - SADECE DERS ADI ====================
   {
-    name: 'Günlük Tekrar',
-    category: 'Okul',
-    topics: [],
-  },
-  {
-    name: 'Haftalık Tekrar',
-    category: 'Okul',
-    topics: [],
-  },
-  {
-    name: 'Kitap Okuma',
-    category: 'Okul',
-    topics: [],
-  },
-  {
     name: 'Matematik',
     category: 'Okul',
     topics: [],
