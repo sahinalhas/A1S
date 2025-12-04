@@ -28,11 +28,10 @@ import {
  getExamResultsByStudent,
 } from './risk.api';
 import type { MeetingNote } from '@shared/types/meeting-notes.types';
+import type { SurveyResult, Intervention } from '../../types/common.types';
+import type { AttendanceRecord } from '../../types/attendance.types';
+import type { AcademicRecord, BehaviorIncident, ExamResult } from '../../types/academic.types';
 import type {
- SurveyResult,
- AttendanceRecord,
- AcademicRecord,
- Intervention,
  CoachingRecommendation,
  MultipleIntelligence,
  LearningStyle,
@@ -41,13 +40,13 @@ import type {
  Evaluation360,
  Achievement,
  SelfAssessment,
+} from '../../types/coaching.types';
+import type {
  ParentMeeting,
  HomeVisit,
  FamilyParticipation,
- SpecialEducation,
- BehaviorIncident,
- ExamResult,
-} from '../storage';
+} from '../../types/family.types';
+import type { SpecialEducation } from '@shared/types';
 
 export interface RiskFactors {
  level: string;

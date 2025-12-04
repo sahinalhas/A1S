@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import * as surveyService from '../../services/surveys.service.js';
 import { autoSyncHooks } from '../../../profile-sync/index.js';
 import { uploadExcelFile } from '../../../../middleware/file-validation.middleware.js';
-import { validateSchoolAccess } from '../../../middleware/school-access.middleware.js';
+import { validateSchoolAccess } from '../../../../middleware/school-access.middleware.js';
 
 export const getSurveyResponses: RequestHandler = (req, res) => {
   try {

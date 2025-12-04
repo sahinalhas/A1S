@@ -38,7 +38,7 @@ export default function AnketlerSection({ studentId, onUpdate }: AnketlerSection
  queryKey: ['student-survey-responses', studentId],
  queryFn: async () => {
  const responses = await apiClient.get<SurveyResponse[]>(
- `/api/survey-responses?studentId=${encodeURIComponent(studentId)}`
+ `/api/surveys/survey-responses?studentId=${encodeURIComponent(studentId)}`
  );
  return responses;
  },
@@ -49,7 +49,7 @@ export default function AnketlerSection({ studentId, onUpdate }: AnketlerSection
  const { data: distributions = [] } = useQuery<SurveyDistribution[]>({
  queryKey: ['survey-distributions'],
  queryFn: async () => {
- return await apiClient.get<SurveyDistribution[]>('/api/survey-distributions');
+ return await apiClient.get<SurveyDistribution[]>('/api/surveys/survey-distributions');
  },
  staleTime: 5 * 60 * 1000,
  });

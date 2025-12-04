@@ -85,13 +85,13 @@ export default function SurveyAnalyticsTab({ distributions }: SurveyAnalyticsTab
     try {
       setLoading(true);
       
-      const analyticsResponse = await fetch(`/api/survey-analytics/${selectedDistribution}`);
+      const analyticsResponse = await fetch(`/api/surveys/survey-analytics/${selectedDistribution}`);
       if (analyticsResponse.ok) {
         const analyticsData = await analyticsResponse.json();
         setAnalyticsData(analyticsData);
       }
 
-      const statsResponse = await fetch(`/api/survey-statistics/${selectedDistribution}`);
+      const statsResponse = await fetch(`/api/surveys/survey-statistics/${selectedDistribution}`);
       if (statsResponse.ok) {
         const statsData = await statsResponse.json();
         setDistributionStats(statsData);

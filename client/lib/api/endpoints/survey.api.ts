@@ -19,7 +19,7 @@ function extractScoreFromResponse(responseData: any): number | undefined {
 export async function loadSurveyResults(): Promise<SurveyResult[]> {
  return createApiHandler(
  async () => {
- const responses = await apiClient.get<any>('/api/survey-responses', { showErrorToast: false });
+ const responses = await apiClient.get<any>('/api/surveys/survey-responses', { showErrorToast: false });
  
  const responseArray = Array.isArray(responses) ? responses : [];
  
@@ -40,7 +40,7 @@ export async function loadSurveyResults(): Promise<SurveyResult[]> {
 export async function getSurveyResultsByStudent(studentId: string): Promise<SurveyResult[]> {
  return createApiHandler(
  async () => {
- const responses = await apiClient.get<any>(`/api/survey-responses?studentId=${encodeURIComponent(studentId)}`, { showErrorToast: false });
+ const responses = await apiClient.get<any>(`/api/surveys/survey-responses?studentId=${encodeURIComponent(studentId)}`, { showErrorToast: false });
  
  const responseArray = Array.isArray(responses) ? responses : [];
  
@@ -73,7 +73,7 @@ export async function addSurveyResult(r: SurveyResult): Promise<void> {
  submittedAt: r.date
  };
  
- return apiClient.post('/api/survey-responses', surveyResponse, {
+ return apiClient.post('/api/surveys/survey-responses', surveyResponse, {
  showSuccessToast: true,
  successMessage: API_ERROR_MESSAGES.SURVEY.ADD_SUCCESS,
  errorMessage: API_ERROR_MESSAGES.SURVEY.ADD_ERROR,
