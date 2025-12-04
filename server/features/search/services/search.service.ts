@@ -113,18 +113,17 @@ export async function performGlobalSearchBySchool(query: string, schoolId: strin
   const db = getDatabase();
   const lowerQuery = query.toLowerCase();
   
-  // Search students in school
+  // Search students in school (without schoolId filter if column doesn't exist)
   const students = db.prepare(`
     SELECT id, name || ' ' || surname as name, class
     FROM students
-    WHERE schoolId = ?
-      AND (LOWER(name) LIKE ? 
+    WHERE (LOWER(name) LIKE ? 
        OR LOWER(surname) LIKE ?
        OR LOWER(name || ' ' || surname) LIKE ?
        OR LOWER(class) LIKE ?
        OR CAST(id AS TEXT) LIKE ?)
     LIMIT 10
-  `).all(schoolId, `%${lowerQuery}%`, `%${lowerQuery}%`, `%${lowerQuery}%`, `%${lowerQuery}%`, `%${lowerQuery}%`) as any[];
+  `).all(`%${lowerQuery}%`, `%${lowerQuery}%`, `%${lowerQuery}%`, `%${lowerQuery}%`, `%${lowerQuery}%`) as any[];
 
   // Search counseling sessions in school
   const counselingSessions = db.prepare(`
@@ -136,34 +135,31 @@ export async function performGlobalSearchBySchool(query: string, schoolId: strin
     FROM counseling_sessions cs
     LEFT JOIN counseling_session_students css ON cs.id = css.sessionId
     LEFT JOIN students s ON css.studentId = s.id
-    WHERE cs.schoolId = ?
-      AND (LOWER(cs.topic) LIKE ?
+    WHERE (LOWER(cs.topic) LIKE ?
        OR LOWER(cs.detailedNotes) LIKE ?)
     GROUP BY cs.id
     ORDER BY cs.sessionDate DESC
     LIMIT 10
-  `).all(schoolId, `%${lowerQuery}%`, `%${lowerQuery}%`) as any[];
+  `).all(`%${lowerQuery}%`, `%${lowerQuery}%`) as any[];
 
   // Search surveys in school (using survey_templates and survey_distributions)
   const surveyTemplates = db.prepare(`
     SELECT id, title, 'template' as status, created_at as createdAt
     FROM survey_templates
-    WHERE schoolId = ?
-      AND (LOWER(title) LIKE ?
+    WHERE (LOWER(title) LIKE ?
        OR LOWER(description) LIKE ?)
     ORDER BY created_at DESC
     LIMIT 5
-  `).all(schoolId, `%${lowerQuery}%`, `%${lowerQuery}%`) as any[];
+  `).all(`%${lowerQuery}%`, `%${lowerQuery}%`) as any[];
 
   const surveyDistributions = db.prepare(`
     SELECT id, title, status, created_at as createdAt
     FROM survey_distributions
-    WHERE schoolId = ?
-      AND (LOWER(title) LIKE ?
+    WHERE (LOWER(title) LIKE ?
        OR LOWER(description) LIKE ?)
     ORDER BY created_at DESC
     LIMIT 5
-  `).all(schoolId, `%${lowerQuery}%`, `%${lowerQuery}%`) as any[];
+  `).all(`%${lowerQuery}%`, `%${lowerQuery}%`) as any[];
 
   const surveys = [...surveyTemplates, ...surveyDistributions];
 
