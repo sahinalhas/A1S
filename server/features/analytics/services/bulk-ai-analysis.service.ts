@@ -138,14 +138,14 @@ Sınıf: ${className}
 
 Öğrenci Verileri:
 ${JSON.stringify(students.map(s => ({
-  id: s.id,
-  name: s.name,
-  surname: s.surname,
-  gpa: s.gpa,
-  attendanceCount: s.attendanceCount,
-  behaviorScore: s.behaviorScore,
-  specialStatus: s.specialStatus
-})), null, 2)}
+      id: s.id,
+      name: s.name,
+      surname: s.surname,
+      gpa: s.gpa,
+      attendanceCount: s.attendanceCount,
+      behaviorScore: s.behaviorScore,
+      specialStatus: s.specialStatus
+    })), null, 2)}
 
 Bu sınıfı analiz et ve şunları belirle:
 1. Güçlü yönler
@@ -181,7 +181,7 @@ JSON formatında döndür:
       });
 
       const analysis = JSON.parse(response);
-      
+
       // Calculate stats
       const avgGPA = students.reduce((sum, s) => sum + (s.notOrtalamasi || 0), 0) / students.length;
       const riskDistribution = this.calculateRiskDistribution(students);
@@ -204,7 +204,7 @@ JSON formatında döndür:
    */
   async analyzeSchoolWide(): Promise<SchoolWideAnalysis> {
     const db = getDatabase();
-    
+
     const totalStudents = db.prepare('SELECT COUNT(*) as count FROM students').get() as { count: number };
     const classComparisons = await this.compareClasses();
 
@@ -283,18 +283,13 @@ JSON formatında döndür:
   async generateEarlyWarningReport(): Promise<EarlyWarningSystemReport> {
     const db = getDatabase();
 
-    // Get high-risk students
+    // Get all students for basic early warning
+    // Note: Advanced metrics (attendance, grades, behavior) are in separate tables
     const highRiskStudents = db.prepare(`
-      SELECT s.*, 
-        (CASE 
-          WHEN s.attendanceCount > 10 THEN 'high_absence'
-          WHEN s.gpa < 50 THEN 'academic_failure'
-          WHEN s.behaviorScore < 3 THEN 'behavioral_concern'
-          ELSE 'general_risk'
-        END) as alertType
+      SELECT s.id, s.name, s.surname, s.class, s.risk, s.status
       FROM students s
-      WHERE s.attendanceCount > 5 OR s.gpa < 60 OR s.behaviorScore < 4
-      ORDER BY s.attendanceCount DESC, s.gpa ASC
+      WHERE s.risk IN ('Yüksek', 'Orta')
+      ORDER BY s.risk DESC
       LIMIT 20
     `).all() as StudentData[];
 
@@ -394,17 +389,17 @@ JSON formatında döndür:
       const gpa = s.gpa || 0;
       const behavior = s.behaviorScore || 5;
 
-      if (attendance > RISK_THRESHOLDS.CRITICAL.DEVAMSIZLIK || 
-          gpa < RISK_THRESHOLDS.CRITICAL.NOT_ORT || 
-          behavior < RISK_THRESHOLDS.CRITICAL.DAVRANUS_NOTU) {
+      if (attendance > RISK_THRESHOLDS.CRITICAL.DEVAMSIZLIK ||
+        gpa < RISK_THRESHOLDS.CRITICAL.NOT_ORT ||
+        behavior < RISK_THRESHOLDS.CRITICAL.DAVRANUS_NOTU) {
         dist.critical++;
-      } else if (attendance > RISK_THRESHOLDS.HIGH.DEVAMSIZLIK || 
-                 gpa < RISK_THRESHOLDS.HIGH.NOT_ORT || 
-                 behavior < RISK_THRESHOLDS.HIGH.DAVRANUS_NOTU) {
+      } else if (attendance > RISK_THRESHOLDS.HIGH.DEVAMSIZLIK ||
+        gpa < RISK_THRESHOLDS.HIGH.NOT_ORT ||
+        behavior < RISK_THRESHOLDS.HIGH.DAVRANUS_NOTU) {
         dist.high++;
-      } else if (attendance > RISK_THRESHOLDS.MEDIUM.DEVAMSIZLIK || 
-                 gpa < RISK_THRESHOLDS.MEDIUM.NOT_ORT || 
-                 behavior < RISK_THRESHOLDS.MEDIUM.DAVRANUS_NOTU) {
+      } else if (attendance > RISK_THRESHOLDS.MEDIUM.DEVAMSIZLIK ||
+        gpa < RISK_THRESHOLDS.MEDIUM.NOT_ORT ||
+        behavior < RISK_THRESHOLDS.MEDIUM.DAVRANUS_NOTU) {
         dist.medium++;
       } else {
         dist.low++;

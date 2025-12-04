@@ -34,7 +34,7 @@ export class UnifiedScoringEngine {
   async calculateUnifiedScores(studentId: string): Promise<UnifiedStudentScores> {
     // Initialize repository
     const repo = await this.initializeRepo();
-    
+
     // Tüm profil verilerini al
     const academic = repo.getAcademicProfile(studentId);
     const socialEmotional = repo.getSocialEmotionalProfile(studentId);
@@ -51,36 +51,43 @@ export class UnifiedScoringEngine {
       talentsInterests,
       health,
       behaviorIncidents,
-      motivation,
-      riskProtective
+      motivation: motivation as any,
+      riskProtective: riskProtective ? {
+        ...riskProtective,
+        academicRiskLevel: this.mapRiskLevel(riskProtective.academicRiskLevel),
+        behavioralRiskLevel: this.mapRiskLevel(riskProtective.behavioralRiskLevel),
+        socialEmotionalRiskLevel: this.mapRiskLevel(riskProtective.socialEmotionalRiskLevel),
+        attendanceRiskLevel: this.mapRiskLevel(riskProtective.attendanceRiskLevel),
+        overallRiskLevel: this.mapRiskLevel(riskProtective.overallRiskLevel as any) // Cast if needed
+      } as any : null
     });
 
     // Birleşik skor formatına dönüştür
     return {
       studentId,
       lastUpdated: new Date().toISOString(),
-      
+
       // Ana Skorlar
       akademikSkor: aggregateScores.academicScore,
       sosyalDuygusalSkor: aggregateScores.socialEmotionalScore,
       davranissalSkor: aggregateScores.behaviorScore,
       motivasyonSkor: aggregateScores.motivationScore,
       riskSkoru: aggregateScores.riskScore,
-      
+
       // Detaylı Skorlar
       akademikDetay: {
         notOrtalamasi: aggregateScores.scoreBreakdown.academic.motivationLevel,
         devamDurumu: aggregateScores.scoreBreakdown.academic.homeworkCompletionRate,
         odeklikSeviyesi: aggregateScores.scoreBreakdown.academic.strongSkillsCount
       },
-      
+
       sosyalDuygusalDetay: {
         empati: socialEmotional?.empathyLevel || 0,
         ozFarkinalik: socialEmotional?.selfAwarenessLevel || 0,
         duyguDuzenlemesi: socialEmotional?.emotionRegulationLevel || 0,
         iliski: aggregateScores.scoreBreakdown.socialEmotional.avgSELCompetency
       },
-      
+
       davranissalDetay: {
         olumluDavranis: Math.max(0, 100 - (aggregateScores.scoreBreakdown.behavior.incidentCount * 10)),
         olumsuzDavranis: aggregateScores.scoreBreakdown.behavior.incidentCount,
@@ -95,7 +102,7 @@ export class UnifiedScoringEngine {
    */
   async calculateProfileCompleteness(studentId: string): Promise<ProfileCompleteness> {
     const repo = await this.initializeRepo();
-    
+
     const academic = repo.getAcademicProfile(studentId);
     const socialEmotional = repo.getSocialEmotionalProfile(studentId);
     const talentsInterests = repo.getTalentsInterestsProfile(studentId);
@@ -111,11 +118,11 @@ export class UnifiedScoringEngine {
     };
 
     const overall = Math.round(
-      (scores.akademikProfil + 
-       scores.sosyalDuygusalProfil + 
-       scores.yetenekIlgiProfil + 
-       scores.saglikProfil + 
-       scores.davranisalProfil) / 5
+      (scores.akademikProfil +
+        scores.sosyalDuygusalProfil +
+        scores.yetenekIlgiProfil +
+        scores.saglikProfil +
+        scores.davranisalProfil) / 5
     );
 
     const eksikAlanlar: { kategori: string; alanlar: string[] }[] = [];
@@ -160,7 +167,7 @@ export class UnifiedScoringEngine {
 
   private calculateAcademicProfileCompleteness(profile: any): number {
     if (!profile) return 0;
-    
+
     let score = 0;
     let total = 9;
 
@@ -179,7 +186,7 @@ export class UnifiedScoringEngine {
 
   private calculateSocialEmotionalProfileCompleteness(profile: any): number {
     if (!profile) return 0;
-    
+
     let score = 0;
     let total = 13;
 
@@ -202,7 +209,7 @@ export class UnifiedScoringEngine {
 
   private calculateTalentsInterestsProfileCompleteness(profile: any): number {
     if (!profile) return 0;
-    
+
     let score = 0;
     let total = 6;
 
@@ -218,7 +225,7 @@ export class UnifiedScoringEngine {
 
   private calculateHealthProfileCompleteness(profile: any): number {
     if (!profile) return 0;
-    
+
     let score = 0;
     let total = 7;
 
@@ -235,7 +242,7 @@ export class UnifiedScoringEngine {
 
   private calculateBehaviorProfileCompleteness(incidents: any[]): number {
     if (!incidents || incidents.length === 0) return 100; // Davranış kaydı yoksa tam kabul ediyoruz
-    
+
     let totalFields = 0;
     let filledFields = 0;
 
@@ -257,7 +264,7 @@ export class UnifiedScoringEngine {
 
   private getAcademicMissingFields(profile: any): string[] {
     const missing: string[] = [];
-    
+
     if (!profile) {
       return ['Akademik profil oluşturulmamış'];
     }
@@ -274,7 +281,7 @@ export class UnifiedScoringEngine {
 
   private getSocialEmotionalMissingFields(profile: any): string[] {
     const missing: string[] = [];
-    
+
     if (!profile) {
       return ['Sosyal-duygusal profil oluşturulmamış'];
     }
@@ -290,7 +297,7 @@ export class UnifiedScoringEngine {
 
   private getTalentsInterestsMissingFields(profile: any): string[] {
     const missing: string[] = [];
-    
+
     if (!profile) {
       return ['Yetenek ve ilgi profili oluşturulmamış'];
     }
@@ -304,7 +311,7 @@ export class UnifiedScoringEngine {
 
   private getHealthMissingFields(profile: any): string[] {
     const missing: string[] = [];
-    
+
     if (!profile) {
       return ['Sağlık profili oluşturulmamış'];
     }
@@ -324,7 +331,7 @@ export class UnifiedScoringEngine {
    */
   async saveAggregateScores(studentId: string, scores: UnifiedStudentScores): Promise<void> {
     const db = getDatabase();
-    
+
     const stmt = db.prepare(`
       INSERT INTO student_aggregate_scores (
         studentId, academicScore, socialEmotionalScore, behaviorScore,
@@ -356,13 +363,13 @@ export class UnifiedScoringEngine {
    */
   async getSavedAggregateScores(studentId: string): Promise<UnifiedStudentScores | null> {
     const db = getDatabase();
-    
+
     const stmt = db.prepare(`
       SELECT * FROM student_aggregate_scores WHERE studentId = ?
     `);
 
     const result = stmt.get(studentId) as any;
-    
+
     if (!result) return null;
 
     return {
@@ -377,6 +384,20 @@ export class UnifiedScoringEngine {
       sosyalDuygusalDetay: {},
       davranissalDetay: {}
     };
+  }
+  private mapRiskLevel(level: string | undefined | number): number {
+    if (typeof level === 'number') return level;
+    if (!level) return 0;
+
+    const map: Record<string, number> = {
+      'DÜŞÜK': 2,
+      'ORTA': 5,
+      'YÜKSEK': 8,
+      'KRİTİK': 10,
+      'ÇOK_YÜKSEK': 10
+    };
+
+    return map[level as string] || 5;
   }
 }
 
