@@ -593,10 +593,10 @@ const WeeklyPlanDocument: React.FC<WeeklyPlanDocumentProps> = ({
 
         <View style={styles.mainContent}>
           <View style={styles.column}>
-            {dayPairs.map((pair) => renderDaySection(pair[0]))}
+            {dayPairs.map((pair, idx) => <View key={`pair-left-${idx}`}>{renderDaySection(pair[0])}</View>)}
           </View>
           <View style={styles.column}>
-            {dayPairs.map((pair) => pair[1] ? renderDaySection(pair[1]) : <View key="empty" />)}
+            {dayPairs.map((pair, idx) => pair[1] ? <View key={`pair-right-${idx}`}>{renderDaySection(pair[1])}</View> : <View key={`empty-${idx}`} />)}
           </View>
         </View>
 
@@ -1119,18 +1119,21 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
   const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0=Pazar, 1=Pazartesi, ...
   const adjustedFirstDay = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1; // 0=Pazartesi
   
-  const calendarWeeks: Array<Array<number | null>> = [];
-  let currentWeek: Array<number | null> = Array(adjustedFirstDay).fill(null);
+  const calendarWeeks: Array<(number | null)[]> = [];
+  let currentWeek: (number | null)[] = Array.from({ length: adjustedFirstDay }).map(() => null);
   
   for (let day = 1; day <= daysInMonth; day++) {
     currentWeek.push(day);
     if (currentWeek.length === 7) {
-      calendarWeeks.push(currentWeek);
+      calendarWeeks.push([...currentWeek]);
       currentWeek = [];
     }
   }
   if (currentWeek.length > 0) {
-    calendarWeeks.push(currentWeek);
+    while (currentWeek.length < 7) {
+      currentWeek.push(null);
+    }
+    calendarWeeks.push([...currentWeek]);
   }
 
   return (
