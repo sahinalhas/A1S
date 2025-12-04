@@ -9,7 +9,7 @@ export const getStudyAssignments: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -30,7 +30,7 @@ export const saveStudyAssignmentHandler: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -52,7 +52,7 @@ export const updateStudyAssignmentHandler: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -72,7 +72,7 @@ export const deleteStudyAssignmentHandler: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -91,7 +91,7 @@ export const getAllWeeklySlotsHandler: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -109,7 +109,7 @@ export const getWeeklySlots: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -130,7 +130,7 @@ export const saveWeeklySlotHandler: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -152,7 +152,7 @@ export const updateWeeklySlotHandler: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -172,7 +172,7 @@ export const deleteWeeklySlotHandler: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -193,7 +193,7 @@ export const savePlannedTopicsHandler: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -212,7 +212,7 @@ export const getPlannedTopicsHandler: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     

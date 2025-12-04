@@ -8,7 +8,7 @@ export const getMultipleIntelligenceByStudent: RequestHandler = (req, res) => {
     res.json(records);
   } catch (error) {
     console.error('Error fetching multiple intelligence:', error);
-    res.status(500).json({ error: 'Çoklu zeka verileri yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Çoklu zeka verileri yüklenemedi' });
   }
 };
 
@@ -18,7 +18,7 @@ export const createMultipleIntelligence: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating multiple intelligence:', error);
-    res.status(500).json({ error: 'Çoklu zeka değerlendirmesi kaydedilemedi' });
+    res.status(500).json({ success: false, error: 'Çoklu zeka değerlendirmesi kaydedilemedi' });
   }
 };
 
@@ -29,7 +29,7 @@ export const getLearningStylesByStudent: RequestHandler = (req, res) => {
     res.json(records);
   } catch (error) {
     console.error('Error fetching learning styles:', error);
-    res.status(500).json({ error: 'Öğrenme stilleri yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Öğrenme stilleri yüklenemedi' });
   }
 };
 
@@ -39,7 +39,7 @@ export const createLearningStyle: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating learning style:', error);
-    res.status(500).json({ error: 'Öğrenme stili kaydedilemedi' });
+    res.status(500).json({ success: false, error: 'Öğrenme stili kaydedilemedi' });
   }
 };
 
@@ -50,7 +50,7 @@ export const getEvaluations360ByStudent: RequestHandler = (req, res) => {
     res.json(evals);
   } catch (error) {
     console.error('Error fetching 360 evaluations:', error);
-    res.status(500).json({ error: '360 değerlendirmeler yüklenemedi' });
+    res.status(500).json({ success: false, error: '360 değerlendirmeler yüklenemedi' });
   }
 };
 
@@ -60,7 +60,7 @@ export const createEvaluation360: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating 360 evaluation:', error);
-    res.status(500).json({ error: '360 değerlendirme kaydedilemedi' });
+    res.status(500).json({ success: false, error: '360 değerlendirme kaydedilemedi' });
   }
 };
 
@@ -71,7 +71,7 @@ export const getSelfAssessmentsByStudent: RequestHandler = (req, res) => {
     res.json(assessments);
   } catch (error) {
     console.error('Error fetching self assessments:', error);
-    res.status(500).json({ error: 'Öz değerlendirmeler yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Öz değerlendirmeler yüklenemedi' });
   }
 };
 
@@ -81,6 +81,6 @@ export const createSelfAssessment: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating self assessment:', error);
-    res.status(500).json({ error: 'Öz değerlendirme kaydedilemedi' });
+    res.status(500).json({ success: false, error: 'Öz değerlendirme kaydedilemedi' });
   }
 };

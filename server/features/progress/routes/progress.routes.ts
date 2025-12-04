@@ -32,7 +32,7 @@ export const saveProgressHandler: RequestHandler = (req, res) => {
   try {
     const progress = req.body;
     if (!Array.isArray(progress)) {
-      return res.status(400).json({ error: ERROR_MESSAGES.EXPECTED_ARRAY_OF_PROGRESS });
+      return res.status(400).json({ success: false, error: ERROR_MESSAGES.EXPECTED_ARRAY_OF_PROGRESS });
     }
     
     // Allow students to save their own progress, counselors/teachers can save anyone's
@@ -44,7 +44,7 @@ export const saveProgressHandler: RequestHandler = (req, res) => {
       const userId = (req as any).user?.id;
       const allOwnProgress = progress.every(p => p.studentId === userId);
       if (!allOwnProgress) {
-        return res.status(403).json({ error: 'Sadece kendi progress\'inizi güncelleyebilirsiniz' });
+        return res.status(403).json({ success: false, error: 'Sadece kendi progress\'inizi güncelleyebilirsiniz' });
       }
     }
     
@@ -71,7 +71,7 @@ export const saveAcademicGoalsHandler: RequestHandler = (req, res) => {
   try {
     const goals = req.body;
     if (!Array.isArray(goals)) {
-      return res.status(400).json({ error: ERROR_MESSAGES.EXPECTED_ARRAY_OF_ACADEMIC_GOALS });
+      return res.status(400).json({ success: false, error: ERROR_MESSAGES.EXPECTED_ARRAY_OF_ACADEMIC_GOALS });
     }
     progressService.saveAcademicGoals(goals);
     res.json({ success: true, message: `${goals.length} ${SUCCESS_MESSAGES.ACADEMIC_GOALS_SAVED}` });

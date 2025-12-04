@@ -6,7 +6,7 @@ export function getAllTags(req: Request, res: Response) {
     res.json(ALL_SESSION_TAGS);
   } catch (error) {
     console.error('Error fetching tags:', error);
-    res.status(500).json({ error: 'Etiketler yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Etiketler yüklenemedi' });
   }
 }
 
@@ -15,13 +15,13 @@ export function getTagsByCategory(req: Request, res: Response) {
     const { category } = req.params;
     
     if (!TAG_CATEGORIES[category as keyof typeof TAG_CATEGORIES]) {
-      return res.status(404).json({ error: 'Kategori bulunamadı' });
+      return res.status(404).json({ success: false, error: 'Kategori bulunamadı' });
     }
     
     res.json(TAG_CATEGORIES[category as keyof typeof TAG_CATEGORIES]);
   } catch (error) {
     console.error('Error fetching tags by category:', error);
-    res.status(500).json({ error: 'Etiketler yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Etiketler yüklenemedi' });
   }
 }
 
@@ -30,14 +30,14 @@ export function getSuggestedTags(req: Request, res: Response) {
     const { topic } = req.query;
     
     if (!topic || typeof topic !== 'string') {
-      return res.status(400).json({ error: 'Konu parametresi gereklidir' });
+      return res.status(400).json({ success: false, error: 'Konu parametresi gereklidir' });
     }
     
     const suggestions = suggestTagsForTopic(topic);
     res.json(suggestions);
   } catch (error) {
     console.error('Error suggesting tags:', error);
-    res.status(500).json({ error: 'Öneri oluşturulamadı' });
+    res.status(500).json({ success: false, error: 'Öneri oluşturulamadı' });
   }
 }
 
@@ -47,12 +47,12 @@ export function getTagDetails(req: Request, res: Response) {
     const tag = getTagById(id);
     
     if (!tag) {
-      return res.status(404).json({ error: 'Etiket bulunamadı' });
+      return res.status(404).json({ success: false, error: 'Etiket bulunamadı' });
     }
     
     res.json(tag);
   } catch (error) {
     console.error('Error fetching tag details:', error);
-    res.status(500).json({ error: 'Etiket bilgisi alınamadı' });
+    res.status(500).json({ success: false, error: 'Etiket bilgisi alınamadı' });
   }
 }

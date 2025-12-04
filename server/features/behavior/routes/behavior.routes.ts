@@ -15,7 +15,7 @@ router.get('/:studentId', (req: Request, res: Response) => {
   try {
     const schoolId = getSchoolId(req);
     if (!schoolId) {
-      return res.status(400).json({ error: 'School ID required' });
+      return res.status(400).json({ success: false, error: 'School ID required' });
     }
     
     const { studentId } = req.params;
@@ -30,7 +30,7 @@ router.get('/:studentId', (req: Request, res: Response) => {
     res.json(incidents);
   } catch (error) {
     console.error('Error fetching behavior incidents:', error);
-    res.status(500).json({ error: 'Davranış kayıtları yüklenirken hata oluştu' });
+    res.status(500).json({ success: false, error: 'Davranış kayıtları yüklenirken hata oluştu' });
   }
 });
 
@@ -38,7 +38,7 @@ router.get('/:studentId/stats', (req: Request, res: Response) => {
   try {
     const schoolId = getSchoolId(req);
     if (!schoolId) {
-      return res.status(400).json({ error: 'School ID required' });
+      return res.status(400).json({ success: false, error: 'School ID required' });
     }
     
     const { studentId } = req.params;
@@ -53,7 +53,7 @@ router.get('/:studentId/stats', (req: Request, res: Response) => {
     res.json(stats);
   } catch (error) {
     console.error('Error fetching behavior stats:', error);
-    res.status(500).json({ error: 'Davranış istatistikleri yüklenirken hata oluştu' });
+    res.status(500).json({ success: false, error: 'Davranış istatistikleri yüklenirken hata oluştu' });
   }
 });
 
@@ -61,7 +61,7 @@ router.post('/', (req: Request, res: Response) => {
   try {
     const schoolId = getSchoolId(req);
     if (!schoolId) {
-      return res.status(400).json({ error: 'School ID required' });
+      return res.status(400).json({ success: false, error: 'School ID required' });
     }
     
     const incident = req.body;
@@ -97,7 +97,7 @@ router.post('/', (req: Request, res: Response) => {
     res.json(result);
   } catch (error) {
     console.error('Error adding behavior incident:', error);
-    res.status(500).json({ error: 'Davranış kaydı eklenirken hata oluştu' });
+    res.status(500).json({ success: false, error: 'Davranış kaydı eklenirken hata oluştu' });
   }
 });
 
@@ -105,7 +105,7 @@ router.put('/:id', (req: Request, res: Response) => {
   try {
     const schoolId = getSchoolId(req);
     if (!schoolId) {
-      return res.status(400).json({ error: 'School ID required' });
+      return res.status(400).json({ success: false, error: 'School ID required' });
     }
     
     const { id } = req.params;
@@ -122,7 +122,7 @@ router.put('/:id', (req: Request, res: Response) => {
     res.json(result);
   } catch (error) {
     console.error('Error updating behavior incident:', error);
-    res.status(500).json({ error: 'Davranış kaydı güncellenirken hata oluştu' });
+    res.status(500).json({ success: false, error: 'Davranış kaydı güncellenirken hata oluştu' });
   }
 });
 
@@ -130,7 +130,7 @@ router.delete('/:id', (req: Request, res: Response) => {
   try {
     const schoolId = getSchoolId(req);
     if (!schoolId) {
-      return res.status(400).json({ error: 'School ID required' });
+      return res.status(400).json({ success: false, error: 'School ID required' });
     }
     
     const { id } = req.params;
@@ -146,7 +146,7 @@ router.delete('/:id', (req: Request, res: Response) => {
     res.json(result);
   } catch (error) {
     console.error('Error deleting behavior incident:', error);
-    res.status(500).json({ error: 'Davranış kaydı silinirken hata oluştu' });
+    res.status(500).json({ success: false, error: 'Davranış kaydı silinirken hata oluştu' });
   }
 });
 

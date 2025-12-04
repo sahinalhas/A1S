@@ -27,7 +27,7 @@ export function exportForAI(req: Request, res: Response) {
     });
   } catch (error) {
     console.error('Error exporting sessions for AI:', error);
-    res.status(500).json({ error: 'AI formatına dönüştürme başarısız' });
+    res.status(500).json({ success: false, error: 'AI formatına dönüştürme başarısız' });
   }
 }
 
@@ -37,13 +37,13 @@ export function generatePrompt(req: Request, res: Response) {
     const { sessionId } = req.params;
     
     if (!sessionId) {
-      return res.status(400).json({ error: 'Görüşme ID gereklidir' });
+      return res.status(400).json({ success: false, error: 'Görüşme ID gereklidir' });
     }
 
     const sessionData = exportSessionsForAI(schoolId, [sessionId])[0];
     
     if (!sessionData) {
-      return res.status(404).json({ error: 'Görüşme bulunamadı' });
+      return res.status(404).json({ success: false, error: 'Görüşme bulunamadı' });
     }
 
     const prompt = generateAIAnalysisPrompt(sessionData);
@@ -55,7 +55,7 @@ export function generatePrompt(req: Request, res: Response) {
     });
   } catch (error) {
     console.error('Error generating AI prompt:', error);
-    res.status(500).json({ error: 'Prompt oluşturulamadı' });
+    res.status(500).json({ success: false, error: 'Prompt oluşturulamadı' });
   }
 }
 
@@ -65,7 +65,7 @@ export function getStudentAggregation(req: Request, res: Response) {
     const { studentId } = req.params;
     
     if (!studentId) {
-      return res.status(400).json({ error: 'Öğrenci ID gereklidir' });
+      return res.status(400).json({ success: false, error: 'Öğrenci ID gereklidir' });
     }
 
     const aggregation = aggregateSessionDataForStudent(studentId, schoolId);
@@ -77,6 +77,6 @@ export function getStudentAggregation(req: Request, res: Response) {
     });
   } catch (error) {
     console.error('Error aggregating student data:', error);
-    res.status(500).json({ error: 'Veri toplanamadı' });
+    res.status(500).json({ success: false, error: 'Veri toplanamadı' });
   }
 }

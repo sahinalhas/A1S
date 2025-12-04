@@ -16,7 +16,7 @@ export const saveSubjectsHandler: RequestHandler = (req, res) => {
   try {
     const subjects = req.body;
     if (!Array.isArray(subjects)) {
-      return res.status(400).json({ error: ERROR_MESSAGES.EXPECTED_ARRAY_OF_SUBJECTS });
+      return res.status(400).json({ success: false, error: ERROR_MESSAGES.EXPECTED_ARRAY_OF_SUBJECTS });
     }
     subjectsService.saveSubjectsList(subjects);
     res.json({ success: true, message: `${subjects.length} ${SUCCESS_MESSAGES.SUBJECTS_SAVED}` });
@@ -40,7 +40,7 @@ export const getTopicsBySubjectId: RequestHandler = (req, res) => {
   try {
     const subjectId = req.params.id;
     if (!subjectId) {
-      return res.status(400).json({ error: 'Subject ID is required' });
+      return res.status(400).json({ success: false, error: 'Subject ID is required' });
     }
     const filteredTopics = subjectsService.getTopicsBySubject(subjectId);
     res.json(filteredTopics);
@@ -54,7 +54,7 @@ export const saveTopicsHandler: RequestHandler = (req, res) => {
   try {
     const topics = req.body;
     if (!Array.isArray(topics)) {
-      return res.status(400).json({ error: ERROR_MESSAGES.EXPECTED_ARRAY_OF_TOPICS });
+      return res.status(400).json({ success: false, error: ERROR_MESSAGES.EXPECTED_ARRAY_OF_TOPICS });
     }
     subjectsService.saveTopicsList(topics);
     res.json({ success: true, message: `${topics.length} ${SUCCESS_MESSAGES.TOPICS_SAVED}` });

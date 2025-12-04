@@ -9,7 +9,7 @@ export function getAllOutcomes(req: Request, res: Response) {
     res.json(outcomes);
   } catch (error) {
     console.error('Error fetching outcomes:', error);
-    res.status(500).json({ error: 'Sonuçlar yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Sonuçlar yüklenemedi' });
   }
 }
 
@@ -20,7 +20,7 @@ export function getOutcomesRequiringFollowUp(req: Request, res: Response) {
     res.json(outcomes);
   } catch (error) {
     console.error('Error fetching outcomes requiring follow-up:', error);
-    res.status(500).json({ error: 'Takip gerektiren sonuçlar yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Takip gerektiren sonuçlar yüklenemedi' });
   }
 }
 
@@ -31,13 +31,13 @@ export function getOutcomeById(req: Request, res: Response) {
     const outcome = service.getOutcomeByIdAndSchool(id, schoolId);
     
     if (!outcome) {
-      return res.status(404).json({ error: 'Sonuç bulunamadı veya bu okula ait değil' });
+      return res.status(404).json({ success: false, error: 'Sonuç bulunamadı veya bu okula ait değil' });
     }
     
     res.json(outcome);
   } catch (error) {
     console.error('Error fetching outcome:', error);
-    res.status(500).json({ error: 'Sonuç yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Sonuç yüklenemedi' });
   }
 }
 
@@ -48,13 +48,13 @@ export function getOutcomeBySessionId(req: Request, res: Response) {
     const outcome = service.getOutcomeBySessionIdAndSchool(sessionId, schoolId);
     
     if (!outcome) {
-      return res.status(404).json({ error: 'Bu görüşme için sonuç bulunamadı veya bu okula ait değil' });
+      return res.status(404).json({ success: false, error: 'Bu görüşme için sonuç bulunamadı veya bu okula ait değil' });
     }
     
     res.json(outcome);
   } catch (error) {
     console.error('Error fetching outcome by session:', error);
-    res.status(500).json({ error: 'Görüşme sonucu yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Görüşme sonucu yüklenemedi' });
   }
 }
 
@@ -63,7 +63,7 @@ export function createOutcome(req: Request, res: Response) {
     const { id, sessionId } = req.body;
     
     if (!id || !sessionId) {
-      return res.status(400).json({ error: 'ID ve görüşme ID zorunludur' });
+      return res.status(400).json({ success: false, error: 'ID ve görüşme ID zorunludur' });
     }
     
     const result = service.createOutcome(req.body);
@@ -71,9 +71,9 @@ export function createOutcome(req: Request, res: Response) {
   } catch (error: unknown) {
     console.error('Error creating outcome:', error);
     if (error instanceof Error ? error.message : String(error)?.includes('Etkinlik puanı')) {
-      return res.status(400).json({ error: error instanceof Error ? error.message : String(error) });
+      return res.status(400).json({ success: false, error: error instanceof Error ? error.message : String(error) });
     }
-    res.status(500).json({ error: 'Sonuç kaydedilemedi' });
+    res.status(500).json({ success: false, error: 'Sonuç kaydedilemedi' });
   }
 }
 
@@ -84,22 +84,22 @@ export function updateOutcome(req: Request, res: Response) {
     
     const existing = service.getOutcomeByIdAndSchool(id, schoolId);
     if (!existing) {
-      return res.status(404).json({ error: 'Sonuç bulunamadı veya bu okula ait değil' });
+      return res.status(404).json({ success: false, error: 'Sonuç bulunamadı veya bu okula ait değil' });
     }
     
     const result = service.updateOutcome(id, req.body);
     
     if (result.notFound) {
-      return res.status(404).json({ error: 'Sonuç bulunamadı' });
+      return res.status(404).json({ success: false, error: 'Sonuç bulunamadı' });
     }
     
     res.json({ success: true });
   } catch (error: unknown) {
     console.error('Error updating outcome:', error);
     if (error instanceof Error ? error.message : String(error)?.includes('Etkinlik puanı')) {
-      return res.status(400).json({ error: error instanceof Error ? error.message : String(error) });
+      return res.status(400).json({ success: false, error: error instanceof Error ? error.message : String(error) });
     }
-    res.status(500).json({ error: 'Sonuç güncellenemedi' });
+    res.status(500).json({ success: false, error: 'Sonuç güncellenemedi' });
   }
 }
 
@@ -111,12 +111,12 @@ export function deleteOutcome(req: Request, res: Response) {
     const result = service.deleteOutcomeBySchool(id, schoolId);
     
     if (result.notFound) {
-      return res.status(404).json({ error: 'Sonuç bulunamadı veya bu okula ait değil' });
+      return res.status(404).json({ success: false, error: 'Sonuç bulunamadı veya bu okula ait değil' });
     }
     
     res.json({ success: true });
   } catch (error) {
     console.error('Error deleting outcome:', error);
-    res.status(500).json({ error: 'Sonuç silinemedi' });
+    res.status(500).json({ success: false, error: 'Sonuç silinemedi' });
   }
 }

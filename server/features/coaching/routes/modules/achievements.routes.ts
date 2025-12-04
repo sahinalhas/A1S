@@ -8,7 +8,7 @@ export const getCoachingRecommendationsByStudent: RequestHandler = (req, res) =>
     res.json(recs);
   } catch (error) {
     console.error('Error fetching coaching recommendations:', error);
-    res.status(500).json({ error: 'Koçluk önerileri yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Koçluk önerileri yüklenemedi' });
   }
 };
 
@@ -18,7 +18,7 @@ export const createCoachingRecommendation: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating coaching recommendation:', error);
-    res.status(500).json({ error: 'Koçluk önerisi kaydedilemedi' });
+    res.status(500).json({ success: false, error: 'Koçluk önerisi kaydedilemedi' });
   }
 };
 
@@ -29,7 +29,7 @@ export const updateCoachingRecommendation: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error updating coaching recommendation:', error);
-    res.status(500).json({ error: 'Koçluk önerisi güncellenemedi' });
+    res.status(500).json({ success: false, error: 'Koçluk önerisi güncellenemedi' });
   }
 };
 
@@ -40,7 +40,7 @@ export const getAchievementsByStudent: RequestHandler = (req, res) => {
     res.json(achievements);
   } catch (error) {
     console.error('Error fetching achievements:', error);
-    res.status(500).json({ error: 'Başarılar yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Başarılar yüklenemedi' });
   }
 };
 
@@ -50,6 +50,6 @@ export const createAchievement: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating achievement:', error);
-    res.status(500).json({ error: 'Başarı kaydedilemedi' });
+    res.status(500).json({ success: false, error: 'Başarı kaydedilemedi' });
   }
 };

@@ -52,7 +52,7 @@ router.post('/create', requireSecureAuth, requireRoleSecure(['counselor']), back
   } catch (error) {
     console.error('Create backup error:', error);
     const errorMessage = error instanceof Error ? error.message : String(error);
-    res.status(500).json({ error: `Failed to create backup: ${errorMessage}` });
+    res.status(500).json({ success: false, error: `Failed to create backup: ${errorMessage}` });
   }
 });
 
@@ -63,7 +63,7 @@ router.get('/list', requireSecureAuth, async (req, res) => {
   } catch (error) {
     console.error('List backups error:', error);
     const errorMessage = error instanceof Error ? error.message : String(error);
-    res.status(500).json({ error: `Failed to list backups: ${errorMessage}` });
+    res.status(500).json({ success: false, error: `Failed to list backups: ${errorMessage}` });
   }
 });
 
@@ -92,7 +92,7 @@ router.get('/download/:backupId', requireSecureAuth, requireRoleSecure(['counsel
   } catch (error) {
     console.error('Download backup error:', error);
     const errorMessage = error instanceof Error ? error.message : String(error);
-    res.status(500).json({ error: `Failed to download backup: ${errorMessage}` });
+    res.status(500).json({ success: false, error: `Failed to download backup: ${errorMessage}` });
   }
 });
 
@@ -118,7 +118,7 @@ router.post('/restore/:backupId', requireSecureAuth, requireRoleSecure(['counsel
   } catch (error) {
     console.error('Restore backup error:', error);
     const errorMessage = error instanceof Error ? error.message : String(error);
-    res.status(500).json({ error: `Failed to restore backup: ${errorMessage}` });
+    res.status(500).json({ success: false, error: `Failed to restore backup: ${errorMessage}` });
   }
 });
 
@@ -127,7 +127,7 @@ router.post('/upload-restore', requireSecureAuth, requireRoleSecure(['counselor'
   
   try {
     if (!req.file) {
-      return res.status(400).json({ error: 'Dosya yüklenmedi' });
+      return res.status(400).json({ success: false, error: 'Dosya yüklenmedi' });
     }
     
     console.log(`📤 Yedek dosyası yükleme başlatıldı: ${req.file.originalname} (${req.file.size} bytes) - Kullanıcı: ${authReq.user!.name}`);
@@ -175,7 +175,7 @@ router.post('/upload-restore', requireSecureAuth, requireRoleSecure(['counselor'
       logger.warn(`Failed to log audit trail: ${err instanceof Error ? err.message : 'unknown error'}`, 'BackupRoutes');
     });
     
-    res.status(isValidationError ? 400 : 500).json({ error: `Failed to upload and restore backup: ${errorMessage}` });
+    res.status(isValidationError ? 400 : 500).json({ success: false, error: `Failed to upload and restore backup: ${errorMessage}` });
   }
 });
 
@@ -201,7 +201,7 @@ router.delete('/:backupId', requireSecureAuth, requireRoleSecure(['counselor']),
   } catch (error) {
     console.error('Delete backup error:', error);
     const errorMessage = error instanceof Error ? error.message : String(error);
-    res.status(500).json({ error: `Failed to delete backup: ${errorMessage}` });
+    res.status(500).json({ success: false, error: `Failed to delete backup: ${errorMessage}` });
   }
 });
 
@@ -221,7 +221,7 @@ router.get('/audit-logs', requireSecureAuth, requireRoleSecure(['counselor']), a
     res.json(logs);
   } catch (error) {
     console.error('Query audit logs error:', error);
-    res.status(500).json({ error: 'Failed to query audit logs' });
+    res.status(500).json({ success: false, error: 'Failed to query audit logs' });
   }
 });
 
@@ -234,7 +234,7 @@ router.get('/audit-report/:userId', requireSecureAuth, requireRoleSecure(['couns
     res.json(report);
   } catch (error) {
     console.error('Get audit report error:', error);
-    res.status(500).json({ error: 'Failed to get audit report' });
+    res.status(500).json({ success: false, error: 'Failed to get audit report' });
   }
 });
 
@@ -243,14 +243,14 @@ router.post('/encrypt', requireSecureAuth, requireRoleSecure(['counselor']), asy
     const { data, fields } = req.body;
     
     if (!data || !fields) {
-      return res.status(400).json({ error: 'data and fields are required' });
+      return res.status(400).json({ success: false, error: 'data and fields are required' });
     }
     
     const encrypted = encryptionService.encryptSensitiveFields(data, fields);
     res.json(encrypted);
   } catch (error) {
     console.error('Encrypt error:', error);
-    res.status(500).json({ error: 'Failed to encrypt data' });
+    res.status(500).json({ success: false, error: 'Failed to encrypt data' });
   }
 });
 
@@ -259,14 +259,14 @@ router.post('/decrypt', requireSecureAuth, requireRoleSecure(['counselor']), asy
     const { data, fields } = req.body;
     
     if (!data || !fields) {
-      return res.status(400).json({ error: 'data and fields are required' });
+      return res.status(400).json({ success: false, error: 'data and fields are required' });
     }
     
     const decrypted = encryptionService.decryptSensitiveFields(data, fields);
     res.json(decrypted);
   } catch (error) {
     console.error('Decrypt error:', error);
-    res.status(500).json({ error: 'Failed to decrypt data' });
+    res.status(500).json({ success: false, error: 'Failed to decrypt data' });
   }
 });
 
@@ -287,7 +287,7 @@ router.post('/anonymize', requireSecureAuth, requireRoleSecure(['counselor']), a
     res.json(result);
   } catch (error) {
     console.error('Anonymize error:', error);
-    res.status(500).json({ error: 'Failed to anonymize data' });
+    res.status(500).json({ success: false, error: 'Failed to anonymize data' });
   }
 });
 

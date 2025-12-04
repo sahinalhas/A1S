@@ -137,7 +137,7 @@ export function getAllUsers(req: Request, res: Response) {
     res.json(users);
   } catch (error) {
     console.error('Get all users route error:', error);
-    res.status(500).json({ error: 'Kullanıcılar alınırken bir hata oluştu' });
+    res.status(500).json({ success: false, error: 'Kullanıcılar alınırken bir hata oluştu' });
   }
 }
 
@@ -146,19 +146,19 @@ export function getUserById(req: Request, res: Response) {
     const { id } = req.params;
 
     if (!id) {
-      return res.status(400).json({ error: 'Kullanıcı ID gereklidir' });
+      return res.status(400).json({ success: false, error: 'Kullanıcı ID gereklidir' });
     }
 
     const user = service.getUserById(id);
     
     if (!user) {
-      return res.status(404).json({ error: 'Kullanıcı bulunamadı' });
+      return res.status(404).json({ success: false, error: 'Kullanıcı bulunamadı' });
     }
 
     res.json(user);
   } catch (error) {
     console.error('Get user by id route error:', error);
-    res.status(500).json({ error: 'Kullanıcı alınırken bir hata oluştu' });
+    res.status(500).json({ success: false, error: 'Kullanıcı alınırken bir hata oluştu' });
   }
 }
 
@@ -279,6 +279,6 @@ export function getUsersCount(req: Request, res: Response) {
     res.json({ count });
   } catch (error) {
     console.error('Get users count route error:', error);
-    res.status(500).json({ error: 'Kullanıcı sayısı alınırken bir hata oluştu' });
+    res.status(500).json({ success: false, error: 'Kullanıcı sayısı alınırken bir hata oluştu' });
   }
 }

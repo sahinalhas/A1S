@@ -8,7 +8,7 @@ export const getSpecialEducationByStudent: RequestHandler = (req, res) => {
     res.json(records);
   } catch (error) {
     console.error('Error fetching special education records:', error);
-    res.status(500).json({ error: 'Özel eğitim kayıtları yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Özel eğitim kayıtları yüklenemedi' });
   }
 };
 
@@ -18,7 +18,7 @@ export const createSpecialEducation: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating special education record:', error);
-    res.status(500).json({ error: 'Özel eğitim kaydı oluşturulamadı' });
+    res.status(500).json({ success: false, error: 'Özel eğitim kaydı oluşturulamadı' });
   }
 };
 
@@ -29,7 +29,7 @@ export const updateSpecialEducation: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error updating special education record:', error);
-    res.status(500).json({ error: 'Özel eğitim kaydı güncellenemedi' });
+    res.status(500).json({ success: false, error: 'Özel eğitim kaydı güncellenemedi' });
   }
 };
 
@@ -40,6 +40,6 @@ export const deleteSpecialEducation: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error deleting special education record:', error);
-    res.status(500).json({ error: 'Özel eğitim kaydı silinemedi' });
+    res.status(500).json({ success: false, error: 'Özel eğitim kaydı silinemedi' });
   }
 };

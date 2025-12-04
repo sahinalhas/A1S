@@ -7,7 +7,7 @@ export const getAcademicGoals: RequestHandler = (req, res) => {
     res.json(goals);
   } catch (error) {
     console.error('Error fetching academic goals:', error);
-    res.status(500).json({ error: 'Akademik hedefler yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Akademik hedefler yüklenemedi' });
   }
 };
 
@@ -18,7 +18,7 @@ export const getAcademicGoalsByStudent: RequestHandler = (req, res) => {
     res.json(goals);
   } catch (error) {
     console.error('Error fetching student academic goals:', error);
-    res.status(500).json({ error: 'Öğrenci akademik hedefleri yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Öğrenci akademik hedefleri yüklenemedi' });
   }
 };
 
@@ -28,7 +28,7 @@ export const createAcademicGoal: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating academic goal:', error);
-    res.status(500).json({ error: 'Akademik hedef kaydedilemedi' });
+    res.status(500).json({ success: false, error: 'Akademik hedef kaydedilemedi' });
   }
 };
 
@@ -39,7 +39,7 @@ export const updateAcademicGoal: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error updating academic goal:', error);
-    res.status(500).json({ error: 'Akademik hedef güncellenemedi' });
+    res.status(500).json({ success: false, error: 'Akademik hedef güncellenemedi' });
   }
 };
 
@@ -50,7 +50,7 @@ export const deleteAcademicGoal: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error deleting academic goal:', error);
-    res.status(500).json({ error: 'Akademik hedef silinemedi' });
+    res.status(500).json({ success: false, error: 'Akademik hedef silinemedi' });
   }
 };
 
@@ -61,7 +61,7 @@ export const getSmartGoalsByStudent: RequestHandler = (req, res) => {
     res.json(goals);
   } catch (error) {
     console.error('Error fetching smart goals:', error);
-    res.status(500).json({ error: 'SMART hedefler yüklenemedi' });
+    res.status(500).json({ success: false, error: 'SMART hedefler yüklenemedi' });
   }
 };
 
@@ -71,7 +71,7 @@ export const createSmartGoal: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating smart goal:', error);
-    res.status(500).json({ error: 'SMART hedef kaydedilemedi' });
+    res.status(500).json({ success: false, error: 'SMART hedef kaydedilemedi' });
   }
 };
 
@@ -82,6 +82,6 @@ export const updateSmartGoal: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error updating smart goal:', error);
-    res.status(500).json({ error: 'SMART hedef güncellenemedi' });
+    res.status(500).json({ success: false, error: 'SMART hedef güncellenemedi' });
   }
 };

@@ -8,7 +8,7 @@ export function getOverview(req: Request, res: Response) {
     res.json(stats);
   } catch (error) {
     console.error('Error fetching overview stats:', error);
-    res.status(500).json({ error: 'Genel istatistikler yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Genel istatistikler yüklenemedi' });
   }
 }
 
@@ -17,11 +17,11 @@ export function getTimeSeries(req: Request, res: Response) {
     const { period = 'daily', startDate, endDate } = req.query;
 
     if (!startDate || !endDate) {
-      return res.status(400).json({ error: 'Başlangıç ve bitiş tarihleri gereklidir' });
+      return res.status(400).json({ success: false, error: 'Başlangıç ve bitiş tarihleri gereklidir' });
     }
 
     if (!['daily', 'weekly', 'monthly'].includes(period as string)) {
-      return res.status(400).json({ error: 'Geçersiz periyod. Kullanılabilir değerler: daily, weekly, monthly' });
+      return res.status(400).json({ success: false, error: 'Geçersiz periyod. Kullanılabilir değerler: daily, weekly, monthly' });
     }
 
     const data = service.getSessionsByTimePeriod(
@@ -33,7 +33,7 @@ export function getTimeSeries(req: Request, res: Response) {
     res.json(data);
   } catch (error) {
     console.error('Error fetching time series data:', error);
-    res.status(500).json({ error: 'Zaman serisi verileri yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Zaman serisi verileri yüklenemedi' });
   }
 }
 
@@ -43,7 +43,7 @@ export function getTopics(req: Request, res: Response) {
     res.json(data);
   } catch (error) {
     console.error('Error fetching topic analysis:', error);
-    res.status(500).json({ error: 'Konu analizi yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Konu analizi yüklenemedi' });
   }
 }
 
@@ -53,7 +53,7 @@ export function getParticipants(req: Request, res: Response) {
     res.json(data);
   } catch (error) {
     console.error('Error fetching participant analysis:', error);
-    res.status(500).json({ error: 'Katılımcı analizi yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Katılımcı analizi yüklenemedi' });
   }
 }
 
@@ -63,7 +63,7 @@ export function getClasses(req: Request, res: Response) {
     res.json(data);
   } catch (error) {
     console.error('Error fetching class analysis:', error);
-    res.status(500).json({ error: 'Sınıf analizi yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Sınıf analizi yüklenemedi' });
   }
 }
 
@@ -73,7 +73,7 @@ export function getModes(req: Request, res: Response) {
     res.json(data);
   } catch (error) {
     console.error('Error fetching session mode analysis:', error);
-    res.status(500).json({ error: 'Görüşme şekli analizi yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Görüşme şekli analizi yüklenemedi' });
   }
 }
 
@@ -82,13 +82,13 @@ export function getStudentStats(req: Request, res: Response) {
     const { studentId } = req.params;
 
     if (!studentId) {
-      return res.status(400).json({ error: 'Öğrenci ID gereklidir' });
+      return res.status(400).json({ success: false, error: 'Öğrenci ID gereklidir' });
     }
 
     const data = sessionService.getStudentSessionStats(studentId);
     res.json(data);
   } catch (error) {
     console.error('Error fetching student session stats:', error);
-    res.status(500).json({ error: 'Öğrenci görüşme istatistikleri yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Öğrenci görüşme istatistikleri yüklenemedi' });
   }
 }

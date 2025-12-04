@@ -8,7 +8,7 @@ export const getParentMeetingsByStudent: RequestHandler = (req, res) => {
     res.json(meetings);
   } catch (error) {
     console.error('Error fetching parent meetings:', error);
-    res.status(500).json({ error: 'Veli görüşmeleri yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Veli görüşmeleri yüklenemedi' });
   }
 };
 
@@ -18,7 +18,7 @@ export const createParentMeeting: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating parent meeting:', error);
-    res.status(500).json({ error: 'Veli görüşmesi kaydedilemedi' });
+    res.status(500).json({ success: false, error: 'Veli görüşmesi kaydedilemedi' });
   }
 };
 
@@ -29,7 +29,7 @@ export const updateParentMeeting: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error updating parent meeting:', error);
-    res.status(500).json({ error: 'Veli görüşmesi güncellenemedi' });
+    res.status(500).json({ success: false, error: 'Veli görüşmesi güncellenemedi' });
   }
 };
 
@@ -40,7 +40,7 @@ export const getHomeVisitsByStudent: RequestHandler = (req, res) => {
     res.json(visits);
   } catch (error) {
     console.error('Error fetching home visits:', error);
-    res.status(500).json({ error: 'Ev ziyaretleri yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Ev ziyaretleri yüklenemedi' });
   }
 };
 
@@ -50,7 +50,7 @@ export const createHomeVisit: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating home visit:', error);
-    res.status(500).json({ error: 'Ev ziyareti kaydedilemedi' });
+    res.status(500).json({ success: false, error: 'Ev ziyareti kaydedilemedi' });
   }
 };
 
@@ -61,7 +61,7 @@ export const updateHomeVisit: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error updating home visit:', error);
-    res.status(500).json({ error: 'Ev ziyareti güncellenemedi' });
+    res.status(500).json({ success: false, error: 'Ev ziyareti güncellenemedi' });
   }
 };
 
@@ -72,7 +72,7 @@ export const getFamilyParticipationByStudent: RequestHandler = (req, res) => {
     res.json(records);
   } catch (error) {
     console.error('Error fetching family participation:', error);
-    res.status(500).json({ error: 'Aile katılım durumu yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Aile katılım durumu yüklenemedi' });
   }
 };
 
@@ -82,7 +82,7 @@ export const createFamilyParticipation: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating family participation:', error);
-    res.status(500).json({ error: 'Aile katılım durumu kaydedilemedi' });
+    res.status(500).json({ success: false, error: 'Aile katılım durumu kaydedilemedi' });
   }
 };
 
@@ -93,6 +93,6 @@ export const updateFamilyParticipation: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error updating family participation:', error);
-    res.status(500).json({ error: 'Aile katılım durumu güncellenemedi' });
+    res.status(500).json({ success: false, error: 'Aile katılım durumu güncellenemedi' });
   }
 };

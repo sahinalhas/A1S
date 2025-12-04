@@ -10,7 +10,7 @@ export const getStudySessions: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -18,7 +18,7 @@ export const getStudySessions: RequestHandler = (req, res) => {
     res.json(sessions);
   } catch (error) {
     logger.error('Error getting study sessions', 'SessionsRoutes', error);
-    res.status(500).json({ error: 'Failed to get study sessions' });
+    res.status(500).json({ success: false, error: 'Failed to get study sessions' });
   }
 };
 
@@ -28,7 +28,7 @@ export const saveStudySession: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -36,6 +36,6 @@ export const saveStudySession: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     logger.error('Error saving study session', 'SessionsRoutes', error);
-    res.status(500).json({ error: 'Failed to save study session' });
+    res.status(500).json({ success: false, error: 'Failed to save study session' });
   }
 };

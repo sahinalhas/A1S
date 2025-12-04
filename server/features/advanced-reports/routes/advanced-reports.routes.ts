@@ -21,13 +21,13 @@ router.get('/school-stats', simpleRateLimit(100, 60 * 1000), async (req: Request
   try {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     if (!schoolId) {
-      return res.status(400).json({ error: 'School ID gerekli' });
+      return res.status(400).json({ success: false, error: 'School ID gerekli' });
     }
     const stats = await advancedReportsService.getSchoolStatistics(schoolId);
     res.json(stats);
   } catch (error) {
     console.error('Error fetching school statistics:', error);
-    res.status(500).json({ error: 'İstatistikler alınamadı' });
+    res.status(500).json({ success: false, error: 'İstatistikler alınamadı' });
   }
 });
 
@@ -39,7 +39,7 @@ router.get('/class-comparisons', simpleRateLimit(100, 60 * 1000), async (req: Re
   try {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     if (!schoolId) {
-      return res.status(400).json({ error: 'School ID gerekli' });
+      return res.status(400).json({ success: false, error: 'School ID gerekli' });
     }
     const { classes } = req.query;
     const classNames = classes ? (classes as string).split(',') : undefined;
@@ -48,7 +48,7 @@ router.get('/class-comparisons', simpleRateLimit(100, 60 * 1000), async (req: Re
     res.json(comparisons);
   } catch (error) {
     console.error('Error fetching class comparisons:', error);
-    res.status(500).json({ error: 'Sınıf karşılaştırmaları alınamadı' });
+    res.status(500).json({ success: false, error: 'Sınıf karşılaştırmaları alınamadı' });
   }
 });
 
@@ -60,7 +60,7 @@ router.get('/compare/:class1/:class2', simpleRateLimit(100, 60 * 1000), async (r
   try {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     if (!schoolId) {
-      return res.status(400).json({ error: 'School ID gerekli' });
+      return res.status(400).json({ success: false, error: 'School ID gerekli' });
     }
     const { class1, class2 } = req.params;
     const comparison = await advancedReportsService.compareClasses(
@@ -71,7 +71,7 @@ router.get('/compare/:class1/:class2', simpleRateLimit(100, 60 * 1000), async (r
     res.json(comparison);
   } catch (error) {
     console.error('Error comparing classes:', error);
-    res.status(500).json({ error: 'Sınıflar karşılaştırılamadı' });
+    res.status(500).json({ success: false, error: 'Sınıflar karşılaştırılamadı' });
   }
 });
 
@@ -83,7 +83,7 @@ router.get('/trends', simpleRateLimit(100, 60 * 1000), async (req: Request, res:
   try {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     if (!schoolId) {
-      return res.status(400).json({ error: 'School ID gerekli' });
+      return res.status(400).json({ success: false, error: 'School ID gerekli' });
     }
     const { period, startDate, endDate } = req.query;
     
@@ -102,7 +102,7 @@ router.get('/trends', simpleRateLimit(100, 60 * 1000), async (req: Request, res:
     res.json(analysis);
   } catch (error) {
     console.error('Error fetching trend analysis:', error);
-    res.status(500).json({ error: 'Trend analizi alınamadı' });
+    res.status(500).json({ success: false, error: 'Trend analizi alınamadı' });
   }
 });
 
@@ -114,12 +114,12 @@ router.post('/comprehensive', simpleRateLimit(20, 60 * 1000), async (req: Reques
   try {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     if (!schoolId) {
-      return res.status(400).json({ error: 'School ID gerekli' });
+      return res.status(400).json({ success: false, error: 'School ID gerekli' });
     }
     const { generatedBy, includeAIAnalysis, classNames, period, startDate, endDate } = req.body;
     
     if (!generatedBy) {
-      return res.status(400).json({ error: 'generatedBy alanı gereklidir' });
+      return res.status(400).json({ success: false, error: 'generatedBy alanı gereklidir' });
     }
     
     const report = await advancedReportsService.generateComprehensiveReport(schoolId, generatedBy, {
@@ -133,7 +133,7 @@ router.post('/comprehensive', simpleRateLimit(20, 60 * 1000), async (req: Reques
     res.json(report);
   } catch (error) {
     console.error('Error generating comprehensive report:', error);
-    res.status(500).json({ error: 'Kapsamlı rapor oluşturulamadı' });
+    res.status(500).json({ success: false, error: 'Kapsamlı rapor oluşturulamadı' });
   }
 });
 
@@ -145,13 +145,13 @@ router.get('/available-classes', simpleRateLimit(100, 60 * 1000), async (req: Re
   try {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     if (!schoolId) {
-      return res.status(400).json({ error: 'School ID gerekli' });
+      return res.status(400).json({ success: false, error: 'School ID gerekli' });
     }
     const classes = advancedReportsService.getAvailableClasses(schoolId);
     res.json(classes);
   } catch (error) {
     console.error('Error fetching available classes:', error);
-    res.status(500).json({ error: 'Sınıf listesi alınamadı' });
+    res.status(500).json({ success: false, error: 'Sınıf listesi alınamadı' });
   }
 });
 
@@ -163,12 +163,12 @@ router.post('/export/excel', exportRateLimiter, async (req: Request, res: Respon
   try {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     if (!schoolId) {
-      return res.status(400).json({ error: 'School ID gerekli' });
+      return res.status(400).json({ success: false, error: 'School ID gerekli' });
     }
     const { generatedBy, includeAIAnalysis, classNames, period, startDate, endDate, anonymize } = req.body;
     
     if (!generatedBy) {
-      return res.status(400).json({ error: 'generatedBy alanı gereklidir' });
+      return res.status(400).json({ success: false, error: 'generatedBy alanı gereklidir' });
     }
     
     const report = await advancedReportsService.generateComprehensiveReport(schoolId, generatedBy, {
@@ -194,7 +194,7 @@ router.post('/export/excel', exportRateLimiter, async (req: Request, res: Respon
     });
   } catch (error) {
     console.error('Error exporting to Excel:', error);
-    res.status(500).json({ error: 'Excel raporu oluşturulamadı' });
+    res.status(500).json({ success: false, error: 'Excel raporu oluşturulamadı' });
   }
 });
 

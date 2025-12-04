@@ -45,7 +45,7 @@ router.get('/intervention-stats', (req, res) => {
     });
   } catch (error) {
     logger.error('Error fetching intervention stats', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to fetch intervention stats' });
+    res.status(500).json({ success: false, error: 'Failed to fetch intervention stats' });
   }
 });
 
@@ -59,7 +59,7 @@ router.get('/:studentId/academic', (req, res) => {
     res.json(profile || {});
   } catch (error) {
     logger.error('Error fetching academic profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to fetch academic profile' });
+    res.status(500).json({ success: false, error: 'Failed to fetch academic profile' });
   }
 });
 
@@ -79,7 +79,7 @@ router.post('/:studentId/academic', (req, res) => {
     res.json({ success: true, profile });
   } catch (error) {
     logger.error('Error saving academic profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to save academic profile' });
+    res.status(500).json({ success: false, error: 'Failed to save academic profile' });
   }
 });
 
@@ -93,7 +93,7 @@ router.get('/:studentId/social-emotional', (req, res) => {
     res.json(profile || {});
   } catch (error) {
     logger.error('Error fetching social-emotional profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to fetch social-emotional profile' });
+    res.status(500).json({ success: false, error: 'Failed to fetch social-emotional profile' });
   }
 });
 
@@ -113,7 +113,7 @@ router.post('/:studentId/social-emotional', (req, res) => {
     res.json({ success: true, profile });
   } catch (error) {
     logger.error('Error saving social-emotional profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to save social-emotional profile' });
+    res.status(500).json({ success: false, error: 'Failed to save social-emotional profile' });
   }
 });
 
@@ -127,7 +127,7 @@ router.get('/:studentId/talents-interests', (req, res) => {
     res.json(profile || {});
   } catch (error) {
     logger.error('Error fetching talents-interests profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to fetch talents-interests profile' });
+    res.status(500).json({ success: false, error: 'Failed to fetch talents-interests profile' });
   }
 });
 
@@ -147,7 +147,7 @@ router.post('/:studentId/talents-interests', (req, res) => {
     res.json({ success: true, profile });
   } catch (error) {
     logger.error('Error saving talents-interests profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to save talents-interests profile' });
+    res.status(500).json({ success: false, error: 'Failed to save talents-interests profile' });
   }
 });
 
@@ -161,7 +161,7 @@ router.get('/:studentId/health', (req, res) => {
     res.json(profile || {});
   } catch (error) {
     logger.error('Error fetching health profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to fetch health profile' });
+    res.status(500).json({ success: false, error: 'Failed to fetch health profile' });
   }
 });
 
@@ -181,7 +181,7 @@ router.post('/:studentId/health', (req, res) => {
     res.json({ success: true, profile });
   } catch (error) {
     logger.error('Error saving health profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to save health profile' });
+    res.status(500).json({ success: false, error: 'Failed to save health profile' });
   }
 });
 
@@ -195,7 +195,7 @@ router.get('/:studentId/interventions', (req, res) => {
     res.json(interventions);
   } catch (error) {
     logger.error('Error fetching interventions', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to fetch interventions' });
+    res.status(500).json({ success: false, error: 'Failed to fetch interventions' });
   }
 });
 
@@ -215,7 +215,7 @@ router.post('/:studentId/interventions', (req, res) => {
     res.json({ success: true, intervention });
   } catch (error) {
     logger.error('Error saving intervention', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to save intervention' });
+    res.status(500).json({ success: false, error: 'Failed to save intervention' });
   }
 });
 
@@ -229,7 +229,7 @@ router.get('/:studentId/behavior-incidents', (req, res) => {
     res.json(incidents);
   } catch (error) {
     logger.error('Error fetching behavior incidents', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to fetch behavior incidents' });
+    res.status(500).json({ success: false, error: 'Failed to fetch behavior incidents' });
   }
 });
 
@@ -249,7 +249,7 @@ router.post('/:studentId/behavior-incident', (req, res) => {
     res.json({ success: true, incident });
   } catch (error) {
     logger.error('Error saving behavior incident', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to save behavior incident' });
+    res.status(500).json({ success: false, error: 'Failed to save behavior incident' });
   }
 });
 
@@ -310,7 +310,7 @@ router.get('/:studentId/aggregate', (req, res) => {
     res.json(aiReadyProfile);
   } catch (error) {
     logger.error('Error generating aggregate profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to generate aggregate profile' });
+    res.status(500).json({ success: false, error: 'Failed to generate aggregate profile' });
   }
 });
 
@@ -324,7 +324,7 @@ router.get('/:studentId/motivation', (req, res) => {
     res.json(profile || {});
   } catch (error) {
     logger.error('Error fetching motivation profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to fetch motivation profile' });
+    res.status(500).json({ success: false, error: 'Failed to fetch motivation profile' });
   }
 });
 
@@ -361,7 +361,7 @@ router.post('/:studentId/motivation', (req, res) => {
     res.json({ success: true, profile: req.body });
   } catch (error) {
     logger.error('Error saving motivation profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to save motivation profile' });
+    res.status(500).json({ success: false, error: 'Failed to save motivation profile' });
   }
 });
 
@@ -375,7 +375,7 @@ router.get('/:studentId/risk-protective', (req, res) => {
     res.json(profile || {});
   } catch (error) {
     logger.error('Error fetching risk/protective profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to fetch risk/protective profile' });
+    res.status(500).json({ success: false, error: 'Failed to fetch risk/protective profile' });
   }
 });
 
@@ -435,7 +435,7 @@ router.post('/:studentId/risk-protective', (req, res) => {
     res.json({ success: true, profile: req.body });
   } catch (error) {
     logger.error('Error saving risk protective profile', 'StandardizedProfile', error);
-    res.status(500).json({ error: 'Failed to save risk protective profile' });
+    res.status(500).json({ success: false, error: 'Failed to save risk protective profile' });
   }
 });
 
