@@ -352,6 +352,8 @@ router.post('/:studentId/motivation', (req, res) => {
       longTermGoals: req.body.longTermGoals,
       obstacles: req.body.obstacles,
       supportNeeds: req.body.supportNeeds,
+      studentExpectations: req.body.studentExpectations,
+      familyExpectations: req.body.familyExpectations,
       additionalNotes: req.body.additionalNotes,
     };
     
@@ -388,20 +390,38 @@ router.post('/:studentId/risk-protective', (req, res) => {
       id: req.body.id || randomUUID(),
       studentId,
       assessmentDate: req.body.assessmentDate,
-      // Risk levels
-      academicRiskLevel: req.body.academicRiskLevel || null,
-      behavioralRiskLevel: req.body.behavioralRiskLevel || null,
-      socialEmotionalRiskLevel: req.body.emotionalRiskLevel || null,
-      attendanceRiskLevel: req.body.attendanceRiskLevel || null,
-      dropoutRisk: req.body.dropoutRisk || null,
-      // Protective and risk factors
+      // Risk levels (TEXT enum - kept for backward compatibility, derived from numeric)
+      academicRiskLevel: undefined,
+      behavioralRiskLevel: undefined,
+      socialEmotionalRiskLevel: undefined,
+      attendanceRiskLevel: req.body.attendanceRiskLevel || undefined,
+      dropoutRisk: req.body.dropoutRisk || undefined,
+      // Numeric risk levels (1-10 scale from UI sliders)
+      overallRiskLevel: req.body.overallRiskLevel || null,
+      academicRiskLevelInt: req.body.academicRiskLevel || null,
+      behavioralRiskLevelInt: req.body.behavioralRiskLevel || null,
+      emotionalRiskLevel: req.body.emotionalRiskLevel || null,
+      socialRiskLevel: req.body.socialRiskLevel || null,
+      // Protective factor levels (1-10 scale from UI sliders)
+      familySupport: req.body.familySupport || null,
+      peerSupport: req.body.peerSupport || null,
+      schoolEngagement: req.body.schoolEngagement || null,
+      resilienceLevel: req.body.resilienceLevel || null,
+      copingSkills: req.body.copingSkills || null,
+      // Protective and risk factors (arrays)
       activeProtectiveFactors: req.body.protectiveFactors || [],
-      academicRiskFactors: req.body.riskAssessmentNotes || null,
+      identifiedRiskFactors: req.body.identifiedRiskFactors || [],
+      // Risk factors (text fields - legacy)
+      academicRiskFactors: req.body.academicRiskFactors || null,
       behavioralRiskFactors: req.body.behavioralRiskFactors || null,
       socialRiskFactors: req.body.socialRiskFactors || null,
       familyRiskFactors: req.body.familyRiskFactors || null,
       // Overall assessment
       overallRiskScore: req.body.overallRiskLevel || null,
+      // Assessment and planning
+      riskAssessmentNotes: req.body.riskAssessmentNotes || null,
+      interventionPlan: req.body.interventionPlan || null,
+      monitoringFrequency: req.body.monitoringFrequency || null,
       // Interventions and follow-up
       recommendedInterventions: req.body.recommendedInterventions || [],
       assignedCounselor: req.body.assignedCounselor || null,

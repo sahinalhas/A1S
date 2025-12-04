@@ -236,6 +236,8 @@ export interface MotivationProfile {
   hasLongTermGoals?: boolean;
   goalClarityLevel?: number; // 1-10
   goalCommitmentLevel?: number; // 1-10
+  goalOrientation?: string;
+  resilienceLevel?: number; // 1-10
   
   // Future vision
   careerAspirations: string[];
@@ -252,6 +254,10 @@ export interface MotivationProfile {
   obstacles?: string;
   supportNeeds?: string;
   
+  // Expectations (from UI forms)
+  studentExpectations?: string;
+  familyExpectations?: string;
+  
   additionalNotes?: string;
   assessedBy?: string;
   created_at?: string;
@@ -265,15 +271,30 @@ export interface RiskProtectiveProfile {
   studentId: string;
   assessmentDate: string;
   
-  // Risk levels (calculated or assessed)
+  // Risk levels (TEXT enum for backward compatibility)
   academicRiskLevel?: 'DÜŞÜK' | 'ORTA' | 'YÜKSEK' | 'KRİTİK';
   behavioralRiskLevel?: 'DÜŞÜK' | 'ORTA' | 'YÜKSEK' | 'KRİTİK';
   socialEmotionalRiskLevel?: 'DÜŞÜK' | 'ORTA' | 'YÜKSEK' | 'KRİTİK';
   attendanceRiskLevel?: 'DÜŞÜK' | 'ORTA' | 'YÜKSEK' | 'KRİTİK';
   dropoutRisk?: 'DÜŞÜK' | 'ORTA' | 'YÜKSEK' | 'KRİTİK';
   
+  // Numeric risk levels (1-10 scale for UI sliders)
+  overallRiskLevel?: number;
+  academicRiskLevelInt?: number;
+  behavioralRiskLevelInt?: number;
+  emotionalRiskLevel?: number;
+  socialRiskLevel?: number;
+  
+  // Protective factor levels (1-10 scale)
+  familySupport?: number;
+  peerSupport?: number;
+  schoolEngagement?: number;
+  resilienceLevel?: number;
+  copingSkills?: number;
+  
   // Protective factors (from PROTECTIVE_FACTORS)
   activeProtectiveFactors: string[];
+  identifiedRiskFactors?: string[];
   
   // Risk factors (text but categorized)
   academicRiskFactors?: string;
@@ -283,6 +304,11 @@ export interface RiskProtectiveProfile {
   
   // Overall assessment
   overallRiskScore?: number; // 0-100 calculated score
+  
+  // Assessment and planning
+  riskAssessmentNotes?: string;
+  interventionPlan?: string;
+  monitoringFrequency?: 'GÜN' | 'HAFTA' | 'AY' | 'ÜÇAY' | 'YARI_YIL';
   
   // Action items
   recommendedInterventions: string[]; // from INTERVENTION_TYPES

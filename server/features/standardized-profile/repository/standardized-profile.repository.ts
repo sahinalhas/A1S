@@ -348,8 +348,9 @@ export class StandardizedProfileRepository {
         id, studentId, assessmentDate, primaryMotivationSources, careerAspirations,
         academicGoals, goalClarityLevel, intrinsicMotivation, extrinsicMotivation,
         persistenceLevel, futureOrientationLevel, shortTermGoals, longTermGoals,
-        obstacles, supportNeeds, additionalNotes, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+        obstacles, supportNeeds, studentExpectations, familyExpectations,
+        additionalNotes, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
       ON CONFLICT(id) DO UPDATE SET
         assessmentDate = excluded.assessmentDate,
         primaryMotivationSources = excluded.primaryMotivationSources,
@@ -364,6 +365,8 @@ export class StandardizedProfileRepository {
         longTermGoals = excluded.longTermGoals,
         obstacles = excluded.obstacles,
         supportNeeds = excluded.supportNeeds,
+        studentExpectations = excluded.studentExpectations,
+        familyExpectations = excluded.familyExpectations,
         additionalNotes = excluded.additionalNotes,
         updated_at = CURRENT_TIMESTAMP
     `);
@@ -384,6 +387,8 @@ export class StandardizedProfileRepository {
       profile.longTermGoals,
       profile.obstacles,
       profile.supportNeeds,
+      profile.studentExpectations,
+      profile.familyExpectations,
       profile.additionalNotes
     );
   }
@@ -403,11 +408,16 @@ export class StandardizedProfileRepository {
       INSERT INTO risk_protective_profiles (
         id, studentId, assessmentDate, academicRiskLevel, behavioralRiskLevel,
         socialEmotionalRiskLevel, attendanceRiskLevel, dropoutRisk,
-        activeProtectiveFactors, academicRiskFactors, behavioralRiskFactors,
+        overallRiskLevel, academicRiskLevelInt, behavioralRiskLevelInt,
+        emotionalRiskLevel, socialRiskLevel,
+        familySupport, peerSupport, schoolEngagement, resilienceLevel, copingSkills,
+        activeProtectiveFactors, identifiedRiskFactors,
+        academicRiskFactors, behavioralRiskFactors,
         socialRiskFactors, familyRiskFactors, overallRiskScore,
+        riskAssessmentNotes, interventionPlan, monitoringFrequency,
         recommendedInterventions, assignedCounselor, parentNotified,
         nextAssessmentDate, additionalNotes, assessedBy, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
       ON CONFLICT(id) DO UPDATE SET
         assessmentDate = excluded.assessmentDate,
         academicRiskLevel = excluded.academicRiskLevel,
@@ -415,12 +425,26 @@ export class StandardizedProfileRepository {
         socialEmotionalRiskLevel = excluded.socialEmotionalRiskLevel,
         attendanceRiskLevel = excluded.attendanceRiskLevel,
         dropoutRisk = excluded.dropoutRisk,
+        overallRiskLevel = excluded.overallRiskLevel,
+        academicRiskLevelInt = excluded.academicRiskLevelInt,
+        behavioralRiskLevelInt = excluded.behavioralRiskLevelInt,
+        emotionalRiskLevel = excluded.emotionalRiskLevel,
+        socialRiskLevel = excluded.socialRiskLevel,
+        familySupport = excluded.familySupport,
+        peerSupport = excluded.peerSupport,
+        schoolEngagement = excluded.schoolEngagement,
+        resilienceLevel = excluded.resilienceLevel,
+        copingSkills = excluded.copingSkills,
         activeProtectiveFactors = excluded.activeProtectiveFactors,
+        identifiedRiskFactors = excluded.identifiedRiskFactors,
         academicRiskFactors = excluded.academicRiskFactors,
         behavioralRiskFactors = excluded.behavioralRiskFactors,
         socialRiskFactors = excluded.socialRiskFactors,
         familyRiskFactors = excluded.familyRiskFactors,
         overallRiskScore = excluded.overallRiskScore,
+        riskAssessmentNotes = excluded.riskAssessmentNotes,
+        interventionPlan = excluded.interventionPlan,
+        monitoringFrequency = excluded.monitoringFrequency,
         recommendedInterventions = excluded.recommendedInterventions,
         assignedCounselor = excluded.assignedCounselor,
         parentNotified = excluded.parentNotified,
@@ -439,12 +463,26 @@ export class StandardizedProfileRepository {
       profile.socialEmotionalRiskLevel || null,
       profile.attendanceRiskLevel || null,
       profile.dropoutRisk || null,
+      profile.overallRiskLevel || null,
+      profile.academicRiskLevelInt || null,
+      profile.behavioralRiskLevelInt || null,
+      profile.emotionalRiskLevel || null,
+      profile.socialRiskLevel || null,
+      profile.familySupport || null,
+      profile.peerSupport || null,
+      profile.schoolEngagement || null,
+      profile.resilienceLevel || null,
+      profile.copingSkills || null,
       JSON.stringify(profile.activeProtectiveFactors || []),
+      JSON.stringify(profile.identifiedRiskFactors || []),
       profile.academicRiskFactors || null,
       profile.behavioralRiskFactors || null,
       profile.socialRiskFactors || null,
       profile.familyRiskFactors || null,
       profile.overallRiskScore || null,
+      profile.riskAssessmentNotes || null,
+      profile.interventionPlan || null,
+      profile.monitoringFrequency || null,
       JSON.stringify(profile.recommendedInterventions || []),
       profile.assignedCounselor || null,
       profile.parentNotified ? 1 : 0,
