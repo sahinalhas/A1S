@@ -10,6 +10,7 @@ import { StudentProfileTabs } from "./StudentProfileTabs";
 import { useAIContext } from "@/lib/contexts/ai-context";
 
 interface FormDirtyContextType {
+  setIsDirty: (dirty: boolean) => void;
   registerFormSubmit: (id: string, submitFn: () => Promise<void>) => void;
   unregisterFormSubmit: (id: string) => void;
 }
@@ -42,6 +43,7 @@ export default function StudentProfile() {
  const [scoresData, setScoresData] = useState<StudentScoresData | null>(null);
  const [loadingScores, setLoadingScores] = useState(false);
  const [formSubmits] = useState<Map<string, () => Promise<void>>>(new Map());
+ const [isDirty, setIsDirty] = useState(false);
  
  const { student, studentId, isLoading, error } = useStudentProfile(id);
  const { data } = useStudentData(studentId, refresh);
@@ -76,7 +78,7 @@ export default function StudentProfile() {
  if (!studentId) return;
  
  setLoadingScores(true);
- fetch(`/api/student-profile/${studentId}/scores`)
+ fetch(`/api/ai/student-profile/${studentId}/scores`)
  .then(res => res.json())
  .then(result => {
  if (result.success) {
@@ -172,7 +174,7 @@ export default function StudentProfile() {
  }
 
  return (
- <FormDirtyContext.Provider value={{ registerFormSubmit, unregisterFormSubmit }}>
+ <FormDirtyContext.Provider value={{ setIsDirty, registerFormSubmit, unregisterFormSubmit }}>
    <motion.div
    initial={{ opacity: 0, y: 20 }}
    animate={{ opacity: 1, y: 0 }}
