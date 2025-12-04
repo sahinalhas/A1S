@@ -857,54 +857,62 @@ const weeklyScheduleStyles = StyleSheet.create({
     alignItems: 'center',
   },
   successTrackerSection: {
-    marginTop: 8,
-    padding: 8,
+    marginTop: 4,
+    padding: 6,
     backgroundColor: '#f0f9ff',
-    borderRadius: 4,
+    borderRadius: 3,
     borderWidth: 1,
     borderColor: '#bfdbfe',
   },
   trackerTitle: {
-    fontSize: 9,
+    fontSize: 8,
     fontWeight: 700,
     color: '#1e3a5f',
-    marginBottom: 5,
+    marginBottom: 4,
     textAlign: 'center',
   },
   monthCalendar: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: 2,
+    flexDirection: 'column',
+    gap: 1,
   },
-  calendarDayBox: {
-    width: 16,
-    height: 16,
+  calendarWeekHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 2,
+  },
+  calendarWeekHeaderCell: {
+    width: '14%',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 2,
+  },
+  calendarWeekHeaderText: {
+    fontSize: 4.5,
+    fontWeight: 700,
+    color: '#475569',
+  },
+  calendarWeek: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 0.5,
+  },
+  calendarDayBox: {
+    width: '14%',
+    height: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 1,
     backgroundColor: '#ffffff',
     borderWidth: 0.5,
     borderColor: '#cbd5e1',
-    marginBottom: 2,
   },
   calendarDayFilled: {
     backgroundColor: '#fef3c7',
     borderColor: '#fcd34d',
   },
   calendarDayNumber: {
-    fontSize: 5,
+    fontSize: 4.5,
     fontWeight: 700,
     color: '#1e3a5f',
-  },
-  progressSummary: {
-    marginTop: 6,
-    alignItems: 'center',
-  },
-  progressText: {
-    fontSize: 7,
-    color: '#1e3a5f',
-    fontWeight: 700,
   },
   weeklyDayHeaderBg: {
     flexDirection: 'row',
@@ -1107,20 +1115,22 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
   const monthName = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'][month];
   const nextMonthName = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'][(month + 1) % 12];
   
-  // Takvim günlerini render et - ayın sonu 7 günden az ise gelecek ayı da ekle
-  const calendarDays: Array<{ day: number; isCurrentMonth: boolean; monthLabel: string }> = [];
+  // Takvim günlerini haftalık grid formatına çevir
+  const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0=Pazar, 1=Pazartesi, ...
+  const adjustedFirstDay = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1; // 0=Pazartesi
   
-  // Mevcut ayın günleri
-  for (let i = 1; i <= daysInMonth; i++) {
-    calendarDays.push({ day: i, isCurrentMonth: true, monthLabel: monthName });
-  }
+  const calendarWeeks: Array<Array<number | null>> = [];
+  let currentWeek: Array<number | null> = Array(adjustedFirstDay).fill(null);
   
-  // Eğer ayın sonu 7 günden az ise gelecek ayı da ekle
-  if (remainingDays < 7) {
-    const nextMonthDays = 7 - remainingDays;
-    for (let i = 1; i <= nextMonthDays; i++) {
-      calendarDays.push({ day: i, isCurrentMonth: false, monthLabel: nextMonthName });
+  for (let day = 1; day <= daysInMonth; day++) {
+    currentWeek.push(day);
+    if (currentWeek.length === 7) {
+      calendarWeeks.push(currentWeek);
+      currentWeek = [];
     }
+  }
+  if (currentWeek.length > 0) {
+    calendarWeeks.push(currentWeek);
   }
 
   return (
@@ -1161,29 +1171,34 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
           </View>
           <View style={weeklyScheduleStyles.column}>
             {rightDays.map(renderDaySection)}
-          </View>
-        </View>
-
-        {/* Monthly Success Tracker */}
-        <View style={weeklyScheduleStyles.successTrackerSection}>
-          <Text style={weeklyScheduleStyles.trackerTitle}>Aylık Başarı Takibi - {monthName} {year}{remainingDays < 7 ? ` / ${nextMonthName}` : ''}</Text>
-          <View style={weeklyScheduleStyles.monthCalendar}>
-            {calendarDays.map((dayObj, idx) => {
-              const isDayPassed = dayObj.isCurrentMonth && dayObj.day <= today;
-              return (
-                <View 
-                  key={`${dayObj.monthLabel}-${dayObj.day}`}
-                  style={isDayPassed ? [weeklyScheduleStyles.calendarDayBox, weeklyScheduleStyles.calendarDayFilled] : weeklyScheduleStyles.calendarDayBox}
-                >
-                  <Text style={weeklyScheduleStyles.calendarDayNumber}>{dayObj.day}</Text>
+            
+            {/* Monthly Success Tracker */}
+            <View style={weeklyScheduleStyles.successTrackerSection}>
+              <Text style={weeklyScheduleStyles.trackerTitle}>Aylık Başarı Takibi - {monthName} {year}</Text>
+              <View style={weeklyScheduleStyles.monthCalendar}>
+                {/* Hafta başlığı */}
+                <View style={weeklyScheduleStyles.calendarWeekHeader}>
+                  {['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pz'].map((day) => (
+                    <View key={day} style={weeklyScheduleStyles.calendarWeekHeaderCell}>
+                      <Text style={weeklyScheduleStyles.calendarWeekHeaderText}>{day}</Text>
+                    </View>
+                  ))}
                 </View>
-              );
-            })}
-          </View>
-          <View style={weeklyScheduleStyles.progressSummary}>
-            <Text style={weeklyScheduleStyles.progressText}>
-              İlerleme: {today}/{daysInMonth} ({Math.round((today / daysInMonth) * 100)}%)
-            </Text>
+                {/* Takvim haftaları */}
+                {calendarWeeks.map((week, weekIdx) => (
+                  <View key={`week-${weekIdx}`} style={weeklyScheduleStyles.calendarWeek}>
+                    {week.map((day, dayIdx) => (
+                      <View 
+                        key={`day-${weekIdx}-${dayIdx}`}
+                        style={day && day <= today ? [weeklyScheduleStyles.calendarDayBox, weeklyScheduleStyles.calendarDayFilled] : weeklyScheduleStyles.calendarDayBox}
+                      >
+                        {day && <Text style={weeklyScheduleStyles.calendarDayNumber}>{day}</Text>}
+                      </View>
+                    ))}
+                  </View>
+                ))}
+              </View>
+            </View>
           </View>
         </View>
 
