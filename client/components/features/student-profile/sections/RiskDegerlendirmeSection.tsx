@@ -71,7 +71,7 @@ interface RiskDegerlendirmeSectionProps {
 }
 
 export default function RiskDegerlendirmeSection({ studentId, riskFactors, onUpdate }: RiskDegerlendirmeSectionProps) {
- const { setIsDirty, registerFormSubmit, unregisterFormSubmit } = useFormDirty();
+ const { registerFormSubmit, unregisterFormSubmit } = useFormDirty();
  const componentId = useMemo(() => crypto.randomUUID(), []);
  const form = useForm<RiskAssessmentFormValues>({
  resolver: zodResolver(riskAssessmentSchema),
@@ -90,13 +90,6 @@ export default function RiskDegerlendirmeSection({ studentId, riskFactors, onUpd
  nextAssessmentDate:"",
  },
  });
-
- useEffect(() => {
- const subscription = form.watch(() => {
- setIsDirty(true);
- });
- return () => subscription.unsubscribe();
- }, [form, setIsDirty]);
 
  const onSubmitRef = useRef<(data: RiskAssessmentFormValues) => Promise<void>>();
 

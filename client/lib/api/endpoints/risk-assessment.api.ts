@@ -5,7 +5,10 @@ type RiskFactors = any;
 
 export async function getRiskFactorsByStudent(studentId: string): Promise<RiskFactors[]> {
  return createApiHandler(
- () => apiClient.get<RiskFactors[]>(`/api/risk-factors/${studentId}`, { showErrorToast: false }),
+ async () => {
+   const result = await apiClient.get<RiskFactors>(`/api/standardized-profile/${studentId}/risk-protective`, { showErrorToast: false });
+   return result && Object.keys(result).length > 0 ? [result] : [];
+ },
  [],
  API_ERROR_MESSAGES.RISK_FACTORS.LOAD_ERROR
  )();
@@ -13,21 +16,25 @@ export async function getRiskFactorsByStudent(studentId: string): Promise<RiskFa
 
 export async function getLatestRiskFactors(studentId: string): Promise<RiskFactors | null> {
  return createApiHandler(
- () => apiClient.get<RiskFactors>(`/api/risk-factors/${studentId}/latest`, { showErrorToast: false }),
+ async () => {
+   const result = await apiClient.get<RiskFactors>(`/api/standardized-profile/${studentId}/risk-protective`, { showErrorToast: false });
+   return result && Object.keys(result).length > 0 ? result : null;
+ },
  null
  )();
 }
 
 export async function addRiskFactors(risk: RiskFactors): Promise<void> {
- return apiClient.post('/api/risk-factors', risk, {
+ const { studentId, ...riskData } = risk;
+ return apiClient.post(`/api/standardized-profile/${studentId}/risk-protective`, riskData, {
  showSuccessToast: true,
  successMessage: API_ERROR_MESSAGES.RISK_FACTORS.ADD_SUCCESS,
  errorMessage: API_ERROR_MESSAGES.RISK_FACTORS.ADD_ERROR,
  });
 }
 
-export async function updateRiskFactors(id: string, updates: Partial<RiskFactors>): Promise<void> {
- return apiClient.put(`/api/risk-factors/${id}`, updates, {
+export async function updateRiskFactors(studentId: string, updates: Partial<RiskFactors>): Promise<void> {
+ return apiClient.post(`/api/standardized-profile/${studentId}/risk-protective`, updates, {
  showSuccessToast: true,
  successMessage: API_ERROR_MESSAGES.RISK_FACTORS.UPDATE_SUCCESS,
  errorMessage: API_ERROR_MESSAGES.RISK_FACTORS.UPDATE_ERROR,

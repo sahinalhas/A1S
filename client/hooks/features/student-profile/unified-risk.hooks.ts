@@ -67,7 +67,7 @@ export function useUnifiedRisk(studentId: string, student?: Student) {
  // Risk faktörlerini al (API'den)
  let riskFactors = null;
  try {
- const response = await apiClient.get(`/api/risk-assessment/${studentId}`);
+ const response = await apiClient.get(`/api/standardized-profile/${studentId}/risk-protective`);
  riskFactors = validateRiskFactors(response);
  } catch (error) {
  console.error('Risk factors fetch error:', error);
@@ -76,7 +76,7 @@ export function useUnifiedRisk(studentId: string, student?: Student) {
  // Enhanced risk'i al (AI tabanlı)
  let enhancedRisk = null;
  try {
- const response = await apiClient.get(`/api/enhanced-risk/${studentId}`);
+ const response = await apiClient.get(`/api/enhanced-risk/score/${studentId}`);
  enhancedRisk = validateEnhancedRisk(response);
  } catch (error) {
  console.error('Enhanced risk fetch error:', error);
@@ -85,7 +85,7 @@ export function useUnifiedRisk(studentId: string, student?: Student) {
  // Risk & Protective profile'ı al
  let riskProtectiveProfile = null;
  try {
- const response = await apiClient.get(`/api/student-profile/${studentId}/risk-protective`);
+ const response = await apiClient.get(`/api/standardized-profile/${studentId}/risk-protective`);
  riskProtectiveProfile = validateRiskProtectiveProfile(response);
  } catch (error) {
  console.error('Risk protective profile fetch error:', error);
