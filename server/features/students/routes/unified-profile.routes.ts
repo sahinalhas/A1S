@@ -32,7 +32,7 @@ export async function getUnifiedProfile(req: Request, res: Response) {
     const student = studentStmt.get(id) as Student | undefined;
     
     if (!student) {
-      return res.status(404).json({ error: 'Öğrenci bulunamadı' });
+      return res.status(404).json({ success: false, error: 'Öğrenci bulunamadı' });
     }
     
     // Profil tamlık kontrolü
@@ -84,7 +84,7 @@ export async function getUnifiedProfile(req: Request, res: Response) {
     });
   } catch (error) {
     logger.error('Unified profile error', 'UnifiedProfileRoutes', error);
-    res.status(500).json({ error: 'Profil verileri alınırken hata oluştu' });
+    res.status(500).json({ success: false, error: 'Profil verileri alınırken hata oluştu' });
   }
 }
 
@@ -102,7 +102,7 @@ export async function initializeProfiles(req: Request, res: Response) {
     const student = studentStmt.get(id);
     
     if (!student) {
-      return res.status(404).json({ error: 'Öğrenci bulunamadı' });
+      return res.status(404).json({ success: false, error: 'Öğrenci bulunamadı' });
     }
     
     // Eksik profilleri oluştur
@@ -117,7 +117,7 @@ export async function initializeProfiles(req: Request, res: Response) {
     });
   } catch (error) {
     logger.error('Profile initialization error', 'UnifiedProfileRoutes', error);
-    res.status(500).json({ error: 'Profiller oluşturulurken hata oluştu' });
+    res.status(500).json({ success: false, error: 'Profiller oluşturulurken hata oluştu' });
   }
 }
 
@@ -138,7 +138,7 @@ export async function recalculateScores(req: Request, res: Response) {
     });
   } catch (error) {
     logger.error('Score recalculation error', 'UnifiedProfileRoutes', error);
-    res.status(500).json({ error: 'Skorlar hesaplanırken hata oluştu' });
+    res.status(500).json({ success: false, error: 'Skorlar hesaplanırken hata oluştu' });
   }
 }
 
@@ -155,7 +155,7 @@ export async function getQualityReport(req: Request, res: Response) {
     const student = studentStmt.get(id);
     
     if (!student) {
-      return res.status(404).json({ error: 'Öğrenci bulunamadı' });
+      return res.status(404).json({ success: false, error: 'Öğrenci bulunamadı' });
     }
     
     const { StandardizedProfileRepository } = await import('../../standardized-profile/repository/standardized-profile.repository.js');
@@ -181,6 +181,6 @@ export async function getQualityReport(req: Request, res: Response) {
     res.json(qualityReport);
   } catch (error) {
     logger.error('Quality report error', 'UnifiedProfileRoutes', error);
-    res.status(500).json({ error: 'Kalite raporu oluşturulurken hata oluştu' });
+    res.status(500).json({ success: false, error: 'Kalite raporu oluşturulurken hata oluştu' });
   }
 }

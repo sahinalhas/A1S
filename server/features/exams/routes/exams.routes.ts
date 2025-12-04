@@ -9,7 +9,7 @@ export const getExamResultsByStudent: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -17,7 +17,7 @@ export const getExamResultsByStudent: RequestHandler = (req, res) => {
     res.json(results);
   } catch (error) {
     console.error('Error fetching exam results:', error);
-    res.status(500).json({ error: 'Sınav sonuçları yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Sınav sonuçları yüklenemedi' });
   }
 };
 
@@ -27,7 +27,7 @@ export const getExamResultsByType: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -35,7 +35,7 @@ export const getExamResultsByType: RequestHandler = (req, res) => {
     res.json(results);
   } catch (error) {
     console.error('Error fetching exam results by type:', error);
-    res.status(500).json({ error: 'Sınav sonuçları yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Sınav sonuçları yüklenemedi' });
   }
 };
 
@@ -46,7 +46,7 @@ export const getLatestExamResult: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -54,7 +54,7 @@ export const getLatestExamResult: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error fetching latest exam result:', error);
-    res.status(500).json({ error: 'En son sınav sonucu yüklenemedi' });
+    res.status(500).json({ success: false, error: 'En son sınav sonucu yüklenemedi' });
   }
 };
 
@@ -64,7 +64,7 @@ export const getExamProgressAnalysis: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -72,7 +72,7 @@ export const getExamProgressAnalysis: RequestHandler = (req, res) => {
     res.json(results);
   } catch (error) {
     console.error('Error fetching exam progress analysis:', error);
-    res.status(500).json({ error: 'Sınav gelişim analizi yüklenemedi' });
+    res.status(500).json({ success: false, error: 'Sınav gelişim analizi yüklenemedi' });
   }
 };
 
@@ -81,7 +81,7 @@ export const createExamResult: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -104,7 +104,7 @@ export const createExamResult: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error creating exam result:', error);
-    res.status(500).json({ error: 'Sınav sonucu kaydedilemedi' });
+    res.status(500).json({ success: false, error: 'Sınav sonucu kaydedilemedi' });
   }
 };
 
@@ -114,7 +114,7 @@ export const updateExamResult: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -122,7 +122,7 @@ export const updateExamResult: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error updating exam result:', error);
-    res.status(500).json({ error: 'Sınav sonucu güncellenemedi' });
+    res.status(500).json({ success: false, error: 'Sınav sonucu güncellenemedi' });
   }
 };
 
@@ -132,7 +132,7 @@ export const deleteExamResult: RequestHandler = (req, res) => {
     const schoolId = (req as SchoolScopedRequest).schoolId;
     
     if (!schoolId) {
-      res.status(400).json({ error: 'School ID is required' });
+      res.status(400).json({ success: false, error: 'School ID is required' });
       return;
     }
     
@@ -140,6 +140,6 @@ export const deleteExamResult: RequestHandler = (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Error deleting exam result:', error);
-    res.status(500).json({ error: 'Sınav sonucu silinemedi' });
+    res.status(500).json({ success: false, error: 'Sınav sonucu silinemedi' });
   }
 };

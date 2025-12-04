@@ -153,12 +153,21 @@ export function isApiSuccessResponse<T>(
 export function isApiErrorResponse(
   response: unknown
 ): response is ApiErrorResponse {
-  return (
-    typeof response === 'object' &&
-    response !== null &&
-    'success' in response &&
-    (response as ApiResponse).success === false
-  );
+  if (typeof response !== 'object' || response === null) {
+    return false;
+  }
+  
+  const resp = response as Record<string, unknown>;
+  
+  if ('success' in resp && resp.success === false) {
+    return true;
+  }
+  
+  if ('error' in resp && typeof resp.error === 'string' && !('success' in resp)) {
+    return true;
+  }
+  
+  return false;
 }
 
 export function isPaginatedResponse<T>(
