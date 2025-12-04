@@ -185,7 +185,49 @@ export function createHolisticProfileTables(db: Database.Database): void {
     );
   `);
 
-  // Create indexes
+  // Migration: Add schoolId to holistic profile tables BEFORE creating indexes
+  const holisticTables = [
+    'student_future_vision',
+    'student_strengths',
+    'student_interests',
+    'student_sel_competencies',
+    'student_socioeconomic'
+  ];
+
+  // First check if students table has schoolId column
+  let studentsHasSchoolId = false;
+  try {
+    const studentsColumns = db.prepare(`PRAGMA table_info(students)`).all() as Array<{ name: string }>;
+    studentsHasSchoolId = studentsColumns.some(col => col.name === 'schoolId');
+  } catch (err) {
+    console.warn('Warning checking students table:', err);
+  }
+
+  for (const tableName of holisticTables) {
+    try {
+      const columnCheck = db.prepare(`PRAGMA table_info(${tableName})`).all() as Array<{ name: string }>;
+      const hasSchoolId = columnCheck.some(col => col.name === 'schoolId');
+
+      if (!hasSchoolId) {
+        db.exec(`ALTER TABLE ${tableName} ADD COLUMN schoolId TEXT;`);
+        // Only populate schoolId from students if students table has the column
+        if (studentsHasSchoolId) {
+          db.exec(`
+            UPDATE ${tableName} 
+            SET schoolId = (SELECT schoolId FROM students WHERE students.id = ${tableName}.studentId)
+            WHERE schoolId IS NULL AND studentId IS NOT NULL
+          `);
+        }
+        console.log(`✅ Added schoolId to ${tableName}`);
+      }
+    } catch (err: any) {
+      if (!err.message?.includes('duplicate column')) {
+        console.warn(`Warning migrating ${tableName}:`, err.message);
+      }
+    }
+  }
+
+  // Create indexes AFTER migration ensures columns exist
   db.exec(`
     CREATE INDEX IF NOT EXISTS idx_future_vision_student ON student_future_vision(studentId);
     CREATE INDEX IF NOT EXISTS idx_future_vision_date ON student_future_vision(assessmentDate);
@@ -203,36 +245,6 @@ export function createHolisticProfileTables(db: Database.Database): void {
     CREATE INDEX IF NOT EXISTS idx_socioeconomic_date ON student_socioeconomic(assessmentDate);
     CREATE INDEX IF NOT EXISTS idx_socioeconomic_school ON student_socioeconomic(schoolId);
   `);
-
-  // Migration: Add schoolId to holistic profile tables
-  const holisticTables = [
-    'student_future_vision',
-    'student_strengths',
-    'student_interests',
-    'student_sel_competencies',
-    'student_socioeconomic'
-  ];
-
-  for (const tableName of holisticTables) {
-    try {
-      const columnCheck = db.prepare(`PRAGMA table_info(${tableName})`).all() as Array<{ name: string }>;
-      const hasSchoolId = columnCheck.some(col => col.name === 'schoolId');
-
-      if (!hasSchoolId) {
-        db.exec(`ALTER TABLE ${tableName} ADD COLUMN schoolId TEXT;`);
-        db.exec(`
-          UPDATE ${tableName} 
-          SET schoolId = (SELECT schoolId FROM students WHERE students.id = ${tableName}.studentId)
-          WHERE schoolId IS NULL AND studentId IS NOT NULL
-        `);
-        console.log(`✅ Added schoolId to ${tableName}`);
-      }
-    } catch (err: any) {
-      if (!err.message?.includes('duplicate column')) {
-        console.warn(`Warning migrating ${tableName}:`, err.message);
-      }
-    }
-  }
 
   console.log('✅ Holistic profile tables created successfully');
 }
