@@ -76,12 +76,20 @@ export const saveStudentsHandler: RequestHandler = (req, res) => {
     const students = req.body as BulkStudentSaveInput;
     
     studentsService.bulkSaveStudentsForSchool(students, schoolId);
-    res.json({ success: true, message: `${students.length} ${SUCCESS_MESSAGES.STUDENTS_SAVED}` });
+    res.json(
+      createSuccessResponse(
+        { count: students.length },
+        `${students.length} ${SUCCESS_MESSAGES.STUDENTS_SAVED}`
+      )
+    );
   } catch (error) {
     logger.error('Error saving students', 'StudentsRoutes', error);
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    
-    res.status(500).json({ success: false, error: ERROR_MESSAGES.FAILED_TO_SAVE_STUDENTS });
+    res.status(500).json(
+      createErrorResponse(
+        ERROR_MESSAGES.FAILED_TO_SAVE_STUDENTS,
+        ApiErrorCode.INTERNAL_ERROR
+      )
+    );
   }
 };
 
@@ -90,19 +98,22 @@ export const getStudentAcademics: RequestHandler = (req, res) => {
     const { id } = req.params as StudentIdParam;
     
     const academics = studentsService.getStudentAcademics(id);
-    // ✅ UYUMSUZLUK FIX: Transform response to match frontend expectations
     const transformedAcademics = academics.map(record => ({
       id: record.id?.toString() || `${record.studentId}_${record.year}_${record.semester}`,
       studentId: record.studentId,
-      term: `${record.year}/${record.semester}`, // Frontend expects combined format
+      term: `${record.year}/${record.semester}`,
       gpa: record.gpa,
       notes: record.notes
-      // Remove 'exams' field - frontend doesn't use it
     }));
-    res.json(transformedAcademics);
+    res.json(createSuccessResponse(transformedAcademics));
   } catch (error) {
     logger.error('Error fetching student academics', 'StudentsRoutes', error);
-    res.status(500).json({ success: false, error: ERROR_MESSAGES.FAILED_TO_FETCH_ACADEMICS });
+    res.status(500).json(
+      createErrorResponse(
+        ERROR_MESSAGES.FAILED_TO_FETCH_ACADEMICS,
+        ApiErrorCode.INTERNAL_ERROR
+      )
+    );
   }
 };
 
@@ -135,10 +146,15 @@ export const getStudentProgress: RequestHandler = (req, res) => {
     const { id } = req.params as StudentIdParam;
     
     const progress = studentsService.getStudentProgress(id);
-    res.json(progress);
+    res.json(createSuccessResponse(progress));
   } catch (error) {
     logger.error('Error fetching student progress', 'StudentsRoutes', error);
-    res.status(500).json({ success: false, error: ERROR_MESSAGES.FAILED_TO_FETCH_STUDENT_PROGRESS });
+    res.status(500).json(
+      createErrorResponse(
+        ERROR_MESSAGES.FAILED_TO_FETCH_STUDENT_PROGRESS,
+        ApiErrorCode.INTERNAL_ERROR
+      )
+    );
   }
 };
 
@@ -150,31 +166,33 @@ export const deleteStudentHandler: RequestHandler = (req, res) => {
     
     const result = studentsService.removeStudent(id, schoolId, confirmationName);
     
-    res.json({ 
-      success: true, 
-      message: `${result.studentName} başarıyla silindi` 
-    });
+    res.json(
+      createSuccessResponse(
+        { studentName: result.studentName },
+        `${result.studentName} başarıyla silindi`
+      )
+    );
   } catch (error) {
     logger.error('Error deleting student', 'StudentsRoutes', error);
     const errorMessage = error instanceof Error ? error.message : String(error);
     
     if (errorMessage.includes("bulunamadı") || errorMessage.includes("ait değil")) {
-      return res.status(404).json({ 
-        success: false, 
-        error: errorMessage 
-      });
+      return res.status(404).json(
+        createErrorResponse(errorMessage, ApiErrorCode.NOT_FOUND)
+      );
     }
     
     if (errorMessage.includes("onaylamak")) {
-      return res.status(400).json({ 
-        success: false, 
-        error: errorMessage 
-      });
+      return res.status(400).json(
+        createErrorResponse(errorMessage, ApiErrorCode.VALIDATION_ERROR)
+      );
     }
     
-    res.status(500).json({ 
-      success: false, 
-      error: "Öğrenci silinirken hata oluştu" 
-    });
+    res.status(500).json(
+      createErrorResponse(
+        "Öğrenci silinirken hata oluştu",
+        ApiErrorCode.INTERNAL_ERROR
+      )
+    );
   }
 };

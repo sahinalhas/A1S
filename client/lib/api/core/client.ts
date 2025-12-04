@@ -149,8 +149,18 @@ class ApiClient {
  }
 
  private extractData<TResponse>(response: TResponse): TResponse {
- if (response && typeof response === 'object' && 'data' in response && !Array.isArray(response)) {
- return (response as any).data as TResponse;
+ if (response && typeof response === 'object' && !Array.isArray(response)) {
+ const respObj = response as Record<string, unknown>;
+ 
+ // Handle { success: true, data: ... } format from standardized API responses
+ if ('success' in respObj && respObj.success === true && 'data' in respObj) {
+ return respObj.data as TResponse;
+ }
+ 
+ // Handle { data: ... } format (without success field, for backward compatibility)
+ if ('data' in respObj && !('success' in respObj) && !('error' in respObj)) {
+ return respObj.data as TResponse;
+ }
  }
  return response;
  }
