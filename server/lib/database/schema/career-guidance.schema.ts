@@ -32,10 +32,12 @@ CREATE TABLE IF NOT EXISTS student_career_targets (
   careerId TEXT NOT NULL,
   setDate TEXT NOT NULL,
   notes TEXT,
+  schoolId TEXT,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (studentId) REFERENCES students(id) ON DELETE CASCADE,
   FOREIGN KEY (careerId) REFERENCES career_profiles(id) ON DELETE CASCADE,
+  FOREIGN KEY (schoolId) REFERENCES schools(id) ON DELETE CASCADE,
   UNIQUE(studentId, careerId)
 );`;
 
@@ -46,8 +48,10 @@ CREATE TABLE IF NOT EXISTS career_analysis_history (
   studentId TEXT NOT NULL,
   analysisDate TEXT NOT NULL,
   analysisResult TEXT NOT NULL,
+  schoolId TEXT,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (studentId) REFERENCES students(id) ON DELETE CASCADE
+  FOREIGN KEY (studentId) REFERENCES students(id) ON DELETE CASCADE,
+  FOREIGN KEY (schoolId) REFERENCES schools(id) ON DELETE CASCADE
 );`;
 
 // Kariyer Yol Haritaları Tablosu
@@ -64,10 +68,12 @@ CREATE TABLE IF NOT EXISTS career_roadmaps (
   aiRecommendations TEXT NOT NULL,
   motivationalInsights TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'COMPLETED', 'ARCHIVED')),
+  schoolId TEXT,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (studentId) REFERENCES students(id) ON DELETE CASCADE,
-  FOREIGN KEY (targetCareerId) REFERENCES career_profiles(id) ON DELETE CASCADE
+  FOREIGN KEY (targetCareerId) REFERENCES career_profiles(id) ON DELETE CASCADE,
+  FOREIGN KEY (schoolId) REFERENCES schools(id) ON DELETE CASCADE
 );`;
 
 // Öğrenci Yetkinlikleri Tablosu (Derived from existing profiles)
@@ -86,9 +92,11 @@ CREATE TABLE IF NOT EXISTS student_competencies (
   source TEXT NOT NULL CHECK (source IN (
     'ACADEMIC', 'SOCIAL_EMOTIONAL', 'TALENTS', 'SELF_ASSESSMENT', 'TEACHER_ASSESSMENT'
   )),
+  schoolId TEXT,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (studentId) REFERENCES students(id) ON DELETE CASCADE,
+  FOREIGN KEY (schoolId) REFERENCES schools(id) ON DELETE CASCADE,
   UNIQUE(studentId, competencyId)
 );`;
 
@@ -133,14 +141,39 @@ export function createCareerGuidanceTables(db: Database): void {
   db.exec(createCareerRoadmapsTable);
   db.exec(createStudentCompetenciesTable);
   db.exec(createCareerGuidanceIndexes);
-  
+
+  // Migration: Add schoolId to career guidance tables
+  const careerTables = ['student_career_targets', 'career_analysis_history', 'career_roadmaps', 'student_competencies'];
+
+  for (const tableName of careerTables) {
+    try {
+      const columnCheck = db.prepare(`PRAGMA table_info(${tableName})`).all() as Array<{ name: string }>;
+      const hasSchoolId = columnCheck.some(col => col.name === 'schoolId');
+
+      if (!hasSchoolId) {
+        db.exec(`ALTER TABLE ${tableName} ADD COLUMN schoolId TEXT;`);
+        db.exec(`
+          UPDATE ${tableName} 
+          SET schoolId = (SELECT schoolId FROM students WHERE students.id = ${tableName}.studentId)
+          WHERE schoolId IS NULL AND studentId IS NOT NULL
+        `);
+        db.exec(`CREATE INDEX IF NOT EXISTS idx_${tableName}_schoolId ON ${tableName}(schoolId);`);
+        console.log(`✅ Added schoolId to ${tableName}`);
+      }
+    } catch (err: any) {
+      if (!err.message?.includes('duplicate column')) {
+        console.warn(`Warning migrating ${tableName}:`, err.message);
+      }
+    }
+  }
+
   console.log('✅ Career Guidance tables created successfully');
 }
 
 // Seed data - Meslek profillerini yükle
 export async function seedCareerProfiles(db: Database): Promise<void> {
   const { CAREER_PROFILES } = await import('../../../../shared/constants/career-profiles.js');
-  
+
   const insert = db.prepare(`
     INSERT OR REPLACE INTO career_profiles (
       id, name, category, description, requiredEducationLevel,

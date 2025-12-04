@@ -62,9 +62,11 @@ export function createSurveysTables(db: Database.Database): void {
       maxResponses INTEGER,
       status TEXT DEFAULT 'DRAFT',
       createdBy TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (templateId) REFERENCES survey_templates (id) ON DELETE CASCADE
+      FOREIGN KEY (templateId) REFERENCES survey_templates (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -80,10 +82,12 @@ export function createSurveysTables(db: Database.Database): void {
       submittedAt DATETIME,
       ipAddress TEXT,
       userAgent TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (distributionId) REFERENCES survey_distributions (id) ON DELETE CASCADE,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE SET NULL
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE SET NULL,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -95,9 +99,11 @@ export function createSurveysTables(db: Database.Database): void {
       questions TEXT NOT NULL,
       responses TEXT,
       completed BOOLEAN DEFAULT FALSE,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -110,17 +116,53 @@ export function createSurveysTables(db: Database.Database): void {
       qrCode TEXT,
       isUsed BOOLEAN DEFAULT FALSE,
       usedAt DATETIME,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (distributionId) REFERENCES survey_distributions (id) ON DELETE CASCADE,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE SET NULL
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE SET NULL,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
+
+  // Migration: Add schoolId to survey tables
+  const surveyTables = [
+    { name: 'survey_distributions', studentColumn: null, parentTable: null },
+    { name: 'survey_responses', studentColumn: 'studentId', parentTable: 'students' },
+    { name: 'surveys', studentColumn: 'studentId', parentTable: 'students' },
+    { name: 'survey_distribution_codes', studentColumn: 'studentId', parentTable: 'students' }
+  ];
+
+  for (const table of surveyTables) {
+    try {
+      const columnCheck = db.prepare(`PRAGMA table_info(${table.name})`).all() as Array<{ name: string }>;
+      const hasSchoolId = columnCheck.some(col => col.name === 'schoolId');
+
+      if (!hasSchoolId) {
+        db.exec(`ALTER TABLE ${table.name} ADD COLUMN schoolId TEXT;`);
+
+        if (table.studentColumn && table.parentTable) {
+          db.exec(`
+            UPDATE ${table.name} 
+            SET schoolId = (SELECT schoolId FROM ${table.parentTable} WHERE ${table.parentTable}.id = ${table.name}.${table.studentColumn})
+            WHERE schoolId IS NULL AND ${table.studentColumn} IS NOT NULL
+          `);
+        }
+
+        db.exec(`CREATE INDEX IF NOT EXISTS idx_${table.name}_schoolId ON ${table.name}(schoolId);`);
+        console.log(`✅ Added schoolId to ${table.name}`);
+      }
+    } catch (err: any) {
+      if (!err.message?.includes('duplicate column')) {
+        console.warn(`Warning migrating ${table.name}:`, err.message);
+      }
+    }
+  }
 }
 
 export function seedSurveysDefaultTemplates(db: Database.Database): void {
   const checkTemplate = db.prepare('SELECT id FROM survey_templates WHERE id = ?');
-  
+
   const upsertTemplate = db.prepare(`
     INSERT INTO survey_templates (id, title, description, isActive, createdBy, tags, targetAudience, created_at, updated_at)
     VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
@@ -145,7 +187,7 @@ export function seedSurveysDefaultTemplates(db: Database.Database): void {
   `);
 
   let seededCount = 0;
-  
+
   const allSurveyTemplates = [
     ...DEFAULT_SURVEY_TEMPLATES,
     ...DEFAULT_SURVEY_TEMPLATES_LIFE_WINDOW,
@@ -163,11 +205,11 @@ export function seedSurveysDefaultTemplates(db: Database.Database): void {
     ...DEFAULT_SURVEY_TEMPLATES_INTERNET_ADDICTION,
     ...DEFAULT_SURVEY_TEMPLATES_WHO_AM_I
   ];
-  
+
   const seedTransaction = db.transaction(() => {
     for (const surveyTemplate of allSurveyTemplates) {
       const templateExists = checkTemplate.get(surveyTemplate.template.id);
-      
+
       upsertTemplate.run(
         surveyTemplate.template.id,
         surveyTemplate.template.title,
@@ -184,7 +226,7 @@ export function seedSurveysDefaultTemplates(db: Database.Database): void {
 
       surveyTemplate.questions.forEach((question, index) => {
         const questionId = question.id || `${surveyTemplate.template.id}-q-${index}`;
-        
+
         insertQuestion.run(
           questionId,
           surveyTemplate.template.id,
@@ -199,7 +241,7 @@ export function seedSurveysDefaultTemplates(db: Database.Database): void {
   });
 
   seedTransaction();
-  
+
   if (seededCount > 0) {
     console.log(`✅ Varsayılan anketler yüklendi: ${seededCount} yeni anket`);
   }

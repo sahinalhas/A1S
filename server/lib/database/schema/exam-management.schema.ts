@@ -56,7 +56,7 @@ export function createExamManagementTables(db: Database.Database): void {
   try {
     const columnCheck = db.prepare(`PRAGMA table_info(exam_sessions)`).all() as Array<{ name: string }>;
     const hasSchoolId = columnCheck.some(col => col.name === 'school_id');
-    
+
     if (!hasSchoolId) {
       db.exec(`ALTER TABLE exam_sessions ADD COLUMN school_id TEXT DEFAULT 'school-default-001';`);
       console.log('✅ Added school_id column to exam_sessions');
@@ -95,18 +95,38 @@ export function createExamManagementTables(db: Database.Database): void {
       wrong_count INTEGER DEFAULT 0,
       empty_count INTEGER DEFAULT 0,
       net_score REAL DEFAULT 0,
+      school_id TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (session_id) REFERENCES exam_sessions (id) ON DELETE CASCADE,
       FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE,
       FOREIGN KEY (subject_id) REFERENCES exam_subjects (id) ON DELETE CASCADE,
+      FOREIGN KEY (school_id) REFERENCES schools (id) ON DELETE CASCADE,
       UNIQUE(session_id, student_id, subject_id)
     );
     
     CREATE INDEX IF NOT EXISTS idx_exam_session_results_session ON exam_session_results(session_id);
     CREATE INDEX IF NOT EXISTS idx_exam_session_results_student ON exam_session_results(student_id);
     CREATE INDEX IF NOT EXISTS idx_exam_session_results_subject ON exam_session_results(subject_id);
+    CREATE INDEX IF NOT EXISTS idx_exam_session_results_school ON exam_session_results(school_id);
   `);
+
+  // Migration: Add school_id to exam_session_results
+  try {
+    const columnCheck = db.prepare(`PRAGMA table_info(exam_session_results)`).all() as Array<{ name: string }>;
+    const hasSchoolId = columnCheck.some(col => col.name === 'school_id');
+    if (!hasSchoolId) {
+      db.exec(`ALTER TABLE exam_session_results ADD COLUMN school_id TEXT;`);
+      db.exec(`
+        UPDATE exam_session_results 
+        SET school_id = (SELECT schoolId FROM students WHERE students.id = exam_session_results.student_id)
+        WHERE school_id IS NULL AND student_id IS NOT NULL
+      `);
+      console.log('✅ Added school_id to exam_session_results');
+    }
+  } catch (err: any) {
+    console.warn('Warning migrating exam_session_results:', err.message);
+  }
 
   // Okul Sınavları (Dönem sonu, yazılılar vb.)
   db.exec(`
@@ -121,15 +141,35 @@ export function createExamManagementTables(db: Database.Database): void {
       semester TEXT,
       year INTEGER,
       notes TEXT,
+      school_id TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (school_id) REFERENCES schools (id) ON DELETE CASCADE
     );
     
     CREATE INDEX IF NOT EXISTS idx_school_exam_results_student ON school_exam_results(student_id);
     CREATE INDEX IF NOT EXISTS idx_school_exam_results_date ON school_exam_results(exam_date);
     CREATE INDEX IF NOT EXISTS idx_school_exam_results_semester ON school_exam_results(semester, year);
+    CREATE INDEX IF NOT EXISTS idx_school_exam_results_school ON school_exam_results(school_id);
   `);
+
+  // Migration: Add school_id to school_exam_results
+  try {
+    const columnCheck = db.prepare(`PRAGMA table_info(school_exam_results)`).all() as Array<{ name: string }>;
+    const hasSchoolId = columnCheck.some(col => col.name === 'school_id');
+    if (!hasSchoolId) {
+      db.exec(`ALTER TABLE school_exam_results ADD COLUMN school_id TEXT;`);
+      db.exec(`
+        UPDATE school_exam_results 
+        SET school_id = (SELECT schoolId FROM students WHERE students.id = school_exam_results.student_id)
+        WHERE school_id IS NULL AND student_id IS NOT NULL
+      `);
+      console.log('✅ Added school_id to school_exam_results');
+    }
+  } catch (err: any) {
+    console.warn('Warning migrating school_exam_results:', err.message);
+  }
 }
 
 /**
@@ -138,7 +178,7 @@ export function createExamManagementTables(db: Database.Database): void {
  */
 export function seedExamData(db: Database.Database): void {
   const checkData = db.prepare('SELECT COUNT(*) as count FROM exam_types').get() as { count: number };
-  
+
   // Eğer veri varsa seed etme
   if (checkData.count > 0) {
     return;
@@ -251,16 +291,36 @@ export function createAdvancedExamTables(db: Database.Database): void {
       status TEXT DEFAULT 'active' CHECK (status IN ('active', 'achieved', 'cancelled')),
       priority TEXT DEFAULT 'medium' CHECK (priority IN ('high', 'medium', 'low')),
       notes TEXT,
+      school_id TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE,
       FOREIGN KEY (exam_type_id) REFERENCES exam_types (id) ON DELETE CASCADE,
-      FOREIGN KEY (subject_id) REFERENCES exam_subjects (id) ON DELETE SET NULL
+      FOREIGN KEY (subject_id) REFERENCES exam_subjects (id) ON DELETE SET NULL,
+      FOREIGN KEY (school_id) REFERENCES schools (id) ON DELETE CASCADE
     );
     
     CREATE INDEX IF NOT EXISTS idx_exam_goals_student ON student_exam_goals(student_id);
     CREATE INDEX IF NOT EXISTS idx_exam_goals_status ON student_exam_goals(status);
+    CREATE INDEX IF NOT EXISTS idx_exam_goals_school ON student_exam_goals(school_id);
   `);
+
+  // Migration: Add school_id to student_exam_goals
+  try {
+    const columnCheck = db.prepare(`PRAGMA table_info(student_exam_goals)`).all() as Array<{ name: string }>;
+    const hasSchoolId = columnCheck.some(col => col.name === 'school_id');
+    if (!hasSchoolId) {
+      db.exec(`ALTER TABLE student_exam_goals ADD COLUMN school_id TEXT;`);
+      db.exec(`
+        UPDATE student_exam_goals 
+        SET school_id = (SELECT schoolId FROM students WHERE students.id = student_exam_goals.student_id)
+        WHERE school_id IS NULL AND student_id IS NOT NULL
+      `);
+      console.log('✅ Added school_id to student_exam_goals');
+    }
+  } catch (err: any) {
+    console.warn('Warning migrating student_exam_goals:', err.message);
+  }
 
   // Soru Analizi (Question Level Analysis)
   db.exec(`
@@ -275,16 +335,36 @@ export function createAdvancedExamTables(db: Database.Database): void {
       difficulty_score REAL DEFAULT 0,
       discrimination_index REAL DEFAULT 0,
       avg_response_time INTEGER,
+      school_id TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (session_id) REFERENCES exam_sessions (id) ON DELETE CASCADE,
       FOREIGN KEY (subject_id) REFERENCES exam_subjects (id) ON DELETE CASCADE,
+      FOREIGN KEY (school_id) REFERENCES schools (id) ON DELETE CASCADE,
       UNIQUE(session_id, subject_id, question_number)
     );
     
     CREATE INDEX IF NOT EXISTS idx_question_analysis_session ON question_analysis(session_id);
     CREATE INDEX IF NOT EXISTS idx_question_analysis_difficulty ON question_analysis(difficulty_score);
+    CREATE INDEX IF NOT EXISTS idx_question_analysis_school ON question_analysis(school_id);
   `);
+
+  // Migration: Add school_id to question_analysis
+  try {
+    const columnCheck = db.prepare(`PRAGMA table_info(question_analysis)`).all() as Array<{ name: string }>;
+    const hasSchoolId = columnCheck.some(col => col.name === 'school_id');
+    if (!hasSchoolId) {
+      db.exec(`ALTER TABLE question_analysis ADD COLUMN school_id TEXT;`);
+      db.exec(`
+        UPDATE question_analysis 
+        SET school_id = (SELECT school_id FROM exam_sessions WHERE exam_sessions.id = question_analysis.session_id)
+        WHERE school_id IS NULL AND session_id IS NOT NULL
+      `);
+      console.log('✅ Added school_id to question_analysis');
+    }
+  } catch (err: any) {
+    console.warn('Warning migrating question_analysis:', err.message);
+  }
 
   // Konu Performans Isı Haritası (Subject Performance Heatmap)
   db.exec(`
@@ -299,16 +379,36 @@ export function createAdvancedExamTables(db: Database.Database): void {
       last_12_avg REAL DEFAULT 0,
       total_sessions INTEGER DEFAULT 0,
       strength_level TEXT DEFAULT 'moderate' CHECK (strength_level IN ('weak', 'moderate', 'strong')),
+      school_id TEXT,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE,
       FOREIGN KEY (subject_id) REFERENCES exam_subjects (id) ON DELETE CASCADE,
       FOREIGN KEY (exam_type_id) REFERENCES exam_types (id) ON DELETE CASCADE,
+      FOREIGN KEY (school_id) REFERENCES schools (id) ON DELETE CASCADE,
       UNIQUE(student_id, subject_id, exam_type_id)
     );
     
     CREATE INDEX IF NOT EXISTS idx_heatmap_student ON subject_performance_heatmap(student_id);
     CREATE INDEX IF NOT EXISTS idx_heatmap_strength ON subject_performance_heatmap(strength_level);
+    CREATE INDEX IF NOT EXISTS idx_heatmap_school ON subject_performance_heatmap(school_id);
   `);
+
+  // Migration: Add school_id to subject_performance_heatmap
+  try {
+    const columnCheck = db.prepare(`PRAGMA table_info(subject_performance_heatmap)`).all() as Array<{ name: string }>;
+    const hasSchoolId = columnCheck.some(col => col.name === 'school_id');
+    if (!hasSchoolId) {
+      db.exec(`ALTER TABLE subject_performance_heatmap ADD COLUMN school_id TEXT;`);
+      db.exec(`
+        UPDATE subject_performance_heatmap 
+        SET school_id = (SELECT schoolId FROM students WHERE students.id = subject_performance_heatmap.student_id)
+        WHERE school_id IS NULL AND student_id IS NOT NULL
+      `);
+      console.log('✅ Added school_id to subject_performance_heatmap');
+    }
+  } catch (err: any) {
+    console.warn('Warning migrating subject_performance_heatmap:', err.message);
+  }
 
   // Benchmark Verileri (Benchmarking Data)
   db.exec(`
@@ -324,16 +424,36 @@ export function createAdvancedExamTables(db: Database.Database): void {
       total_participants INTEGER,
       deviation_from_avg REAL DEFAULT 0,
       performance_category TEXT CHECK (performance_category IN ('excellent', 'good', 'average', 'needs_improvement')),
+      school_id TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (session_id) REFERENCES exam_sessions (id) ON DELETE CASCADE,
       FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (school_id) REFERENCES schools (id) ON DELETE CASCADE,
       UNIQUE(session_id, student_id)
     );
     
     CREATE INDEX IF NOT EXISTS idx_benchmarks_session ON exam_benchmarks(session_id);
     CREATE INDEX IF NOT EXISTS idx_benchmarks_student ON exam_benchmarks(student_id);
     CREATE INDEX IF NOT EXISTS idx_benchmarks_percentile ON exam_benchmarks(percentile);
+    CREATE INDEX IF NOT EXISTS idx_benchmarks_school ON exam_benchmarks(school_id);
   `);
+
+  // Migration: Add school_id to exam_benchmarks
+  try {
+    const columnCheck = db.prepare(`PRAGMA table_info(exam_benchmarks)`).all() as Array<{ name: string }>;
+    const hasSchoolId = columnCheck.some(col => col.name === 'school_id');
+    if (!hasSchoolId) {
+      db.exec(`ALTER TABLE exam_benchmarks ADD COLUMN school_id TEXT;`);
+      db.exec(`
+        UPDATE exam_benchmarks 
+        SET school_id = (SELECT schoolId FROM students WHERE students.id = exam_benchmarks.student_id)
+        WHERE school_id IS NULL AND student_id IS NOT NULL
+      `);
+      console.log('✅ Added school_id to exam_benchmarks');
+    }
+  } catch (err: any) {
+    console.warn('Warning migrating exam_benchmarks:', err.message);
+  }
 
   // Zaman Analizi (Time Analysis)
   db.exec(`
@@ -348,14 +468,34 @@ export function createAdvancedExamTables(db: Database.Database): void {
       last_exam_date TEXT,
       performance_time_correlation REAL DEFAULT 0,
       improvement_velocity REAL DEFAULT 0,
+      school_id TEXT,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE,
       FOREIGN KEY (exam_type_id) REFERENCES exam_types (id) ON DELETE CASCADE,
+      FOREIGN KEY (school_id) REFERENCES schools (id) ON DELETE CASCADE,
       UNIQUE(student_id, exam_type_id)
     );
     
     CREATE INDEX IF NOT EXISTS idx_time_analysis_student ON exam_time_analysis(student_id);
+    CREATE INDEX IF NOT EXISTS idx_time_analysis_school ON exam_time_analysis(school_id);
   `);
+
+  // Migration: Add school_id to exam_time_analysis
+  try {
+    const columnCheck = db.prepare(`PRAGMA table_info(exam_time_analysis)`).all() as Array<{ name: string }>;
+    const hasSchoolId = columnCheck.some(col => col.name === 'school_id');
+    if (!hasSchoolId) {
+      db.exec(`ALTER TABLE exam_time_analysis ADD COLUMN school_id TEXT;`);
+      db.exec(`
+        UPDATE exam_time_analysis 
+        SET school_id = (SELECT schoolId FROM students WHERE students.id = exam_time_analysis.student_id)
+        WHERE school_id IS NULL AND student_id IS NOT NULL
+      `);
+      console.log('✅ Added school_id to exam_time_analysis');
+    }
+  } catch (err: any) {
+    console.warn('Warning migrating exam_time_analysis:', err.message);
+  }
 
   // Tahminsel Analitik (Predictive Analytics)
   db.exec(`
@@ -371,14 +511,34 @@ export function createAdvancedExamTables(db: Database.Database): void {
       success_probability REAL DEFAULT 0,
       improvement_needed REAL DEFAULT 0,
       ai_insights TEXT,
+      school_id TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE,
-      FOREIGN KEY (exam_type_id) REFERENCES exam_types (id) ON DELETE CASCADE
+      FOREIGN KEY (exam_type_id) REFERENCES exam_types (id) ON DELETE CASCADE,
+      FOREIGN KEY (school_id) REFERENCES schools (id) ON DELETE CASCADE
     );
     
     CREATE INDEX IF NOT EXISTS idx_predictions_student ON exam_predictions(student_id);
     CREATE INDEX IF NOT EXISTS idx_predictions_risk ON exam_predictions(risk_level);
+    CREATE INDEX IF NOT EXISTS idx_predictions_school ON exam_predictions(school_id);
   `);
+
+  // Migration: Add school_id to exam_predictions
+  try {
+    const columnCheck = db.prepare(`PRAGMA table_info(exam_predictions)`).all() as Array<{ name: string }>;
+    const hasSchoolId = columnCheck.some(col => col.name === 'school_id');
+    if (!hasSchoolId) {
+      db.exec(`ALTER TABLE exam_predictions ADD COLUMN school_id TEXT;`);
+      db.exec(`
+        UPDATE exam_predictions 
+        SET school_id = (SELECT schoolId FROM students WHERE students.id = exam_predictions.student_id)
+        WHERE school_id IS NULL AND student_id IS NOT NULL
+      `);
+      console.log('✅ Added school_id to exam_predictions');
+    }
+  } catch (err: any) {
+    console.warn('Warning migrating exam_predictions:', err.message);
+  }
 
   // Otomatik Uyarılar (Automated Alerts)
   db.exec(`
@@ -392,14 +552,34 @@ export function createAdvancedExamTables(db: Database.Database): void {
       data TEXT,
       is_read BOOLEAN DEFAULT FALSE,
       action_taken BOOLEAN DEFAULT FALSE,
+      school_id TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (school_id) REFERENCES schools (id) ON DELETE CASCADE
     );
     
     CREATE INDEX IF NOT EXISTS idx_alerts_student ON exam_alerts(student_id);
     CREATE INDEX IF NOT EXISTS idx_alerts_type ON exam_alerts(alert_type);
     CREATE INDEX IF NOT EXISTS idx_alerts_read ON exam_alerts(is_read);
+    CREATE INDEX IF NOT EXISTS idx_alerts_school ON exam_alerts(school_id);
   `);
+
+  // Migration: Add school_id to exam_alerts
+  try {
+    const columnCheck = db.prepare(`PRAGMA table_info(exam_alerts)`).all() as Array<{ name: string }>;
+    const hasSchoolId = columnCheck.some(col => col.name === 'school_id');
+    if (!hasSchoolId) {
+      db.exec(`ALTER TABLE exam_alerts ADD COLUMN school_id TEXT;`);
+      db.exec(`
+        UPDATE exam_alerts 
+        SET school_id = (SELECT schoolId FROM students WHERE students.id = exam_alerts.student_id)
+        WHERE school_id IS NULL AND student_id IS NOT NULL
+      `);
+      console.log('✅ Added school_id to exam_alerts');
+    }
+  } catch (err: any) {
+    console.warn('Warning migrating exam_alerts:', err.message);
+  }
 
   // Gelişim Planları (Development Plans)
   db.exec(`
@@ -414,15 +594,35 @@ export function createAdvancedExamTables(db: Database.Database): void {
       improvement_suggestions TEXT,
       action_items TEXT,
       status TEXT DEFAULT 'active' CHECK (status IN ('active', 'completed', 'archived')),
+      school_id TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE,
-      FOREIGN KEY (exam_type_id) REFERENCES exam_types (id) ON DELETE CASCADE
+      FOREIGN KEY (exam_type_id) REFERENCES exam_types (id) ON DELETE CASCADE,
+      FOREIGN KEY (school_id) REFERENCES schools (id) ON DELETE CASCADE
     );
     
     CREATE INDEX IF NOT EXISTS idx_dev_plans_student ON student_development_plans(student_id);
     CREATE INDEX IF NOT EXISTS idx_dev_plans_status ON student_development_plans(status);
+    CREATE INDEX IF NOT EXISTS idx_dev_plans_school ON student_development_plans(school_id);
   `);
+
+  // Migration: Add school_id to student_development_plans
+  try {
+    const columnCheck = db.prepare(`PRAGMA table_info(student_development_plans)`).all() as Array<{ name: string }>;
+    const hasSchoolId = columnCheck.some(col => col.name === 'school_id');
+    if (!hasSchoolId) {
+      db.exec(`ALTER TABLE student_development_plans ADD COLUMN school_id TEXT;`);
+      db.exec(`
+        UPDATE student_development_plans 
+        SET school_id = (SELECT schoolId FROM students WHERE students.id = student_development_plans.student_id)
+        WHERE school_id IS NULL AND student_id IS NOT NULL
+      `);
+      console.log('✅ Added school_id to student_development_plans');
+    }
+  } catch (err: any) {
+    console.warn('Warning migrating student_development_plans:', err.message);
+  }
 
   console.log('✅ Advanced exam management tables created successfully');
 }

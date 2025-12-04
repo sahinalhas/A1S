@@ -34,9 +34,11 @@ export function createHolisticProfileTables(db: Database.Database): void {
       progressTracking TEXT,
       notes TEXT,
       assessedBy TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -62,9 +64,11 @@ export function createHolisticProfileTables(db: Database.Database): void {
       growthMindsetIndicators TEXT,
       notes TEXT,
       assessedBy TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -95,9 +99,11 @@ export function createHolisticProfileTables(db: Database.Database): void {
       explorationAreas TEXT,
       notes TEXT,
       assessedBy TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -133,9 +139,11 @@ export function createHolisticProfileTables(db: Database.Database): void {
       adaptability INTEGER,
       notes TEXT,
       assessedBy TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -169,9 +177,11 @@ export function createHolisticProfileTables(db: Database.Database): void {
       specialCircumstances TEXT,
       notes TEXT,
       assessedBy TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -179,15 +189,50 @@ export function createHolisticProfileTables(db: Database.Database): void {
   db.exec(`
     CREATE INDEX IF NOT EXISTS idx_future_vision_student ON student_future_vision(studentId);
     CREATE INDEX IF NOT EXISTS idx_future_vision_date ON student_future_vision(assessmentDate);
+    CREATE INDEX IF NOT EXISTS idx_future_vision_school ON student_future_vision(schoolId);
     CREATE INDEX IF NOT EXISTS idx_strengths_student ON student_strengths(studentId);
     CREATE INDEX IF NOT EXISTS idx_strengths_date ON student_strengths(assessmentDate);
+    CREATE INDEX IF NOT EXISTS idx_strengths_school ON student_strengths(schoolId);
     CREATE INDEX IF NOT EXISTS idx_interests_student ON student_interests(studentId);
     CREATE INDEX IF NOT EXISTS idx_interests_date ON student_interests(assessmentDate);
+    CREATE INDEX IF NOT EXISTS idx_interests_school ON student_interests(schoolId);
     CREATE INDEX IF NOT EXISTS idx_sel_student ON student_sel_competencies(studentId);
     CREATE INDEX IF NOT EXISTS idx_sel_date ON student_sel_competencies(assessmentDate);
+    CREATE INDEX IF NOT EXISTS idx_sel_school ON student_sel_competencies(schoolId);
     CREATE INDEX IF NOT EXISTS idx_socioeconomic_student ON student_socioeconomic(studentId);
     CREATE INDEX IF NOT EXISTS idx_socioeconomic_date ON student_socioeconomic(assessmentDate);
+    CREATE INDEX IF NOT EXISTS idx_socioeconomic_school ON student_socioeconomic(schoolId);
   `);
-  
+
+  // Migration: Add schoolId to holistic profile tables
+  const holisticTables = [
+    'student_future_vision',
+    'student_strengths',
+    'student_interests',
+    'student_sel_competencies',
+    'student_socioeconomic'
+  ];
+
+  for (const tableName of holisticTables) {
+    try {
+      const columnCheck = db.prepare(`PRAGMA table_info(${tableName})`).all() as Array<{ name: string }>;
+      const hasSchoolId = columnCheck.some(col => col.name === 'schoolId');
+
+      if (!hasSchoolId) {
+        db.exec(`ALTER TABLE ${tableName} ADD COLUMN schoolId TEXT;`);
+        db.exec(`
+          UPDATE ${tableName} 
+          SET schoolId = (SELECT schoolId FROM students WHERE students.id = ${tableName}.studentId)
+          WHERE schoolId IS NULL AND studentId IS NOT NULL
+        `);
+        console.log(`✅ Added schoolId to ${tableName}`);
+      }
+    } catch (err: any) {
+      if (!err.message?.includes('duplicate column')) {
+        console.warn(`Warning migrating ${tableName}:`, err.message);
+      }
+    }
+  }
+
   console.log('✅ Holistic profile tables created successfully');
 }

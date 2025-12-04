@@ -18,7 +18,7 @@ function safeAddSchoolIdColumn(db: Database.Database, tableName: string): void {
       }
     }
   }
-  
+
   try {
     db.exec(`CREATE INDEX IF NOT EXISTS idx_${tableName}_schoolId ON ${tableName}(schoolId)`);
   } catch (err: any) {
@@ -67,7 +67,9 @@ export function createAcademicTables(db: Database.Database): void {
       description TEXT,
       color TEXT,
       category TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      schoolId TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -85,8 +87,10 @@ export function createAcademicTables(db: Database.Database): void {
       difficultyScore INTEGER,
       priority INTEGER,
       deadline TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (subjectId) REFERENCES subjects (id) ON DELETE CASCADE
+      FOREIGN KEY (subjectId) REFERENCES subjects (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -335,8 +339,10 @@ export function createAcademicTables(db: Database.Database): void {
 
   // Migration: Add schoolId to existing tables
   const tablesToMigrate = [
+    'subjects',
+    'topics',
     'academic_records',
-    'interventions', 
+    'interventions',
     'progress',
     'academic_goals',
     'study_sessions',
@@ -346,20 +352,45 @@ export function createAcademicTables(db: Database.Database): void {
     'behavior_incidents',
     'attendance_records'
   ];
-  
+
   for (const tableName of tablesToMigrate) {
     safeAddSchoolIdColumn(db, tableName);
   }
 
   // Populate schoolId from students table for existing records
   try {
-    for (const tableName of tablesToMigrate) {
+    // For subjects and topics, we'll need special handling since they don't have studentId
+    // We'll set them to NULL for now and let schools claim/create their own
+
+    // For student-related tables, populate from students
+    const studentRelatedTables = [
+      'academic_records',
+      'interventions',
+      'progress',
+      'academic_goals',
+      'study_sessions',
+      'notes',
+      'study_assignments',
+      'exam_results',
+      'behavior_incidents',
+      'attendance_records'
+    ];
+
+    for (const tableName of studentRelatedTables) {
       db.exec(`
         UPDATE ${tableName} 
         SET schoolId = (SELECT schoolId FROM students WHERE students.id = ${tableName}.studentId)
         WHERE schoolId IS NULL AND studentId IS NOT NULL
       `);
     }
+
+    // For topics, populate from subjects
+    db.exec(`
+      UPDATE topics 
+      SET schoolId = (SELECT schoolId FROM subjects WHERE subjects.id = topics.subjectId)
+      WHERE schoolId IS NULL AND subjectId IS NOT NULL
+    `);
+
     console.log('✅ Migration: Populated schoolId from students for academic tables');
   } catch (err: any) {
     console.warn('Warning populating schoolId for academic tables:', err.message);
@@ -368,7 +399,7 @@ export function createAcademicTables(db: Database.Database): void {
 
 export function seedSubjectsAndTopics(db: Database.Database): void {
   const subjectCount = db.prepare('SELECT COUNT(*) as count FROM subjects').get() as { count: number };
-  
+
   if (subjectCount.count > 0) {
     console.log('✓ Dersler ve konular zaten mevcut, otomatik doldurma atlanıyor');
     return;
@@ -396,7 +427,7 @@ export function seedSubjectsAndTopics(db: Database.Database): void {
     for (const subjectData of DEFAULT_SUBJECTS) {
       let subjectId: string;
       const existingSubject = findSubject.get(subjectData.name, subjectData.category) as { id: string } | undefined;
-      
+
       if (existingSubject) {
         subjectId = existingSubject.id;
       } else {
@@ -404,14 +435,14 @@ export function seedSubjectsAndTopics(db: Database.Database): void {
         insertSubject.run(subjectId, subjectData.name, subjectData.category);
         subjectInserted++;
       }
-      
+
       if (subjectData.topics.length > 0) {
         subjectData.topics.forEach((topicData, index) => {
           const topicId = randomUUID();
           insertTopic.run(
-            topicId, 
-            subjectId, 
-            topicData.name, 
+            topicId,
+            subjectId,
+            topicData.name,
             index + 1,
             topicData.avgMinutes || 60,
             topicData.energyLevel || 'medium',
@@ -427,14 +458,14 @@ export function seedSubjectsAndTopics(db: Database.Database): void {
   insertTransaction();
 
   console.log(`✓ ${subjectInserted} ders ve ${topicInserted} konu başarıyla eklendi`);
-  
+
   const stats = db.prepare(`
     SELECT category, COUNT(*) as count 
     FROM subjects 
     WHERE category IS NOT NULL 
     GROUP BY category
   `).all() as Array<{ category: string; count: number }>;
-  
+
   console.log('📊 Kategori özeti:');
   stats.forEach((stat) => {
     const topicCountForCategory = db.prepare(`
@@ -443,7 +474,7 @@ export function seedSubjectsAndTopics(db: Database.Database): void {
       JOIN subjects s ON t.subjectId = s.id 
       WHERE s.category = ?
     `).get(stat.category) as { count: number };
-    
+
     console.log(`   ${stat.category}: ${stat.count} ders, ${topicCountForCategory.count} konu`);
   });
 }

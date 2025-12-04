@@ -29,8 +29,10 @@ export function createEvaluations360Table(db: Database.Database): void {
       evaluatorName TEXT,
       ratings TEXT,
       comments TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -42,4 +44,17 @@ export function createEvaluations360Table(db: Database.Database): void {
   safeAddColumn(db, 'evaluations_360', 'areasForImprovement', 'TEXT');
   safeAddColumn(db, 'evaluations_360', 'actionPlan', 'TEXT');
   safeAddColumn(db, 'evaluations_360', 'notes', 'TEXT');
+  safeAddColumn(db, 'evaluations_360', 'schoolId', 'TEXT');
+
+  // Migration: Add schoolId
+  try {
+    const hasSchoolId = columnExists(db, 'evaluations_360', 'schoolId');
+    if (!hasSchoolId) {
+      db.exec(`ALTER TABLE evaluations_360 ADD COLUMN schoolId TEXT;`);
+    }
+    db.exec(`UPDATE evaluations_360 SET schoolId = (SELECT schoolId FROM students WHERE students.id = evaluations_360.studentId) WHERE schoolId IS NULL;`);
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_evaluations_360_schoolId ON evaluations_360(schoolId);`);
+  } catch (err: any) {
+    if (!err.message?.includes('duplicate column')) console.warn('Warning migrating evaluations_360:', err.message);
+  }
 }

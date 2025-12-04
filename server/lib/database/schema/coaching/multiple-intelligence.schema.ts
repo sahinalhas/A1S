@@ -26,14 +26,17 @@ export function createMultipleIntelligenceTable(db: Database.Database): void {
       intrapersonal REAL DEFAULT 0,
       naturalistic REAL DEFAULT 0,
       notes TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
   safeAddColumn(db, 'multiple_intelligence', 'linguisticVerbal', 'REAL DEFAULT 0');
   safeAddColumn(db, 'multiple_intelligence', 'visualSpatial', 'REAL DEFAULT 0');
   safeAddColumn(db, 'multiple_intelligence', 'naturalistic', 'REAL DEFAULT 0');
+  safeAddColumn(db, 'multiple_intelligence', 'schoolId', 'TEXT');
 
   if (columnExists(db, 'multiple_intelligence', 'linguistic')) {
     db.exec(`
@@ -43,5 +46,17 @@ export function createMultipleIntelligenceTable(db: Database.Database): void {
           naturalistic = COALESCE(naturalist, 0)
       WHERE linguisticVerbal IS NULL OR visualSpatial IS NULL OR naturalistic IS NULL
     `);
+  }
+
+  // Migration: Add schoolId
+  try {
+    const hasSchoolId = columnExists(db, 'multiple_intelligence', 'schoolId');
+    if (!hasSchoolId) {
+      db.exec(`ALTER TABLE multiple_intelligence ADD COLUMN schoolId TEXT;`);
+    }
+    db.exec(`UPDATE multiple_intelligence SET schoolId = (SELECT schoolId FROM students WHERE students.id = multiple_intelligence.studentId) WHERE schoolId IS NULL;`);
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_multiple_intelligence_schoolId ON multiple_intelligence(schoolId);`);
+  } catch (err: any) {
+    if (!err.message?.includes('duplicate column')) console.warn('Warning migrating multiple_intelligence:', err.message);
   }
 }

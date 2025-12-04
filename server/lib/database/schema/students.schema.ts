@@ -27,7 +27,7 @@ export function createStudentsTables(db: Database.Database): void {
       FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
-  
+
   // Migration: Add studentNumber column if it doesn't exist
   try {
     db.exec(`ALTER TABLE students ADD COLUMN studentNumber TEXT;`);
@@ -67,8 +67,10 @@ export function createStudentsTables(db: Database.Database): void {
       name TEXT NOT NULL,
       type TEXT NOT NULL,
       dataUrl TEXT NOT NULL,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
 
@@ -80,8 +82,35 @@ export function createStudentsTables(db: Database.Database): void {
       status TEXT NOT NULL,
       reason TEXT,
       notes TEXT,
+      schoolId TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE
+      FOREIGN KEY (studentId) REFERENCES students (id) ON DELETE CASCADE,
+      FOREIGN KEY (schoolId) REFERENCES schools (id) ON DELETE CASCADE
     );
   `);
+
+  // Migration: Add schoolId to student_documents and attendance
+  const studentTables = ['student_documents', 'attendance'];
+
+  for (const tableName of studentTables) {
+    try {
+      const columnCheck = db.prepare(`PRAGMA table_info(${tableName})`).all() as Array<{ name: string }>;
+      const hasSchoolId = columnCheck.some(col => col.name === 'schoolId');
+
+      if (!hasSchoolId) {
+        db.exec(`ALTER TABLE ${tableName} ADD COLUMN schoolId TEXT;`);
+        db.exec(`
+          UPDATE ${tableName} 
+          SET schoolId = (SELECT schoolId FROM students WHERE students.id = ${tableName}.studentId)
+          WHERE schoolId IS NULL AND studentId IS NOT NULL
+        `);
+        db.exec(`CREATE INDEX IF NOT EXISTS idx_${tableName}_schoolId ON ${tableName}(schoolId);`);
+        console.log(`✅ Added schoolId to ${tableName}`);
+      }
+    } catch (err: any) {
+      if (!err.message?.includes('duplicate column')) {
+        console.warn(`Warning migrating ${tableName}:`, err.message);
+      }
+    }
+  }
 }
