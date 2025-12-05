@@ -3,10 +3,12 @@ import { randomUUID } from 'crypto';
 import { StandardizedProfileRepository } from '../repository/standardized-profile.repository';
 import { AggregateScoreCalculator } from '../services/aggregate-score-calculator.service';
 import getDatabase from '../../../lib/database';
+import { requireSecureAuth } from '../../../middleware/auth-secure.middleware.js';
 import { validateSchoolAccess } from '../../../middleware/school-access.middleware.js';
 import { logger } from '../../../utils/logger.js';
 
 const router = Router();
+router.use(requireSecureAuth);
 router.use(validateSchoolAccess);
 
 router.get('/intervention-stats', (req, res) => {

@@ -10,8 +10,12 @@ import { UnifiedScoringEngine } from '../../../services/unified-scoring-engine.s
 import { AIProfileAnalyzerService } from '../../../services/ai-profile-analyzer.service.js';
 import { CounselorPrompts } from '../../../prompts/counselor-prompts.js';
 import { logger } from '../../../utils/logger.js';
+import { requireSecureAuth } from '../../../middleware/auth-secure.middleware.js';
+import { validateSchoolAccess } from '../../../middleware/school-access.middleware.js';
 
 const router = Router();
+router.use(requireSecureAuth);
+router.use(validateSchoolAccess);
 
 /**
  * GET /api/ai/status
