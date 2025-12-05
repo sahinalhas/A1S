@@ -106,7 +106,7 @@ function useBreadcrumbs() {
  const crumbs = useMemo(() => {
  const map: Record<string, string> = {
 "": "Gösterge Paneli",
- ogrenci: "Öğrenci Portföyü",
+ ogrenci: "Öğrenciler",
  gorusmeler: "Görüşme & Randevu",
  anketler: "Ölçek & Anketler",
  raporlar: "Analiz & Raporlar",
@@ -128,7 +128,7 @@ function useBreadcrumbs() {
 // Modern navigation
 const navigationItems = [
  { label: "Gösterge Paneli", icon: Home, to: "/", end: true },
- { label: "Öğrenci Portföyü", icon: Users2, to: "/ogrenci" },
+ { label: "Öğrenciler", icon: Users2, to: "/ogrenci" },
  { label: "Görüşme & Randevu", icon: CalendarDays, to: "/gorusmeler" },
  {
   icon: Brain,

@@ -486,10 +486,10 @@ export default function Students() {
           <div className="flex-1">
             <Badge className="mb-2 bg-white/20 text-white border-white/30 backdrop-blur-sm text-xs">
               <Sparkles className="h-3 w-3 mr-1" />
-              Öğrenci Portföy Sistemi
+              Öğrenci Yönetim Sistemi
             </Badge>
             <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">
-              Öğrenci Portföyü
+              Öğrenciler
             </h1>
             <p className="text-sm md:text-base text-white/90 mb-4 max-w-xl leading-relaxed">
               Tüm öğrenci kayıtlarını görüntüleyin, yönetin ve analiz edin.
