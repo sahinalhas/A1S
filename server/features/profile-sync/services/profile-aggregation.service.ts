@@ -7,7 +7,7 @@ import { randomUUID } from 'crypto';
 import { DataValidationService } from './data-validation.service.js';
 import { FieldMapperService } from './field-mapper.service.js';
 import { AIProviderService } from '../../../services/ai-provider.service.js';
-import { StandardizedProfileRepository } from '../../standardized-profile/repository/standardized-profile.repository.js';
+import { StandardizedProfileRepository } from '../../student-profile/repository/standardized-profile.repository.js';
 import * as profileSyncRepo from '../repository/profile-sync.repository.js';
 import getDatabase from '../../../lib/database/index.js';
 import type { 
@@ -308,12 +308,12 @@ export class ProfileAggregationService {
   /**
    * JSON array formatını garanti eder
    */
-  private ensureJsonArray(value: any): unknown[] {
-    if (Array.isArray(value)) return value;
+  private ensureJsonArray(value: any): string[] {
+    if (Array.isArray(value)) return value.map((v: any) => String(v));
     if (typeof value === 'string') {
       try {
         const parsed = JSON.parse(value);
-        return Array.isArray(parsed) ? parsed : [value];
+        return Array.isArray(parsed) ? parsed.map((v: any) => String(v)) : [value];
       } catch {
         return [value];
       }

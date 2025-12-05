@@ -47,7 +47,7 @@ export async function getUnifiedProfile(req: Request, res: Response) {
     }
     
     // Profil kalitesi raporu
-    const { StandardizedProfileRepository } = await import('../../standardized-profile/repository/standardized-profile.repository.js');
+    const { StandardizedProfileRepository } = await import('../../student-profile/repository/standardized-profile.repository.js');
     const profileRepo = new StandardizedProfileRepository(db);
     
     const academic = profileRepo.getAcademicProfile(id);
@@ -158,7 +158,7 @@ export async function getQualityReport(req: Request, res: Response) {
       return res.status(404).json({ success: false, error: 'Öğrenci bulunamadı' });
     }
     
-    const { StandardizedProfileRepository } = await import('../../standardized-profile/repository/standardized-profile.repository.js');
+    const { StandardizedProfileRepository } = await import('../../student-profile/repository/standardized-profile.repository.js');
     const profileRepo = new StandardizedProfileRepository(db);
     
     const academic = profileRepo.getAcademicProfile(id);

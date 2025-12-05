@@ -6,8 +6,8 @@
  */
 
 import type { UnifiedStudentScores, ProfileCompleteness } from '../../shared/types/student.types.js';
-import { AggregateScoreCalculator } from '../features/standardized-profile/services/aggregate-score-calculator.service.js';
-import type { StandardizedProfileRepository } from '../features/standardized-profile/repository/standardized-profile.repository.js';
+import { AggregateScoreCalculator } from '../features/student-profile/services/aggregate-score-calculator.service.js';
+import type { StandardizedProfileRepository } from '../features/student-profile/repository/standardized-profile.repository.js';
 import getDatabase from '../lib/database.js';
 
 export class UnifiedScoringEngine {
@@ -21,7 +21,7 @@ export class UnifiedScoringEngine {
   private async initializeRepo() {
     if (!this.profileRepo) {
       const db = getDatabase();
-      const { StandardizedProfileRepository: Repo } = await import('../features/standardized-profile/repository/standardized-profile.repository.js');
+      const { StandardizedProfileRepository: Repo } = await import('../features/student-profile/repository/standardized-profile.repository.js');
       this.profileRepo = new Repo(db);
     }
     return this.profileRepo;
@@ -46,11 +46,11 @@ export class UnifiedScoringEngine {
 
     // Aggregate skorları hesapla
     const aggregateScores = this.scoreCalculator.calculateAggregateScores({
-      academic,
-      socialEmotional,
-      talentsInterests,
-      health,
-      behaviorIncidents,
+      academic: academic as any,
+      socialEmotional: socialEmotional as any,
+      talentsInterests: talentsInterests as any,
+      health: health as any,
+      behaviorIncidents: behaviorIncidents as any,
       motivation: motivation as any,
       riskProtective: riskProtective ? {
         ...riskProtective,
@@ -58,7 +58,7 @@ export class UnifiedScoringEngine {
         behavioralRiskLevel: this.mapRiskLevel(riskProtective.behavioralRiskLevel),
         socialEmotionalRiskLevel: this.mapRiskLevel(riskProtective.socialEmotionalRiskLevel),
         attendanceRiskLevel: this.mapRiskLevel(riskProtective.attendanceRiskLevel),
-        overallRiskLevel: this.mapRiskLevel(riskProtective.overallRiskLevel as any) // Cast if needed
+        overallRiskLevel: this.mapRiskLevel(riskProtective.overallRiskLevel as any)
       } as any : null
     });
 

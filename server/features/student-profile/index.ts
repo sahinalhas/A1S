@@ -3,7 +3,7 @@
  * Birleştirilmiş Öğrenci Profili Modülü
  * 
  * Combines:
- * - standardized-profile (academic, social-emotional, talents, health, interventions)
+ * - standardized-profile (academic, social-emotional, talents, health, interventions, motivation, risk-protective)
  * - holistic-profile (strengths, social relations, interests, future vision, SEL, socioeconomic)
  */
 
@@ -12,8 +12,8 @@ import { requireSecureAuth } from '../../middleware/auth-secure.middleware.js';
 import { validateSchoolAccess } from '../../middleware/school-access.middleware.js';
 import { simpleRateLimit } from '../../middleware/validation.js';
 
-import standardizedProfileRouter from '../standardized-profile/routes/standardized-profile.routes.js';
-import holisticProfileRouter from '../holistic-profile/routes/holistic-profile.routes.js';
+import standardizedProfileRouter from './routes/standardized-profile.routes.js';
+import holisticProfileRouter from './routes/holistic-profile.routes.js';
 
 const router = Router();
 

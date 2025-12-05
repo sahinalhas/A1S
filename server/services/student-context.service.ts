@@ -10,10 +10,10 @@ import getDatabase from '../lib/database.js';
 import type { StudentContext } from '../../shared/types/student-context.types.js';
 import type { UnifiedStudentScores, ProfileCompleteness } from '../../shared/types/student.types.js';
 import { PatternAnalysisService, type PatternInsight } from './pattern-analysis.service.js';
-import { getLatestSocioeconomicByStudent } from '../features/holistic-profile/repository/socioeconomic.repository.js';
-import { getLatestInterestByStudent } from '../features/holistic-profile/repository/interests.repository.js';
-import { getLatestFutureVisionByStudent } from '../features/holistic-profile/repository/future-vision.repository.js';
-import { getLatestStrengthByStudent } from '../features/holistic-profile/repository/strengths.repository.js';
+import { getLatestSocioeconomicByStudent } from '../features/student-profile/repository/socioeconomic.repository.js';
+import { getLatestInterestByStudent } from '../features/student-profile/repository/interests.repository.js';
+import { getLatestFutureVisionByStudent } from '../features/student-profile/repository/future-vision.repository.js';
+import { getLatestStrengthByStudent } from '../features/student-profile/repository/strengths.repository.js';
 import { safeJsonParseArray } from '../utils/parsers/json.js';
 
 // StudentContext artık shared/types/student-context.types.ts'den import ediliyor

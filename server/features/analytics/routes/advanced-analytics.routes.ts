@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { AdvancedAnalyticsDashboardService } from '../../../services/advanced-analytics-dashboard.service';
+import { AdvancedAnalyticsDashboardService } from '../services/advanced-analytics-dashboard.service.js';
 import { validateSchoolAccess, SchoolScopedRequest } from '../../../middleware/school-access.middleware.js';
 import * as studentsRepository from '../../students/repository/students.repository.js';
 

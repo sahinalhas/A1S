@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { EnhancedRiskPredictionService } from '../../../services/enhanced-risk-prediction.service';
+import { EnhancedRiskPredictionService } from '../services/enhanced-risk-prediction.service.js';
 import { validateSchoolAccess } from '../../../middleware/school-access.middleware.js';
 
 const router = Router();
