@@ -16,15 +16,15 @@ import { simpleRateLimit } from '../../middleware/validation.js';
 import { requireAIEnabled } from '../../middleware/ai-guard.middleware.js';
 import { validateBody, validateParams } from '../../middleware/zod-validation.middleware.js';
 
-import aiAssistantRoutes from '../ai-assistant/routes/ai-assistant.routes.js';
-import sessionAnalysisRoutes from '../ai-assistant/routes/session-analysis.routes.js';
-import * as meetingPrepRoutes from '../ai-assistant/routes/meeting-prep.routes.js';
-import * as recommendationsRoutes from '../ai-assistant/routes/recommendations.routes.js';
-import aiUtilitiesRouter from '../ai-assistant/routes/ai-utilities.routes.js';
+import aiAssistantRoutes from './routes/ai-assistant.routes.js';
+import sessionAnalysisRoutes from './routes/session-analysis.routes.js';
+import * as meetingPrepRoutes from './routes/meeting-prep.routes.js';
+import * as recommendationsRoutes from './routes/recommendations.routes.js';
+import aiUtilitiesRouter from './routes/ai-utilities.routes.js';
 
-import aiSuggestionsRoutes from '../ai-suggestions/routes/ai-suggestions.routes.js';
+import aiSuggestionsRoutes from './routes/ai-suggestions.routes.js';
 
-import * as deepAnalysisRoutes from '../deep-analysis/routes/deep-analysis.routes.js';
+import * as deepAnalysisRoutes from './routes/deep-analysis.routes.js';
 import {
   StudentIdParamSchema,
   ClassIdParamSchema,

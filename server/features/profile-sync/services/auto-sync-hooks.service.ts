@@ -10,7 +10,7 @@
  */
 
 import { ProfileAggregationService } from './profile-aggregation.service.js';
-import { SuggestionQueueService } from '../../ai-suggestions/services/suggestion-queue.service.js';
+import { SuggestionQueueService } from '../../ai-services/services/suggestion-queue.service.js';
 import type { ProfileUpdateRequest, DataSource } from '../types/profile-sync.types.js';
 import type { CreateSuggestionRequest, ProposedChange } from '../../../../shared/types/ai-suggestion.types.js';
 import { asyncOpMonitor } from '../../../services/async-operation-monitor.service.js';

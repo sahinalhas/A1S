@@ -151,7 +151,7 @@ featureRegistry.use('/ai-assistant', aiServicesRouter);
 featureRegistry.use('/ai-suggestions', aiServicesRouter);
 featureRegistry.use('/deep-analysis', aiServicesRouter);
 featureRegistry.use('/advanced-ai-analysis', aiServicesRouter);
-import aiUtilitiesRouter from './ai-assistant/routes/ai-utilities.routes.js';
+import aiUtilitiesRouter from './ai-services/routes/ai-utilities.routes.js';
 featureRegistry.use('/ai', aiUtilitiesRouter);
 
 // =================== ANALYTICS & REPORTING DOMAIN (CONSOLIDATED) ===================
