@@ -197,16 +197,10 @@ router.get('/students/:studentId/roadmap', async (req: Request, res: Response) =
 
     const roadmap = service.getStudentActiveRoadmap(studentId);
 
-    if (!roadmap) {
-      return res.status(404).json({
-        success: false,
-        message: 'Aktif kariyer yol haritası bulunamadı'
-      });
-    }
-
+    // Return null data instead of 404 - not having a roadmap is not an error
     res.json({
       success: true,
-      data: roadmap
+      data: roadmap || null
     });
   } catch (error) {
     console.error('Error fetching roadmap:', error);

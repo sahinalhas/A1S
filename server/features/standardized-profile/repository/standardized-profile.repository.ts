@@ -1,5 +1,5 @@
 import type Database from 'better-sqlite3';
-import type { 
+import type {
   AcademicProfile,
   SocialEmotionalProfile,
   TalentsInterestsProfile,
@@ -11,7 +11,7 @@ import type {
 } from '../../../../shared/types/standardized-profile.types.js';
 
 export class StandardizedProfileRepository {
-  constructor(private db: Database.Database) {}
+  constructor(private db: Database.Database) { }
 
   getAcademicProfile(studentId: string): AcademicProfile | null {
     const stmt = this.db.prepare(`
@@ -149,8 +149,9 @@ export class StandardizedProfileRepository {
         id, studentId, assessmentDate, creativeTalents, physicalTalents,
         primaryInterests, exploratoryInterests, talentProficiency,
         weeklyEngagementHours, clubMemberships, competitionsParticipated,
+        hobbiesDetailed, extracurricularActivities,
         additionalNotes, assessedBy, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
       ON CONFLICT(id) DO UPDATE SET
         assessmentDate = excluded.assessmentDate,
         creativeTalents = excluded.creativeTalents,
@@ -161,6 +162,8 @@ export class StandardizedProfileRepository {
         weeklyEngagementHours = excluded.weeklyEngagementHours,
         clubMemberships = excluded.clubMemberships,
         competitionsParticipated = excluded.competitionsParticipated,
+        hobbiesDetailed = excluded.hobbiesDetailed,
+        extracurricularActivities = excluded.extracurricularActivities,
         additionalNotes = excluded.additionalNotes,
         assessedBy = excluded.assessedBy,
         updated_at = CURRENT_TIMESTAMP
@@ -178,6 +181,8 @@ export class StandardizedProfileRepository {
       profile.weeklyEngagementHours,
       JSON.stringify(profile.clubMemberships),
       JSON.stringify(profile.competitionsParticipated),
+      profile.hobbiesDetailed || null,
+      profile.extracurricularActivities || null,
       profile.additionalNotes,
       profile.assessedBy
     );

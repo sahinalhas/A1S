@@ -108,7 +108,6 @@ export function createExamManagementTables(db: Database.Database): void {
     CREATE INDEX IF NOT EXISTS idx_exam_session_results_session ON exam_session_results(session_id);
     CREATE INDEX IF NOT EXISTS idx_exam_session_results_student ON exam_session_results(student_id);
     CREATE INDEX IF NOT EXISTS idx_exam_session_results_subject ON exam_session_results(subject_id);
-    CREATE INDEX IF NOT EXISTS idx_exam_session_results_school ON exam_session_results(school_id);
   `);
 
   // Migration: Add school_id to exam_session_results
@@ -126,6 +125,12 @@ export function createExamManagementTables(db: Database.Database): void {
     }
   } catch (err: any) {
     console.warn('Warning migrating exam_session_results:', err.message);
+  }
+
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_exam_session_results_school ON exam_session_results(school_id);`);
+  } catch (err: any) {
+    console.warn('Warning creating exam_session_results school_id index:', err.message);
   }
 
   // Okul Sınavları (Dönem sonu, yazılılar vb.)
@@ -151,7 +156,6 @@ export function createExamManagementTables(db: Database.Database): void {
     CREATE INDEX IF NOT EXISTS idx_school_exam_results_student ON school_exam_results(student_id);
     CREATE INDEX IF NOT EXISTS idx_school_exam_results_date ON school_exam_results(exam_date);
     CREATE INDEX IF NOT EXISTS idx_school_exam_results_semester ON school_exam_results(semester, year);
-    CREATE INDEX IF NOT EXISTS idx_school_exam_results_school ON school_exam_results(school_id);
   `);
 
   // Migration: Add school_id to school_exam_results
@@ -169,6 +173,12 @@ export function createExamManagementTables(db: Database.Database): void {
     }
   } catch (err: any) {
     console.warn('Warning migrating school_exam_results:', err.message);
+  }
+
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_school_exam_results_school ON school_exam_results(school_id);`);
+  } catch (err: any) {
+    console.warn('Warning creating school_exam_results school_id index:', err.message);
   }
 }
 
@@ -302,7 +312,6 @@ export function createAdvancedExamTables(db: Database.Database): void {
     
     CREATE INDEX IF NOT EXISTS idx_exam_goals_student ON student_exam_goals(student_id);
     CREATE INDEX IF NOT EXISTS idx_exam_goals_status ON student_exam_goals(status);
-    CREATE INDEX IF NOT EXISTS idx_exam_goals_school ON student_exam_goals(school_id);
   `);
 
   // Migration: Add school_id to student_exam_goals
@@ -320,6 +329,12 @@ export function createAdvancedExamTables(db: Database.Database): void {
     }
   } catch (err: any) {
     console.warn('Warning migrating student_exam_goals:', err.message);
+  }
+
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_exam_goals_school ON student_exam_goals(school_id);`);
+  } catch (err: any) {
+    console.warn('Warning creating student_exam_goals school_id index:', err.message);
   }
 
   // Soru Analizi (Question Level Analysis)
@@ -346,7 +361,6 @@ export function createAdvancedExamTables(db: Database.Database): void {
     
     CREATE INDEX IF NOT EXISTS idx_question_analysis_session ON question_analysis(session_id);
     CREATE INDEX IF NOT EXISTS idx_question_analysis_difficulty ON question_analysis(difficulty_score);
-    CREATE INDEX IF NOT EXISTS idx_question_analysis_school ON question_analysis(school_id);
   `);
 
   // Migration: Add school_id to question_analysis
@@ -364,6 +378,12 @@ export function createAdvancedExamTables(db: Database.Database): void {
     }
   } catch (err: any) {
     console.warn('Warning migrating question_analysis:', err.message);
+  }
+
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_question_analysis_school ON question_analysis(school_id);`);
+  } catch (err: any) {
+    console.warn('Warning creating question_analysis school_id index:', err.message);
   }
 
   // Konu Performans Isı Haritası (Subject Performance Heatmap)
@@ -390,7 +410,6 @@ export function createAdvancedExamTables(db: Database.Database): void {
     
     CREATE INDEX IF NOT EXISTS idx_heatmap_student ON subject_performance_heatmap(student_id);
     CREATE INDEX IF NOT EXISTS idx_heatmap_strength ON subject_performance_heatmap(strength_level);
-    CREATE INDEX IF NOT EXISTS idx_heatmap_school ON subject_performance_heatmap(school_id);
   `);
 
   // Migration: Add school_id to subject_performance_heatmap
@@ -408,6 +427,12 @@ export function createAdvancedExamTables(db: Database.Database): void {
     }
   } catch (err: any) {
     console.warn('Warning migrating subject_performance_heatmap:', err.message);
+  }
+
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_heatmap_school ON subject_performance_heatmap(school_id);`);
+  } catch (err: any) {
+    console.warn('Warning creating subject_performance_heatmap school_id index:', err.message);
   }
 
   // Benchmark Verileri (Benchmarking Data)
@@ -435,7 +460,6 @@ export function createAdvancedExamTables(db: Database.Database): void {
     CREATE INDEX IF NOT EXISTS idx_benchmarks_session ON exam_benchmarks(session_id);
     CREATE INDEX IF NOT EXISTS idx_benchmarks_student ON exam_benchmarks(student_id);
     CREATE INDEX IF NOT EXISTS idx_benchmarks_percentile ON exam_benchmarks(percentile);
-    CREATE INDEX IF NOT EXISTS idx_benchmarks_school ON exam_benchmarks(school_id);
   `);
 
   // Migration: Add school_id to exam_benchmarks
@@ -453,6 +477,12 @@ export function createAdvancedExamTables(db: Database.Database): void {
     }
   } catch (err: any) {
     console.warn('Warning migrating exam_benchmarks:', err.message);
+  }
+
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_benchmarks_school ON exam_benchmarks(school_id);`);
+  } catch (err: any) {
+    console.warn('Warning creating exam_benchmarks school_id index:', err.message);
   }
 
   // Zaman Analizi (Time Analysis)
@@ -477,7 +507,6 @@ export function createAdvancedExamTables(db: Database.Database): void {
     );
     
     CREATE INDEX IF NOT EXISTS idx_time_analysis_student ON exam_time_analysis(student_id);
-    CREATE INDEX IF NOT EXISTS idx_time_analysis_school ON exam_time_analysis(school_id);
   `);
 
   // Migration: Add school_id to exam_time_analysis
@@ -495,6 +524,12 @@ export function createAdvancedExamTables(db: Database.Database): void {
     }
   } catch (err: any) {
     console.warn('Warning migrating exam_time_analysis:', err.message);
+  }
+
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_time_analysis_school ON exam_time_analysis(school_id);`);
+  } catch (err: any) {
+    console.warn('Warning creating exam_time_analysis school_id index:', err.message);
   }
 
   // Tahminsel Analitik (Predictive Analytics)
@@ -520,7 +555,6 @@ export function createAdvancedExamTables(db: Database.Database): void {
     
     CREATE INDEX IF NOT EXISTS idx_predictions_student ON exam_predictions(student_id);
     CREATE INDEX IF NOT EXISTS idx_predictions_risk ON exam_predictions(risk_level);
-    CREATE INDEX IF NOT EXISTS idx_predictions_school ON exam_predictions(school_id);
   `);
 
   // Migration: Add school_id to exam_predictions
@@ -538,6 +572,12 @@ export function createAdvancedExamTables(db: Database.Database): void {
     }
   } catch (err: any) {
     console.warn('Warning migrating exam_predictions:', err.message);
+  }
+
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_predictions_school ON exam_predictions(school_id);`);
+  } catch (err: any) {
+    console.warn('Warning creating exam_predictions school_id index:', err.message);
   }
 
   // Otomatik Uyarılar (Automated Alerts)
@@ -561,7 +601,6 @@ export function createAdvancedExamTables(db: Database.Database): void {
     CREATE INDEX IF NOT EXISTS idx_alerts_student ON exam_alerts(student_id);
     CREATE INDEX IF NOT EXISTS idx_alerts_type ON exam_alerts(alert_type);
     CREATE INDEX IF NOT EXISTS idx_alerts_read ON exam_alerts(is_read);
-    CREATE INDEX IF NOT EXISTS idx_alerts_school ON exam_alerts(school_id);
   `);
 
   // Migration: Add school_id to exam_alerts
@@ -579,6 +618,12 @@ export function createAdvancedExamTables(db: Database.Database): void {
     }
   } catch (err: any) {
     console.warn('Warning migrating exam_alerts:', err.message);
+  }
+
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_alerts_school ON exam_alerts(school_id);`);
+  } catch (err: any) {
+    console.warn('Warning creating exam_alerts school_id index:', err.message);
   }
 
   // Gelişim Planları (Development Plans)
@@ -604,7 +649,6 @@ export function createAdvancedExamTables(db: Database.Database): void {
     
     CREATE INDEX IF NOT EXISTS idx_dev_plans_student ON student_development_plans(student_id);
     CREATE INDEX IF NOT EXISTS idx_dev_plans_status ON student_development_plans(status);
-    CREATE INDEX IF NOT EXISTS idx_dev_plans_school ON student_development_plans(school_id);
   `);
 
   // Migration: Add school_id to student_development_plans
@@ -622,6 +666,12 @@ export function createAdvancedExamTables(db: Database.Database): void {
     }
   } catch (err: any) {
     console.warn('Warning migrating student_development_plans:', err.message);
+  }
+
+  try {
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_dev_plans_school ON student_development_plans(school_id);`);
+  } catch (err: any) {
+    console.warn('Warning creating student_development_plans school_id index:', err.message);
   }
 
   console.log('✅ Advanced exam management tables created successfully');

@@ -6,8 +6,13 @@ function columnExists(db: Database.Database, tableName: string, columnName: stri
 }
 
 function safeAddColumn(db: Database.Database, tableName: string, columnName: string, columnDef: string): void {
-  if (!columnExists(db, tableName, columnName)) {
+  try {
     db.exec(`ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${columnDef}`);
+    console.log(`✅ Added column ${columnName} to ${tableName}`);
+  } catch (err: any) {
+    if (!err.message?.includes('duplicate column')) {
+      console.warn(`Warning adding column ${columnName} to ${tableName}:`, err.message);
+    }
   }
 }
 
@@ -30,11 +35,15 @@ export function createCounselingTables(db: Database.Database): void {
 
   safeAddColumn(db, 'meeting_notes', 'schoolId', 'TEXT');
   db.exec(`CREATE INDEX IF NOT EXISTS idx_meeting_notes_schoolId ON meeting_notes(schoolId);`);
-  db.exec(`
-    UPDATE meeting_notes 
-    SET schoolId = (SELECT schoolId FROM students WHERE students.id = meeting_notes.studentId)
-    WHERE schoolId IS NULL AND studentId IS NOT NULL
-  `);
+  try {
+    db.exec(`
+      UPDATE meeting_notes 
+      SET schoolId = (SELECT schoolId FROM students WHERE students.id = meeting_notes.studentId)
+      WHERE schoolId IS NULL AND studentId IS NOT NULL
+    `);
+  } catch (err: any) {
+    console.warn('Warning updating meeting_notes schoolId:', err.message);
+  }
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS counseling_sessions (
@@ -85,8 +94,12 @@ export function createCounselingTables(db: Database.Database): void {
 
   safeAddColumn(db, 'counseling_sessions', 'schoolId', "TEXT DEFAULT 'school-default-001'");
 
-  db.exec(`UPDATE counseling_sessions SET schoolId = 'school-default-001' WHERE schoolId IS NULL OR schoolId = ''`);
-  db.exec(`CREATE INDEX IF NOT EXISTS idx_counseling_sessions_schoolId ON counseling_sessions(schoolId)`);
+  try {
+    db.exec(`UPDATE counseling_sessions SET schoolId = 'school-default-001' WHERE schoolId IS NULL OR schoolId = ''`);
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_counseling_sessions_schoolId ON counseling_sessions(schoolId)`);
+  } catch (err: any) {
+    console.warn('Warning updating counseling_sessions schoolId:', err.message);
+  }
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS counseling_session_students (
@@ -104,11 +117,15 @@ export function createCounselingTables(db: Database.Database): void {
 
   safeAddColumn(db, 'counseling_session_students', 'schoolId', 'TEXT');
   db.exec(`CREATE INDEX IF NOT EXISTS idx_counseling_session_students_schoolId ON counseling_session_students(schoolId);`);
-  db.exec(`
-    UPDATE counseling_session_students 
-    SET schoolId = (SELECT schoolId FROM students WHERE students.id = counseling_session_students.studentId)
-    WHERE schoolId IS NULL AND studentId IS NOT NULL
-  `);
+  try {
+    db.exec(`
+      UPDATE counseling_session_students 
+      SET schoolId = (SELECT schoolId FROM students WHERE students.id = counseling_session_students.studentId)
+      WHERE schoolId IS NULL AND studentId IS NOT NULL
+    `);
+  } catch (err: any) {
+    console.warn('Warning updating counseling_session_students schoolId:', err.message);
+  }
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS parent_meetings (
@@ -138,11 +155,15 @@ export function createCounselingTables(db: Database.Database): void {
 
   safeAddColumn(db, 'parent_meetings', 'schoolId', 'TEXT');
   db.exec(`CREATE INDEX IF NOT EXISTS idx_parent_meetings_schoolId ON parent_meetings(schoolId);`);
-  db.exec(`
-    UPDATE parent_meetings 
-    SET schoolId = (SELECT schoolId FROM students WHERE students.id = parent_meetings.studentId)
-    WHERE schoolId IS NULL AND studentId IS NOT NULL
-  `);
+  try {
+    db.exec(`
+      UPDATE parent_meetings 
+      SET schoolId = (SELECT schoolId FROM students WHERE students.id = parent_meetings.studentId)
+      WHERE schoolId IS NULL AND studentId IS NOT NULL
+    `);
+  } catch (err: any) {
+    console.warn('Warning updating parent_meetings schoolId:', err.message);
+  }
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS home_visits (
@@ -174,11 +195,15 @@ export function createCounselingTables(db: Database.Database): void {
 
   safeAddColumn(db, 'home_visits', 'schoolId', 'TEXT');
   db.exec(`CREATE INDEX IF NOT EXISTS idx_home_visits_schoolId ON home_visits(schoolId);`);
-  db.exec(`
-    UPDATE home_visits 
-    SET schoolId = (SELECT schoolId FROM students WHERE students.id = home_visits.studentId)
-    WHERE schoolId IS NULL AND studentId IS NOT NULL
-  `);
+  try {
+    db.exec(`
+      UPDATE home_visits 
+      SET schoolId = (SELECT schoolId FROM students WHERE students.id = home_visits.studentId)
+      WHERE schoolId IS NULL AND studentId IS NOT NULL
+    `);
+  } catch (err: any) {
+    console.warn('Warning updating home_visits schoolId:', err.message);
+  }
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS family_participation (
@@ -209,11 +234,15 @@ export function createCounselingTables(db: Database.Database): void {
 
   safeAddColumn(db, 'family_participation', 'schoolId', 'TEXT');
   db.exec(`CREATE INDEX IF NOT EXISTS idx_family_participation_schoolId ON family_participation(schoolId);`);
-  db.exec(`
-    UPDATE family_participation 
-    SET schoolId = (SELECT schoolId FROM students WHERE students.id = family_participation.studentId)
-    WHERE schoolId IS NULL AND studentId IS NOT NULL
-  `);
+  try {
+    db.exec(`
+      UPDATE family_participation 
+      SET schoolId = (SELECT schoolId FROM students WHERE students.id = family_participation.studentId)
+      WHERE schoolId IS NULL AND studentId IS NOT NULL
+    `);
+  } catch (err: any) {
+    console.warn('Warning updating family_participation schoolId:', err.message);
+  }
 
   safeAddColumn(db, 'family_participation', 'eventName', 'TEXT');
   safeAddColumn(db, 'family_participation', 'participationStatus', 'TEXT');
@@ -253,11 +282,15 @@ export function createCounselingTables(db: Database.Database): void {
 
   safeAddColumn(db, 'counseling_reminders', 'schoolId', 'TEXT');
   db.exec(`CREATE INDEX IF NOT EXISTS idx_counseling_reminders_schoolId ON counseling_reminders(schoolId);`);
-  db.exec(`
-    UPDATE counseling_reminders 
-    SET schoolId = (SELECT schoolId FROM counseling_sessions WHERE counseling_sessions.id = counseling_reminders.sessionId)
-    WHERE schoolId IS NULL AND sessionId IS NOT NULL
-  `);
+  try {
+    db.exec(`
+      UPDATE counseling_reminders 
+      SET schoolId = (SELECT schoolId FROM counseling_sessions WHERE counseling_sessions.id = counseling_reminders.sessionId)
+      WHERE schoolId IS NULL AND sessionId IS NOT NULL
+    `);
+  } catch (err: any) {
+    console.warn('Warning updating counseling_reminders schoolId:', err.message);
+  }
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS counseling_follow_ups (
@@ -280,11 +313,15 @@ export function createCounselingTables(db: Database.Database): void {
 
   safeAddColumn(db, 'counseling_follow_ups', 'schoolId', 'TEXT');
   db.exec(`CREATE INDEX IF NOT EXISTS idx_counseling_follow_ups_schoolId ON counseling_follow_ups(schoolId);`);
-  db.exec(`
-    UPDATE counseling_follow_ups 
-    SET schoolId = (SELECT schoolId FROM counseling_sessions WHERE counseling_sessions.id = counseling_follow_ups.sessionId)
-    WHERE schoolId IS NULL AND sessionId IS NOT NULL
-  `);
+  try {
+    db.exec(`
+      UPDATE counseling_follow_ups 
+      SET schoolId = (SELECT schoolId FROM counseling_sessions WHERE counseling_sessions.id = counseling_follow_ups.sessionId)
+      WHERE schoolId IS NULL AND sessionId IS NOT NULL
+    `);
+  } catch (err: any) {
+    console.warn('Warning updating counseling_follow_ups schoolId:', err.message);
+  }
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS counseling_outcomes (
@@ -307,11 +344,15 @@ export function createCounselingTables(db: Database.Database): void {
 
   safeAddColumn(db, 'counseling_outcomes', 'schoolId', 'TEXT');
   db.exec(`CREATE INDEX IF NOT EXISTS idx_counseling_outcomes_schoolId ON counseling_outcomes(schoolId);`);
-  db.exec(`
-    UPDATE counseling_outcomes 
-    SET schoolId = (SELECT schoolId FROM counseling_sessions WHERE counseling_sessions.id = counseling_outcomes.sessionId)
-    WHERE schoolId IS NULL AND sessionId IS NOT NULL
-  `);
+  try {
+    db.exec(`
+      UPDATE counseling_outcomes 
+      SET schoolId = (SELECT schoolId FROM counseling_sessions WHERE counseling_sessions.id = counseling_outcomes.sessionId)
+      WHERE schoolId IS NULL AND sessionId IS NOT NULL
+    `);
+  } catch (err: any) {
+    console.warn('Warning updating counseling_outcomes schoolId:', err.message);
+  }
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS peer_relationships (
@@ -336,9 +377,13 @@ export function createCounselingTables(db: Database.Database): void {
   `);
 
   safeAddColumn(db, 'peer_relationships', 'schoolId', 'TEXT');
-  db.exec(`
-    UPDATE peer_relationships 
-    SET schoolId = (SELECT schoolId FROM students WHERE students.id = peer_relationships.studentId)
-    WHERE schoolId IS NULL AND studentId IS NOT NULL
-  `);
+  try {
+    db.exec(`
+      UPDATE peer_relationships 
+      SET schoolId = (SELECT schoolId FROM students WHERE students.id = peer_relationships.studentId)
+      WHERE schoolId IS NULL AND studentId IS NOT NULL
+    `);
+  } catch (err: any) {
+    console.warn('Warning updating peer_relationships schoolId:', err.message);
+  }
 }

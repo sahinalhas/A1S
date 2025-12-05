@@ -68,6 +68,8 @@ CREATE TABLE IF NOT EXISTS talents_interests_profiles (
   weeklyEngagementHours REAL,
   clubMemberships TEXT, -- JSON array
   competitionsParticipated TEXT, -- JSON array
+  hobbiesDetailed TEXT, -- Detailed hobbies description
+  extracurricularActivities TEXT, -- Extracurricular activities
   additionalNotes TEXT,
   assessedBy TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -464,6 +466,10 @@ export const initStandardizedProfileTables = (db: any) => {
   for (const columnDef of riskColumns) {
     safeAddColumn(db, 'risk_protective_profiles', columnDef);
   }
+
+  // Migration: Add new columns to talents_interests_profiles
+  safeAddColumn(db, 'talents_interests_profiles', 'hobbiesDetailed TEXT');
+  safeAddColumn(db, 'talents_interests_profiles', 'extracurricularActivities TEXT');
 
   console.log('✅ Standardized profile tables and migrations completed');
 };
