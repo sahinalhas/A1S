@@ -63,7 +63,7 @@ export default function StandardizedBehaviorSection({
 
  const form = useForm<BehaviorIncidentFormValues>({
  resolver: zodResolver(behaviorIncidentSchema),
- mode: 'onBlur',
+ mode: 'onSubmit',
  defaultValues: {
  incidentDate: new Date().toISOString().slice(0, 10),
  behaviorCategory:"",

@@ -119,7 +119,7 @@ export default function UnifiedIdentitySection({ student, onUpdate }: UnifiedIde
 
     const form = useForm<UnifiedIdentityFormValues>({
         resolver: zodResolver(unifiedIdentitySchema),
-        mode: 'onBlur',
+        mode: 'onSubmit',
         defaultValues: {
             name: student.name || "",
             surname: student.surname || "",

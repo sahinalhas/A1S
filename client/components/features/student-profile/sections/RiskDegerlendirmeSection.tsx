@@ -75,7 +75,7 @@ export default function RiskDegerlendirmeSection({ studentId, riskFactors, onUpd
  const componentId = useMemo(() => crypto.randomUUID(), []);
  const form = useForm<RiskAssessmentFormValues>({
  resolver: zodResolver(riskAssessmentSchema),
- mode: 'onBlur',
+ mode: 'onSubmit',
  defaultValues: {
  assessmentDate: new Date().toISOString().slice(0, 10),
  academicRiskLevel:"DÜŞÜK",

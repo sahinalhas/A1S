@@ -52,7 +52,7 @@ export default function StandardizedAcademicSection({
  const componentId = useMemo(() => crypto.randomUUID(), []);
  const form = useForm<AcademicProfileFormValues>({
  resolver: zodResolver(academicProfileSchema),
- mode: 'onBlur',
+ mode: 'onSubmit',
  defaultValues: {
  assessmentDate: new Date().toISOString().slice(0, 10),
  strongSubjects: [],

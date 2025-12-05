@@ -39,7 +39,7 @@ export default function StrengthsSection({ studentId, onUpdate }: StrengthsSecti
 
  const form = useForm<StrengthFormValues>({
  resolver: zodResolver(strengthSchema),
- mode: 'onBlur',
+ mode: 'onSubmit',
  defaultValues: {},
  });
 

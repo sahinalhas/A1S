@@ -77,7 +77,7 @@ export default function OzelEgitimSection({ studentId, specialEducation, onUpdat
  
  const form = useForm<SpecialEducationFormValues>({
  resolver: zodResolver(specialEducationSchema),
- mode: 'onBlur',
+ mode: 'onSubmit',
  defaultValues: {
  hasIEP: existingRecord?.hasIEP || false,
  iepStartDate: existingRecord?.iepStartDate ||"",
