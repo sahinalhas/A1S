@@ -489,7 +489,7 @@ export default function Students() {
               Öğrenci Yönetim Sistemi
             </Badge>
             <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">
-              Öğrenciler
+              Öğrenci Yönetimi
             </h1>
             <p className="text-sm md:text-base text-white/90 mb-4 max-w-xl leading-relaxed">
               Tüm öğrenci kayıtlarını görüntüleyin, yönetin ve analiz edin.
