@@ -12,7 +12,7 @@ import { requireSecureAuth } from '../../middleware/auth-secure.middleware.js';
 import { validateSchoolAccess } from '../../middleware/school-access.middleware.js';
 import { simpleRateLimit } from '../../middleware/validation.js';
 import autoReportsRoutes from './routes/auto-reports.routes.js';
-import advancedReportsRoutes from '../advanced-reports/routes/advanced-reports.routes.js';
+import advancedReportsRoutes from './routes/advanced-reports.routes.js';
 
 const router = Router();
 

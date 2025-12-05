@@ -12,8 +12,8 @@ import { requireSecureAuth } from '../../middleware/auth-secure.middleware.js';
 import { validateSchoolAccess } from '../../middleware/school-access.middleware.js';
 import { simpleRateLimit } from '../../middleware/validation.js';
 
-import standardizedProfileRouter from '../standardized-profile/routes/standardized-profile.routes.js';
-import holisticProfileRouter from '../holistic-profile/routes/holistic-profile.routes.js';
+import standardizedProfileRouter from './routes/standardized-profile.routes.js';
+import holisticProfileRouter from './routes/holistic-profile.routes.js';
 
 const router = Router();
 

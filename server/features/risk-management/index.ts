@@ -12,8 +12,8 @@ import { requireSecureAuth } from '../../middleware/auth-secure.middleware.js';
 import { validateSchoolAccess } from '../../middleware/school-access.middleware.js';
 import { simpleRateLimit } from '../../middleware/validation.js';
 
-import enhancedRiskRoutes from '../enhanced-risk/routes/enhanced-risk.routes.js';
-import * as earlyWarningRoutes from '../early-warning/routes/early-warning.routes.js';
+import enhancedRiskRoutes from './routes/enhanced-risk.routes.js';
+import * as earlyWarningRoutes from './routes/early-warning.routes.js';
 
 const router = Router();
 
