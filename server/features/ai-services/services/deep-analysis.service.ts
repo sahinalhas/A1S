@@ -3,7 +3,7 @@ import { StudentContextService } from '../../../services/student-context.service
 import { AIProviderService } from '../../../services/ai-provider.service.js';
 import AIPromptBuilder from '../../../services/ai-prompt-builder.service.js';
 import * as studentsRepo from '../../students/repository/students.repository.js';
-import * as earlyWarningService from '../../risk-management/services/early-warning.service.js';
+import * as earlyWarningService from '../../early-warning/services/early-warning.service.js';
 import getDatabase from '../../../lib/database.js';
 import type { 
   DeepAnalysisReport, 

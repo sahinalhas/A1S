@@ -7,7 +7,7 @@ import { randomUUID } from 'crypto';
 import { DataValidationService } from './data-validation.service.js';
 import { FieldMapperService } from './field-mapper.service.js';
 import { AIProviderService } from '../../../services/ai-provider.service.js';
-import { StandardizedProfileRepository } from '../../student-profile/repository/standardized-profile.repository.js';
+import { StandardizedProfileRepository } from '../../standardized-profile/repository/standardized-profile.repository.js';
 import * as profileSyncRepo from '../repository/profile-sync.repository.js';
 import getDatabase from '../../../lib/database/index.js';
 import type { 

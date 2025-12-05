@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import * as dailyInsightsRepo from '../../daily-insights/repository/daily-insights.repository.js';
-import * as earlyWarningService from '../../risk-management/services/early-warning.service.js';
+import * as earlyWarningService from '../../early-warning/services/early-warning.service.js';
 import * as studentsRepo from '../../students/repository/students.repository.js';
 import type { SchoolScopedRequest } from '../../../middleware/school-access.middleware.js';
 import { validateSchoolAccess } from '../../../middleware/school-access.middleware.js';

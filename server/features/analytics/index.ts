@@ -13,7 +13,7 @@ import { validateSchoolAccess } from '../../middleware/school-access.middleware.
 import { simpleRateLimit } from '../../middleware/validation.js';
 import analyticsRouter from './routes/analytics.routes.js';
 import bulkAIAnalysisRoutes from './routes/bulk-ai-analysis.routes.js';
-import advancedAnalyticsRoutes from './routes/advanced-analytics.routes.js';
+import advancedAnalyticsRoutes from '../advanced-analytics/routes/advanced-analytics.routes.js';
 
 const router = Router();
 
