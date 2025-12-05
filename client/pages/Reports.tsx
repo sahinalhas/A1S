@@ -582,7 +582,7 @@ export default function Reports() {
  İstatistiksel Analiz
  </Badge>
  <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">
- Analiz & Raporlama
+ Analiz & Raporlar
  </h1>
  <p className="text-sm md:text-base text-white/90 mb-4 max-w-xl leading-relaxed">
  Öğrenci başarı analizleri, karşılaştırmalı raporlar ve erken uyarı sistemi

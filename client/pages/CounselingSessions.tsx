@@ -307,7 +307,7 @@ export default function CounselingSessions() {
  Görüşme & Randevu Sistemi
  </Badge>
  <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">
- Rehberlik Görüşmeleri
+ Görüşme & Randevu
  </h1>
  <p className="text-sm md:text-base text-white/90 mb-4 max-w-xl leading-relaxed">
  Modern görüşme yönetimi ve analiz sistemi.
