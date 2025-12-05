@@ -30,7 +30,7 @@ const riskProtectiveProfileSchema = z.object({
  copingSkills: z.number().min(1).max(10),
  riskAssessmentNotes: z.string().optional(),
  interventionPlan: z.string().optional(),
- monitoringFrequency: z.enum(['GÜN', 'HAFTA', 'AY', 'ÜÇAY', 'YARI_YIL']).optional(),
+ monitoringFrequency: z.enum(['GÜN', 'HAFTA', 'AY', 'ÜÇAY', 'YARI_YIL']).optional().or(z.literal("")),
  additionalNotes: z.string().optional(),
 });
 

@@ -49,10 +49,10 @@ interface RiskFactors {
 
 const riskAssessmentSchema = z.object({
  assessmentDate: z.string().min(1,"Değerlendirme tarihi gereklidir"),
- academicRiskLevel: z.enum(riskLevels),
- behavioralRiskLevel: z.enum(riskLevels),
- attendanceRiskLevel: z.enum(riskLevels),
- socialEmotionalRiskLevel: z.enum(riskLevels),
+ academicRiskLevel: z.enum(riskLevels).or(z.literal("")),
+ behavioralRiskLevel: z.enum(riskLevels).or(z.literal("")),
+ attendanceRiskLevel: z.enum(riskLevels).or(z.literal("")),
+ socialEmotionalRiskLevel: z.enum(riskLevels).or(z.literal("")),
  academicFactors: z.string().optional(),
  behavioralFactors: z.string().optional(),
  protectiveFactors: z.string().optional(),
