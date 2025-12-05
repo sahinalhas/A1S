@@ -27,7 +27,7 @@ import type { Student } from '@/lib/storage';
 import { Link } from 'react-router-dom';
 import type { ColumnVisibility } from './TableControls';
 
-export type SortColumn = 'id' | 'fullName' | 'class' | 'gender' | 'risk';
+export type SortColumn = 'id' | 'fullName' | 'class' | 'gender';
 export type SortDirection = 'asc' | 'desc' | null;
 
 interface EnhancedStudentTableProps {
@@ -62,17 +62,6 @@ const StudentRow = memo(
         onRowClick?: (s: Student) => void;
         columnVisibility: ColumnVisibility;
     }) => {
-        const getRiskBadge = (risk?: string) => {
-            switch (risk) {
-                case 'Yüksek':
-                    return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300';
-                case 'Orta':
-                    return 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300';
-                default:
-                    return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300';
-            }
-        };
-
         // Veli bilgilerini öncelik sırasına göre al
         const getParentContact = () => {
             // Önce anne bilgisi
@@ -139,13 +128,6 @@ const StudentRow = memo(
                     <TableCell>
                         <Badge variant="secondary" className="font-normal text-xs">
                             {student.gender === 'E' ? 'Erkek' : 'Kız'}
-                        </Badge>
-                    </TableCell>
-                )}
-                {columnVisibility.risk && (
-                    <TableCell>
-                        <Badge className={`font-medium text-xs ${getRiskBadge(student.risk)}`}>
-                            {student.risk || 'Düşük'}
                         </Badge>
                     </TableCell>
                 )}
@@ -369,19 +351,6 @@ export function EnhancedStudentTable({
                                     >
                                         Cinsiyet
                                         <SortIcon column="gender" />
-                                    </Button>
-                                </TableHead>
-                            )}
-                            {columnVisibility.risk && (
-                                <TableHead className="w-28">
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className="-ml-3 h-8 font-semibold"
-                                        onClick={() => onSort('risk')}
-                                    >
-                                        Risk
-                                        <SortIcon column="risk" />
                                     </Button>
                                 </TableHead>
                             )}

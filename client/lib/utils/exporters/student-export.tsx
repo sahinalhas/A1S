@@ -70,12 +70,11 @@ const styles = StyleSheet.create({
     fontSize: 9,
     color: '#333',
   },
-  col1: { width: '12%' },
-  col2: { width: '20%' },
-  col3: { width: '20%' },
-  col4: { width: '18%' },
+  col1: { width: '15%' },
+  col2: { width: '25%' },
+  col3: { width: '25%' },
+  col4: { width: '20%' },
   col5: { width: '15%' },
-  col6: { width: '15%' },
 });
 
 interface StudentListDocumentProps {
@@ -101,7 +100,6 @@ const StudentListDocument: React.FC<StudentListDocumentProps> = ({ students }) =
             <Text style={[styles.headerCell, styles.col3]}>Soyad</Text>
             <Text style={[styles.headerCell, styles.col4]}>Sınıf</Text>
             <Text style={[styles.headerCell, styles.col5]}>Cinsiyet</Text>
-            <Text style={[styles.headerCell, styles.col6]}>Risk</Text>
           </View>
 
           {students.map((student, index) => (
@@ -116,7 +114,6 @@ const StudentListDocument: React.FC<StudentListDocumentProps> = ({ students }) =
               <Text style={[styles.cell, styles.col5]}>
                 {student.gender === 'E' ? 'Erkek' : 'Kız'}
               </Text>
-              <Text style={[styles.cell, styles.col6]}>{student.risk || 'Düşük'}</Text>
             </View>
           ))}
         </View>
@@ -126,14 +123,13 @@ const StudentListDocument: React.FC<StudentListDocumentProps> = ({ students }) =
 };
 
 export function exportToCSV(students: Student[], filename: string = 'ogrenciler.csv') {
-  const headers = ['Numara', 'Ad', 'Soyad', 'Sınıf', 'Cinsiyet', 'Risk Seviyesi'];
+  const headers = ['Numara', 'Ad', 'Soyad', 'Sınıf', 'Cinsiyet'];
   const rows = students.map((s) => [
     s.id,
     s.name,
     s.surname,
     s.class,
     s.gender === 'E' ? 'Erkek' : 'Kız',
-    s.risk || 'Düşük',
   ]);
 
   const csvContent = [
@@ -171,7 +167,6 @@ export function exportToExcel(students: Student[], filename: string = 'ogrencile
         Soyad: s.surname,
         Sınıf: s.class,
         Cinsiyet: s.gender === 'E' ? 'Erkek' : 'Kız',
-        'Risk Seviyesi': s.risk || 'Düşük',
       }))
     );
 

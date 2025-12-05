@@ -22,7 +22,6 @@ export interface ColumnVisibility {
  fullName: boolean;
  class: boolean;
  gender: boolean;
- risk: boolean;
  actions: boolean;
 }
 
@@ -38,7 +37,6 @@ const COLUMN_LABELS: Record<keyof ColumnVisibility, string> = {
  fullName: 'Ad Soyad',
  class: 'Sınıf',
  gender: 'Cinsiyet',
- risk: 'Risk Seviyesi',
  actions: 'İşlemler',
 };
 

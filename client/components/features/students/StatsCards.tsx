@@ -1,4 +1,4 @@
-import { Users, UserCheck, UserX, AlertTriangle } from 'lucide-react';
+import { Users, UserCheck, CalendarPlus, GraduationCap } from 'lucide-react';
 import { StatCard } from '@/components/molecules/StatCard';
 import { StatsGrid, SkeletonCard } from '@/components/molecules/StatsGrid';
 import { MODERN_GRADIENTS } from '@/lib/config/theme.config';
@@ -29,25 +29,25 @@ export function StatsCards({ stats, isLoading = false }: StatsCardsProps) {
  gradient: MODERN_GRADIENTS.blue,
  },
  {
- title: 'Düşük Risk',
- value: stats.lowRisk,
- subtitle: `${stats.total > 0 ? ((stats.lowRisk / stats.total) * 100).toFixed(1) : 0}% öğrenci`,
+ title: 'Kız Öğrenci',
+ value: stats.female,
+ subtitle: `${stats.total > 0 ? ((stats.female / stats.total) * 100).toFixed(1) : 0}% öğrenci`,
  icon: UserCheck,
- gradient: MODERN_GRADIENTS.green,
- },
- {
- title: 'Orta Risk',
- value: stats.mediumRisk,
- subtitle: `${stats.total > 0 ? ((stats.mediumRisk / stats.total) * 100).toFixed(1) : 0}% öğrenci`,
- icon: AlertTriangle,
- gradient: MODERN_GRADIENTS.amber,
- },
- {
- title: 'Yüksek Risk',
- value: stats.highRisk,
- subtitle: `${stats.total > 0 ? ((stats.highRisk / stats.total) * 100).toFixed(1) : 0}% öğrenci`,
- icon: UserX,
  gradient: MODERN_GRADIENTS.rose,
+ },
+ {
+ title: 'Erkek Öğrenci',
+ value: stats.male,
+ subtitle: `${stats.total > 0 ? ((stats.male / stats.total) * 100).toFixed(1) : 0}% öğrenci`,
+ icon: GraduationCap,
+ gradient: MODERN_GRADIENTS.blue,
+ },
+ {
+ title: 'Bu Ay Yeni',
+ value: stats.newThisMonth,
+ subtitle: `${stats.newThisWeek} bu hafta kayıt`,
+ icon: CalendarPlus,
+ gradient: MODERN_GRADIENTS.green,
  },
  ];
 

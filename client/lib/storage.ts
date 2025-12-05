@@ -31,7 +31,6 @@ export function defaultSeed() {
  surname:"Yılmaz",
  class:"9/A",
  gender:"K",
- risk:"Düşük",
  phone:"+90 555 111 22 33",
  parentName:"Fatma Yılmaz",
  parentContact:"+90 555 000 11 22",
@@ -43,7 +42,6 @@ export function defaultSeed() {
  surname:"Demir",
  class:"10/B",
  gender:"E",
- risk:"Orta",
  phone:"+90 555 333 44 55",
  enrollmentDate: new Date().toISOString(),
  },
@@ -53,7 +51,6 @@ export function defaultSeed() {
  surname:"Kaya",
  class:"11/C",
  gender:"K",
- risk:"Yüksek",
  enrollmentDate: new Date().toISOString(),
  },
  {
@@ -62,7 +59,6 @@ export function defaultSeed() {
  surname:"Çelik",
  class:"12/A",
  gender:"E",
- risk:"Düşük",
  enrollmentDate: new Date().toISOString(),
  },
  ];

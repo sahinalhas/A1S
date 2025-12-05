@@ -17,8 +17,6 @@ interface AdvancedFiltersProps {
  onClassChange: (value: string) => void;
  selectedGender: string;
  onGenderChange: (value: string) => void;
- selectedRisk: string;
- onRiskChange: (value: string) => void;
  onResetFilters: () => void;
  hasActiveFilters: boolean;
  activeFilterCount: number;
@@ -32,8 +30,6 @@ export function AdvancedFilters({
  onClassChange,
  selectedGender,
  onGenderChange,
- selectedRisk,
- onRiskChange,
  onResetFilters,
  hasActiveFilters,
  activeFilterCount,
@@ -73,18 +69,6 @@ export function AdvancedFilters({
  <SelectItem value="tum">Tüm Cinsiyetler</SelectItem>
  <SelectItem value="K">Kız</SelectItem>
  <SelectItem value="E">Erkek</SelectItem>
- </SelectContent>
- </Select>
-
- <Select value={selectedRisk} onValueChange={onRiskChange}>
- <SelectTrigger className="w-[160px] h-9">
- <SelectValue />
- </SelectTrigger>
- <SelectContent>
- <SelectItem value="tum">Tüm Risk Seviyeleri</SelectItem>
- <SelectItem value="Düşük">Düşük Risk</SelectItem>
- <SelectItem value="Orta">Orta Risk</SelectItem>
- <SelectItem value="Yüksek">Yüksek Risk</SelectItem>
  </SelectContent>
  </Select>
 

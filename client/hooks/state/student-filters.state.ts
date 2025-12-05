@@ -5,7 +5,6 @@ export interface FilterState {
  searchQuery: string;
  selectedClass: string;
  selectedGender: string;
- selectedRisk: string;
 }
 
 export interface UseStudentFiltersReturn {
@@ -14,7 +13,6 @@ export interface UseStudentFiltersReturn {
  setSearchQuery: (query: string) => void;
  setSelectedClass: (classValue: string) => void;
  setSelectedGender: (gender: string) => void;
- setSelectedRisk: (risk: string) => void;
  resetFilters: () => void;
  hasActiveFilters: boolean;
  activeFilterCount: number;
@@ -24,7 +22,6 @@ const DEFAULT_FILTERS: FilterState = {
  searchQuery: '',
  selectedClass: 'tum',
  selectedGender: 'tum',
- selectedRisk: 'tum',
 };
 
 export function useStudentFilters(students: Student[]): UseStudentFiltersReturn {
@@ -40,10 +37,6 @@ export function useStudentFilters(students: Student[]): UseStudentFiltersReturn 
 
  const setSelectedGender = useCallback((gender: string) => {
  setFilters((prev) => ({ ...prev, selectedGender: gender }));
- }, []);
-
- const setSelectedRisk = useCallback((risk: string) => {
- setFilters((prev) => ({ ...prev, selectedRisk: risk }));
  }, []);
 
  const resetFilters = useCallback(() => {
@@ -66,11 +59,7 @@ export function useStudentFilters(students: Student[]): UseStudentFiltersReturn 
  filters.selectedGender === 'tum' ||
  student.gender === filters.selectedGender;
 
- const matchesRisk =
- filters.selectedRisk === 'tum' ||
- (student.risk || 'Düşük') === filters.selectedRisk;
-
- return matchesSearch && matchesClass && matchesGender && matchesRisk;
+ return matchesSearch && matchesClass && matchesGender;
  });
  }, [students, filters]);
 
@@ -78,8 +67,7 @@ export function useStudentFilters(students: Student[]): UseStudentFiltersReturn 
  return (
  filters.searchQuery !== '' ||
  filters.selectedClass !== 'tum' ||
- filters.selectedGender !== 'tum' ||
- filters.selectedRisk !== 'tum'
+ filters.selectedGender !== 'tum'
  );
  }, [filters]);
 
@@ -88,7 +76,6 @@ export function useStudentFilters(students: Student[]): UseStudentFiltersReturn 
  if (filters.searchQuery !== '') count++;
  if (filters.selectedClass !== 'tum') count++;
  if (filters.selectedGender !== 'tum') count++;
- if (filters.selectedRisk !== 'tum') count++;
  return count;
  }, [filters]);
 
@@ -98,7 +85,6 @@ export function useStudentFilters(students: Student[]): UseStudentFiltersReturn 
  setSearchQuery,
  setSelectedClass,
  setSelectedGender,
- setSelectedRisk,
  resetFilters,
  hasActiveFilters,
  activeFilterCount,

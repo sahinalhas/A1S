@@ -14,7 +14,6 @@ import {
  Phone,
  GraduationCap,
  Calendar,
- AlertTriangle,
  Edit,
  Eye,
 } from 'lucide-react';
@@ -30,28 +29,6 @@ interface StudentDrawerProps {
 
 export function StudentDrawer({ student, open, onOpenChange, onEdit }: StudentDrawerProps) {
  if (!student) return null;
-
- const getRiskColor = (risk?: string) => {
- switch (risk) {
- case 'Yüksek':
- return 'destructive';
- case 'Orta':
- return 'default';
- default:
- return 'secondary';
- }
- };
-
- const getRiskIcon = (risk?: string) => {
- switch (risk) {
- case 'Yüksek':
- return '🔴';
- case 'Orta':
- return '🟡';
- default:
- return '🟢';
- }
- };
 
  return (
  <Sheet open={open} onOpenChange={onOpenChange}>
@@ -111,37 +88,6 @@ export function StudentDrawer({ student, open, onOpenChange, onEdit }: StudentDr
  </div>
  </div>
 
- <div className="flex items-center gap-3">
- <div
- className={`rounded-md p-2 ${
- student.risk === 'Yüksek'
- ? 'bg-red-500/10'
- : student.risk === 'Orta'
- ? 'bg-yellow-500/10'
- : 'bg-green-500/10'
- }`}
- >
- <AlertTriangle
- className={`h-4 w-4 ${
- student.risk === 'Yüksek'
- ? 'text-red-600'
- : student.risk === 'Orta'
- ? 'text-yellow-600'
- : 'text-green-600'
- }`}
- />
- </div>
- <div className="flex-1">
- <p className="text-xs text-muted-foreground">Risk Seviyesi</p>
- <div className="flex items-center gap-2">
- <span className="text-lg">{getRiskIcon(student.risk)}</span>
- <Badge variant={getRiskColor(student.risk)}>
- {student.risk || 'Düşük'}
- </Badge>
- </div>
- </div>
- </div>
-
  {student.enrollmentDate && (
  <div className="flex items-center gap-3">
  <div className="rounded-md bg-orange-500/10 p-2">
@@ -158,7 +104,7 @@ export function StudentDrawer({ student, open, onOpenChange, onEdit }: StudentDr
  </div>
  </div>
 
- {(student.phone || student.parentName || student.parentContact) && (
+ {(student.phone || student.motherName || student.fatherName || student.guardianName) && (
  <>
  <Separator />
  <div className="space-y-4">
@@ -179,26 +125,47 @@ export function StudentDrawer({ student, open, onOpenChange, onEdit }: StudentDr
  </div>
  )}
 
- {student.parentName && (
+ {student.motherName && (
  <div className="flex items-center gap-3">
  <div className="rounded-md bg-indigo-500/10 p-2">
  <User className="h-4 w-4 text-indigo-600" />
  </div>
  <div className="flex-1">
- <p className="text-xs text-muted-foreground">Veli Adı</p>
- <p className="font-medium">{student.parentName}</p>
+ <p className="text-xs text-muted-foreground">Anne</p>
+ <p className="font-medium">{student.motherName}</p>
+ {student.motherPhone && (
+ <p className="text-xs text-muted-foreground">{student.motherPhone}</p>
+ )}
  </div>
  </div>
  )}
 
- {student.parentContact && (
+ {student.fatherName && (
+ <div className="flex items-center gap-3">
+ <div className="rounded-md bg-blue-500/10 p-2">
+ <User className="h-4 w-4 text-blue-600" />
+ </div>
+ <div className="flex-1">
+ <p className="text-xs text-muted-foreground">Baba</p>
+ <p className="font-medium">{student.fatherName}</p>
+ {student.fatherPhone && (
+ <p className="text-xs text-muted-foreground">{student.fatherPhone}</p>
+ )}
+ </div>
+ </div>
+ )}
+
+ {student.guardianName && (
  <div className="flex items-center gap-3">
  <div className="rounded-md bg-pink-500/10 p-2">
  <Phone className="h-4 w-4 text-pink-600" />
  </div>
  <div className="flex-1">
- <p className="text-xs text-muted-foreground">Veli Telefon</p>
- <p className="font-medium">{student.parentContact}</p>
+ <p className="text-xs text-muted-foreground">{student.guardianRelation || 'Vasi'}</p>
+ <p className="font-medium">{student.guardianName}</p>
+ {student.guardianPhone && (
+ <p className="text-xs text-muted-foreground">{student.guardianPhone}</p>
+ )}
  </div>
  </div>
  )}

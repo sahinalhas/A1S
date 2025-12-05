@@ -5,9 +5,6 @@ export interface StudentStats {
  total: number;
  female: number;
  male: number;
- highRisk: number;
- mediumRisk: number;
- lowRisk: number;
  classCounts: Record<string, number>;
  newThisMonth: number;
  newThisWeek: number;
@@ -23,9 +20,6 @@ export function useStudentStats(students: Student[]): StudentStats {
  total: students.length,
  female: 0,
  male: 0,
- highRisk: 0,
- mediumRisk: 0,
- lowRisk: 0,
  classCounts: {},
  newThisMonth: 0,
  newThisWeek: 0,
@@ -34,11 +28,6 @@ export function useStudentStats(students: Student[]): StudentStats {
  students.forEach((student) => {
  if (student.gender === 'K') stats.female++;
  else if (student.gender === 'E') stats.male++;
-
- const risk = student.risk || 'Düşük';
- if (risk === 'Yüksek') stats.highRisk++;
- else if (risk === 'Orta') stats.mediumRisk++;
- else stats.lowRisk++;
 
  const classValue = student.class || '';
  const classBase = classValue ? (classValue.split('/')[0] || classValue) : 'Belirtilmemiş';

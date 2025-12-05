@@ -82,11 +82,6 @@ export function sortStudents(
         aVal = a.gender || '';
         bVal = b.gender || '';
         break;
-      case 'risk':
-        const riskOrder = { 'Yüksek': 3, 'Orta': 2, 'Düşük': 1 };
-        aVal = riskOrder[a.risk as keyof typeof riskOrder] || 0;
-        bVal = riskOrder[b.risk as keyof typeof riskOrder] || 0;
-        break;
       default:
         return 0;
     }

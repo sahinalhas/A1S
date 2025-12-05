@@ -51,7 +51,6 @@ import {
   Sparkles,
   TrendingUp,
   UserCheck,
-  AlertTriangle,
 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -103,7 +102,6 @@ export default function Students() {
     fullName: true,
     class: true,
     gender: true,
-    risk: true,
     actions: true,
   });
 
@@ -422,7 +420,15 @@ export default function Students() {
       icon: Users,
       gradient: "from-violet-500 to-purple-600",
       description: "Kayıtlı öğrenci",
-      change: "+5%"
+      change: `${stats.total} kayıt`
+    },
+    {
+      title: "Kız Öğrenci",
+      value: stats.female,
+      icon: UserCheck,
+      gradient: "from-pink-500 to-rose-600",
+      description: "Kız kayıt",
+      change: `${stats.female}/${stats.total}`
     },
     {
       title: "Erkek Öğrenci",
@@ -433,20 +439,12 @@ export default function Students() {
       change: `${stats.male}/${stats.total}`
     },
     {
-      title: "Risk Altında",
-      value: stats.highRisk,
-      icon: AlertTriangle,
-      gradient: "from-amber-500 to-orange-600",
-      description: "Yüksek risk",
-      change: "-3%"
-    },
-    {
-      title: "Başarı Oranı",
-      value: `%${Math.round(((stats.total - stats.highRisk) / stats.total) * 100 || 0)}`,
+      title: "Bu Ay Yeni",
+      value: stats.newThisMonth,
       icon: TrendingUp,
       gradient: "from-emerald-500 to-teal-600",
-      description: "Genel başarı",
-      change: "+8%"
+      description: "Yeni kayıt",
+      change: `${stats.newThisWeek} bu hafta`
     },
   ];
 
@@ -646,8 +644,6 @@ export default function Students() {
                 onClassChange={filters.setSelectedClass}
                 selectedGender={filters.filters.selectedGender}
                 onGenderChange={filters.setSelectedGender}
-                selectedRisk={filters.filters.selectedRisk}
-                onRiskChange={filters.setSelectedRisk}
                 onResetFilters={filters.resetFilters}
                 hasActiveFilters={filters.hasActiveFilters}
                 activeFilterCount={filters.activeFilterCount}

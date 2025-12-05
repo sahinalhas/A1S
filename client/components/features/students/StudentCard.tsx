@@ -29,17 +29,6 @@ export function StudentCard({
     onDelete,
     onView,
 }: StudentCardProps) {
-    const getRiskBadge = (risk?: string) => {
-        switch (risk) {
-            case 'Yüksek':
-                return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300';
-            case 'Orta':
-                return 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300';
-            default:
-                return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300';
-        }
-    };
-
     return (
         <Card
             className={`
@@ -124,9 +113,6 @@ export function StudentCard({
                                 </Badge>
                                 <Badge variant="secondary" className="text-xs font-normal">
                                     {student.gender === 'E' ? 'Erkek' : 'Kız'}
-                                </Badge>
-                                <Badge className={`text-xs font-medium ${getRiskBadge(student.risk)}`}>
-                                    {student.risk || 'Düşük'}
                                 </Badge>
                             </div>
                         </div>
