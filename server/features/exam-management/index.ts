@@ -1,14 +1,23 @@
 import { Router } from 'express';
-import { requireSecureAuth } from '../../middleware/auth-secure.middleware.js';
+import { requireSecureAuth, requireRoleSecure } from '../../middleware/auth-secure.middleware.js';
 import { validateSchoolAccess } from '../../middleware/school-access.middleware.js';
 import { simpleRateLimit } from '../../middleware/validation.js';
 import { exportRateLimiter, bulkOperationsRateLimiter } from '../../middleware/rate-limit.middleware.js';
 import * as routes from './routes/exam-management.routes.js';
+import * as legacyRoutes from './routes/legacy-exams.routes.js';
 
 const router = Router();
 
 router.use(requireSecureAuth);
 router.use(validateSchoolAccess);
+
+router.get('/legacy/:studentId', simpleRateLimit(200, 15 * 60 * 1000), legacyRoutes.getExamResultsByStudent);
+router.get('/legacy/:studentId/type/:examType', simpleRateLimit(200, 15 * 60 * 1000), legacyRoutes.getExamResultsByType);
+router.get('/legacy/:studentId/latest', simpleRateLimit(200, 15 * 60 * 1000), legacyRoutes.getLatestExamResult);
+router.get('/legacy/:studentId/progress/:examType', simpleRateLimit(200, 15 * 60 * 1000), legacyRoutes.getExamProgressAnalysis);
+router.post('/legacy', requireRoleSecure(['counselor', 'teacher']), simpleRateLimit(50, 15 * 60 * 1000), legacyRoutes.createExamResult);
+router.put('/legacy/:id', requireRoleSecure(['counselor', 'teacher']), simpleRateLimit(50, 15 * 60 * 1000), legacyRoutes.updateExamResult);
+router.delete('/legacy/:id', requireRoleSecure(['counselor']), simpleRateLimit(20, 15 * 60 * 1000), legacyRoutes.deleteExamResult);
 
 router.get('/types', routes.getExamTypes);
 router.get('/types/:typeId/subjects', routes.getSubjectsByType);

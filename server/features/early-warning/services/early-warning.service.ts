@@ -3,7 +3,7 @@ import * as repository from '../repository/early-warning.repository.js';
 import * as studentRepo from '../../students/repository/students.repository.js';
 import * as behaviorRepo from '../../behavior/repository/behavior.repository.js';
 import * as attendanceRepo from '../../attendance/repository/attendance.repository.js';
-import * as examsRepo from '../../exams/repository/exams.repository.js';
+import * as examsRepo from '../../exam-management/repository/exams.repository.js';
 import * as counselingAnalyticsRepo from '../../counseling-sessions/repository/analytics.repository.js';
 import { analyzeRiskFactors } from './risk-scoring.service.js';
 import { generateAllAlerts } from './alert-generator.service.js';
