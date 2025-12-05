@@ -36,6 +36,7 @@ export default function HedeflerPlanlamaSection({
  const componentId = useMemo(() => crypto.randomUUID(), []);
  const form = useForm<HedeflerPlanlamaFormValues>({
  resolver: zodResolver(hedeflerPlanlamaSchema),
+ mode: 'onBlur',
  defaultValues: {
  assessmentDate: new Date().toISOString().slice(0, 10),
  studentExpectations:"",

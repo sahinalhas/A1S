@@ -29,6 +29,7 @@ export default function DisciplineSection({ student, onUpdate }: DisciplineSecti
  const componentId = useMemo(() => crypto.randomUUID(), []);
  const form = useForm<DisciplineFormValues>({
  resolver: zodResolver(disciplineSchema),
+ mode: 'onBlur',
  defaultValues: {
  disiplinCezalari: (student as any).disiplinCezalari ||"",
  },
