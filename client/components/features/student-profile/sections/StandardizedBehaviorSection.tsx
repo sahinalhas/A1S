@@ -52,7 +52,9 @@ export default function StandardizedBehaviorSection({
  const { data: savedBehaviorData = [], refetch } = useQuery({
  queryKey: ['/api/standardized-profile/behavior-incidents', studentId],
  queryFn: async () => {
- const response = await fetch(`/api/standardized-profile/${studentId}/behavior-incidents`);
+ const response = await fetch(`/api/standardized-profile/${studentId}/behavior-incidents`, {
+   credentials: 'include'
+ });
  if (!response.ok) throw new Error('Failed to fetch behavior incidents');
  return response.json();
  },
@@ -99,6 +101,7 @@ export default function StandardizedBehaviorSection({
  const response = await fetch(`/api/standardized-profile/${studentId}/behavior-incident`, {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
+ credentials: 'include',
  body: JSON.stringify(payload),
  });
 
@@ -135,6 +138,7 @@ export default function StandardizedBehaviorSection({
  try {
  const response = await fetch(`/api/standardized-profile/${studentId}/behavior-incident/${incidentId}`, {
  method: 'DELETE',
+ credentials: 'include',
  });
 
  if (!response.ok) throw new Error('Failed to delete');

@@ -78,7 +78,7 @@ export default function StudentProfile() {
  if (!studentId) return;
  
  setLoadingScores(true);
- fetch(`/api/ai/student-profile/${studentId}/scores`)
+ fetch(`/api/ai/student-profile/${studentId}/scores`, { credentials: 'include' })
  .then(res => res.json())
  .then(result => {
  if (result.success) {

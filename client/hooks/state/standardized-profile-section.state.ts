@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { UseFormReturn } from 'react-hook-form';
+import { UseFormReturn, FieldValues } from 'react-hook-form';
 import { toast } from 'sonner';
 
-interface UseStandardizedProfileSectionOptions<T> {
+interface UseStandardizedProfileSectionOptions<T extends FieldValues> {
  studentId: string;
  sectionName: string;
  apiEndpoint: string;
@@ -12,7 +12,7 @@ interface UseStandardizedProfileSectionOptions<T> {
  onUpdate?: () => void;
 }
 
-export function useStandardizedProfileSection<T extends Record<string, any>>({
+export function useStandardizedProfileSection<T extends FieldValues>({
  studentId,
  sectionName,
  apiEndpoint,
@@ -25,7 +25,9 @@ export function useStandardizedProfileSection<T extends Record<string, any>>({
  const { data: savedData, refetch } = useQuery({
  queryKey: [`/api/standardized-profile/${sectionName}`, studentId],
  queryFn: async () => {
- const response = await fetch(`/api/standardized-profile/${studentId}/${apiEndpoint}`);
+ const response = await fetch(`/api/standardized-profile/${studentId}/${apiEndpoint}`, {
+   credentials: 'include'
+ });
  if (!response.ok) {
  if (response.status === 404) return null;
  throw new Error(`Failed to fetch ${sectionName} data`);
@@ -75,6 +77,7 @@ export function useStandardizedProfileSection<T extends Record<string, any>>({
  const response = await fetch(`/api/standardized-profile/${studentId}/${apiEndpoint}`, {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
+ credentials: 'include',
  body: JSON.stringify(payload),
  });
 
