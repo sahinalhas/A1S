@@ -162,8 +162,6 @@ function expressPlugin(): Plugin {
                 .then(({ startAnalyticsScheduler }) => startAnalyticsScheduler()),
               import('./server/features/counseling-sessions/services/auto-complete-scheduler.service.js')
                 .then(({ startAutoCompleteScheduler }) => startAutoCompleteScheduler()),
-              import('./server/services/daily-action-plan-scheduler.service.js')
-                .then(({ startDailyActionPlanScheduler }) => startDailyActionPlanScheduler()),
               import('./server/features/guidance-tips/index.js')
                 .then(({ startGuidanceTipsScheduler }) => startGuidanceTipsScheduler())
             ]).catch((error) => {
@@ -206,20 +204,17 @@ function expressPlugin(): Plugin {
           const [
             { stopAnalyticsScheduler },
             { stopAutoCompleteScheduler },
-            { stopDailyActionPlanScheduler },
             { stopGuidanceTipsScheduler },
             { closeDatabase }
           ] = await Promise.all([
             import('./server/features/analytics/services/analytics-scheduler.service.js'),
             import('./server/features/counseling-sessions/services/auto-complete-scheduler.service.js'),
-            import('./server/services/daily-action-plan-scheduler.service.js'),
             import('./server/features/guidance-tips/index.js'),
             import('./server/lib/database/connection.js')
           ]);
           
           stopAnalyticsScheduler();
           stopAutoCompleteScheduler();
-          stopDailyActionPlanScheduler();
           stopGuidanceTipsScheduler();
           closeDatabase();
           logger.info?.('✅ Resources cleaned up successfully', 'VitePlugin');
