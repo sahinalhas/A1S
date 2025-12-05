@@ -15,7 +15,6 @@ export function parseImportedRows(rows: unknown[][]): Student[] {
   const iSurname = headerRow.findIndex(h => ['soyad', 'soyadı', 'surname'].includes(normalize(h)));
   const iClass = headerRow.findIndex(h => ['sınıf', 'sinif', 'class'].includes(normalize(h)));
   const iGender = headerRow.findIndex(h => ['cinsiyet', 'gender'].includes(normalize(h)));
-  const iRisk = headerRow.findIndex(h => ['risk', 'risk seviyesi'].includes(normalize(h)));
 
   for (let i = 1; i < rows.length; i++) {
     const r = rows[i];
@@ -32,18 +31,12 @@ export function parseImportedRows(rows: unknown[][]): Student[] {
     const genderVal = iGender >= 0 ? normalize(r[iGender]) : 'k';
     const gender: 'K' | 'E' = genderVal.startsWith('e') || genderVal === 'erkek' ? 'E' : 'K';
 
-    const riskVal = iRisk >= 0 ? normalize(r[iRisk]) : 'düşük';
-    let risk: 'Düşük' | 'Orta' | 'Yüksek' = 'Düşük';
-    if (riskVal.includes('yüksek') || riskVal.includes('high')) risk = 'Yüksek';
-    else if (riskVal.includes('orta') || riskVal.includes('medium')) risk = 'Orta';
-
     students.push({
       id,
       name,
       surname,
       class: classVal,
       gender,
-      risk,
       enrollmentDate: new Date().toISOString(),
     });
   }

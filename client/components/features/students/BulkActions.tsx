@@ -1,12 +1,4 @@
 import { Button } from '@/components/atoms/Button';
-import { Badge } from '@/components/atoms/Badge';
-import {
- Select,
- SelectContent,
- SelectItem,
- SelectTrigger,
- SelectValue,
-} from '@/components/atoms/Select';
 import {
  AlertDialog,
  AlertDialogAction,
@@ -23,29 +15,19 @@ import { useState } from 'react';
 interface BulkActionsProps {
  selectedCount: number;
  onBulkDelete: () => void;
- onBulkUpdateRisk: (risk: 'Düşük' | 'Orta' | 'Yüksek') => void;
  onClearSelection: () => void;
 }
 
 export function BulkActions({
  selectedCount,
  onBulkDelete,
- onBulkUpdateRisk,
  onClearSelection,
 }: BulkActionsProps) {
  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
- const [selectedRisk, setSelectedRisk] = useState<string>('');
 
  const handleBulkDelete = () => {
  onBulkDelete();
  setDeleteDialogOpen(false);
- };
-
- const handleRiskUpdate = () => {
- if (selectedRisk && selectedRisk !== 'none') {
- onBulkUpdateRisk(selectedRisk as 'Düşük' | 'Orta' | 'Yüksek');
- setSelectedRisk('none');
- }
  };
 
  if (selectedCount === 0) {
@@ -68,27 +50,6 @@ export function BulkActions({
  </div>
 
  <div className="flex items-center gap-2">
- <div className="flex items-center gap-2">
- <Select value={selectedRisk} onValueChange={setSelectedRisk}>
- <SelectTrigger className="w-[180px] h-9">
- <SelectValue placeholder="Risk seviyesi değiştir" />
- </SelectTrigger>
- <SelectContent>
- <SelectItem value="none" disabled>
- Risk seviyesi seç
- </SelectItem>
- <SelectItem value="Düşük">Düşük Risk</SelectItem>
- <SelectItem value="Orta">Orta Risk</SelectItem>
- <SelectItem value="Yüksek">Yüksek Risk</SelectItem>
- </SelectContent>
- </Select>
- {selectedRisk && selectedRisk !== 'none' && (
- <Button size="sm" onClick={handleRiskUpdate} className="h-9">
- Uygula
- </Button>
- )}
- </div>
-
  <Button
  variant="destructive"
  size="sm"

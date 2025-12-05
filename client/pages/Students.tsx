@@ -140,7 +140,6 @@ export default function Students() {
       surname: '',
       class: '9/A',
       gender: 'K',
-      risk: 'Düşük',
       enrollmentDate: new Date().toISOString(),
     },
   });
@@ -193,7 +192,6 @@ export default function Students() {
     setValue('surname', student.surname);
     setValue('class', student.class);
     setValue('gender', student.gender);
-    setValue('risk', student.risk || 'Düşük');
     setEditOpen(true);
   };
 
@@ -283,25 +281,6 @@ export default function Students() {
     } catch (error) {
       toast.error('Toplu silme işlemi başarısız oldu.');
       console.error('Bulk delete error:', error);
-    }
-  };
-
-  const handleBulkUpdateRisk = async (risk: 'Düşük' | 'Orta' | 'Yüksek') => {
-    const idsToUpdate = Array.from(selectedStudentIds);
-
-    try {
-      for (const id of idsToUpdate) {
-        const student = students.find((s) => s.id === id);
-        if (student) {
-          await upsertStudent({ ...student, risk });
-        }
-      }
-      invalidate();
-      setSelectedStudentIds(new Set());
-      toast.success(`${idsToUpdate.length} öğrencinin risk seviyesi güncellendi.`);
-    } catch (error) {
-      toast.error('Toplu güncelleme işlemi başarısız oldu.');
-      console.error('Bulk update error:', error);
     }
   };
 
@@ -690,7 +669,6 @@ export default function Students() {
       <BulkActions
         selectedCount={selectedStudentIds.size}
         onBulkDelete={handleBulkDelete}
-        onBulkUpdateRisk={handleBulkUpdateRisk}
         onClearSelection={() => setSelectedStudentIds(new Set())}
       />
 
@@ -991,23 +969,6 @@ function StudentFormDialog({
             </SelectContent>
           </Select>
           <input type="hidden" {...register('gender')} />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Risk Seviyesi</label>
-          <Select
-            onValueChange={(v) => setValue('risk', v as 'Düşük' | 'Orta' | 'Yüksek')}
-            value={watch('risk')}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Seçiniz" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Düşük">Düşük</SelectItem>
-              <SelectItem value="Orta">Orta</SelectItem>
-              <SelectItem value="Yüksek">Yüksek</SelectItem>
-            </SelectContent>
-          </Select>
-          <input type="hidden" {...register('risk')} />
         </div>
       </form>
       <DialogFooter className="flex-col sm:flex-row gap-2">
