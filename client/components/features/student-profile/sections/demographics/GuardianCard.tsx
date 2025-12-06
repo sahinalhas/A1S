@@ -79,7 +79,7 @@ export function GuardianCard({ student, onUpdate }: GuardianCardProps) {
               <UserCheck className="h-5 w-5 text-amber-600" />
               Vasi Bilgileri
             </CardTitle>
-            <CardDescription>Acil durumlarda ulaşılacak kişi</CardDescription>
+            <CardDescription>Anne-babasıyla yaşamıyorsa uygun vasi bilgileri doldurunuz.”</CardDescription>
           </div>
           {isDirty && (
             <Button
