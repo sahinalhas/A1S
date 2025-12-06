@@ -111,6 +111,21 @@ export function createStudentsTables(db: Database.Database): void {
     'familyExpectations TEXT',
     // Discipline History
     'disiplinCezalari TEXT',
+    // Health Information
+    'chronicDiseases TEXT',
+    'allergies TEXT',
+    'medications TEXT',
+    'medicalHistory TEXT',
+    'specialNeeds TEXT',
+    'physicalLimitations TEXT',
+    // Emergency Contacts
+    'emergencyContact1Name TEXT',
+    'emergencyContact1Phone TEXT',
+    'emergencyContact1Relation TEXT',
+    'emergencyContact2Name TEXT',
+    'emergencyContact2Phone TEXT',
+    'emergencyContact2Relation TEXT',
+    'healthAdditionalNotes TEXT',
   ];
 
   for (const columnDef of extendedColumns) {
