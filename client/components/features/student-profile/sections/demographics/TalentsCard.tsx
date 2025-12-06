@@ -177,8 +177,8 @@ export function TalentsCard({ student, onUpdate }: TalentsCardProps) {
                 <div className="space-y-3 py-2">
                   {getSummaryItems.map((item, index) => (
                     <motion.div key={index} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: index * 0.08 }} className="p-3.5 rounded-lg bg-gradient-to-br from-orange-50/70 to-amber-50/40 dark:from-orange-900/20 dark:to-amber-900/10 border border-orange-100/60 dark:border-orange-800/30 hover:border-orange-200/80 dark:hover:border-orange-700/60 hover:shadow-md dark:hover:shadow-orange-900/20 transition-all duration-200 group">
-                      <p className="text-xs font-bold text-orange-700 dark:text-orange-300 mb-2 flex items-center gap-2 uppercase tracking-wide">{item.icon && <span className="text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">{item.icon}</span>}{item.label}</p>
-                      <div className="flex flex-wrap gap-2">{item.items?.map((val, i) => (<span key={i} className="inline-flex items-center px-2.5 py-1.5 text-xs font-bold bg-orange-100 dark:bg-orange-700/50 text-orange-900 dark:text-orange-100 rounded-md">{val}</span>))}</div>
+                      <p className="text-xs font-semibold text-amber-700 dark:text-amber-300 mb-2 flex items-center gap-2 uppercase tracking-wide">{item.icon && <span className="text-amber-600/80 dark:text-amber-400/80 group-hover:scale-110 transition-transform">{item.icon}</span>}{item.label}</p>
+                      <div className="flex flex-wrap gap-2">{item.items?.map((val, i) => (<span key={i} className="inline-flex items-center px-2.5 py-1.5 text-xs font-medium bg-amber-50/70 dark:bg-amber-900/15 text-amber-700 dark:text-amber-200 rounded-md border border-amber-100/50 dark:border-amber-800/20">{val}</span>))}</div>
                     </motion.div>
                   ))}
                 </div>
