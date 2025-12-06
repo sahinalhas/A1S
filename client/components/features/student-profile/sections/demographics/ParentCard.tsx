@@ -67,13 +67,6 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
     try {
       const prefix = isMother ? "mother" : "father";
       
-      console.log('[DEBUG ParentCard] Current student data:', {
-        id: student.id,
-        motherName: student.motherName,
-        fatherName: student.fatherName,
-      });
-      console.log('[DEBUG ParentCard] Form data to save:', data);
-      
       const updatedStudent: Student = {
         ...student,
         [`${prefix}Name`]: data.name || undefined,
@@ -83,14 +76,7 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
         [`${prefix}Occupation`]: data.occupation || undefined,
         [`${prefix}VitalStatus`]: data.vitalStatus || undefined,
         [`${prefix}LivingStatus`]: data.livingStatus || undefined,
-      };
-      
-      console.log('[DEBUG ParentCard] Updated student to send:', {
-        id: updatedStudent.id,
-        motherName: updatedStudent.motherName,
-        fatherName: updatedStudent.fatherName,
-        [`${prefix}Name`]: (updatedStudent as Record<string, unknown>)[`${prefix}Name`],
-      });
+      } as Student;
       
       await upsertStudent(updatedStudent);
       form.reset(data);

@@ -55,7 +55,11 @@ export function IdentityCard({ student, onUpdate }: IdentityCardProps) {
   const onSubmit = useCallback(async (data: FormValues) => {
     setIsSaving(true);
     try {
-      const updatedStudent: Student = { ...student, ...data };
+      const updatedStudent: Student = { 
+        ...student, 
+        ...data,
+        gender: data.gender || undefined,
+      };
       await upsertStudent(updatedStudent);
       form.reset(data);
       setShowSuccess(true);
