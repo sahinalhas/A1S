@@ -1,29 +1,32 @@
-
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/organisms/Card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/organisms/Card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/organisms/Form";
 import { Slider } from "@/components/atoms/Slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/atoms/Select";
-import { EnhancedTextarea } from "@/components/molecules/EnhancedTextarea";
-import { Checkbox } from "@/components/atoms/Checkbox";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/organisms/Collapsible";
+import { Textarea } from "@/components/atoms/Textarea";
 import { Button } from "@/components/atoms/Button";
-import { GraduationCap, TrendingUp, Target, BookOpen, Brain, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
+import { 
+  GraduationCap, 
+  TrendingUp, 
+  Target, 
+  BookOpen, 
+  Brain, 
+  Sparkles,
+  Check,
+  Save,
+  Loader2
+} from "lucide-react";
 import { 
   ACADEMIC_SUBJECTS, 
   ACADEMIC_SKILLS,
   LEARNING_STYLES 
 } from "@shared/constants/student-profile-taxonomy";
-import { useStandardizedProfileSection } from "@/hooks/state/standardized-profile-section.state";
-import { Textarea } from "@/components/atoms/Textarea";
-import { useFormDirty } from "@/pages/StudentProfile/StudentProfile";
-import { Badge } from "@/components/atoms/Badge";
-import { Separator } from "@/components/atoms/Separator";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { ScrollArea } from "@/components/organisms/ScrollArea";
+import { useFormDirty } from "@/pages/StudentProfile/StudentProfile";
 
 const academicProfileSchema = z.object({
   assessmentDate: z.string().optional(),
@@ -48,23 +51,109 @@ interface StandardizedAcademicSectionProps {
   onUpdate: () => void;
 }
 
+type SubjectItem = { value: string; label: string; category: string };
+type SkillItem = { value: string; label: string; category: string };
+
+const subjectsList: SubjectItem[] = ACADEMIC_SUBJECTS.map(s => ({ value: s.value, label: s.label, category: s.category }));
+const skillsList: SkillItem[] = ACADEMIC_SKILLS.map(s => ({ value: s.value, label: s.label, category: s.category }));
+const learningStylesList = LEARNING_STYLES.map(s => ({ value: s.value, label: s.label, description: s.description }));
+
+const categoryColors: Record<string, string> = {
+  sayısal: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+  sözel: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+  dil: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+  sanat: "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300",
+  fiziksel: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+  uygulamalı: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300",
+  bilişsel: "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300",
+  yürütücü: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+  akademik: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
+};
+
+function groupByCategory<T extends { category: string }>(items: T[]): Record<string, T[]> {
+  return items.reduce((acc, item) => {
+    const cat = item.category || 'Diğer';
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(item);
+    return acc;
+  }, {} as Record<string, T[]>);
+}
+
+interface ChipSelectorProps<T extends { value: string; label: string; category: string }> {
+  items: T[];
+  selectedValues: string[];
+  onChange: (values: string[]) => void;
+  type: 'strong' | 'weak';
+}
+
+function ChipSelector<T extends { value: string; label: string; category: string }>({ 
+  items, 
+  selectedValues, 
+  onChange,
+  type 
+}: ChipSelectorProps<T>) {
+  const grouped = groupByCategory(items);
+  
+  const toggleItem = (value: string) => {
+    if (selectedValues.includes(value)) {
+      onChange(selectedValues.filter(v => v !== value));
+    } else {
+      onChange([...selectedValues, value]);
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {Object.entries(grouped).map(([category, categoryItems]) => (
+        <div key={category} className="space-y-2">
+          <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            {category}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {categoryItems.map((item) => {
+              const isSelected = selectedValues.includes(item.value);
+              return (
+                <button
+                  key={item.value}
+                  type="button"
+                  onClick={() => toggleItem(item.value)}
+                  className={cn(
+                    "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200",
+                    "border-2 cursor-pointer",
+                    isSelected && type === 'strong' && "bg-emerald-500 text-white border-emerald-500 shadow-md",
+                    isSelected && type === 'weak' && "bg-amber-500 text-white border-amber-500 shadow-md",
+                    !isSelected && "bg-background border-muted-foreground/20 hover:border-muted-foreground/40 text-foreground/70 hover:text-foreground"
+                  )}
+                >
+                  {isSelected && (
+                    type === 'strong' 
+                      ? <Check className="h-3.5 w-3.5" />
+                      : <Target className="h-3.5 w-3.5" />
+                  )}
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function StandardizedAcademicSection({ 
   studentId, 
-  academicData,
   onUpdate 
 }: StandardizedAcademicSectionProps) {
   const { setIsDirty, registerFormSubmit, unregisterFormSubmit } = useFormDirty();
   const componentId = useMemo(() => crypto.randomUUID(), []);
-  const [isSubjectsOpen, setIsSubjectsOpen] = useState(false);
-  const [isSkillsOpen, setIsSkillsOpen] = useState(false);
-  const [isLearningStylesOpen, setIsLearningStylesOpen] = useState(false);
-  const [isPerformanceOpen, setIsPerformanceOpen] = useState(false);
-  const [isAdditionalOpen, setIsAdditionalOpen] = useState(false);
-  const [localIsDirty, setLocalIsDirty] = useState(false);
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [savedData, setSavedData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const isResettingRef = useRef(false);
+
   const form = useForm<AcademicProfileFormValues>({
     resolver: zodResolver(academicProfileSchema),
-    mode: 'onSubmit',
     defaultValues: {
       strongSubjects: [],
       weakSubjects: [],
@@ -73,41 +162,122 @@ export default function StandardizedAcademicSection({
       primaryLearningStyle: "",
       secondaryLearningStyle: "",
       overallMotivation: 5,
+      studyHoursPerWeek: 0,
       homeworkCompletionRate: 50,
       additionalNotes: "",
       languageSkills: "",
     },
   });
 
+  const loadData = useCallback(async () => {
+    if (!studentId) return;
+    setIsLoading(true);
+    try {
+      const response = await fetch(`/api/standardized-profile/${studentId}/academic`, {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setSavedData(data);
+        if (data && Object.keys(data).length > 0) {
+          const formData: AcademicProfileFormValues = {
+            assessmentDate: data.assessmentDate || "",
+            strongSubjects: parseJsonArray(data.strongSubjects),
+            weakSubjects: parseJsonArray(data.weakSubjects),
+            strongSkills: parseJsonArray(data.strongSkills),
+            weakSkills: parseJsonArray(data.weakSkills),
+            primaryLearningStyle: data.primaryLearningStyle || "",
+            secondaryLearningStyle: data.secondaryLearningStyle || "",
+            overallMotivation: data.overallMotivation ?? 5,
+            studyHoursPerWeek: data.studyHoursPerWeek ?? 0,
+            homeworkCompletionRate: data.homeworkCompletionRate ?? 50,
+            additionalNotes: data.additionalNotes || "",
+            languageSkills: data.languageSkills || "",
+          };
+          isResettingRef.current = true;
+          form.reset(formData);
+          setTimeout(() => {
+            isResettingRef.current = false;
+            setIsDirty(false);
+          }, 0);
+        }
+      }
+    } catch (error) {
+      console.error("Error loading academic data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [studentId, form, setIsDirty]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
   useEffect(() => {
     const subscription = form.watch(() => {
-      setIsDirty(true);
-      setLocalIsDirty(true);
+      if (!isResettingRef.current) {
+        setIsDirty(true);
+      }
     });
     return () => subscription.unsubscribe();
   }, [form, setIsDirty]);
 
-  const { isSubmitting, onSubmit } = useStandardizedProfileSection({
-    studentId,
-    sectionName: 'Akademik profil',
-    apiEndpoint: 'academic',
-    form,
-    defaultValues: form.getValues(),
-    onUpdate,
-  });
-  
+  function parseJsonArray(value: any): string[] {
+    if (!value) return [];
+    if (Array.isArray(value)) return value;
+    if (typeof value === 'string') {
+      try {
+        const parsed = JSON.parse(value);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  }
+
+  const onSubmit = useCallback(async (data: AcademicProfileFormValues) => {
+    setIsSubmitting(true);
+    try {
+      const payload = {
+        id: savedData?.id || crypto.randomUUID(),
+        studentId,
+        ...data,
+        assessmentDate: data.assessmentDate || new Date().toISOString().split('T')[0],
+      };
+
+      const response = await fetch(`/api/standardized-profile/${studentId}/academic`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.details || 'Kayıt başarısız');
+      }
+
+      toast.success("Akademik profil kaydedildi");
+      isResettingRef.current = true;
+      await loadData();
+      setTimeout(() => {
+        isResettingRef.current = false;
+        setIsDirty(false);
+      }, 0);
+      onUpdate?.();
+    } catch (error: any) {
+      toast.error(error.message || "Kayıt sırasında hata oluştu");
+      console.error("Error saving academic profile:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [savedData?.id, studentId, loadData, onUpdate, setIsDirty]);
+
   const onSubmitRef = useRef(onSubmit);
   useEffect(() => {
     onSubmitRef.current = onSubmit;
   }, [onSubmit]);
-
-  const handleSave = async () => {
-    const isValid = await form.trigger();
-    if (isValid) {
-      await form.handleSubmit(onSubmit)();
-      setLocalIsDirty(false);
-    }
-  };
 
   useEffect(() => {
     registerFormSubmit(componentId, async () => {
@@ -121,59 +291,43 @@ export default function StandardizedAcademicSection({
 
   const motivationLevel = form.watch("overallMotivation");
   const completionRate = form.watch("homeworkCompletionRate");
+  const studyHours = form.watch("studyHoursPerWeek");
 
   const getMotivationColor = (level: number) => {
-    if (level >= 8) return "text-green-600";
-    if (level >= 5) return "text-yellow-600";
-    return "text-red-600";
+    if (level >= 8) return "text-emerald-600";
+    if (level >= 5) return "text-amber-600";
+    return "text-rose-600";
   };
 
   const getCompletionColor = (rate: number) => {
-    if (rate >= 80) return "text-green-600";
-    if (rate >= 60) return "text-yellow-600";
-    return "text-red-600";
+    if (rate >= 80) return "text-emerald-600";
+    if (rate >= 60) return "text-amber-600";
+    return "text-rose-600";
   };
 
-  // Group subjects by category
-  const subjectsByCategory = useMemo(() => {
-    const grouped: Record<string, typeof ACADEMIC_SUBJECTS> = {};
-    ACADEMIC_SUBJECTS.forEach(subject => {
-      const category = subject.category || 'Diğer';
-      if (!grouped[category]) {
-        grouped[category] = [];
-      }
-      grouped[category].push(subject);
-    });
-    return grouped;
-  }, []);
-
-  // Group skills by category
-  const skillsByCategory = useMemo(() => {
-    const grouped: Record<string, typeof ACADEMIC_SKILLS> = {};
-    ACADEMIC_SKILLS.forEach(skill => {
-      const category = skill.category || 'Diğer';
-      if (!grouped[category]) {
-        grouped[category] = [];
-      }
-      grouped[category].push(skill);
-    });
-    return grouped;
-  }, []);
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      {/* Header Card */}
-      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-        <CardHeader>
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-primary/10">
-              <GraduationCap className="h-6 w-6 text-primary" />
+    <div className="space-y-6 max-w-5xl mx-auto">
+      <Card className="border-0 shadow-lg bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-950/20 dark:via-teal-950/20 dark:to-cyan-950/20">
+        <CardHeader className="pb-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 shadow-lg">
+              <GraduationCap className="h-7 w-7 text-white" />
             </div>
             <div>
-              <CardTitle className="text-2xl">Akademik Profil</CardTitle>
-              <CardDescription className="mt-1">
+              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                Akademik Profil
+              </CardTitle>
+              <p className="text-muted-foreground mt-1">
                 Öğrencinin akademik yetkinliklerini ve öğrenme stilini değerlendirin
-              </CardDescription>
+              </p>
             </div>
           </div>
         </CardHeader>
@@ -181,382 +335,171 @@ export default function StandardizedAcademicSection({
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          
-          {/* Dersler Bölümü */}
-          <Collapsible open={isSubjectsOpen} onOpenChange={setIsSubjectsOpen}>
-            <Card>
-              <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <BookOpen className="h-5 w-5 text-blue-600" />
-                      <CardTitle className="text-lg">Ders Performansı</CardTitle>
-                    </div>
-                    {isSubjectsOpen ? (
-                      <ChevronUp className="h-5 w-5 text-muted-foreground" />
-                    ) : (
-                      <ChevronDown className="h-5 w-5 text-muted-foreground" />
-                    )}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card className="shadow-md hover:shadow-lg transition-shadow">
+              <CardHeader className="pb-3">
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-xl bg-emerald-100 dark:bg-emerald-900/30">
+                    <TrendingUp className="h-5 w-5 text-emerald-600" />
                   </div>
-                </CardHeader>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Güçlü Dersler */}
+                  <CardTitle className="text-lg">Güçlü Dersler</CardTitle>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Öğrencinin başarılı olduğu dersleri seçin
+                </p>
+              </CardHeader>
+              <CardContent>
                 <FormField
                   control={form.control}
                   name="strongSubjects"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-2 text-base font-medium mb-3">
-                        <TrendingUp className="h-4 w-4 text-green-600" />
-                        Güçlü Dersler
-                      </FormLabel>
-                      <ScrollArea className="h-[300px] rounded-lg border p-4">
-                        <div className="space-y-4">
-                          {Object.entries(subjectsByCategory).map(([category, subjects]) => (
-                            <div key={category} className="space-y-2">
-                              <h4 className="text-sm font-semibold text-muted-foreground sticky top-0 bg-background py-1">
-                                {category}
-                              </h4>
-                              <div className="space-y-2 pl-2">
-                                {subjects.map((subject) => (
-                                  <div key={subject.value} className="flex items-center space-x-2">
-                                    <Checkbox
-                                      id={`strong-${subject.value}`}
-                                      checked={field.value?.includes(subject.value)}
-                                      onCheckedChange={(checked) => {
-                                        const current = field.value || [];
-                                        if (checked) {
-                                          field.onChange([...current, subject.value]);
-                                        } else {
-                                          field.onChange(current.filter((v) => v !== subject.value));
-                                        }
-                                      }}
-                                    />
-                                    <label
-                                      htmlFor={`strong-${subject.value}`}
-                                      className={cn(
-                                        "text-sm font-medium leading-none cursor-pointer select-none",
-                                        "peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                      )}
-                                    >
-                                      {subject.label}
-                                    </label>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </ScrollArea>
-                      {field.value && field.value.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {field.value.map((value) => {
-                            const subject = ACADEMIC_SUBJECTS.find(s => s.value === value);
-                            return (
-                              <Badge key={value} variant="secondary" className="text-xs">
-                                {subject?.label}
-                              </Badge>
-                            );
-                          })}
-                        </div>
-                      )}
+                      <FormControl>
+                        <ChipSelector
+                          items={subjectsList}
+                          selectedValues={field.value || []}
+                          onChange={field.onChange}
+                          type="strong"
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+              </CardContent>
+            </Card>
 
-                {/* Geliştirilmesi Gereken Dersler */}
+            <Card className="shadow-md hover:shadow-lg transition-shadow">
+              <CardHeader className="pb-3">
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-xl bg-amber-100 dark:bg-amber-900/30">
+                    <Target className="h-5 w-5 text-amber-600" />
+                  </div>
+                  <CardTitle className="text-lg">Geliştirilmesi Gereken Dersler</CardTitle>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Destek gerektiren dersleri işaretleyin
+                </p>
+              </CardHeader>
+              <CardContent>
                 <FormField
                   control={form.control}
                   name="weakSubjects"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-2 text-base font-medium mb-3">
-                        <Target className="h-4 w-4 text-orange-600" />
-                        Geliştirilmesi Gereken Dersler
-                      </FormLabel>
-                      <ScrollArea className="h-[300px] rounded-lg border p-4">
-                        <div className="space-y-4">
-                          {Object.entries(subjectsByCategory).map(([category, subjects]) => (
-                            <div key={category} className="space-y-2">
-                              <h4 className="text-sm font-semibold text-muted-foreground sticky top-0 bg-background py-1">
-                                {category}
-                              </h4>
-                              <div className="space-y-2 pl-2">
-                                {subjects.map((subject) => (
-                                  <div key={subject.value} className="flex items-center space-x-2">
-                                    <Checkbox
-                                      id={`weak-${subject.value}`}
-                                      checked={field.value?.includes(subject.value)}
-                                      onCheckedChange={(checked) => {
-                                        const current = field.value || [];
-                                        if (checked) {
-                                          field.onChange([...current, subject.value]);
-                                        } else {
-                                          field.onChange(current.filter((v) => v !== subject.value));
-                                        }
-                                      }}
-                                    />
-                                    <label
-                                      htmlFor={`weak-${subject.value}`}
-                                      className={cn(
-                                        "text-sm font-medium leading-none cursor-pointer select-none",
-                                        "peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                      )}
-                                    >
-                                      {subject.label}
-                                    </label>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </ScrollArea>
-                      {field.value && field.value.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {field.value.map((value) => {
-                            const subject = ACADEMIC_SUBJECTS.find(s => s.value === value);
-                            return (
-                              <Badge key={value} variant="secondary" className="text-xs">
-                                {subject?.label}
-                              </Badge>
-                            );
-                          })}
-                        </div>
-                      )}
+                      <FormControl>
+                        <ChipSelector
+                          items={subjectsList}
+                          selectedValues={field.value || []}
+                          onChange={field.onChange}
+                          type="weak"
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-              </div>
-                </CardContent>
-                {localIsDirty && (
-                  <CardContent className="pt-0">
-                    <Button 
-                      onClick={handleSave} 
-                      disabled={isSubmitting}
-                      className="w-full"
-                    >
-                      {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
-                    </Button>
-                  </CardContent>
-                )}
-              </CollapsibleContent>
+              </CardContent>
             </Card>
-          </Collapsible>
+          </div>
 
-          {/* Beceriler Bölümü */}
-          <Collapsible open={isSkillsOpen} onOpenChange={setIsSkillsOpen}>
-            <Card>
-              <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Brain className="h-5 w-5 text-purple-600" />
-                      <CardTitle className="text-lg">Akademik Beceriler</CardTitle>
-                    </div>
-                    {isSkillsOpen ? (
-                      <ChevronUp className="h-5 w-5 text-muted-foreground" />
-                    ) : (
-                      <ChevronDown className="h-5 w-5 text-muted-foreground" />
-                    )}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card className="shadow-md hover:shadow-lg transition-shadow">
+              <CardHeader className="pb-3">
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-xl bg-indigo-100 dark:bg-indigo-900/30">
+                    <Brain className="h-5 w-5 text-indigo-600" />
                   </div>
-                </CardHeader>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Güçlü Beceriler */}
+                  <CardTitle className="text-lg">Güçlü Beceriler</CardTitle>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Öğrencinin öne çıkan becerilerini seçin
+                </p>
+              </CardHeader>
+              <CardContent>
                 <FormField
                   control={form.control}
                   name="strongSkills"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-2 text-base font-medium mb-3">
-                        <TrendingUp className="h-4 w-4 text-green-600" />
-                        Güçlü Beceriler
-                      </FormLabel>
-                      <ScrollArea className="h-[300px] rounded-lg border p-4">
-                        <div className="space-y-4">
-                          {Object.entries(skillsByCategory).map(([category, skills]) => (
-                            <div key={category} className="space-y-2">
-                              <h4 className="text-sm font-semibold text-muted-foreground sticky top-0 bg-background py-1">
-                                {category}
-                              </h4>
-                              <div className="space-y-2 pl-2">
-                                {skills.map((skill) => (
-                                  <div key={skill.value} className="flex items-center space-x-2">
-                                    <Checkbox
-                                      id={`strong-skill-${skill.value}`}
-                                      checked={field.value?.includes(skill.value)}
-                                      onCheckedChange={(checked) => {
-                                        const current = field.value || [];
-                                        if (checked) {
-                                          field.onChange([...current, skill.value]);
-                                        } else {
-                                          field.onChange(current.filter((v) => v !== skill.value));
-                                        }
-                                      }}
-                                    />
-                                    <label
-                                      htmlFor={`strong-skill-${skill.value}`}
-                                      className={cn(
-                                        "text-sm font-medium leading-none cursor-pointer select-none",
-                                        "peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                      )}
-                                    >
-                                      {skill.label}
-                                    </label>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </ScrollArea>
-                      {field.value && field.value.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {field.value.map((value) => {
-                            const skill = ACADEMIC_SKILLS.find(s => s.value === value);
-                            return (
-                              <Badge key={value} variant="secondary" className="text-xs">
-                                {skill?.label}
-                              </Badge>
-                            );
-                          })}
-                        </div>
-                      )}
+                      <FormControl>
+                        <ChipSelector
+                          items={skillsList}
+                          selectedValues={field.value || []}
+                          onChange={field.onChange}
+                          type="strong"
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+              </CardContent>
+            </Card>
 
-                {/* Geliştirilmesi Gereken Beceriler */}
+            <Card className="shadow-md hover:shadow-lg transition-shadow">
+              <CardHeader className="pb-3">
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-xl bg-rose-100 dark:bg-rose-900/30">
+                    <Target className="h-5 w-5 text-rose-600" />
+                  </div>
+                  <CardTitle className="text-lg">Geliştirilmesi Gereken Beceriler</CardTitle>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Destek gerektiren becerileri işaretleyin
+                </p>
+              </CardHeader>
+              <CardContent>
                 <FormField
                   control={form.control}
                   name="weakSkills"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-2 text-base font-medium mb-3">
-                        <Target className="h-4 w-4 text-orange-600" />
-                        Geliştirilmesi Gereken Beceriler
-                      </FormLabel>
-                      <ScrollArea className="h-[300px] rounded-lg border p-4">
-                        <div className="space-y-4">
-                          {Object.entries(skillsByCategory).map(([category, skills]) => (
-                            <div key={category} className="space-y-2">
-                              <h4 className="text-sm font-semibold text-muted-foreground sticky top-0 bg-background py-1">
-                                {category}
-                              </h4>
-                              <div className="space-y-2 pl-2">
-                                {skills.map((skill) => (
-                                  <div key={skill.value} className="flex items-center space-x-2">
-                                    <Checkbox
-                                      id={`weak-skill-${skill.value}`}
-                                      checked={field.value?.includes(skill.value)}
-                                      onCheckedChange={(checked) => {
-                                        const current = field.value || [];
-                                        if (checked) {
-                                          field.onChange([...current, skill.value]);
-                                        } else {
-                                          field.onChange(current.filter((v) => v !== skill.value));
-                                        }
-                                      }}
-                                    />
-                                    <label
-                                      htmlFor={`weak-skill-${skill.value}`}
-                                      className={cn(
-                                        "text-sm font-medium leading-none cursor-pointer select-none",
-                                        "peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                      )}
-                                    >
-                                      {skill.label}
-                                    </label>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </ScrollArea>
-                      {field.value && field.value.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {field.value.map((value) => {
-                            const skill = ACADEMIC_SKILLS.find(s => s.value === value);
-                            return (
-                              <Badge key={value} variant="secondary" className="text-xs">
-                                {skill?.label}
-                              </Badge>
-                            );
-                          })}
-                        </div>
-                      )}
+                      <FormControl>
+                        <ChipSelector
+                          items={skillsList}
+                          selectedValues={field.value || []}
+                          onChange={field.onChange}
+                          type="weak"
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-              </div>
-                </CardContent>
-                {localIsDirty && (
-                  <CardContent className="pt-0">
-                    <Button 
-                      onClick={handleSave} 
-                      disabled={isSubmitting}
-                      className="w-full"
-                    >
-                      {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
-                    </Button>
-                  </CardContent>
-                )}
-              </CollapsibleContent>
+              </CardContent>
             </Card>
-          </Collapsible>
+          </div>
 
-          {/* Öğrenme Stilleri */}
-          <Collapsible open={isLearningStylesOpen} onOpenChange={setIsLearningStylesOpen}>
-            <Card>
-              <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Sparkles className="h-5 w-5 text-pink-600" />
-                      <CardTitle className="text-lg">Öğrenme Stilleri</CardTitle>
-                    </div>
-                    {isLearningStylesOpen ? (
-                      <ChevronUp className="h-5 w-5 text-muted-foreground" />
-                    ) : (
-                      <ChevronDown className="h-5 w-5 text-muted-foreground" />
-                    )}
-                  </div>
-                </CardHeader>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <CardContent>
+          <Card className="shadow-md hover:shadow-lg transition-shadow">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-xl bg-violet-100 dark:bg-violet-900/30">
+                  <Sparkles className="h-5 w-5 text-violet-600" />
+                </div>
+                <CardTitle className="text-lg">Öğrenme Stilleri</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
                   name="primaryLearningStyle"
                   render={({ field }) => (
-                    <FormItem className="space-y-3">
-                      <FormLabel className="text-base font-medium">
-                        Birincil Öğrenme Stili
-                      </FormLabel>
+                    <FormItem>
+                      <FormLabel>Birincil Öğrenme Stili</FormLabel>
                       <Select onValueChange={field.onChange} value={field.value}>
                         <FormControl>
-                          <SelectTrigger className="h-11">
-                            <SelectValue placeholder="Öğrenme stili seçiniz" />
+                          <SelectTrigger>
+                            <SelectValue placeholder="Seçiniz..." />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {LEARNING_STYLES.map((style) => (
+                          {learningStylesList.map((style) => (
                             <SelectItem key={style.value} value={style.value}>
-                              <div className="flex flex-col">
-                                <span className="font-medium">{style.label}</span>
-                                <span className="text-xs text-muted-foreground">{style.description}</span>
+                              <div>
+                                <div className="font-medium">{style.label}</div>
+                                <div className="text-xs text-muted-foreground">{style.description}</div>
                               </div>
                             </SelectItem>
                           ))}
@@ -571,20 +514,21 @@ export default function StandardizedAcademicSection({
                   control={form.control}
                   name="secondaryLearningStyle"
                   render={({ field }) => (
-                    <FormItem className="space-y-3">
-                      <FormLabel className="text-base font-medium">
-                        İkincil Öğrenme Stili
-                      </FormLabel>
+                    <FormItem>
+                      <FormLabel>İkincil Öğrenme Stili</FormLabel>
                       <Select onValueChange={field.onChange} value={field.value}>
                         <FormControl>
-                          <SelectTrigger className="h-11">
-                            <SelectValue placeholder="Öğrenme stili seçiniz" />
+                          <SelectTrigger>
+                            <SelectValue placeholder="Seçiniz..." />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {LEARNING_STYLES.map((style) => (
+                          {learningStylesList.map((style) => (
                             <SelectItem key={style.value} value={style.value}>
-                              <span className="font-medium">{style.label}</span>
+                              <div>
+                                <div className="font-medium">{style.label}</div>
+                                <div className="text-xs text-muted-foreground">{style.description}</div>
+                              </div>
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -594,51 +538,29 @@ export default function StandardizedAcademicSection({
                   )}
                 />
               </div>
-                </CardContent>
-                {localIsDirty && (
-                  <CardContent className="pt-0">
-                    <Button 
-                      onClick={handleSave} 
-                      disabled={isSubmitting}
-                      className="w-full"
-                    >
-                      {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
-                    </Button>
-                  </CardContent>
-                )}
-              </CollapsibleContent>
-            </Card>
-          </Collapsible>
+            </CardContent>
+          </Card>
 
-          {/* Performans Metrikleri */}
-          <Collapsible open={isPerformanceOpen} onOpenChange={setIsPerformanceOpen}>
-            <Card>
-              <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">Performans Göstergeleri</CardTitle>
-                    {isPerformanceOpen ? (
-                      <ChevronUp className="h-5 w-5 text-muted-foreground" />
-                    ) : (
-                      <ChevronDown className="h-5 w-5 text-muted-foreground" />
-                    )}
-                  </div>
-                </CardHeader>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <CardContent className="space-y-6">
+          <Card className="shadow-md hover:shadow-lg transition-shadow">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-xl bg-cyan-100 dark:bg-cyan-900/30">
+                  <BookOpen className="h-5 w-5 text-cyan-600" />
+                </div>
+                <CardTitle className="text-lg">Performans Göstergeleri</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-8">
               <FormField
                 control={form.control}
                 name="overallMotivation"
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center justify-between mb-2">
-                      <FormLabel className="text-base font-medium">
-                        Genel Motivasyon Seviyesi
-                      </FormLabel>
-                      <Badge variant="outline" className={getMotivationColor(field.value)}>
-                        {field.value}/10
-                      </Badge>
+                      <FormLabel className="text-base">Genel Motivasyon Düzeyi</FormLabel>
+                      <span className={cn("text-2xl font-bold", getMotivationColor(motivationLevel))}>
+                        {motivationLevel}/10
+                      </span>
                     </div>
                     <FormControl>
                       <Slider
@@ -650,7 +572,7 @@ export default function StandardizedAcademicSection({
                         className="py-4"
                       />
                     </FormControl>
-                    <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                    <div className="flex justify-between text-xs text-muted-foreground">
                       <span>Düşük</span>
                       <span>Orta</span>
                       <span>Yüksek</span>
@@ -660,20 +582,16 @@ export default function StandardizedAcademicSection({
                 )}
               />
 
-              <Separator />
-
               <FormField
                 control={form.control}
                 name="homeworkCompletionRate"
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center justify-between mb-2">
-                      <FormLabel className="text-base font-medium">
-                        Ödev Tamamlama Oranı
-                      </FormLabel>
-                      <Badge variant="outline" className={getCompletionColor(field.value)}>
-                        {field.value}%
-                      </Badge>
+                      <FormLabel className="text-base">Ödev Tamamlama Oranı</FormLabel>
+                      <span className={cn("text-2xl font-bold", getCompletionColor(completionRate))}>
+                        %{completionRate}
+                      </span>
                     </div>
                     <FormControl>
                       <Slider
@@ -685,61 +603,65 @@ export default function StandardizedAcademicSection({
                         className="py-4"
                       />
                     </FormControl>
-                    <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                      <span>0%</span>
-                      <span>50%</span>
-                      <span>100%</span>
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>%0</span>
+                      <span>%50</span>
+                      <span>%100</span>
                     </div>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-                </CardContent>
-                {localIsDirty && (
-                  <CardContent className="pt-0">
-                    <Button 
-                      onClick={handleSave} 
-                      disabled={isSubmitting}
-                      className="w-full"
-                    >
-                      {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
-                    </Button>
-                  </CardContent>
-                )}
-              </CollapsibleContent>
-            </Card>
-          </Collapsible>
 
-          {/* Ek Bilgiler */}
-          <Collapsible open={isAdditionalOpen} onOpenChange={setIsAdditionalOpen}>
-            <Card>
-              <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">Ek Bilgiler</CardTitle>
-                    {isAdditionalOpen ? (
-                      <ChevronUp className="h-5 w-5 text-muted-foreground" />
-                    ) : (
-                      <ChevronDown className="h-5 w-5 text-muted-foreground" />
-                    )}
-                  </div>
-                </CardHeader>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <CardContent className="space-y-4">
+              <FormField
+                control={form.control}
+                name="studyHoursPerWeek"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center justify-between mb-2">
+                      <FormLabel className="text-base">Haftalık Ders Çalışma Saati</FormLabel>
+                      <span className="text-2xl font-bold text-primary">
+                        {studyHours || 0} saat
+                      </span>
+                    </div>
+                    <FormControl>
+                      <Slider
+                        min={0}
+                        max={40}
+                        step={1}
+                        value={[field.value || 0]}
+                        onValueChange={(vals) => field.onChange(vals[0])}
+                        className="py-4"
+                      />
+                    </FormControl>
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>0 saat</span>
+                      <span>20 saat</span>
+                      <span>40 saat</span>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-md hover:shadow-lg transition-shadow">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg">Ek Bilgiler</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
               <FormField
                 control={form.control}
                 name="languageSkills"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-base font-medium">
-                      Dil Becerileri
-                    </FormLabel>
+                    <FormLabel>Yabancı Dil Yetkinlikleri</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        placeholder="Örn: İngilizce (B2), Almanca (A1)..." 
+                      <Textarea
+                        {...field}
+                        placeholder="Öğrencinin yabancı dil becerileri hakkında notlar..."
                         className="min-h-[80px] resize-none"
-                        {...field} 
                       />
                     </FormControl>
                     <FormMessage />
@@ -752,36 +674,44 @@ export default function StandardizedAcademicSection({
                 name="additionalNotes"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-base font-medium">
-                      Ek Notlar ve Gözlemler
-                    </FormLabel>
+                    <FormLabel>Değerlendirme Notları</FormLabel>
                     <FormControl>
-                      <EnhancedTextarea 
-                        {...field} 
-                        rows={4} 
-                        aiContext="academic"
-                        placeholder="Akademik performans hakkında ek gözlemlerinizi yazınız..."
+                      <Textarea
+                        {...field}
+                        placeholder="Akademik performans hakkında ek notlar, gözlemler..."
+                        className="min-h-[100px] resize-none"
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-                </CardContent>
-                {localIsDirty && (
-                  <CardContent className="pt-0">
-                    <Button 
-                      onClick={handleSave} 
-                      disabled={isSubmitting}
-                      className="w-full"
-                    >
-                      {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
-                    </Button>
-                  </CardContent>
-                )}
-              </CollapsibleContent>
+            </CardContent>
+          </Card>
+
+          <div className="sticky bottom-4 z-10">
+            <Card className="shadow-xl border-2 border-primary/20 bg-background/95 backdrop-blur">
+              <CardContent className="py-4">
+                <Button 
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full h-12 text-lg font-semibold bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Kaydediliyor...
+                    </>
+                  ) : (
+                    <>
+                      <Save className="mr-2 h-5 w-5" />
+                      Akademik Profili Kaydet
+                    </>
+                  )}
+                </Button>
+              </CardContent>
             </Card>
-          </Collapsible>
+          </div>
         </form>
       </Form>
     </div>
