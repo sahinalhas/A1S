@@ -176,7 +176,7 @@ export default function StandardizedAcademicSection({
     try {
       console.log("Loading academic profile for student:", studentId);
       const schoolId = getSelectedSchoolId();
-      const response = await fetch(`/api/standardized-profile/${studentId}/academic`, {
+      const response = await fetch(`/api/standardized-profile/standardized/${studentId}/academic`, {
         credentials: 'include',
         headers: {
           'X-School-Id': schoolId || ''
@@ -260,7 +260,7 @@ export default function StandardizedAcademicSection({
       console.log("Submitting academic profile:", payload);
       const schoolId = getSelectedSchoolId();
 
-      const response = await fetch(`/api/standardized-profile/${studentId}/academic`, {
+      const response = await fetch(`/api/standardized-profile/standardized/${studentId}/academic`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
