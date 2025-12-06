@@ -31,7 +31,6 @@ const academicProfileSchema = z.object({
   primaryLearningStyle: z.string().optional(),
   secondaryLearningStyle: z.string().optional(),
   overallMotivation: z.number().min(1).max(10),
-  studyHoursPerWeek: z.number().min(0),
   homeworkCompletionRate: z.number().min(0).max(100),
   additionalNotes: z.string().optional(),
   languageSkills: z.string().optional(),
@@ -65,7 +64,6 @@ export default function StandardizedAcademicSection({
       primaryLearningStyle: "",
       secondaryLearningStyle: "",
       overallMotivation: 5,
-      studyHoursPerWeek: 0,
       homeworkCompletionRate: 50,
       additionalNotes: "",
       languageSkills: "",
@@ -369,67 +367,38 @@ export default function StandardizedAcademicSection({
 
               <Separator />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField
-                  control={form.control}
-                  name="studyHoursPerWeek"
-                  render={({ field }) => (
-                    <FormItem>
+              <FormField
+                control={form.control}
+                name="homeworkCompletionRate"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center justify-between mb-2">
                       <FormLabel className="text-base font-medium">
-                        Haftalık Çalışma Saati
+                        Ödev Tamamlama Oranı
                       </FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input 
-                            type="number" 
-                            {...field} 
-                            onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
-                            className="h-11 pr-12"
-                            placeholder="0"
-                          />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-                            saat
-                          </span>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="homeworkCompletionRate"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center justify-between mb-2">
-                        <FormLabel className="text-base font-medium">
-                          Ödev Tamamlama Oranı
-                        </FormLabel>
-                        <Badge variant="outline" className={getCompletionColor(field.value)}>
-                          {field.value}%
-                        </Badge>
-                      </div>
-                      <FormControl>
-                        <Slider
-                          min={0}
-                          max={100}
-                          step={5}
-                          value={[field.value]}
-                          onValueChange={(vals) => field.onChange(vals[0])}
-                          className="py-4"
-                        />
-                      </FormControl>
-                      <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                        <span>0%</span>
-                        <span>50%</span>
-                        <span>100%</span>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                      <Badge variant="outline" className={getCompletionColor(field.value)}>
+                        {field.value}%
+                      </Badge>
+                    </div>
+                    <FormControl>
+                      <Slider
+                        min={0}
+                        max={100}
+                        step={5}
+                        value={[field.value]}
+                        onValueChange={(vals) => field.onChange(vals[0])}
+                        className="py-4"
+                      />
+                    </FormControl>
+                    <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                      <span>0%</span>
+                      <span>50%</span>
+                      <span>100%</span>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </CardContent>
           </Card>
 
