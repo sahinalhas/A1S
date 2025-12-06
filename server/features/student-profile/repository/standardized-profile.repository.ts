@@ -27,8 +27,8 @@ export class StandardizedProfileRepository {
         id, studentId, assessmentDate, strongSubjects, weakSubjects,
         strongSkills, weakSkills, primaryLearningStyle, secondaryLearningStyle,
         overallMotivation, studyHoursPerWeek, homeworkCompletionRate,
-        additionalNotes, assessedBy, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+        languageSkills, additionalNotes, assessedBy, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
       ON CONFLICT(id) DO UPDATE SET
         assessmentDate = excluded.assessmentDate,
         strongSubjects = excluded.strongSubjects,
@@ -40,6 +40,7 @@ export class StandardizedProfileRepository {
         overallMotivation = excluded.overallMotivation,
         studyHoursPerWeek = excluded.studyHoursPerWeek,
         homeworkCompletionRate = excluded.homeworkCompletionRate,
+        languageSkills = excluded.languageSkills,
         additionalNotes = excluded.additionalNotes,
         assessedBy = excluded.assessedBy,
         updated_at = CURRENT_TIMESTAMP
@@ -49,17 +50,18 @@ export class StandardizedProfileRepository {
       profile.id,
       profile.studentId,
       profile.assessmentDate,
-      JSON.stringify(profile.strongSubjects),
-      JSON.stringify(profile.weakSubjects),
-      JSON.stringify(profile.strongSkills),
-      JSON.stringify(profile.weakSkills),
-      profile.primaryLearningStyle,
-      profile.secondaryLearningStyle,
-      profile.overallMotivation,
-      profile.studyHoursPerWeek,
-      profile.homeworkCompletionRate,
-      profile.additionalNotes,
-      profile.assessedBy
+      JSON.stringify(profile.strongSubjects || []),
+      JSON.stringify(profile.weakSubjects || []),
+      JSON.stringify(profile.strongSkills || []),
+      JSON.stringify(profile.weakSkills || []),
+      profile.primaryLearningStyle || null,
+      profile.secondaryLearningStyle || null,
+      profile.overallMotivation || 5,
+      profile.studyHoursPerWeek || 0,
+      profile.homeworkCompletionRate || 50,
+      profile.languageSkills || null,
+      profile.additionalNotes || null,
+      profile.assessedBy || null
     );
   }
 

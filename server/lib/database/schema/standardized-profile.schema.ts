@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS academic_profiles (
   overallMotivation INTEGER,
   studyHoursPerWeek REAL,
   homeworkCompletionRate INTEGER,
+  languageSkills TEXT,
   additionalNotes TEXT,
   assessedBy TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -470,6 +471,9 @@ export const initStandardizedProfileTables = (db: any) => {
   // Migration: Add new columns to talents_interests_profiles
   safeAddColumn(db, 'talents_interests_profiles', 'hobbiesDetailed TEXT');
   safeAddColumn(db, 'talents_interests_profiles', 'extracurricularActivities TEXT');
+
+  // Migration: Add languageSkills to academic_profiles
+  safeAddColumn(db, 'academic_profiles', 'languageSkills TEXT');
 
   console.log('✅ Standardized profile tables and migrations completed');
 };

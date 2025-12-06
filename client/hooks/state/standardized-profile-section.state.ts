@@ -39,13 +39,9 @@ export function useStandardizedProfileSection<T extends FieldValues>({
 
  useEffect(() => {
  if (savedData && Object.keys(savedData).length > 0) {
- const formattedData: any = {
- assessmentDate: savedData.assessmentDate || new Date().toISOString().slice(0, 10),
- };
+ const formattedData: any = {};
 
  Object.keys(defaultValues).forEach((key) => {
- if (key === 'assessmentDate') return;
- 
  const value = savedData[key];
  
  if (value === null || value === undefined) {
