@@ -119,74 +119,6 @@ router.post('/:studentId/social-emotional', (req, res) => {
   }
 });
 
-router.get('/:studentId/talents-interests', (req, res) => {
-  try {
-    const { studentId } = req.params;
-    const db = getDatabase();
-    const repo = new StandardizedProfileRepository(db);
-    const profile = repo.getTalentsInterestsProfile(studentId);
-    
-    res.json(profile || {});
-  } catch (error) {
-    logger.error('Error fetching talents-interests profile', 'StandardizedProfile', error);
-    res.status(500).json({ success: false, error: 'Failed to fetch talents-interests profile' });
-  }
-});
-
-router.post('/:studentId/talents-interests', (req, res) => {
-  try {
-    const { studentId } = req.params;
-    const db = getDatabase();
-    const repo = new StandardizedProfileRepository(db);
-    
-    const profile = {
-      ...req.body,
-      studentId,
-      id: req.body.id || randomUUID(),
-    };
-    
-    repo.upsertTalentsInterestsProfile(profile);
-    res.json({ success: true, profile });
-  } catch (error) {
-    logger.error('Error saving talents-interests profile', 'StandardizedProfile', error);
-    res.status(500).json({ success: false, error: 'Failed to save talents-interests profile' });
-  }
-});
-
-router.get('/:studentId/health', (req, res) => {
-  try {
-    const { studentId } = req.params;
-    const db = getDatabase();
-    const repo = new StandardizedProfileRepository(db);
-    const profile = repo.getStandardizedHealthProfile(studentId);
-    
-    res.json(profile || {});
-  } catch (error) {
-    logger.error('Error fetching health profile', 'StandardizedProfile', error);
-    res.status(500).json({ success: false, error: 'Failed to fetch health profile' });
-  }
-});
-
-router.post('/:studentId/health', (req, res) => {
-  try {
-    const { studentId } = req.params;
-    const db = getDatabase();
-    const repo = new StandardizedProfileRepository(db);
-    
-    const profile = {
-      ...req.body,
-      studentId,
-      id: req.body.id || randomUUID(),
-    };
-    
-    repo.upsertStandardizedHealthProfile(profile);
-    res.json({ success: true, profile });
-  } catch (error) {
-    logger.error('Error saving health profile', 'StandardizedProfile', error);
-    res.status(500).json({ success: false, error: 'Failed to save health profile' });
-  }
-});
-
 router.get('/:studentId/interventions', (req, res) => {
   try {
     const { studentId } = req.params;
@@ -264,8 +196,6 @@ router.get('/:studentId/aggregate', (req, res) => {
     
     const academic = repo.getAcademicProfile(studentId);
     const socialEmotional = repo.getSocialEmotionalProfile(studentId);
-    const talentsInterests = repo.getTalentsInterestsProfile(studentId);
-    const health = repo.getStandardizedHealthProfile(studentId);
     const behaviorIncidents = repo.getStandardizedBehaviorIncidents(studentId);
     const motivation = repo.getMotivationProfile(studentId);
     const riskProtective = repo.getRiskProtectiveProfile(studentId);
@@ -274,8 +204,6 @@ router.get('/:studentId/aggregate', (req, res) => {
     const aggregateScores = calculator.calculateAggregateScores({
       academic: academic as any,
       socialEmotional: socialEmotional as any,
-      talentsInterests: talentsInterests as any,
-      health: health as any,
       behaviorIncidents: behaviorIncidents as any[],
       motivation: motivation as any,
       riskProtective: riskProtective as any
@@ -286,8 +214,6 @@ router.get('/:studentId/aggregate', (req, res) => {
       profiles: {
         academic,
         socialEmotional,
-        talentsInterests,
-        health,
         behaviorIncidents,
         motivation,
         riskProtective,
@@ -299,8 +225,6 @@ router.get('/:studentId/aggregate', (req, res) => {
         profileCompleteness: {
           academic: !!academic,
           socialEmotional: !!socialEmotional,
-          talentsInterests: !!talentsInterests,
-          health: !!health,
           behavior: behaviorIncidents.length > 0,
           motivation: !!motivation,
           riskProtective: !!riskProtective,
