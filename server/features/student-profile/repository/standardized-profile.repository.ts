@@ -46,23 +46,28 @@ export class StandardizedProfileRepository {
         updated_at = CURRENT_TIMESTAMP
     `);
 
-    stmt.run(
-      profile.id,
-      profile.studentId,
-      profile.assessmentDate,
-      JSON.stringify(profile.strongSubjects || []),
-      JSON.stringify(profile.weakSubjects || []),
-      JSON.stringify(profile.strongSkills || []),
-      JSON.stringify(profile.weakSkills || []),
-      profile.primaryLearningStyle || null,
-      profile.secondaryLearningStyle || null,
-      profile.overallMotivation || 5,
-      profile.studyHoursPerWeek || 0,
-      profile.homeworkCompletionRate || 50,
-      profile.languageSkills || null,
-      profile.additionalNotes || null,
-      profile.assessedBy || null
-    );
+    try {
+      stmt.run(
+        profile.id,
+        profile.studentId,
+        profile.assessmentDate || new Date().toISOString().split('T')[0],
+        JSON.stringify(profile.strongSubjects || []),
+        JSON.stringify(profile.weakSubjects || []),
+        JSON.stringify(profile.strongSkills || []),
+        JSON.stringify(profile.weakSkills || []),
+        profile.primaryLearningStyle || null,
+        profile.secondaryLearningStyle || null,
+        profile.overallMotivation !== undefined ? profile.overallMotivation : 5,
+        profile.studyHoursPerWeek !== undefined ? profile.studyHoursPerWeek : 0,
+        profile.homeworkCompletionRate !== undefined ? profile.homeworkCompletionRate : 50,
+        profile.languageSkills || null,
+        profile.additionalNotes || null,
+        profile.assessedBy || null
+      );
+    } catch (error) {
+      console.error('Error inserting academic profile:', error);
+      throw error;
+    }
   }
 
   getSocialEmotionalProfile(studentId: string): SocialEmotionalProfile | null {

@@ -15,23 +15,23 @@ router.get('/intervention-stats', (req, res) => {
   try {
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
-    
+
     const studentsStmt = db.prepare('SELECT id FROM students');
     const students = studentsStmt.all() as Array<{ id: string }>;
-    
+
     let totalOpen = 0;
     let completedThisMonth = 0;
-    
+
     const now = new Date();
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
-    
+
     for (const student of students) {
       const interventions = repo.getStandardizedInterventions(student.id);
       totalOpen += interventions.filter(i => 
         i.status !== "TAMAMLANDI" && i.status !== "İPTAL"
       ).length;
-      
+
       const completed = interventions.filter(i => {
         if (i.status !== "TAMAMLANDI") return false;
         const intDate = new Date(i.startDate);
@@ -39,7 +39,7 @@ router.get('/intervention-stats', (req, res) => {
       });
       completedThisMonth += completed.length;
     }
-    
+
     res.json({
       openInterventions: totalOpen,
       completedThisMonth: completedThisMonth,
@@ -57,7 +57,7 @@ router.get('/:studentId/academic', (req, res) => {
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
     const profile = repo.getAcademicProfile(studentId);
-    
+
     res.json(profile || {});
   } catch (error) {
     logger.error('Error fetching academic profile', 'StandardizedProfile', error);
@@ -70,13 +70,13 @@ router.post('/:studentId/academic', (req, res) => {
     const { studentId } = req.params;
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
-    
+
     const profile = {
-      ...req.body,
-      studentId,
       id: req.body.id || randomUUID(),
+      studentId,
+      assessmentDate: req.body.assessmentDate || new Date().toISOString().split('T')[0],
     };
-    
+
     repo.upsertAcademicProfile(profile);
     res.json({ success: true, profile });
   } catch (error) {
@@ -91,7 +91,7 @@ router.get('/:studentId/social-emotional', (req, res) => {
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
     const profile = repo.getSocialEmotionalProfile(studentId);
-    
+
     res.json(profile || {});
   } catch (error) {
     logger.error('Error fetching social-emotional profile', 'StandardizedProfile', error);
@@ -104,13 +104,13 @@ router.post('/:studentId/social-emotional', (req, res) => {
     const { studentId } = req.params;
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
-    
+
     const profile = {
       ...req.body,
       studentId,
       id: req.body.id || randomUUID(),
     };
-    
+
     repo.upsertSocialEmotionalProfile(profile);
     res.json({ success: true, profile });
   } catch (error) {
@@ -125,7 +125,7 @@ router.get('/:studentId/interventions', (req, res) => {
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
     const interventions = repo.getStandardizedInterventions(studentId);
-    
+
     res.json(interventions);
   } catch (error) {
     logger.error('Error fetching interventions', 'StandardizedProfile', error);
@@ -138,13 +138,13 @@ router.post('/:studentId/interventions', (req, res) => {
     const { studentId } = req.params;
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
-    
+
     const intervention = {
       ...req.body,
       studentId,
       id: req.body.id || randomUUID(),
     };
-    
+
     repo.insertStandardizedIntervention(intervention);
     res.json({ success: true, intervention });
   } catch (error) {
@@ -159,7 +159,7 @@ router.get('/:studentId/behavior-incidents', (req, res) => {
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
     const incidents = repo.getStandardizedBehaviorIncidents(studentId);
-    
+
     res.json(incidents);
   } catch (error) {
     logger.error('Error fetching behavior incidents', 'StandardizedProfile', error);
@@ -172,13 +172,13 @@ router.post('/:studentId/behavior-incident', (req, res) => {
     const { studentId } = req.params;
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
-    
+
     const incident = {
       ...req.body,
       studentId,
       id: req.body.id || randomUUID(),
     };
-    
+
     repo.insertStandardizedBehaviorIncident(incident);
     res.json({ success: true, incident });
   } catch (error) {
@@ -193,14 +193,14 @@ router.get('/:studentId/aggregate', (req, res) => {
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
     const calculator = new AggregateScoreCalculator();
-    
+
     const academic = repo.getAcademicProfile(studentId);
     const socialEmotional = repo.getSocialEmotionalProfile(studentId);
     const behaviorIncidents = repo.getStandardizedBehaviorIncidents(studentId);
     const motivation = repo.getMotivationProfile(studentId);
     const riskProtective = repo.getRiskProtectiveProfile(studentId);
     const interventions = repo.getStandardizedInterventions(studentId);
-    
+
     const aggregateScores = calculator.calculateAggregateScores({
       academic: academic as any,
       socialEmotional: socialEmotional as any,
@@ -208,7 +208,7 @@ router.get('/:studentId/aggregate', (req, res) => {
       motivation: motivation as any,
       riskProtective: riskProtective as any
     });
-    
+
     const aiReadyProfile = {
       studentId,
       profiles: {
@@ -232,7 +232,7 @@ router.get('/:studentId/aggregate', (req, res) => {
         }
       }
     };
-    
+
     res.json(aiReadyProfile);
   } catch (error) {
     logger.error('Error generating aggregate profile', 'StandardizedProfile', error);
@@ -246,7 +246,7 @@ router.get('/:studentId/motivation', (req, res) => {
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
     const profile = repo.getMotivationProfile(studentId);
-    
+
     res.json(profile || {});
   } catch (error) {
     logger.error('Error fetching motivation profile', 'StandardizedProfile', error);
@@ -259,7 +259,7 @@ router.post('/:studentId/motivation', (req, res) => {
     const { studentId } = req.params;
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
-    
+
     // Transform frontend field names to database field names
     const profile = {
       id: req.body.id || randomUUID(),
@@ -282,7 +282,7 @@ router.post('/:studentId/motivation', (req, res) => {
       familyExpectations: req.body.familyExpectations,
       additionalNotes: req.body.additionalNotes,
     };
-    
+
     repo.upsertMotivationProfile(profile);
     res.json({ success: true, profile: req.body });
   } catch (error) {
@@ -297,7 +297,7 @@ router.get('/:studentId/risk-protective', (req, res) => {
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
     const profile = repo.getRiskProtectiveProfile(studentId);
-    
+
     res.json(profile || {});
   } catch (error) {
     logger.error('Error fetching risk/protective profile', 'StandardizedProfile', error);
@@ -310,7 +310,7 @@ router.post('/:studentId/risk-protective', (req, res) => {
     const { studentId } = req.params;
     const db = getDatabase();
     const repo = new StandardizedProfileRepository(db);
-    
+
     // Transform frontend field names to backend field names
     const profile = {
       id: req.body.id || randomUUID(),
@@ -356,7 +356,7 @@ router.post('/:studentId/risk-protective', (req, res) => {
       additionalNotes: req.body.additionalNotes || null,
       assessedBy: req.body.assessedBy || null,
     };
-    
+
     repo.upsertRiskProtectiveProfile(profile);
     res.json({ success: true, profile: req.body });
   } catch (error) {
