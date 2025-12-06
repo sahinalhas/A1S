@@ -1,11 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type { Student } from "@/lib/types/student.types";
 import { upsertStudent } from "@/lib/api/endpoints/students.api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/organisms/Card";
 import { Input } from "@/components/atoms/Input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/atoms/Select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/organisms/Form";
-import { useForm, useFormState } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
@@ -46,18 +46,20 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
     return `${prefix}${field.charAt(0).toUpperCase() + field.slice(1)}` as keyof Student;
   };
 
+  const defaultValues = useMemo(() => ({
+    name: (student[getField("name")] as string) || "",
+    phone: (student[getField("phone")] as string) || "",
+    email: (student[getField("email")] as string) || "",
+    education: (student[getField("education")] as string) || "",
+    occupation: (student[getField("occupation")] as string) || "",
+    vitalStatus: (student[getField("vitalStatus")] as "Sağ" | "Vefat Etmiş") || "",
+    livingStatus: (student[getField("livingStatus")] as "Birlikte" | "Ayrı") || "",
+  }), [student, getField]);
+
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: "onChange",
-    defaultValues: {
-      name: (student[getField("name")] as string) || "",
-      phone: (student[getField("phone")] as string) || "",
-      email: (student[getField("email")] as string) || "",
-      education: (student[getField("education")] as string) || "",
-      occupation: (student[getField("occupation")] as string) || "",
-      vitalStatus: (student[getField("vitalStatus")] as "Sağ" | "Vefat Etmiş") || "",
-      livingStatus: (student[getField("livingStatus")] as "Birlikte" | "Ayrı") || "",
-    },
+    defaultValues,
   });
 
   const isDirty = form.formState.isDirty;
@@ -92,17 +94,6 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
     }
   }, [student, onUpdate, form, isMother, title]);
 
-  useEffect(() => {
-    form.reset({
-      name: (student[getField("name")] as string) || "",
-      phone: (student[getField("phone")] as string) || "",
-      email: (student[getField("email")] as string) || "",
-      education: (student[getField("education")] as string) || "",
-      occupation: (student[getField("occupation")] as string) || "",
-      vitalStatus: (student[getField("vitalStatus")] as "Sağ" | "Vefat Etmiş") || "",
-      livingStatus: (student[getField("livingStatus")] as "Birlikte" | "Ayrı") || "",
-    });
-  }, [student, form, getField]);
 
   return (
     <Card className={cn(
