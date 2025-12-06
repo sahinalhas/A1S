@@ -173,11 +173,15 @@ export default function StandardizedAcademicSection({
     if (!studentId) return;
     setIsLoading(true);
     try {
+      console.log("Loading academic profile for student:", studentId);
       const response = await fetch(`/api/standardized-profile/${studentId}/academic`, {
         credentials: 'include'
       });
+      console.log("Load response status:", response.status);
+      
       if (response.ok) {
         const data = await response.json();
+        console.log("Loaded data:", data);
         setSavedData(data);
         if (data && Object.keys(data).length > 0) {
           const formData: AcademicProfileFormValues = {
@@ -201,6 +205,8 @@ export default function StandardizedAcademicSection({
             setIsDirty(false);
           }, 0);
         }
+      } else {
+        console.warn("Failed to load academic data:", response.status);
       }
     } catch (error) {
       console.error("Error loading academic data:", error);
@@ -246,6 +252,8 @@ export default function StandardizedAcademicSection({
         assessmentDate: data.assessmentDate || new Date().toISOString().split('T')[0],
       };
 
+      console.log("Submitting academic profile:", payload);
+
       const response = await fetch(`/api/standardized-profile/${studentId}/academic`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -253,10 +261,16 @@ export default function StandardizedAcademicSection({
         body: JSON.stringify(payload),
       });
 
+      console.log("Response status:", response.status);
+
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.details || 'Kayıt başarısız');
+        console.error("API error response:", errorData);
+        throw new Error(errorData.details || errorData.error || 'Kayıt başarısız');
       }
+
+      const result = await response.json();
+      console.log("Save successful:", result);
 
       toast.success("Akademik profil kaydedildi");
       isResettingRef.current = true;
@@ -267,8 +281,8 @@ export default function StandardizedAcademicSection({
       }, 0);
       onUpdate?.();
     } catch (error: any) {
-      toast.error(error.message || "Kayıt sırasında hata oluştu");
       console.error("Error saving academic profile:", error);
+      toast.error(error.message || "Kayıt sırasında hata oluştu");
     } finally {
       setIsSubmitting(false);
     }
