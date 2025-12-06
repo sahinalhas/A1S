@@ -273,13 +273,21 @@ export default function StandardizedAcademicSection({
       console.log("Response status:", response.status);
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error("API error response:", errorData);
-        throw new Error(errorData.details || errorData.error || 'Kayıt başarısız');
+        try {
+          const errorData = await response.json();
+          console.error("API error response:", errorData);
+          throw new Error(errorData.details || errorData.error || 'Kayıt başarısız');
+        } catch (e) {
+          throw new Error(`API error: ${response.status}`);
+        }
       }
 
-      const result = await response.json();
-      console.log("Save successful:", result);
+      try {
+        const result = await response.json();
+        console.log("Save successful:", result);
+      } catch (e) {
+        console.log("Response parsed successfully (empty body)");
+      }
 
       toast.success("Akademik profil kaydedildi");
       isResettingRef.current = true;
