@@ -1,5 +1,5 @@
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -9,7 +9,9 @@ import { Slider } from "@/components/atoms/Slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/atoms/Select";
 import { EnhancedTextarea } from "@/components/molecules/EnhancedTextarea";
 import { Checkbox } from "@/components/atoms/Checkbox";
-import { GraduationCap, TrendingUp, Target, BookOpen, Brain, Sparkles } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/organisms/Collapsible";
+import { Button } from "@/components/atoms/Button";
+import { GraduationCap, TrendingUp, Target, BookOpen, Brain, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 import { 
   ACADEMIC_SUBJECTS, 
   ACADEMIC_SKILLS,
@@ -51,6 +53,11 @@ export default function StandardizedAcademicSection({
 }: StandardizedAcademicSectionProps) {
   const { setIsDirty, registerFormSubmit, unregisterFormSubmit } = useFormDirty();
   const componentId = useMemo(() => crypto.randomUUID(), []);
+  const [isSubjectsOpen, setIsSubjectsOpen] = useState(false);
+  const [isSkillsOpen, setIsSkillsOpen] = useState(false);
+  const [isLearningStylesOpen, setIsLearningStylesOpen] = useState(false);
+  const [isPerformanceOpen, setIsPerformanceOpen] = useState(false);
+  const [isAdditionalOpen, setIsAdditionalOpen] = useState(false);
   
   const form = useForm<AcademicProfileFormValues>({
     resolver: zodResolver(academicProfileSchema),
@@ -164,14 +171,25 @@ export default function StandardizedAcademicSection({
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           
           {/* Dersler Bölümü */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-blue-600" />
-                <CardTitle className="text-lg">Ders Performansı</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-6">
+          <Collapsible open={isSubjectsOpen} onOpenChange={setIsSubjectsOpen}>
+            <Card>
+              <CollapsibleTrigger asChild>
+                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <BookOpen className="h-5 w-5 text-blue-600" />
+                      <CardTitle className="text-lg">Ders Performansı</CardTitle>
+                    </div>
+                    {isSubjectsOpen ? (
+                      <ChevronUp className="h-5 w-5 text-muted-foreground" />
+                    ) : (
+                      <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                    )}
+                  </div>
+                </CardHeader>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <CardContent className="space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Güçlü Dersler */}
                 <FormField
@@ -303,18 +321,31 @@ export default function StandardizedAcademicSection({
                   )}
                 />
               </div>
-            </CardContent>
-          </Card>
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
 
           {/* Beceriler Bölümü */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Brain className="h-5 w-5 text-purple-600" />
-                <CardTitle className="text-lg">Akademik Beceriler</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-6">
+          <Collapsible open={isSkillsOpen} onOpenChange={setIsSkillsOpen}>
+            <Card>
+              <CollapsibleTrigger asChild>
+                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Brain className="h-5 w-5 text-purple-600" />
+                      <CardTitle className="text-lg">Akademik Beceriler</CardTitle>
+                    </div>
+                    {isSkillsOpen ? (
+                      <ChevronUp className="h-5 w-5 text-muted-foreground" />
+                    ) : (
+                      <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                    )}
+                  </div>
+                </CardHeader>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <CardContent className="space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Güçlü Beceriler */}
                 <FormField
@@ -446,18 +477,31 @@ export default function StandardizedAcademicSection({
                   )}
                 />
               </div>
-            </CardContent>
-          </Card>
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
 
           {/* Öğrenme Stilleri */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-pink-600" />
-                <CardTitle className="text-lg">Öğrenme Stilleri</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
+          <Collapsible open={isLearningStylesOpen} onOpenChange={setIsLearningStylesOpen}>
+            <Card>
+              <CollapsibleTrigger asChild>
+                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="h-5 w-5 text-pink-600" />
+                      <CardTitle className="text-lg">Öğrenme Stilleri</CardTitle>
+                    </div>
+                    {isLearningStylesOpen ? (
+                      <ChevronUp className="h-5 w-5 text-muted-foreground" />
+                    ) : (
+                      <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                    )}
+                  </div>
+                </CardHeader>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
@@ -516,15 +560,28 @@ export default function StandardizedAcademicSection({
                   )}
                 />
               </div>
-            </CardContent>
-          </Card>
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
 
           {/* Performans Metrikleri */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Performans Göstergeleri</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
+          <Collapsible open={isPerformanceOpen} onOpenChange={setIsPerformanceOpen}>
+            <Card>
+              <CollapsibleTrigger asChild>
+                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg">Performans Göstergeleri</CardTitle>
+                    {isPerformanceOpen ? (
+                      <ChevronUp className="h-5 w-5 text-muted-foreground" />
+                    ) : (
+                      <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                    )}
+                  </div>
+                </CardHeader>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <CardContent className="space-y-6">
               <FormField
                 control={form.control}
                 name="overallMotivation"
@@ -592,15 +649,28 @@ export default function StandardizedAcademicSection({
                   </FormItem>
                 )}
               />
-            </CardContent>
-          </Card>
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
 
           {/* Ek Bilgiler */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Ek Bilgiler</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+          <Collapsible open={isAdditionalOpen} onOpenChange={setIsAdditionalOpen}>
+            <Card>
+              <CollapsibleTrigger asChild>
+                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg">Ek Bilgiler</CardTitle>
+                    {isAdditionalOpen ? (
+                      <ChevronUp className="h-5 w-5 text-muted-foreground" />
+                    ) : (
+                      <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                    )}
+                  </div>
+                </CardHeader>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <CardContent className="space-y-4">
               <FormField
                 control={form.control}
                 name="languageSkills"
@@ -641,8 +711,10 @@ export default function StandardizedAcademicSection({
                   </FormItem>
                 )}
               />
-            </CardContent>
-          </Card>
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
         </form>
       </Form>
     </div>
