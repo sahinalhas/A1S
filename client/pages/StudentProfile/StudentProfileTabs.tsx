@@ -1,6 +1,6 @@
 /**
  * Student Profile Tabs - Veri Tipi Odaklı Yapı
- * 5 Ana Sekme: Dashboard, Tanıtıcı Bilgiler, Akademik Durum, 
+ * 4 Ana Sekme: Dashboard, Akademik Durum, 
  * Psikososyal Durum, Kariyer Rehberliği
  * 
  * AI Araçları artık floating AI icon üzerinden erişilebilir
@@ -14,7 +14,6 @@ import { StudentData } from "@/hooks/features/student-profile";
 import { Student } from "@/lib/storage";
 
 import { OverviewTab } from "./tabs/OverviewTab";
-import { DemographicsTab } from "./tabs/DemographicsTab";
 import { AcademicTab } from "./tabs/AcademicTab";
 import { PsychosocialTab } from "./tabs/PsychosocialTab";
 import { CareerTab } from "./tabs/CareerTab";
@@ -69,15 +68,6 @@ export function StudentProfileTabs({
           studentId={studentId}
           scoresData={scoresData}
           loadingScores={loadingScores}
-        />
-      </TabsContent>
-
-      {/* Tanıtıcı Bilgiler */}
-      <TabsContent value="demographics" className="space-y-3">
-        <DemographicsTab 
-          student={student} 
-          studentId={studentId}
-          onUpdate={onUpdate} 
         />
       </TabsContent>
 

@@ -1,7 +1,6 @@
 import {
   LayoutDashboard,
   GraduationCap,
-  UserCircle,
   Heart,
   Target,
   TrendingUp,
@@ -14,7 +13,7 @@ import { TabConfig } from "./types";
 
 /**
  * Öğrenci Profili Ana Tab Yapılandırması
- * Veri Tipi Odaklı Yapı: 6 Sekme
+ * Veri Tipi Odaklı Yapı: 4 Sekme
  * Profesyonel & Akademik Standartlara Uygun Organizasyon
  */
 export const STUDENT_PROFILE_MAIN_TABS: TabConfig[] = [
@@ -23,13 +22,6 @@ export const STUDENT_PROFILE_MAIN_TABS: TabConfig[] = [
     label: "Dashboard",
     icon: LayoutDashboard,
     description: "Özet skorlar, profil tamamlama durumu ve hızlı aksiyonlar",
-    variant: "pills"
-  },
-  {
-    value: "demographics",
-    label: "Tanıtıcı Bilgiler",
-    icon: UserCircle,
-    description: "Kimlik, iletişim, aile yapısı ve standartlaştırılmış sağlık profili",
     variant: "pills"
   },
   {
@@ -63,11 +55,6 @@ export const STUDENT_TAB_COLORS = {
     gradient: "from-indigo-500 via-violet-500 to-purple-600",
     bg: "bg-gradient-to-r from-indigo-50/80 to-purple-50/80 dark:from-indigo-950/30 dark:to-purple-950/30",
     border: "border-indigo-200/50 dark:border-indigo-800/50",
-  },
-  demographics: {
-    gradient: "from-blue-500 to-cyan-500",
-    bg: "bg-gradient-to-r from-blue-50/80 to-cyan-50/80 dark:from-blue-950/30 dark:to-cyan-950/30",
-    border: "border-blue-200/50 dark:border-blue-800/50",
   },
   academic: {
     gradient: "from-emerald-500 to-teal-500",
