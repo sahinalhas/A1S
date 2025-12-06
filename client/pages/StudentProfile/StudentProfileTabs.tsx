@@ -17,6 +17,7 @@ import { OverviewTab } from "./tabs/OverviewTab";
 import { AcademicTab } from "./tabs/AcademicTab";
 import { PsychosocialTab } from "./tabs/PsychosocialTab";
 import { CareerTab } from "./tabs/CareerTab";
+import { DemographicsTab } from "./tabs/DemographicsTab";
 
 interface StudentProfileTabsProps {
   student: Student;
@@ -89,6 +90,15 @@ export function StudentProfileTabs({
         <CareerTab
           studentId={studentId}
           studentName={studentName}
+          onUpdate={onUpdate}
+        />
+      </TabsContent>
+
+      {/* Tanıtıcı Bilgiler */}
+      <TabsContent value="demographics" className="space-y-3">
+        <DemographicsTab
+          student={student}
+          studentId={studentId}
           onUpdate={onUpdate}
         />
       </TabsContent>

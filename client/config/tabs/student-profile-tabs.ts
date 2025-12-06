@@ -8,6 +8,7 @@ import {
   Calendar,
   ClipboardList,
   ListChecks,
+  UserCircle,
 } from "lucide-react";
 import { TabConfig } from "./types";
 
@@ -45,6 +46,13 @@ export const STUDENT_PROFILE_MAIN_TABS: TabConfig[] = [
     description: "Kariyer hedefleri, üniversite planlaması ve gelecek vizyonu",
     variant: "pills"
   },
+  {
+    value: "demographics",
+    label: "Tanıtıcı Bilgiler",
+    icon: UserCircle,
+    description: "Kimlik, iletişim, aile ve sağlık bilgileri",
+    variant: "pills"
+  },
 ];
 
 /**
@@ -75,6 +83,11 @@ export const STUDENT_TAB_COLORS = {
     gradient: "from-purple-500 to-indigo-500",
     bg: "bg-gradient-to-r from-purple-50/80 to-indigo-50/80 dark:from-purple-950/30 dark:to-indigo-950/30",
     border: "border-purple-200/50 dark:border-purple-800/50",
+  },
+  demographics: {
+    gradient: "from-cyan-500 to-blue-500",
+    bg: "bg-gradient-to-r from-cyan-50/80 to-blue-50/80 dark:from-cyan-950/30 dark:to-blue-950/30",
+    border: "border-cyan-200/50 dark:border-cyan-800/50",
   },
 } as const;
 

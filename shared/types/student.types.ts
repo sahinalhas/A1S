@@ -82,6 +82,30 @@ export interface Student {
   extracurricularActivities?: string;
   studentExpectations?: string;
   familyExpectations?: string;
+  
+  // Health Information (Sağlık Bilgileri)
+  chronicDiseases?: string[];
+  allergies?: string[];
+  medications?: string[];
+  medicalHistory?: string;
+  specialNeeds?: string;
+  physicalLimitations?: string;
+  emergencyContact1Name?: string;
+  emergencyContact1Phone?: string;
+  emergencyContact1Relation?: string;
+  emergencyContact2Name?: string;
+  emergencyContact2Phone?: string;
+  emergencyContact2Relation?: string;
+  healthAdditionalNotes?: string;
+  
+  // Talents & Interests (Yetenek & İlgi Alanları)
+  creativeTalents?: string[];
+  physicalTalents?: string[];
+  primaryInterests?: string[];
+  exploratoryInterests?: string[];
+  clubMemberships?: string[];
+  competitionsParticipated?: string[];
+  talentsAdditionalNotes?: string;
 }
 
 /**

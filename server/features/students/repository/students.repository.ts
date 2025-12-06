@@ -47,6 +47,13 @@ function ensureInitialized(): void {
     // Health & additional
     'healthNote', 'bloodType', 'languageSkills', 'hobbiesDetailed', 
     'extracurricularActivities', 'studentExpectations', 'familyExpectations',
+    // Health extended
+    'chronicDiseases', 'allergies', 'medications', 'medicalHistory', 'specialNeeds',
+    'physicalLimitations', 'emergencyContact1Name', 'emergencyContact1Phone', 'emergencyContact1Relation',
+    'emergencyContact2Name', 'emergencyContact2Phone', 'emergencyContact2Relation', 'healthAdditionalNotes',
+    // Talents & Interests
+    'creativeTalents', 'physicalTalents', 'primaryInterests', 'exploratoryInterests',
+    'clubMemberships', 'competitionsParticipated', 'talentsAdditionalNotes',
     // Legacy
     'primaryLearningStyle', 'englishScore'
   ];
@@ -310,6 +317,22 @@ function getStudentFieldValues(student: Student): unknown[] {
     // Health & additional
     student.healthNote, student.bloodType, student.languageSkills, student.hobbiesDetailed,
     student.extracurricularActivities, student.studentExpectations, student.familyExpectations,
+    // Health extended
+    student.chronicDiseases ? JSON.stringify(student.chronicDiseases) : null,
+    student.allergies ? JSON.stringify(student.allergies) : null,
+    student.medications ? JSON.stringify(student.medications) : null,
+    student.medicalHistory, student.specialNeeds, student.physicalLimitations,
+    student.emergencyContact1Name, student.emergencyContact1Phone, student.emergencyContact1Relation,
+    student.emergencyContact2Name, student.emergencyContact2Phone, student.emergencyContact2Relation,
+    student.healthAdditionalNotes,
+    // Talents & Interests
+    student.creativeTalents ? JSON.stringify(student.creativeTalents) : null,
+    student.physicalTalents ? JSON.stringify(student.physicalTalents) : null,
+    student.primaryInterests ? JSON.stringify(student.primaryInterests) : null,
+    student.exploratoryInterests ? JSON.stringify(student.exploratoryInterests) : null,
+    student.clubMemberships ? JSON.stringify(student.clubMemberships) : null,
+    student.competitionsParticipated ? JSON.stringify(student.competitionsParticipated) : null,
+    student.talentsAdditionalNotes,
     // Legacy
     student.primaryLearningStyle, student.englishScore
   ];
