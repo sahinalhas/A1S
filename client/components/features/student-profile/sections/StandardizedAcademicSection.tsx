@@ -5,11 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/organisms/Card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/organisms/Form";
-import { Input } from "@/components/atoms/Input";
 import { Slider } from "@/components/atoms/Slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/atoms/Select";
 import { EnhancedTextarea } from "@/components/molecules/EnhancedTextarea";
-import { MultiSelect } from "@/components/molecules/MultiSelect";
+import { Checkbox } from "@/components/atoms/Checkbox";
 import { GraduationCap, TrendingUp, Target, BookOpen, Brain, Sparkles } from "lucide-react";
 import { 
   ACADEMIC_SUBJECTS, 
@@ -21,9 +20,10 @@ import { Textarea } from "@/components/atoms/Textarea";
 import { useFormDirty } from "@/pages/StudentProfile/StudentProfile";
 import { Badge } from "@/components/atoms/Badge";
 import { Separator } from "@/components/atoms/Separator";
+import { cn } from "@/lib/utils";
+import { ScrollArea } from "@/components/organisms/ScrollArea";
 
 const academicProfileSchema = z.object({
-  assessmentDate: z.string().optional(),
   strongSubjects: z.array(z.string()),
   weakSubjects: z.array(z.string()),
   strongSkills: z.array(z.string()),
@@ -56,7 +56,6 @@ export default function StandardizedAcademicSection({
     resolver: zodResolver(academicProfileSchema),
     mode: 'onSubmit',
     defaultValues: {
-      assessmentDate: new Date().toISOString().slice(0, 10),
       strongSubjects: [],
       weakSubjects: [],
       strongSkills: [],
@@ -116,6 +115,32 @@ export default function StandardizedAcademicSection({
     return "text-red-600";
   };
 
+  // Group subjects by category
+  const subjectsByCategory = useMemo(() => {
+    const grouped: Record<string, typeof ACADEMIC_SUBJECTS> = {};
+    ACADEMIC_SUBJECTS.forEach(subject => {
+      const category = subject.category || 'Diğer';
+      if (!grouped[category]) {
+        grouped[category] = [];
+      }
+      grouped[category].push(subject);
+    });
+    return grouped;
+  }, []);
+
+  // Group skills by category
+  const skillsByCategory = useMemo(() => {
+    const grouped: Record<string, typeof ACADEMIC_SKILLS> = {};
+    ACADEMIC_SKILLS.forEach(skill => {
+      const category = skill.category || 'Diğer';
+      if (!grouped[category]) {
+        grouped[category] = [];
+      }
+      grouped[category].push(skill);
+    });
+    return grouped;
+  }, []);
+
   return (
     <div className="space-y-6">
       {/* Header Card */}
@@ -146,49 +171,133 @@ export default function StandardizedAcademicSection({
                 <CardTitle className="text-lg">Ders Performansı</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Güçlü Dersler */}
                 <FormField
                   control={form.control}
                   name="strongSubjects"
                   render={({ field }) => (
-                    <FormItem className="space-y-3">
-                      <FormLabel className="flex items-center gap-2 text-base">
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2 text-base font-medium mb-3">
                         <TrendingUp className="h-4 w-4 text-green-600" />
                         Güçlü Dersler
                       </FormLabel>
-                      <FormControl>
-                        <MultiSelect
-                          options={ACADEMIC_SUBJECTS}
-                          selected={field.value}
-                          onChange={field.onChange}
-                          placeholder="Güçlü olduğu dersleri seçiniz..."
-                          groupByCategory
-                        />
-                      </FormControl>
+                      <ScrollArea className="h-[300px] rounded-lg border p-4">
+                        <div className="space-y-4">
+                          {Object.entries(subjectsByCategory).map(([category, subjects]) => (
+                            <div key={category} className="space-y-2">
+                              <h4 className="text-sm font-semibold text-muted-foreground sticky top-0 bg-background py-1">
+                                {category}
+                              </h4>
+                              <div className="space-y-2 pl-2">
+                                {subjects.map((subject) => (
+                                  <div key={subject.value} className="flex items-center space-x-2">
+                                    <Checkbox
+                                      id={`strong-${subject.value}`}
+                                      checked={field.value?.includes(subject.value)}
+                                      onCheckedChange={(checked) => {
+                                        const current = field.value || [];
+                                        if (checked) {
+                                          field.onChange([...current, subject.value]);
+                                        } else {
+                                          field.onChange(current.filter((v) => v !== subject.value));
+                                        }
+                                      }}
+                                    />
+                                    <label
+                                      htmlFor={`strong-${subject.value}`}
+                                      className={cn(
+                                        "text-sm font-medium leading-none cursor-pointer select-none",
+                                        "peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                      )}
+                                    >
+                                      {subject.label}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </ScrollArea>
+                      {field.value && field.value.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {field.value.map((value) => {
+                            const subject = ACADEMIC_SUBJECTS.find(s => s.value === value);
+                            return (
+                              <Badge key={value} variant="secondary" className="text-xs">
+                                {subject?.label}
+                              </Badge>
+                            );
+                          })}
+                        </div>
+                      )}
                       <FormMessage />
                     </FormItem>
                   )}
                 />
 
+                {/* Geliştirilmesi Gereken Dersler */}
                 <FormField
                   control={form.control}
                   name="weakSubjects"
                   render={({ field }) => (
-                    <FormItem className="space-y-3">
-                      <FormLabel className="flex items-center gap-2 text-base">
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2 text-base font-medium mb-3">
                         <Target className="h-4 w-4 text-orange-600" />
                         Geliştirilmesi Gereken Dersler
                       </FormLabel>
-                      <FormControl>
-                        <MultiSelect
-                          options={ACADEMIC_SUBJECTS}
-                          selected={field.value}
-                          onChange={field.onChange}
-                          placeholder="Geliştirilecek dersleri seçiniz..."
-                          groupByCategory
-                        />
-                      </FormControl>
+                      <ScrollArea className="h-[300px] rounded-lg border p-4">
+                        <div className="space-y-4">
+                          {Object.entries(subjectsByCategory).map(([category, subjects]) => (
+                            <div key={category} className="space-y-2">
+                              <h4 className="text-sm font-semibold text-muted-foreground sticky top-0 bg-background py-1">
+                                {category}
+                              </h4>
+                              <div className="space-y-2 pl-2">
+                                {subjects.map((subject) => (
+                                  <div key={subject.value} className="flex items-center space-x-2">
+                                    <Checkbox
+                                      id={`weak-${subject.value}`}
+                                      checked={field.value?.includes(subject.value)}
+                                      onCheckedChange={(checked) => {
+                                        const current = field.value || [];
+                                        if (checked) {
+                                          field.onChange([...current, subject.value]);
+                                        } else {
+                                          field.onChange(current.filter((v) => v !== subject.value));
+                                        }
+                                      }}
+                                    />
+                                    <label
+                                      htmlFor={`weak-${subject.value}`}
+                                      className={cn(
+                                        "text-sm font-medium leading-none cursor-pointer select-none",
+                                        "peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                      )}
+                                    >
+                                      {subject.label}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </ScrollArea>
+                      {field.value && field.value.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {field.value.map((value) => {
+                            const subject = ACADEMIC_SUBJECTS.find(s => s.value === value);
+                            return (
+                              <Badge key={value} variant="secondary" className="text-xs">
+                                {subject?.label}
+                              </Badge>
+                            );
+                          })}
+                        </div>
+                      )}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -205,49 +314,133 @@ export default function StandardizedAcademicSection({
                 <CardTitle className="text-lg">Akademik Beceriler</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Güçlü Beceriler */}
                 <FormField
                   control={form.control}
                   name="strongSkills"
                   render={({ field }) => (
-                    <FormItem className="space-y-3">
-                      <FormLabel className="flex items-center gap-2 text-base">
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2 text-base font-medium mb-3">
                         <TrendingUp className="h-4 w-4 text-green-600" />
                         Güçlü Beceriler
                       </FormLabel>
-                      <FormControl>
-                        <MultiSelect
-                          options={ACADEMIC_SKILLS}
-                          selected={field.value}
-                          onChange={field.onChange}
-                          placeholder="Güçlü becerilerini seçiniz..."
-                          groupByCategory
-                        />
-                      </FormControl>
+                      <ScrollArea className="h-[300px] rounded-lg border p-4">
+                        <div className="space-y-4">
+                          {Object.entries(skillsByCategory).map(([category, skills]) => (
+                            <div key={category} className="space-y-2">
+                              <h4 className="text-sm font-semibold text-muted-foreground sticky top-0 bg-background py-1">
+                                {category}
+                              </h4>
+                              <div className="space-y-2 pl-2">
+                                {skills.map((skill) => (
+                                  <div key={skill.value} className="flex items-center space-x-2">
+                                    <Checkbox
+                                      id={`strong-skill-${skill.value}`}
+                                      checked={field.value?.includes(skill.value)}
+                                      onCheckedChange={(checked) => {
+                                        const current = field.value || [];
+                                        if (checked) {
+                                          field.onChange([...current, skill.value]);
+                                        } else {
+                                          field.onChange(current.filter((v) => v !== skill.value));
+                                        }
+                                      }}
+                                    />
+                                    <label
+                                      htmlFor={`strong-skill-${skill.value}`}
+                                      className={cn(
+                                        "text-sm font-medium leading-none cursor-pointer select-none",
+                                        "peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                      )}
+                                    >
+                                      {skill.label}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </ScrollArea>
+                      {field.value && field.value.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {field.value.map((value) => {
+                            const skill = ACADEMIC_SKILLS.find(s => s.value === value);
+                            return (
+                              <Badge key={value} variant="secondary" className="text-xs">
+                                {skill?.label}
+                              </Badge>
+                            );
+                          })}
+                        </div>
+                      )}
                       <FormMessage />
                     </FormItem>
                   )}
                 />
 
+                {/* Geliştirilmesi Gereken Beceriler */}
                 <FormField
                   control={form.control}
                   name="weakSkills"
                   render={({ field }) => (
-                    <FormItem className="space-y-3">
-                      <FormLabel className="flex items-center gap-2 text-base">
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2 text-base font-medium mb-3">
                         <Target className="h-4 w-4 text-orange-600" />
                         Geliştirilmesi Gereken Beceriler
                       </FormLabel>
-                      <FormControl>
-                        <MultiSelect
-                          options={ACADEMIC_SKILLS}
-                          selected={field.value}
-                          onChange={field.onChange}
-                          placeholder="Geliştirilecek becerilerini seçiniz..."
-                          groupByCategory
-                        />
-                      </FormControl>
+                      <ScrollArea className="h-[300px] rounded-lg border p-4">
+                        <div className="space-y-4">
+                          {Object.entries(skillsByCategory).map(([category, skills]) => (
+                            <div key={category} className="space-y-2">
+                              <h4 className="text-sm font-semibold text-muted-foreground sticky top-0 bg-background py-1">
+                                {category}
+                              </h4>
+                              <div className="space-y-2 pl-2">
+                                {skills.map((skill) => (
+                                  <div key={skill.value} className="flex items-center space-x-2">
+                                    <Checkbox
+                                      id={`weak-skill-${skill.value}`}
+                                      checked={field.value?.includes(skill.value)}
+                                      onCheckedChange={(checked) => {
+                                        const current = field.value || [];
+                                        if (checked) {
+                                          field.onChange([...current, skill.value]);
+                                        } else {
+                                          field.onChange(current.filter((v) => v !== skill.value));
+                                        }
+                                      }}
+                                    />
+                                    <label
+                                      htmlFor={`weak-skill-${skill.value}`}
+                                      className={cn(
+                                        "text-sm font-medium leading-none cursor-pointer select-none",
+                                        "peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                      )}
+                                    >
+                                      {skill.label}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </ScrollArea>
+                      {field.value && field.value.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {field.value.map((value) => {
+                            const skill = ACADEMIC_SKILLS.find(s => s.value === value);
+                            return (
+                              <Badge key={value} variant="secondary" className="text-xs">
+                                {skill?.label}
+                              </Badge>
+                            );
+                          })}
+                        </div>
+                      )}
                       <FormMessage />
                     </FormItem>
                   )}
