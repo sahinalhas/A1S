@@ -58,6 +58,7 @@ export default function StandardizedAcademicSection({
   const [isLearningStylesOpen, setIsLearningStylesOpen] = useState(false);
   const [isPerformanceOpen, setIsPerformanceOpen] = useState(false);
   const [isAdditionalOpen, setIsAdditionalOpen] = useState(false);
+  const [localIsDirty, setLocalIsDirty] = useState(false);
   
   const form = useForm<AcademicProfileFormValues>({
     resolver: zodResolver(academicProfileSchema),
@@ -79,6 +80,7 @@ export default function StandardizedAcademicSection({
   useEffect(() => {
     const subscription = form.watch(() => {
       setIsDirty(true);
+      setLocalIsDirty(true);
     });
     return () => subscription.unsubscribe();
   }, [form, setIsDirty]);
@@ -96,6 +98,14 @@ export default function StandardizedAcademicSection({
   useEffect(() => {
     onSubmitRef.current = onSubmit;
   }, [onSubmit]);
+
+  const handleSave = async () => {
+    const isValid = await form.trigger();
+    if (isValid) {
+      await form.handleSubmit(onSubmit)();
+      setLocalIsDirty(false);
+    }
+  };
 
   useEffect(() => {
     registerFormSubmit(componentId, async () => {
@@ -322,6 +332,17 @@ export default function StandardizedAcademicSection({
                 />
               </div>
                 </CardContent>
+                {localIsDirty && (
+                  <CardContent className="pt-0">
+                    <Button 
+                      onClick={handleSave} 
+                      disabled={isSubmitting}
+                      className="w-full"
+                    >
+                      {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
+                    </Button>
+                  </CardContent>
+                )}
               </CollapsibleContent>
             </Card>
           </Collapsible>
@@ -478,6 +499,17 @@ export default function StandardizedAcademicSection({
                 />
               </div>
                 </CardContent>
+                {localIsDirty && (
+                  <CardContent className="pt-0">
+                    <Button 
+                      onClick={handleSave} 
+                      disabled={isSubmitting}
+                      className="w-full"
+                    >
+                      {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
+                    </Button>
+                  </CardContent>
+                )}
               </CollapsibleContent>
             </Card>
           </Collapsible>
@@ -561,6 +593,17 @@ export default function StandardizedAcademicSection({
                 />
               </div>
                 </CardContent>
+                {localIsDirty && (
+                  <CardContent className="pt-0">
+                    <Button 
+                      onClick={handleSave} 
+                      disabled={isSubmitting}
+                      className="w-full"
+                    >
+                      {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
+                    </Button>
+                  </CardContent>
+                )}
               </CollapsibleContent>
             </Card>
           </Collapsible>
@@ -650,6 +693,17 @@ export default function StandardizedAcademicSection({
                 )}
               />
                 </CardContent>
+                {localIsDirty && (
+                  <CardContent className="pt-0">
+                    <Button 
+                      onClick={handleSave} 
+                      disabled={isSubmitting}
+                      className="w-full"
+                    >
+                      {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
+                    </Button>
+                  </CardContent>
+                )}
               </CollapsibleContent>
             </Card>
           </Collapsible>
@@ -712,6 +766,17 @@ export default function StandardizedAcademicSection({
                 )}
               />
                 </CardContent>
+                {localIsDirty && (
+                  <CardContent className="pt-0">
+                    <Button 
+                      onClick={handleSave} 
+                      disabled={isSubmitting}
+                      className="w-full"
+                    >
+                      {isSubmitting ? "Kaydediliyor..." : "Kaydet"}
+                    </Button>
+                  </CardContent>
+                )}
               </CollapsibleContent>
             </Card>
           </Collapsible>
