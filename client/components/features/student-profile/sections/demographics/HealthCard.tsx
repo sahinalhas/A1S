@@ -10,17 +10,34 @@ import { useForm, useFormState } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Heart, Droplets, Phone, Save, Check, Loader2 } from "lucide-react";
+import { Heart, Droplets, AlertTriangle, Pill, Phone, FileText, Save, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/atoms/Button";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/atoms/Badge";
 
 const bloodTypes = ["A Rh+", "A Rh-", "B Rh+", "B Rh-", "AB Rh+", "AB Rh-", "0 Rh+", "0 Rh-", "Bilinmiyor"];
 
+const chronicDiseaseOptions = [
+  "Astım", "Diyabet Tip 1", "Diyabet Tip 2", "Epilepsi", "Migren", 
+  "Otizm Spektrum Bozukluğu", "DEHB", "Disleksi", "Kalp Hastalığı", 
+  "Alerjik Rinit", "Tiroid Hastalıkları", "Anemi", "Görme Bozukluğu", "İşitme Bozukluğu"
+];
+
+const allergyOptions = [
+  "Polen", "Toz Akarı", "Hayvan Tüyü", "Süt Ürünleri", "Yumurta", 
+  "Fıstık", "Gluten", "Balık", "Penisilin", "Arı Sokması", "Lateks"
+];
+
+const medicationOptions = [
+  "Ağrı Kesici", "Antibiyotik", "Astım İlacı", "İnsülin", "Epilepsi İlacı",
+  "DEHB İlacı", "Antihistaminik", "Vitamin/Mineral", "Demir İlacı", "Tiroid İlacı"
+];
+
 const schema = z.object({
   bloodType: z.string().optional(),
-  chronicDiseases: z.string().optional(),
-  allergies: z.string().optional(),
-  medications: z.string().optional(),
+  chronicDiseases: z.array(z.string()).optional(),
+  allergies: z.array(z.string()).optional(),
+  medications: z.array(z.string()).optional(),
   medicalHistory: z.string().optional(),
   specialNeeds: z.string().optional(),
   physicalLimitations: z.string().optional(),
@@ -40,65 +57,57 @@ interface HealthCardProps {
   onUpdate: () => void;
 }
 
-function arrayToString(arr: string[] | undefined): string {
-  if (!arr || !Array.isArray(arr)) return "";
-  return arr.join(", ");
-}
-
-function stringToArray(str: string | undefined): string[] {
-  if (!str) return [];
-  return str.split(",").map(s => s.trim()).filter(s => s.length > 0);
-}
-
 export function HealthCard({ student, onUpdate }: HealthCardProps) {
   const [isSaving, setIsSaving] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-
-  const getDefaultValues = useCallback((): FormValues => ({
-    bloodType: student.bloodType || "",
-    chronicDiseases: arrayToString(student.chronicDiseases),
-    allergies: arrayToString(student.allergies),
-    medications: arrayToString(student.medications),
-    medicalHistory: student.medicalHistory || "",
-    specialNeeds: student.specialNeeds || "",
-    physicalLimitations: student.physicalLimitations || "",
-    emergencyContact1Name: student.emergencyContact1Name || "",
-    emergencyContact1Phone: student.emergencyContact1Phone || "",
-    emergencyContact1Relation: student.emergencyContact1Relation || "",
-    emergencyContact2Name: student.emergencyContact2Name || "",
-    emergencyContact2Phone: student.emergencyContact2Phone || "",
-    emergencyContact2Relation: student.emergencyContact2Relation || "",
-    healthAdditionalNotes: student.healthAdditionalNotes || "",
-  }), [student]);
+  const [selectedDiseases, setSelectedDiseases] = useState<string[]>(student.chronicDiseases || []);
+  const [selectedAllergies, setSelectedAllergies] = useState<string[]>(student.allergies || []);
+  const [selectedMedications, setSelectedMedications] = useState<string[]>(student.medications || []);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: "onSubmit",
-    defaultValues: getDefaultValues(),
+    defaultValues: {
+      bloodType: student.bloodType || "",
+      chronicDiseases: student.chronicDiseases || [],
+      allergies: student.allergies || [],
+      medications: student.medications || [],
+      medicalHistory: student.medicalHistory || "",
+      specialNeeds: student.specialNeeds || "",
+      physicalLimitations: student.physicalLimitations || "",
+      emergencyContact1Name: student.emergencyContact1Name || "",
+      emergencyContact1Phone: student.emergencyContact1Phone || "",
+      emergencyContact1Relation: student.emergencyContact1Relation || "",
+      emergencyContact2Name: student.emergencyContact2Name || "",
+      emergencyContact2Phone: student.emergencyContact2Phone || "",
+      emergencyContact2Relation: student.emergencyContact2Relation || "",
+      healthAdditionalNotes: student.healthAdditionalNotes || "",
+    },
   });
 
   const { dirtyFields } = useFormState({ control: form.control });
-  const isDirty = Object.keys(dirtyFields).length > 0;
+  const isDirty = Object.keys(dirtyFields).length > 0 || 
+    JSON.stringify(selectedDiseases) !== JSON.stringify(student.chronicDiseases || []) ||
+    JSON.stringify(selectedAllergies) !== JSON.stringify(student.allergies || []) ||
+    JSON.stringify(selectedMedications) !== JSON.stringify(student.medications || []);
+
+  const toggleSelection = (item: string, list: string[], setList: (items: string[]) => void) => {
+    if (list.includes(item)) {
+      setList(list.filter(i => i !== item));
+    } else {
+      setList([...list, item]);
+    }
+  };
 
   const onSubmit = useCallback(async (data: FormValues) => {
     setIsSaving(true);
     try {
       const updatedStudent: Student = {
         ...student,
-        bloodType: data.bloodType || undefined,
-        chronicDiseases: stringToArray(data.chronicDiseases),
-        allergies: stringToArray(data.allergies),
-        medications: stringToArray(data.medications),
-        medicalHistory: data.medicalHistory || undefined,
-        specialNeeds: data.specialNeeds || undefined,
-        physicalLimitations: data.physicalLimitations || undefined,
-        emergencyContact1Name: data.emergencyContact1Name || undefined,
-        emergencyContact1Phone: data.emergencyContact1Phone || undefined,
-        emergencyContact1Relation: data.emergencyContact1Relation || undefined,
-        emergencyContact2Name: data.emergencyContact2Name || undefined,
-        emergencyContact2Phone: data.emergencyContact2Phone || undefined,
-        emergencyContact2Relation: data.emergencyContact2Relation || undefined,
-        healthAdditionalNotes: data.healthAdditionalNotes || undefined,
+        ...data,
+        chronicDiseases: selectedDiseases,
+        allergies: selectedAllergies,
+        medications: selectedMedications,
       };
       await upsertStudent(updatedStudent);
       form.reset(data);
@@ -112,11 +121,29 @@ export function HealthCard({ student, onUpdate }: HealthCardProps) {
     } finally {
       setIsSaving(false);
     }
-  }, [student, onUpdate, form]);
+  }, [student, onUpdate, form, selectedDiseases, selectedAllergies, selectedMedications]);
 
   useEffect(() => {
-    form.reset(getDefaultValues());
-  }, [student, form, getDefaultValues]);
+    setSelectedDiseases(student.chronicDiseases || []);
+    setSelectedAllergies(student.allergies || []);
+    setSelectedMedications(student.medications || []);
+    form.reset({
+      bloodType: student.bloodType || "",
+      chronicDiseases: student.chronicDiseases || [],
+      allergies: student.allergies || [],
+      medications: student.medications || [],
+      medicalHistory: student.medicalHistory || "",
+      specialNeeds: student.specialNeeds || "",
+      physicalLimitations: student.physicalLimitations || "",
+      emergencyContact1Name: student.emergencyContact1Name || "",
+      emergencyContact1Phone: student.emergencyContact1Phone || "",
+      emergencyContact1Relation: student.emergencyContact1Relation || "",
+      emergencyContact2Name: student.emergencyContact2Name || "",
+      emergencyContact2Phone: student.emergencyContact2Phone || "",
+      emergencyContact2Relation: student.emergencyContact2Relation || "",
+      healthAdditionalNotes: student.healthAdditionalNotes || "",
+    });
+  }, [student, form]);
 
   return (
     <Card className="border-red-200/50 dark:border-red-800/50 bg-gradient-to-br from-red-50/50 to-rose-50/50 dark:from-red-950/20 dark:to-rose-950/20">
@@ -170,42 +197,70 @@ export function HealthCard({ student, onUpdate }: HealthCardProps) {
               )} />
             </div>
 
-            <div className="border-t pt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <FormField control={form.control} name="chronicDiseases" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Kronik Hastalıklar</FormLabel>
-                  <FormControl><Input {...field} placeholder="Astım, Diyabet... (virgülle ayırın)" className="h-10" /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} />
-              <FormField control={form.control} name="allergies" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Alerjiler</FormLabel>
-                  <FormControl><Input {...field} placeholder="Polen, Süt... (virgülle ayırın)" className="h-10" /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} />
-              <FormField control={form.control} name="medications" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Kullanılan İlaçlar</FormLabel>
-                  <FormControl><Input {...field} placeholder="İlaç adları... (virgülle ayırın)" className="h-10" /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} />
+            <div className="border-t pt-4">
+              <h3 className="text-sm font-semibold mb-3 text-muted-foreground flex items-center gap-1.5">
+                <AlertTriangle className="h-4 w-4" />Kronik Hastalıklar
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {chronicDiseaseOptions.map(disease => (
+                  <Badge
+                    key={disease}
+                    variant={selectedDiseases.includes(disease) ? "default" : "outline"}
+                    className="cursor-pointer transition-all hover:scale-105"
+                    onClick={() => toggleSelection(disease, selectedDiseases, setSelectedDiseases)}
+                  >
+                    {disease}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t pt-4">
+              <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Alerjiler</h3>
+              <div className="flex flex-wrap gap-2">
+                {allergyOptions.map(allergy => (
+                  <Badge
+                    key={allergy}
+                    variant={selectedAllergies.includes(allergy) ? "default" : "outline"}
+                    className="cursor-pointer transition-all hover:scale-105"
+                    onClick={() => toggleSelection(allergy, selectedAllergies, setSelectedAllergies)}
+                  >
+                    {allergy}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t pt-4">
+              <h3 className="text-sm font-semibold mb-3 text-muted-foreground flex items-center gap-1.5">
+                <Pill className="h-4 w-4" />Kullanılan İlaçlar
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {medicationOptions.map(med => (
+                  <Badge
+                    key={med}
+                    variant={selectedMedications.includes(med) ? "default" : "outline"}
+                    className="cursor-pointer transition-all hover:scale-105"
+                    onClick={() => toggleSelection(med, selectedMedications, setSelectedMedications)}
+                  >
+                    {med}
+                  </Badge>
+                ))}
+              </div>
             </div>
 
             <div className="border-t pt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
               <FormField control={form.control} name="medicalHistory" render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tıbbi Geçmiş</FormLabel>
-                  <FormControl><Textarea {...field} placeholder="Geçmiş ameliyatlar, tedaviler..." className="min-h-[80px]" /></FormControl>
+                  <FormLabel className="flex items-center gap-1.5"><FileText className="h-3.5 w-3.5" />Tıbbi Geçmiş</FormLabel>
+                  <FormControl><Textarea {...field} placeholder="Geçmiş ameliyatlar..." className="min-h-[80px]" /></FormControl>
                   <FormMessage />
                 </FormItem>
               )} />
               <FormField control={form.control} name="specialNeeds" render={({ field }) => (
                 <FormItem>
                   <FormLabel>Özel İhtiyaçlar</FormLabel>
-                  <FormControl><Textarea {...field} placeholder="Özel bakım gereksinimleri..." className="min-h-[80px]" /></FormControl>
+                  <FormControl><Textarea {...field} placeholder="Özel bakım..." className="min-h-[80px]" /></FormControl>
                   <FormMessage />
                 </FormItem>
               )} />

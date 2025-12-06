@@ -21,8 +21,8 @@ const schema = z.object({
   email: z.string().email("Geçerli e-posta giriniz").optional().or(z.literal("")),
   education: z.string().optional(),
   occupation: z.string().optional(),
-  vitalStatus: z.string().optional(),
-  livingStatus: z.string().optional(),
+  vitalStatus: z.enum(["Sağ", "Vefat Etmiş"]).optional().or(z.literal("")),
+  livingStatus: z.enum(["Birlikte", "Ayrı"]).optional().or(z.literal("")),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -39,22 +39,25 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
 
   const isMother = parentType === "mother";
   const title = isMother ? "Anne Bilgileri" : "Baba Bilgileri";
-  const prefix = isMother ? "mother" : "father";
+  const colorClass = isMother ? "pink" : "indigo";
 
-  const getDefaultValues = useCallback((): FormValues => ({
-    name: (student[`${prefix}Name` as keyof Student] as string) || "",
-    phone: (student[`${prefix}Phone` as keyof Student] as string) || "",
-    email: (student[`${prefix}Email` as keyof Student] as string) || "",
-    education: (student[`${prefix}Education` as keyof Student] as string) || "",
-    occupation: (student[`${prefix}Occupation` as keyof Student] as string) || "",
-    vitalStatus: (student[`${prefix}VitalStatus` as keyof Student] as string) || "",
-    livingStatus: (student[`${prefix}LivingStatus` as keyof Student] as string) || "",
-  }), [student, prefix]);
+  const getField = (field: string) => {
+    const prefix = isMother ? "mother" : "father";
+    return `${prefix}${field.charAt(0).toUpperCase() + field.slice(1)}` as keyof Student;
+  };
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: "onSubmit",
-    defaultValues: getDefaultValues(),
+    defaultValues: {
+      name: (student[getField("name")] as string) || "",
+      phone: (student[getField("phone")] as string) || "",
+      email: (student[getField("email")] as string) || "",
+      education: (student[getField("education")] as string) || "",
+      occupation: (student[getField("occupation")] as string) || "",
+      vitalStatus: (student[getField("vitalStatus")] as "Sağ" | "Vefat Etmiş") || "",
+      livingStatus: (student[getField("livingStatus")] as "Birlikte" | "Ayrı") || "",
+    },
   });
 
   const { dirtyFields } = useFormState({ control: form.control });
@@ -63,6 +66,15 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
   const onSubmit = useCallback(async (data: FormValues) => {
     setIsSaving(true);
     try {
+      const prefix = isMother ? "mother" : "father";
+      
+      console.log('[DEBUG ParentCard] Current student data:', {
+        id: student.id,
+        motherName: student.motherName,
+        fatherName: student.fatherName,
+      });
+      console.log('[DEBUG ParentCard] Form data to save:', data);
+      
       const updatedStudent: Student = {
         ...student,
         [`${prefix}Name`]: data.name || undefined,
@@ -73,6 +85,13 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
         [`${prefix}VitalStatus`]: data.vitalStatus || undefined,
         [`${prefix}LivingStatus`]: data.livingStatus || undefined,
       };
+      
+      console.log('[DEBUG ParentCard] Updated student to send:', {
+        id: updatedStudent.id,
+        motherName: updatedStudent.motherName,
+        fatherName: updatedStudent.fatherName,
+        [`${prefix}Name`]: (updatedStudent as Record<string, unknown>)[`${prefix}Name`],
+      });
       
       await upsertStudent(updatedStudent);
       form.reset(data);
@@ -86,11 +105,19 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
     } finally {
       setIsSaving(false);
     }
-  }, [student, onUpdate, form, prefix, title]);
+  }, [student, onUpdate, form, isMother, title]);
 
   useEffect(() => {
-    form.reset(getDefaultValues());
-  }, [student, form, getDefaultValues]);
+    form.reset({
+      name: (student[getField("name")] as string) || "",
+      phone: (student[getField("phone")] as string) || "",
+      email: (student[getField("email")] as string) || "",
+      education: (student[getField("education")] as string) || "",
+      occupation: (student[getField("occupation")] as string) || "",
+      vitalStatus: (student[getField("vitalStatus")] as "Sağ" | "Vefat Etmiş") || "",
+      livingStatus: (student[getField("livingStatus")] as "Birlikte" | "Ayrı") || "",
+    });
+  }, [student, form, getField]);
 
   return (
     <Card className={cn(

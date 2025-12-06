@@ -9,19 +9,39 @@ import { useForm, useFormState } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Sparkles, Save, Check, Loader2 } from "lucide-react";
+import { Sparkles, Palette, Dumbbell, Lightbulb, Users, Trophy, Save, Check, Loader2, X } from "lucide-react";
 import { Button } from "@/components/atoms/Button";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/atoms/Badge";
+
+const creativeTalentOptions = [
+  "Resim", "Heykel", "Grafik Tasarım", "Fotoğrafçılık", "Seramik",
+  "Müzik (Çalgı)", "Vokal/Şan", "Beste", "Dans", "Tiyatro",
+  "Yaratıcı Yazarlık", "Şiir", "El Becerileri", "Yaratıcı Problem Çözme"
+];
+
+const physicalTalentOptions = [
+  "Futbol", "Basketbol", "Voleybol", "Hentbol", "Atletizm", "Yüzme",
+  "Jimnastik", "Tenis", "Masa Tenisi", "Bisiklet", "Koşu",
+  "Karate", "Taekwondo", "Judo", "Güç Antrenmanı", "Yoga"
+];
+
+const interestOptions = [
+  "Bilim ve Teknoloji", "Okuma/Kitap", "Robotik", "Kodlama", "Yapay Zeka",
+  "Edebiyat", "Sinema", "Müzik Dinleme", "Fotoğrafçılık", "Video Yapımı",
+  "Tarih", "Felsefe", "Psikoloji", "Gönüllü Çalışmalar", "Çevre ve Doğa",
+  "Podcast", "Blog Yazarlığı", "Yemek Yapma", "Seyahat", "Oyunlar"
+];
 
 const schema = z.object({
-  creativeTalents: z.string().optional(),
-  physicalTalents: z.string().optional(),
-  primaryInterests: z.string().optional(),
-  exploratoryInterests: z.string().optional(),
+  creativeTalents: z.array(z.string()).optional(),
+  physicalTalents: z.array(z.string()).optional(),
+  primaryInterests: z.array(z.string()).optional(),
+  exploratoryInterests: z.array(z.string()).optional(),
   hobbiesDetailed: z.string().optional(),
   extracurricularActivities: z.string().optional(),
-  clubMemberships: z.string().optional(),
-  competitionsParticipated: z.string().optional(),
+  clubMemberships: z.array(z.string()).optional(),
+  competitionsParticipated: z.array(z.string()).optional(),
   talentsAdditionalNotes: z.string().optional(),
 });
 
@@ -32,55 +52,71 @@ interface TalentsCardProps {
   onUpdate: () => void;
 }
 
-function arrayToString(arr: string[] | undefined): string {
-  if (!arr || !Array.isArray(arr)) return "";
-  return arr.join(", ");
-}
-
-function stringToArray(str: string | undefined): string[] {
-  if (!str) return [];
-  return str.split(",").map(s => s.trim()).filter(s => s.length > 0);
-}
-
 export function TalentsCard({ student, onUpdate }: TalentsCardProps) {
   const [isSaving, setIsSaving] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-
-  const getDefaultValues = useCallback((): FormValues => ({
-    creativeTalents: arrayToString(student.creativeTalents),
-    physicalTalents: arrayToString(student.physicalTalents),
-    primaryInterests: arrayToString(student.primaryInterests),
-    exploratoryInterests: arrayToString(student.exploratoryInterests),
-    hobbiesDetailed: student.hobbiesDetailed || "",
-    extracurricularActivities: student.extracurricularActivities || "",
-    clubMemberships: arrayToString(student.clubMemberships),
-    competitionsParticipated: arrayToString(student.competitionsParticipated),
-    talentsAdditionalNotes: student.talentsAdditionalNotes || "",
-  }), [student]);
+  const [creativeTalents, setCreativeTalents] = useState<string[]>(student.creativeTalents || []);
+  const [physicalTalents, setPhysicalTalents] = useState<string[]>(student.physicalTalents || []);
+  const [primaryInterests, setPrimaryInterests] = useState<string[]>(student.primaryInterests || []);
+  const [exploratoryInterests, setExploratoryInterests] = useState<string[]>(student.exploratoryInterests || []);
+  const [clubs, setClubs] = useState<string[]>(student.clubMemberships || []);
+  const [competitions, setCompetitions] = useState<string[]>(student.competitionsParticipated || []);
+  const [newClub, setNewClub] = useState("");
+  const [newCompetition, setNewCompetition] = useState("");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: "onSubmit",
-    defaultValues: getDefaultValues(),
+    defaultValues: {
+      hobbiesDetailed: student.hobbiesDetailed || "",
+      extracurricularActivities: student.extracurricularActivities || "",
+      talentsAdditionalNotes: student.talentsAdditionalNotes || "",
+    },
   });
 
   const { dirtyFields } = useFormState({ control: form.control });
-  const isDirty = Object.keys(dirtyFields).length > 0;
+  const isDirty = Object.keys(dirtyFields).length > 0 ||
+    JSON.stringify(creativeTalents) !== JSON.stringify(student.creativeTalents || []) ||
+    JSON.stringify(physicalTalents) !== JSON.stringify(student.physicalTalents || []) ||
+    JSON.stringify(primaryInterests) !== JSON.stringify(student.primaryInterests || []) ||
+    JSON.stringify(exploratoryInterests) !== JSON.stringify(student.exploratoryInterests || []) ||
+    JSON.stringify(clubs) !== JSON.stringify(student.clubMemberships || []) ||
+    JSON.stringify(competitions) !== JSON.stringify(student.competitionsParticipated || []);
+
+  const toggleSelection = (item: string, list: string[], setList: (items: string[]) => void) => {
+    if (list.includes(item)) {
+      setList(list.filter(i => i !== item));
+    } else {
+      setList([...list, item]);
+    }
+  };
+
+  const addClub = () => {
+    if (newClub.trim() && !clubs.includes(newClub.trim())) {
+      setClubs([...clubs, newClub.trim()]);
+      setNewClub("");
+    }
+  };
+
+  const addCompetition = () => {
+    if (newCompetition.trim() && !competitions.includes(newCompetition.trim())) {
+      setCompetitions([...competitions, newCompetition.trim()]);
+      setNewCompetition("");
+    }
+  };
 
   const onSubmit = useCallback(async (data: FormValues) => {
     setIsSaving(true);
     try {
       const updatedStudent: Student = {
         ...student,
-        creativeTalents: stringToArray(data.creativeTalents),
-        physicalTalents: stringToArray(data.physicalTalents),
-        primaryInterests: stringToArray(data.primaryInterests),
-        exploratoryInterests: stringToArray(data.exploratoryInterests),
-        hobbiesDetailed: data.hobbiesDetailed || undefined,
-        extracurricularActivities: data.extracurricularActivities || undefined,
-        clubMemberships: stringToArray(data.clubMemberships),
-        competitionsParticipated: stringToArray(data.competitionsParticipated),
-        talentsAdditionalNotes: data.talentsAdditionalNotes || undefined,
+        ...data,
+        creativeTalents,
+        physicalTalents,
+        primaryInterests,
+        exploratoryInterests,
+        clubMemberships: clubs,
+        competitionsParticipated: competitions,
       };
       await upsertStudent(updatedStudent);
       form.reset(data);
@@ -94,11 +130,21 @@ export function TalentsCard({ student, onUpdate }: TalentsCardProps) {
     } finally {
       setIsSaving(false);
     }
-  }, [student, onUpdate, form]);
+  }, [student, onUpdate, form, creativeTalents, physicalTalents, primaryInterests, exploratoryInterests, clubs, competitions]);
 
   useEffect(() => {
-    form.reset(getDefaultValues());
-  }, [student, form, getDefaultValues]);
+    setCreativeTalents(student.creativeTalents || []);
+    setPhysicalTalents(student.physicalTalents || []);
+    setPrimaryInterests(student.primaryInterests || []);
+    setExploratoryInterests(student.exploratoryInterests || []);
+    setClubs(student.clubMemberships || []);
+    setCompetitions(student.competitionsParticipated || []);
+    form.reset({
+      hobbiesDetailed: student.hobbiesDetailed || "",
+      extracurricularActivities: student.extracurricularActivities || "",
+      talentsAdditionalNotes: student.talentsAdditionalNotes || "",
+    });
+  }, [student, form]);
 
   return (
     <Card className="border-purple-200/50 dark:border-purple-800/50 bg-gradient-to-br from-purple-50/50 to-violet-50/50 dark:from-purple-950/20 dark:to-violet-950/20">
@@ -135,38 +181,58 @@ export function TalentsCard({ student, onUpdate }: TalentsCardProps) {
       <CardContent>
         <Form {...form}>
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField control={form.control} name="creativeTalents" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Yaratıcı & Sanatsal Yetenekler</FormLabel>
-                  <FormControl><Input {...field} placeholder="Resim, Müzik, Dans... (virgülle ayırın)" className="h-10" /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} />
-              <FormField control={form.control} name="physicalTalents" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Fiziksel & Sportif Yetenekler</FormLabel>
-                  <FormControl><Input {...field} placeholder="Futbol, Yüzme, Atletizm... (virgülle ayırın)" className="h-10" /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} />
+            <div>
+              <h3 className="text-sm font-semibold mb-3 text-muted-foreground flex items-center gap-1.5">
+                <Palette className="h-4 w-4" />Yaratıcı & Sanatsal Yetenekler
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {creativeTalentOptions.map(talent => (
+                  <Badge
+                    key={talent}
+                    variant={creativeTalents.includes(talent) ? "default" : "outline"}
+                    className="cursor-pointer transition-all hover:scale-105"
+                    onClick={() => toggleSelection(talent, creativeTalents, setCreativeTalents)}
+                  >
+                    {talent}
+                  </Badge>
+                ))}
+              </div>
             </div>
 
-            <div className="border-t pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField control={form.control} name="primaryInterests" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Ana İlgi Alanları</FormLabel>
-                  <FormControl><Input {...field} placeholder="Teknoloji, Edebiyat... (virgülle ayırın)" className="h-10" /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} />
-              <FormField control={form.control} name="exploratoryInterests" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Keşfedilen İlgi Alanları</FormLabel>
-                  <FormControl><Input {...field} placeholder="Yeni ilgi alanları... (virgülle ayırın)" className="h-10" /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} />
+            <div className="border-t pt-4">
+              <h3 className="text-sm font-semibold mb-3 text-muted-foreground flex items-center gap-1.5">
+                <Dumbbell className="h-4 w-4" />Fiziksel & Sportif Yetenekler
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {physicalTalentOptions.map(talent => (
+                  <Badge
+                    key={talent}
+                    variant={physicalTalents.includes(talent) ? "default" : "outline"}
+                    className="cursor-pointer transition-all hover:scale-105"
+                    onClick={() => toggleSelection(talent, physicalTalents, setPhysicalTalents)}
+                  >
+                    {talent}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t pt-4">
+              <h3 className="text-sm font-semibold mb-3 text-muted-foreground flex items-center gap-1.5">
+                <Lightbulb className="h-4 w-4" />Ana İlgi Alanları
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {interestOptions.map(interest => (
+                  <Badge
+                    key={interest}
+                    variant={primaryInterests.includes(interest) ? "default" : "outline"}
+                    className="cursor-pointer transition-all hover:scale-105"
+                    onClick={() => toggleSelection(interest, primaryInterests, setPrimaryInterests)}
+                  >
+                    {interest}
+                  </Badge>
+                ))}
+              </div>
             </div>
 
             <div className="border-t pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -186,21 +252,52 @@ export function TalentsCard({ student, onUpdate }: TalentsCardProps) {
               )} />
             </div>
 
-            <div className="border-t pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField control={form.control} name="clubMemberships" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Kulüp Üyelikleri</FormLabel>
-                  <FormControl><Input {...field} placeholder="Satranç Kulübü, Müzik... (virgülle ayırın)" className="h-10" /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} />
-              <FormField control={form.control} name="competitionsParticipated" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Yarışmalar / Turnuvalar</FormLabel>
-                  <FormControl><Input {...field} placeholder="TÜBİTAK, Olimpiyat... (virgülle ayırın)" className="h-10" /></FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} />
+            <div className="border-t pt-4">
+              <h3 className="text-sm font-semibold mb-3 text-muted-foreground flex items-center gap-1.5">
+                <Users className="h-4 w-4" />Kulüp Üyelikleri
+              </h3>
+              <div className="flex flex-wrap gap-2 mb-2">
+                {clubs.map(club => (
+                  <Badge key={club} variant="secondary" className="flex items-center gap-1">
+                    {club}
+                    <X className="h-3 w-3 cursor-pointer hover:text-destructive" onClick={() => setClubs(clubs.filter(c => c !== club))} />
+                  </Badge>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  value={newClub}
+                  onChange={(e) => setNewClub(e.target.value)}
+                  placeholder="Kulüp adı ekle..."
+                  className="h-9 max-w-xs"
+                  onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addClub())}
+                />
+                <Button type="button" size="sm" variant="outline" onClick={addClub}>Ekle</Button>
+              </div>
+            </div>
+
+            <div className="border-t pt-4">
+              <h3 className="text-sm font-semibold mb-3 text-muted-foreground flex items-center gap-1.5">
+                <Trophy className="h-4 w-4" />Yarışmalar / Turnuvalar
+              </h3>
+              <div className="flex flex-wrap gap-2 mb-2">
+                {competitions.map(comp => (
+                  <Badge key={comp} variant="secondary" className="flex items-center gap-1">
+                    {comp}
+                    <X className="h-3 w-3 cursor-pointer hover:text-destructive" onClick={() => setCompetitions(competitions.filter(c => c !== comp))} />
+                  </Badge>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  value={newCompetition}
+                  onChange={(e) => setNewCompetition(e.target.value)}
+                  placeholder="Yarışma adı ekle..."
+                  className="h-9 max-w-xs"
+                  onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addCompetition())}
+                />
+                <Button type="button" size="sm" variant="outline" onClick={addCompetition}>Ekle</Button>
+              </div>
             </div>
 
             <FormField control={form.control} name="talentsAdditionalNotes" render={({ field }) => (
