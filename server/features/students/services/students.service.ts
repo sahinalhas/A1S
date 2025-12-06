@@ -217,7 +217,22 @@ export function createOrUpdateStudent(student: unknown): void {
     throw new Error(validation.error);
   }
   
-  const normalizedStudent = normalizeStudentData(student as StudentInput);
+  const studentInput = student as StudentInput;
+  console.log('[DEBUG] Incoming student parent data:', {
+    motherName: studentInput.motherName,
+    motherPhone: studentInput.motherPhone,
+    fatherName: studentInput.fatherName,
+    fatherPhone: studentInput.fatherPhone,
+  });
+  
+  const normalizedStudent = normalizeStudentData(studentInput);
+  
+  console.log('[DEBUG] Normalized student parent data:', {
+    motherName: normalizedStudent.motherName,
+    motherPhone: normalizedStudent.motherPhone,
+    fatherName: normalizedStudent.fatherName,
+    fatherPhone: normalizedStudent.fatherPhone,
+  });
   
   if (!normalizedStudent.schoolId) {
     throw new Error('schoolId is required for creating/updating students');
