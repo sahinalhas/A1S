@@ -87,28 +87,30 @@ export function GuardianCard({ student, onUpdate }: GuardianCardProps) {
   }, [form, defaultValues]);
 
   return (
-    <Card className="border-amber-200/50 dark:border-amber-800/50 bg-gradient-to-br from-amber-50/50 to-orange-50/50 dark:from-amber-950/20 dark:to-orange-950/20 shadow-md hover:shadow-lg transition-all duration-300">
+    <Card className="border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 shadow-sm hover:shadow-md transition-shadow duration-300">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <UserCheck className="h-5 w-5 text-amber-600" />
+          <CardTitle className="flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-gray-100">
+            <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+              <UserCheck className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+            </div>
             Vasi Bilgileri
           </CardTitle>
           <Button
             variant="ghost"
-            size="icon"
+            size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
             className={cn(
-              "h-8 w-8 rounded-full transition-all duration-200",
+              "h-9 gap-1.5 text-sm transition-colors",
               isExpanded 
-                ? "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700" 
-                : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                ? "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" 
+                : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
             )}
           >
             {isExpanded ? (
-              <X className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+              <><X className="h-4 w-4" />Kapat</>
             ) : (
-              <Pencil className="h-4 w-4 text-amber-600" />
+              <><Pencil className="h-4 w-4" />Düzenle</>
             )}
           </Button>
         </div>
@@ -118,93 +120,75 @@ export function GuardianCard({ student, onUpdate }: GuardianCardProps) {
           {!isExpanded ? (
             <motion.div
               key="summary"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
               {getSummaryItems.length > 0 ? (
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {getSummaryItems.map((item, index) => (
                     <div 
                       key={index} 
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300"
+                      className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50"
                     >
-                      {item.icon}
-                      <span className="truncate max-w-[150px]">{item.value}</span>
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 flex items-center gap-1">
+                        {item.icon}
+                        {item.label}
+                      </p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{item.value}</p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-muted-foreground italic">Henüz bilgi girilmemiş. Düzenlemek için kalem ikonuna tıklayın.</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 italic">Henüz bilgi girilmemiş</p>
               )}
             </motion.div>
           ) : (
             <motion.div
               key="form"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <p className="text-xs text-muted-foreground mb-4">Anne-babasıyla yaşamıyorsa uygun vasi bilgileri doldurunuz.</p>
               <Form {...form}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormField control={form.control} name="guardianName" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Adı Soyadı</FormLabel>
-                      <FormControl><Input {...field} className="h-10" /></FormControl>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><UserCheck className="h-3.5 w-3.5" />Ad Soyad</FormLabel>
+                      <FormControl><Input {...field} className="h-10" placeholder="Vasi adı soyadı" /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="guardianRelation" render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1.5"><Link className="h-3.5 w-3.5" />Yakınlık Derecesi</FormLabel>
-                      <FormControl><Input {...field} className="h-10" placeholder="Örn: Dayı, Teyze" /></FormControl>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Link className="h-3.5 w-3.5" />Yakınlık</FormLabel>
+                      <FormControl><Input {...field} className="h-10" placeholder="Örn: Amca, Teyze" /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   <FormField control={form.control} name="guardianPhone" render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" />Cep Telefonu</FormLabel>
-                      <FormControl><Input {...field} type="tel" className="h-10" /></FormControl>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Phone className="h-3.5 w-3.5" />Telefon</FormLabel>
+                      <FormControl><Input {...field} className="h-10" placeholder="Telefon numarası" /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="guardianEmail" render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1.5"><Mail className="h-3.5 w-3.5" />E-posta</FormLabel>
-                      <FormControl><Input {...field} type="email" className="h-10" /></FormControl>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Mail className="h-3.5 w-3.5" />E-posta</FormLabel>
+                      <FormControl><Input type="email" {...field} className="h-10" placeholder="E-posta adresi" /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                 </div>
-                <div className="flex justify-end gap-2 mt-4 pt-4 border-t">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={handleCancel}
-                    disabled={isSaving}
-                  >
-                    İptal
-                  </Button>
-                  <Button
-                    size="sm"
-                    onClick={form.handleSubmit(onSubmit)}
-                    disabled={isSaving || !isDirty}
-                    className={cn(
-                      "transition-all duration-300",
-                      showSuccess && "bg-green-600 hover:bg-green-700"
-                    )}
-                  >
-                    {isSaving ? (
-                      <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</>
-                    ) : showSuccess ? (
-                      <><Check className="h-4 w-4 mr-1" />Kaydedildi</>
-                    ) : (
-                      <><Save className="h-4 w-4 mr-1" />Kaydet</>
-                    )}
+                <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <Button type="button" variant="outline" size="sm" onClick={handleCancel} disabled={isSaving}>İptal</Button>
+                  <Button size="sm" onClick={form.handleSubmit(onSubmit)} disabled={isSaving || !isDirty} className={cn("transition-all duration-300", showSuccess && "bg-green-600 hover:bg-green-700")}>
+                    {isSaving ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</> : showSuccess ? <><Check className="h-4 w-4 mr-1" />Kaydedildi</> : <><Save className="h-4 w-4 mr-1" />Kaydet</>}
                   </Button>
                 </div>
               </Form>

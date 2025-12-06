@@ -90,28 +90,30 @@ export function ContactCard({ student, onUpdate }: ContactCardProps) {
   }, [form, defaultValues]);
 
   return (
-    <Card className="border-emerald-200/50 dark:border-emerald-800/50 bg-gradient-to-br from-emerald-50/50 to-teal-50/50 dark:from-emerald-950/20 dark:to-teal-950/20 shadow-md hover:shadow-lg transition-all duration-300">
+    <Card className="border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 shadow-sm hover:shadow-md transition-shadow duration-300">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Phone className="h-5 w-5 text-emerald-600" />
-            İletişim & Adres
+          <CardTitle className="flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-gray-100">
+            <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+              <Phone className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+            </div>
+            İletişim Bilgileri
           </CardTitle>
           <Button
             variant="ghost"
-            size="icon"
+            size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
             className={cn(
-              "h-8 w-8 rounded-full transition-all duration-200",
+              "h-9 gap-1.5 text-sm transition-colors",
               isExpanded 
-                ? "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700" 
-                : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                ? "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" 
+                : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
             )}
           >
             {isExpanded ? (
-              <X className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+              <><X className="h-4 w-4" />Kapat</>
             ) : (
-              <Pencil className="h-4 w-4 text-emerald-600" />
+              <><Pencil className="h-4 w-4" />Düzenle</>
             )}
           </Button>
         </div>
@@ -121,84 +123,79 @@ export function ContactCard({ student, onUpdate }: ContactCardProps) {
           {!isExpanded ? (
             <motion.div
               key="summary"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
               {getSummaryItems.length > 0 ? (
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {getSummaryItems.map((item, index) => (
                     <div 
                       key={index} 
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                      className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50"
                     >
-                      {item.icon}
-                      <span className="truncate max-w-[150px]">{item.value}</span>
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 flex items-center gap-1">
+                        {item.icon}
+                        {item.label}
+                      </p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{item.value}</p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-muted-foreground italic">Henüz bilgi girilmemiş. Düzenlemek için kalem ikonuna tıklayın.</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 italic">Henüz bilgi girilmemiş</p>
               )}
             </motion.div>
           ) : (
             <motion.div
               key="form"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
               <Form {...form}>
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-sm font-semibold mb-3 text-muted-foreground">İletişim Bilgileri</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <FormField control={form.control} name="phone" render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" />Telefon</FormLabel>
-                          <FormControl><Input {...field} type="tel" className="h-10" placeholder="+90 5XX..." /></FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )} />
-                      <FormField control={form.control} name="email" render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="flex items-center gap-1.5"><Mail className="h-3.5 w-3.5" />E-posta</FormLabel>
-                          <FormControl><Input {...field} type="email" className="h-10" placeholder="ornek@email.com" /></FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )} />
-                    </div>
-                  </div>
-                  <div className="border-t pt-4">
-                    <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Adres Bilgileri</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <FormField control={form.control} name="province" render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" />İl</FormLabel>
-                          <FormControl><Input {...field} className="h-10" placeholder="Örn: İstanbul" /></FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )} />
-                      <FormField control={form.control} name="district" render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="flex items-center gap-1.5"><Home className="h-3.5 w-3.5" />İlçe</FormLabel>
-                          <FormControl><Input {...field} className="h-10" placeholder="Örn: Kadıköy" /></FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )} />
-                    </div>
-                    <FormField control={form.control} name="address" render={({ field }) => (
-                      <FormItem className="mt-4">
-                        <FormLabel>Açık Adres</FormLabel>
-                        <FormControl><Input {...field} className="h-10" placeholder="Mahalle, sokak, bina no..." /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )} />
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField control={form.control} name="phone" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Phone className="h-3.5 w-3.5" />Telefon</FormLabel>
+                      <FormControl><Input {...field} className="h-10" placeholder="Telefon numarası" /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                  <FormField control={form.control} name="email" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Mail className="h-3.5 w-3.5" />E-posta</FormLabel>
+                      <FormControl><Input type="email" {...field} className="h-10" placeholder="E-posta adresi" /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
                 </div>
-                <div className="flex justify-end gap-2 mt-4 pt-4 border-t">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <FormField control={form.control} name="province" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><MapPin className="h-3.5 w-3.5" />İl</FormLabel>
+                      <FormControl><Input {...field} className="h-10" placeholder="İl adı" /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                  <FormField control={form.control} name="district" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Home className="h-3.5 w-3.5" />İlçe</FormLabel>
+                      <FormControl><Input {...field} className="h-10" placeholder="İlçe adı" /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                </div>
+                <FormField control={form.control} name="address" render={({ field }) => (
+                  <FormItem className="mt-4">
+                    <FormLabel className="text-sm font-medium">Adres</FormLabel>
+                    <FormControl><textarea {...field} className="flex min-h-20 w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-600" placeholder="Tam adres" /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+                <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                   <Button
                     type="button"
                     variant="outline"

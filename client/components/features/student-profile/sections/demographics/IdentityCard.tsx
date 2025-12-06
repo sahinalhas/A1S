@@ -103,28 +103,30 @@ export function IdentityCard({ student, onUpdate }: IdentityCardProps) {
   }, [form, defaultValues]);
 
   return (
-    <Card className="border-blue-200/50 dark:border-blue-800/50 bg-gradient-to-br from-blue-50/50 to-cyan-50/50 dark:from-blue-950/20 dark:to-cyan-950/20 shadow-md hover:shadow-lg transition-all duration-300">
+    <Card className="border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 shadow-sm hover:shadow-md transition-shadow duration-300">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <User className="h-5 w-5 text-blue-600" />
+          <CardTitle className="flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-gray-100">
+            <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+              <User className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+            </div>
             Temel Kimlik Bilgileri
           </CardTitle>
           <Button
             variant="ghost"
-            size="icon"
+            size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
             className={cn(
-              "h-8 w-8 rounded-full transition-all duration-200",
+              "h-9 gap-1.5 text-sm transition-colors",
               isExpanded 
-                ? "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700" 
-                : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                ? "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" 
+                : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
             )}
           >
             {isExpanded ? (
-              <X className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+              <><X className="h-4 w-4" />Kapat</>
             ) : (
-              <Pencil className="h-4 w-4 text-blue-600" />
+              <><Pencil className="h-4 w-4" />Düzenle</>
             )}
           </Button>
         </div>
@@ -134,54 +136,57 @@ export function IdentityCard({ student, onUpdate }: IdentityCardProps) {
           {!isExpanded ? (
             <motion.div
               key="summary"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
               {getSummaryItems.length > 0 ? (
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {getSummaryItems.map((item, index) => (
                     <div 
                       key={index} 
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+                      className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50"
                     >
-                      {item.icon}
-                      <span className="truncate max-w-[150px]">{item.value}</span>
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 flex items-center gap-1">
+                        {item.icon}
+                        {item.label}
+                      </p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{item.value}</p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-muted-foreground italic">Henüz bilgi girilmemiş. Düzenlemek için kalem ikonuna tıklayın.</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 italic">Henüz bilgi girilmemiş</p>
               )}
             </motion.div>
           ) : (
             <motion.div
               key="form"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
               <Form {...form}>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <FormField control={form.control} name="name" render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1.5"><User className="h-3.5 w-3.5" />Ad *</FormLabel>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><User className="h-3.5 w-3.5" />Ad *</FormLabel>
                       <FormControl><Input {...field} className="h-10" placeholder="Öğrenci adı" /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="surname" render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1.5"><User className="h-3.5 w-3.5" />Soyad *</FormLabel>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><User className="h-3.5 w-3.5" />Soyad *</FormLabel>
                       <FormControl><Input {...field} className="h-10" placeholder="Öğrenci soyadı" /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="tcIdentityNo" render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1.5"><Hash className="h-3.5 w-3.5" />TC Kimlik No</FormLabel>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Hash className="h-3.5 w-3.5" />TC Kimlik No</FormLabel>
                       <FormControl><Input {...field} className="h-10" placeholder="11 haneli TC no" maxLength={11} /></FormControl>
                       <FormMessage />
                     </FormItem>
@@ -190,21 +195,21 @@ export function IdentityCard({ student, onUpdate }: IdentityCardProps) {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                   <FormField control={form.control} name="studentNumber" render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1.5"><Hash className="h-3.5 w-3.5" />Okul No *</FormLabel>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Hash className="h-3.5 w-3.5" />Okul No *</FormLabel>
                       <FormControl><Input {...field} className="h-10" placeholder="Örn: 101" /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="class" render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1.5"><GraduationCap className="h-3.5 w-3.5" />Sınıf *</FormLabel>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><GraduationCap className="h-3.5 w-3.5" />Sınıf *</FormLabel>
                       <FormControl><Input {...field} className="h-10" placeholder="Örn: 9/A" /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="gender" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Cinsiyet *</FormLabel>
+                      <FormLabel className="text-sm font-medium">Cinsiyet</FormLabel>
                       <Select onValueChange={field.onChange} value={field.value}>
                         <FormControl><SelectTrigger className="h-10"><SelectValue placeholder="Seçiniz" /></SelectTrigger></FormControl>
                         <SelectContent>
@@ -219,20 +224,20 @@ export function IdentityCard({ student, onUpdate }: IdentityCardProps) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   <FormField control={form.control} name="birthDate" render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5" />Doğum Tarihi</FormLabel>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Calendar className="h-3.5 w-3.5" />Doğum Tarihi</FormLabel>
                       <FormControl><Input type="date" {...field} className="h-10" /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                   <FormField control={form.control} name="birthPlace" render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" />Doğum Yeri</FormLabel>
+                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><MapPin className="h-3.5 w-3.5" />Doğum Yeri</FormLabel>
                       <FormControl><Input {...field} className="h-10" placeholder="İl/İlçe" /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                 </div>
-                <div className="flex justify-end gap-2 mt-4 pt-4 border-t">
+                <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                   <Button
                     type="button"
                     variant="outline"

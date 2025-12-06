@@ -17,22 +17,9 @@ import { Badge } from "@/components/atoms/Badge";
 import { motion, AnimatePresence } from "framer-motion";
 
 const bloodTypes = ["A Rh+", "A Rh-", "B Rh+", "B Rh-", "AB Rh+", "AB Rh-", "0 Rh+", "0 Rh-", "Bilinmiyor"];
-
-const chronicDiseaseOptions = [
-  "Astım", "Diyabet Tip 1", "Diyabet Tip 2", "Epilepsi", "Migren", 
-  "Otizm Spektrum Bozukluğu", "DEHB", "Disleksi", "Kalp Hastalığı", 
-  "Alerjik Rinit", "Tiroid Hastalıkları", "Anemi", "Görme Bozukluğu", "İşitme Bozukluğu"
-];
-
-const allergyOptions = [
-  "Polen", "Toz Akarı", "Hayvan Tüyü", "Süt Ürünleri", "Yumurta", 
-  "Fıstık", "Gluten", "Balık", "Penisilin", "Arı Sokması", "Lateks"
-];
-
-const medicationOptions = [
-  "Ağrı Kesici", "Antibiyotik", "Astım İlacı", "İnsülin", "Epilepsi İlacı",
-  "DEHB İlacı", "Antihistaminik", "Vitamin/Mineral", "Demir İlacı", "Tiroid İlacı"
-];
+const chronicDiseaseOptions = ["Astım", "Diyabet Tip 1", "Diyabet Tip 2", "Epilepsi", "Migren", "Otizm Spektrum Bozukluğu", "DEHB", "Disleksi", "Kalp Hastalığı", "Alerjik Rinit", "Tiroid Hastalıkları", "Anemi", "Görme Bozukluğu", "İşitme Bozukluğu"];
+const allergyOptions = ["Polen", "Toz Akarı", "Hayvan Tüyü", "Süt Ürünleri", "Yumurta", "Fıstık", "Gluten", "Balık", "Penisilin", "Arı Sokması", "Lateks"];
+const medicationOptions = ["Ağrı Kesici", "Antibiyotik", "Astım İlacı", "İnsülin", "Epilepsi İlacı", "DEHB İlacı", "Antihistaminik", "Vitamin/Mineral", "Demir İlacı", "Tiroid İlacı"];
 
 const schema = z.object({
   bloodType: z.string().optional(),
@@ -89,10 +76,7 @@ export function HealthCard({ student, onUpdate }: HealthCardProps) {
     defaultValues,
   });
 
-  const isDirty = form.formState.isDirty || 
-    JSON.stringify(selectedDiseases) !== JSON.stringify(student.chronicDiseases || []) ||
-    JSON.stringify(selectedAllergies) !== JSON.stringify(student.allergies || []) ||
-    JSON.stringify(selectedMedications) !== JSON.stringify(student.medications || []);
+  const isDirty = form.formState.isDirty || JSON.stringify(selectedDiseases) !== JSON.stringify(student.chronicDiseases || []) || JSON.stringify(selectedAllergies) !== JSON.stringify(student.allergies || []) || JSON.stringify(selectedMedications) !== JSON.stringify(student.medications || []);
 
   useEffect(() => {
     form.reset(defaultValues);
@@ -112,11 +96,7 @@ export function HealthCard({ student, onUpdate }: HealthCardProps) {
   }, [defaultValues, student]);
 
   const toggleSelection = (item: string, list: string[], setList: (items: string[]) => void) => {
-    if (list.includes(item)) {
-      setList(list.filter(i => i !== item));
-    } else {
-      setList([...list, item]);
-    }
+    setList(list.includes(item) ? list.filter(i => i !== item) : [...list, item]);
   };
 
   const onSubmit = useCallback(async (data: FormValues) => {
@@ -155,249 +135,134 @@ export function HealthCard({ student, onUpdate }: HealthCardProps) {
   }, [form, defaultValues, student]);
 
   return (
-    <Card className="border-red-200/50 dark:border-red-800/50 bg-gradient-to-br from-red-50/50 to-rose-50/50 dark:from-red-950/20 dark:to-rose-950/20 shadow-md hover:shadow-lg transition-all duration-300">
+    <Card className="border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 shadow-sm hover:shadow-md transition-shadow duration-300">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Heart className="h-5 w-5 text-red-600" />
+          <CardTitle className="flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-gray-100">
+            <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+              <Heart className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+            </div>
             Sağlık Bilgileri
           </CardTitle>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsExpanded(!isExpanded)}
-            className={cn(
-              "h-8 w-8 rounded-full transition-all duration-200",
-              isExpanded 
-                ? "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700" 
-                : "hover:bg-gray-100 dark:hover:bg-gray-800"
-            )}
-          >
-            {isExpanded ? (
-              <X className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-            ) : (
-              <Pencil className="h-4 w-4 text-red-600" />
-            )}
+          <Button variant="ghost" size="sm" onClick={() => setIsExpanded(!isExpanded)} className={cn("h-9 gap-1.5 text-sm transition-colors", isExpanded ? "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100")}>
+            {isExpanded ? <><X className="h-4 w-4" />Kapat</> : <><Pencil className="h-4 w-4" />Düzenle</>}
           </Button>
         </div>
       </CardHeader>
       <CardContent className="pt-0">
         <AnimatePresence mode="wait">
           {!isExpanded ? (
-            <motion.div
-              key="summary"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-            >
+            <motion.div key="summary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
               {getSummaryItems.length > 0 ? (
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {getSummaryItems.map((item, index) => (
-                    <div 
-                      key={index} 
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300"
-                    >
-                      {item.icon}
-                      <span className="truncate max-w-[150px]">{item.value}</span>
+                    <div key={index} className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50">
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 flex items-center gap-1">{item.icon}{item.label}</p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{item.value}</p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-muted-foreground italic">Henüz bilgi girilmemiş. Düzenlemek için kalem ikonuna tıklayın.</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 italic">Henüz bilgi girilmemiş</p>
               )}
             </motion.div>
           ) : (
-            <motion.div
-              key="form"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-            >
+            <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
               <Form {...form}>
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <FormField control={form.control} name="bloodType" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="flex items-center gap-1.5"><Droplets className="h-3.5 w-3.5" />Kan Grubu</FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
-                          <FormControl><SelectTrigger className="h-10"><SelectValue placeholder="Seçiniz" /></SelectTrigger></FormControl>
-                          <SelectContent>
-                            {bloodTypes.map(type => (
-                              <SelectItem key={type} value={type}>{type}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )} />
+                <div className="space-y-4">
+                  <FormField control={form.control} name="bloodType" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-medium">Kan Grubu</FormLabel>
+                      <Select onValueChange={field.onChange} value={field.value}>
+                        <FormControl><SelectTrigger className="h-10"><SelectValue placeholder="Seçiniz" /></SelectTrigger></FormControl>
+                        <SelectContent>{bloodTypes.map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}</SelectContent>
+                      </Select>
+                    </FormItem>
+                  )} />
+                  <div>
+                    <p className="text-sm font-medium mb-2 flex items-center gap-1.5"><AlertTriangle className="h-3.5 w-3.5" />Kronik Hastalıklar</p>
+                    <div className="flex flex-wrap gap-2">{chronicDiseaseOptions.map(disease => (
+                      <Badge key={disease} variant={selectedDiseases.includes(disease) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(disease, selectedDiseases, setSelectedDiseases)}>{disease}</Badge>
+                    ))}</div>
                   </div>
-
-                  <div className="border-t pt-4">
-                    <h3 className="text-sm font-semibold mb-3 text-muted-foreground flex items-center gap-1.5">
-                      <AlertTriangle className="h-4 w-4" />Kronik Hastalıklar
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {chronicDiseaseOptions.map(disease => (
-                        <Badge
-                          key={disease}
-                          variant={selectedDiseases.includes(disease) ? "default" : "outline"}
-                          className="cursor-pointer transition-all hover:scale-105"
-                          onClick={() => toggleSelection(disease, selectedDiseases, setSelectedDiseases)}
-                        >
-                          {disease}
-                        </Badge>
-                      ))}
-                    </div>
+                  <div>
+                    <p className="text-sm font-medium mb-2">Alerjiler</p>
+                    <div className="flex flex-wrap gap-2">{allergyOptions.map(allergy => (
+                      <Badge key={allergy} variant={selectedAllergies.includes(allergy) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(allergy, selectedAllergies, setSelectedAllergies)}>{allergy}</Badge>
+                    ))}</div>
                   </div>
-
-                  <div className="border-t pt-4">
-                    <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Alerjiler</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {allergyOptions.map(allergy => (
-                        <Badge
-                          key={allergy}
-                          variant={selectedAllergies.includes(allergy) ? "default" : "outline"}
-                          className="cursor-pointer transition-all hover:scale-105"
-                          onClick={() => toggleSelection(allergy, selectedAllergies, setSelectedAllergies)}
-                        >
-                          {allergy}
-                        </Badge>
-                      ))}
-                    </div>
+                  <div>
+                    <p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Pill className="h-3.5 w-3.5" />Kullanılan İlaçlar</p>
+                    <div className="flex flex-wrap gap-2">{medicationOptions.map(med => (
+                      <Badge key={med} variant={selectedMedications.includes(med) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(med, selectedMedications, setSelectedMedications)}>{med}</Badge>
+                    ))}</div>
                   </div>
-
-                  <div className="border-t pt-4">
-                    <h3 className="text-sm font-semibold mb-3 text-muted-foreground flex items-center gap-1.5">
-                      <Pill className="h-4 w-4" />Kullanılan İlaçlar
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {medicationOptions.map(med => (
-                        <Badge
-                          key={med}
-                          variant={selectedMedications.includes(med) ? "default" : "outline"}
-                          className="cursor-pointer transition-all hover:scale-105"
-                          onClick={() => toggleSelection(med, selectedMedications, setSelectedMedications)}
-                        >
-                          {med}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="border-t pt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
                     <FormField control={form.control} name="medicalHistory" render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="flex items-center gap-1.5"><FileText className="h-3.5 w-3.5" />Tıbbi Geçmiş</FormLabel>
-                        <FormControl><Textarea {...field} placeholder="Geçmiş ameliyatlar..." className="min-h-[80px]" /></FormControl>
-                        <FormMessage />
+                        <FormLabel className="text-sm font-medium">Tıbbi Geçmiş</FormLabel>
+                        <FormControl><Textarea {...field} placeholder="Ameliyatlar..." className="min-h-[60px] text-sm" /></FormControl>
                       </FormItem>
                     )} />
                     <FormField control={form.control} name="specialNeeds" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Özel İhtiyaçlar</FormLabel>
-                        <FormControl><Textarea {...field} placeholder="Özel bakım..." className="min-h-[80px]" /></FormControl>
-                        <FormMessage />
+                        <FormLabel className="text-sm font-medium">Özel İhtiyaçlar</FormLabel>
+                        <FormControl><Textarea {...field} placeholder="Özel bakım..." className="min-h-[60px] text-sm" /></FormControl>
                       </FormItem>
                     )} />
                     <FormField control={form.control} name="physicalLimitations" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Fiziksel Kısıtlamalar</FormLabel>
-                        <FormControl><Textarea {...field} placeholder="Hareket kısıtlamaları..." className="min-h-[80px]" /></FormControl>
-                        <FormMessage />
+                        <FormLabel className="text-sm font-medium">Fiziksel Kısıtlamalar</FormLabel>
+                        <FormControl><Textarea {...field} placeholder="Hareket kısıtlamaları..." className="min-h-[60px] text-sm" /></FormControl>
                       </FormItem>
                     )} />
                   </div>
-
-                  <div className="border-t pt-4">
-                    <h3 className="text-sm font-semibold mb-3 text-muted-foreground flex items-center gap-1.5">
-                      <Phone className="h-4 w-4" />Acil Durum Kişileri
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3 p-3 bg-muted/30 rounded-lg">
-                        <p className="text-xs font-medium text-muted-foreground">1. Acil Durum Kişisi</p>
-                        <div className="grid grid-cols-1 gap-3">
-                          <FormField control={form.control} name="emergencyContact1Name" render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-xs">Ad Soyad</FormLabel>
-                              <FormControl><Input {...field} className="h-9" /></FormControl>
-                            </FormItem>
-                          )} />
-                          <FormField control={form.control} name="emergencyContact1Phone" render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-xs">Telefon</FormLabel>
-                              <FormControl><Input {...field} type="tel" className="h-9" /></FormControl>
-                            </FormItem>
-                          )} />
-                          <FormField control={form.control} name="emergencyContact1Relation" render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-xs">Yakınlık</FormLabel>
-                              <FormControl><Input {...field} className="h-9" placeholder="Örn: Anne" /></FormControl>
-                            </FormItem>
-                          )} />
-                        </div>
+                  <div className="pt-2">
+                    <p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" />Acil Durum Kişileri</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                        <p className="text-xs font-medium text-gray-500">1. Kişi</p>
+                        <FormField control={form.control} name="emergencyContact1Name" render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-xs">Ad Soyad</FormLabel>
+                            <FormControl><Input {...field} className="h-9 text-sm" /></FormControl>
+                          </FormItem>
+                        )} />
+                        <FormField control={form.control} name="emergencyContact1Phone" render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-xs">Telefon</FormLabel>
+                            <FormControl><Input {...field} className="h-9 text-sm" /></FormControl>
+                          </FormItem>
+                        )} />
                       </div>
-                      <div className="space-y-3 p-3 bg-muted/30 rounded-lg">
-                        <p className="text-xs font-medium text-muted-foreground">2. Acil Durum Kişisi</p>
-                        <div className="grid grid-cols-1 gap-3">
-                          <FormField control={form.control} name="emergencyContact2Name" render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-xs">Ad Soyad</FormLabel>
-                              <FormControl><Input {...field} className="h-9" /></FormControl>
-                            </FormItem>
-                          )} />
-                          <FormField control={form.control} name="emergencyContact2Phone" render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-xs">Telefon</FormLabel>
-                              <FormControl><Input {...field} type="tel" className="h-9" /></FormControl>
-                            </FormItem>
-                          )} />
-                          <FormField control={form.control} name="emergencyContact2Relation" render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-xs">Yakınlık</FormLabel>
-                              <FormControl><Input {...field} className="h-9" placeholder="Örn: Baba" /></FormControl>
-                            </FormItem>
-                          )} />
-                        </div>
+                      <div className="space-y-2 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                        <p className="text-xs font-medium text-gray-500">2. Kişi</p>
+                        <FormField control={form.control} name="emergencyContact2Name" render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-xs">Ad Soyad</FormLabel>
+                            <FormControl><Input {...field} className="h-9 text-sm" /></FormControl>
+                          </FormItem>
+                        )} />
+                        <FormField control={form.control} name="emergencyContact2Phone" render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-xs">Telefon</FormLabel>
+                            <FormControl><Input {...field} className="h-9 text-sm" /></FormControl>
+                          </FormItem>
+                        )} />
                       </div>
                     </div>
                   </div>
-
                   <FormField control={form.control} name="healthAdditionalNotes" render={({ field }) => (
-                    <FormItem className="border-t pt-4">
-                      <FormLabel>Ek Bilgiler</FormLabel>
-                      <FormControl><Textarea {...field} placeholder="Sağlık durumu hakkında ek bilgiler..." className="min-h-[80px]" /></FormControl>
-                      <FormMessage />
+                    <FormItem>
+                      <FormLabel className="text-sm font-medium">Ek Notlar</FormLabel>
+                      <FormControl><Textarea {...field} placeholder="Diğer önemli bilgiler..." className="min-h-[60px] text-sm" /></FormControl>
                     </FormItem>
                   )} />
                 </div>
-                <div className="flex justify-end gap-2 mt-4 pt-4 border-t">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={handleCancel}
-                    disabled={isSaving}
-                  >
-                    İptal
-                  </Button>
-                  <Button
-                    size="sm"
-                    onClick={form.handleSubmit(onSubmit)}
-                    disabled={isSaving || !isDirty}
-                    className={cn(
-                      "transition-all duration-300",
-                      showSuccess && "bg-green-600 hover:bg-green-700"
-                    )}
-                  >
-                    {isSaving ? (
-                      <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</>
-                    ) : showSuccess ? (
-                      <><Check className="h-4 w-4 mr-1" />Kaydedildi</>
-                    ) : (
-                      <><Save className="h-4 w-4 mr-1" />Kaydet</>
-                    )}
+                <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <Button type="button" variant="outline" size="sm" onClick={handleCancel} disabled={isSaving}>İptal</Button>
+                  <Button size="sm" onClick={form.handleSubmit(onSubmit)} disabled={isSaving || !isDirty} className={cn("transition-all duration-300", showSuccess && "bg-green-600 hover:bg-green-700")}>
+                    {isSaving ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</> : showSuccess ? <><Check className="h-4 w-4 mr-1" />Kaydedildi</> : <><Save className="h-4 w-4 mr-1" />Kaydet</>}
                   </Button>
                 </div>
               </Form>
