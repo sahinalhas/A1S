@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/organisms/ScrollArea";
 
 const academicProfileSchema = z.object({
+  assessmentDate: z.string().optional(),
   strongSubjects: z.array(z.string()),
   weakSubjects: z.array(z.string()),
   strongSkills: z.array(z.string()),
@@ -33,6 +34,7 @@ const academicProfileSchema = z.object({
   primaryLearningStyle: z.string().optional(),
   secondaryLearningStyle: z.string().optional(),
   overallMotivation: z.number().min(1).max(10),
+  studyHoursPerWeek: z.number().min(0).optional(),
   homeworkCompletionRate: z.number().min(0).max(100),
   additionalNotes: z.string().optional(),
   languageSkills: z.string().optional(),

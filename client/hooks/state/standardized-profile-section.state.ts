@@ -67,8 +67,8 @@ export function useStandardizedProfileSection<T extends FieldValues>({
  const payload = {
  id: savedData?.id || self.crypto.randomUUID(),
  studentId,
- assessmentDate: new Date().toISOString().split('T')[0],
  ...data,
+ assessmentDate: data.assessmentDate || new Date().toISOString().split('T')[0],
  };
 
  const response = await fetch(`/api/standardized-profile/${studentId}/${apiEndpoint}`, {

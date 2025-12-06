@@ -75,13 +75,34 @@ router.post('/:studentId/academic', (req, res) => {
       id: req.body.id || randomUUID(),
       studentId,
       assessmentDate: req.body.assessmentDate || new Date().toISOString().split('T')[0],
+      strongSubjects: req.body.strongSubjects || [],
+      weakSubjects: req.body.weakSubjects || [],
+      strongSkills: req.body.strongSkills || [],
+      weakSkills: req.body.weakSkills || [],
+      primaryLearningStyle: req.body.primaryLearningStyle || null,
+      secondaryLearningStyle: req.body.secondaryLearningStyle || null,
+      overallMotivation: req.body.overallMotivation !== undefined ? req.body.overallMotivation : 5,
+      studyHoursPerWeek: req.body.studyHoursPerWeek !== undefined ? req.body.studyHoursPerWeek : 0,
+      homeworkCompletionRate: req.body.homeworkCompletionRate !== undefined ? req.body.homeworkCompletionRate : 50,
+      languageSkills: req.body.languageSkills || null,
+      additionalNotes: req.body.additionalNotes || null,
+      assessedBy: req.body.assessedBy || null,
     };
 
     repo.upsertAcademicProfile(profile);
     res.json({ success: true, profile });
   } catch (error) {
     logger.error('Error saving academic profile', 'StandardizedProfile', error);
-    res.status(500).json({ success: false, error: 'Failed to save academic profile' });
+    console.error('Academic profile save error details:', {
+      error: error.message,
+      stack: error.stack,
+      body: req.body
+    });
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to save academic profile',
+      details: error.message 
+    });
   }
 });
 
