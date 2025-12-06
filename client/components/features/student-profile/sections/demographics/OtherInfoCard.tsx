@@ -98,28 +98,28 @@ export function OtherInfoCard({ student, onUpdate }: OtherInfoCardProps) {
   }, [form, defaultValues]);
 
   return (
-    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg">
+    <Card className="border border-amber-100/30 dark:border-amber-800/20 bg-gradient-to-br from-white/95 via-amber-50/15 to-amber-100/5 dark:from-gray-900/95 dark:via-amber-950/10 dark:to-amber-900/5 shadow-lg dark:shadow-2xl backdrop-blur-xl transition-all duration-500 hover:shadow-2xl hover:border-amber-200/50 dark:hover:shadow-amber-900/40 dark:hover:border-amber-700/30">
       <CardHeader 
         className="pb-4 cursor-pointer select-none hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors duration-200"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <div className={cn(
-              "w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300",
+              "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0",
               isExpanded 
-                ? "bg-amber-100 dark:bg-amber-900/30" 
-                : "bg-gray-100 dark:bg-gray-800"
+                ? "bg-gradient-to-br from-amber-200 to-amber-100 dark:from-amber-800/50 dark:to-amber-700/30 ring-2 ring-amber-300/50 dark:ring-amber-600/40" 
+                : "bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 ring-1 ring-gray-200/50 dark:ring-gray-700/50"
             )}>
               <Home className={cn(
-                "h-5 w-5 transition-colors duration-300",
+                "h-6 w-6 transition-all duration-300",
                 isExpanded
-                  ? "text-amber-600 dark:text-amber-400"
+                  ? "text-amber-600 dark:text-amber-300 scale-110"
                   : "text-gray-600 dark:text-gray-400"
               )} />
             </div>
-            <div>
-              <CardTitle className="text-base font-semibold text-gray-900 dark:text-gray-100">Diğer Bilgiler</CardTitle>
+            <div className="min-w-0">
+              <CardTitle className="text-lg font-bold text-gray-900 dark:text-gray-50">Diğer Bilgiler</CardTitle>
               {!isExpanded && getSummaryItems.length > 0 && (
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{getSummaryItems.length} bilgi kayıtlı</p>
               )}
@@ -127,12 +127,13 @@ export function OtherInfoCard({ student, onUpdate }: OtherInfoCardProps) {
           </div>
           <motion.div
             animate={{ rotate: isExpanded ? 180 : 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="flex-shrink-0"
           >
             <ChevronDown className={cn(
-              "h-5 w-5 transition-colors duration-300",
+              "h-5 w-5 transition-all duration-300",
               isExpanded
-                ? "text-amber-600 dark:text-amber-400"
+                ? "text-amber-600 dark:text-amber-300 scale-110"
                 : "text-gray-400 dark:text-gray-500"
             )} />
           </motion.div>

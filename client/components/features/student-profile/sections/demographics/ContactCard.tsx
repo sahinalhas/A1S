@@ -95,8 +95,8 @@ export function ContactCard({ student, onUpdate }: ContactCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.1 }}
     >
-      <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-white to-emerald-50/30 dark:from-gray-900 dark:to-emerald-950/20 shadow-sm dark:shadow-lg backdrop-blur transition-all duration-500 hover:shadow-lg dark:hover:shadow-emerald-900/30">
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent pointer-events-none" />
+      <Card className="relative overflow-hidden border border-emerald-100/30 dark:border-emerald-800/20 bg-gradient-to-br from-white/95 via-emerald-50/20 to-emerald-100/10 dark:from-gray-900/95 dark:via-emerald-950/10 dark:to-emerald-900/5 shadow-lg dark:shadow-2xl backdrop-blur-xl transition-all duration-500 hover:shadow-2xl hover:border-emerald-200/50 dark:hover:shadow-emerald-900/40 dark:hover:border-emerald-700/30">
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/8 via-emerald-400/3 to-transparent pointer-events-none" />
         
         <CardHeader 
           className="relative pb-0 pt-6 px-6 cursor-pointer group"
@@ -111,9 +111,9 @@ export function ContactCard({ student, onUpdate }: ContactCardProps) {
               >
                 <div className={cn(
                   "w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-400",
-                  "bg-gradient-to-br from-emerald-100 to-emerald-50 dark:from-emerald-900/40 dark:to-emerald-800/20",
-                  "shadow-md dark:shadow-lg border border-emerald-200/50 dark:border-emerald-700/30",
-                  isExpanded && "shadow-lg dark:shadow-emerald-900/50 border-emerald-300 dark:border-emerald-600/50 ring-2 ring-emerald-200 dark:ring-emerald-700/50"
+                  "bg-gradient-to-br from-emerald-200 to-emerald-100 dark:from-emerald-800/50 dark:to-emerald-700/30",
+                  "shadow-lg dark:shadow-xl border border-emerald-300/40 dark:border-emerald-600/30",
+                  isExpanded && "shadow-xl dark:shadow-emerald-900/60 border-emerald-400 dark:border-emerald-500/50 ring-2 ring-emerald-300/50 dark:ring-emerald-600/40"
                 )}>
                   <Phone className={cn(
                     "h-7 w-7 text-emerald-600 dark:text-emerald-300 transition-all duration-400",

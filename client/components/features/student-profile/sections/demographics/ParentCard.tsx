@@ -130,13 +130,13 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
       transition={{ duration: 0.4 }}
     >
       <Card className={cn(
-        "border-0 bg-gradient-to-br shadow-sm dark:shadow-lg transition-all duration-300 backdrop-blur-sm",
+        "border transition-all duration-500 shadow-lg dark:shadow-2xl backdrop-blur-xl",
         isMother 
-          ? "from-white to-pink-50/30 dark:from-gray-900 dark:to-pink-950/20 hover:shadow-md hover:shadow-pink-100/50 dark:hover:shadow-pink-900/30" 
-          : "from-white to-blue-50/30 dark:from-gray-900 dark:to-blue-950/20 hover:shadow-md hover:shadow-blue-100/50 dark:hover:shadow-blue-900/30"
+          ? "border-pink-100/30 dark:border-pink-800/20 bg-gradient-to-br from-white/95 via-pink-50/20 to-pink-100/10 dark:from-gray-900/95 dark:via-pink-950/10 dark:to-pink-900/5 hover:shadow-2xl hover:border-pink-200/50 dark:hover:shadow-pink-900/40 dark:hover:border-pink-700/30" 
+          : "border-blue-100/30 dark:border-blue-800/20 bg-gradient-to-br from-white/95 via-blue-50/20 to-blue-100/10 dark:from-gray-900/95 dark:via-blue-950/10 dark:to-blue-900/5 hover:shadow-2xl hover:border-blue-200/50 dark:hover:shadow-blue-900/40 dark:hover:border-blue-700/30"
       )}>
         <CardHeader 
-          className={cn("pb-4 cursor-pointer select-none transition-colors duration-300", isMother ? "hover:bg-pink-50/50 dark:hover:bg-pink-900/10" : "hover:bg-blue-50/50 dark:hover:bg-blue-900/10")}
+          className={cn("pb-4 cursor-pointer select-none transition-colors duration-300 relative group", isMother ? "hover:bg-pink-50/30 dark:hover:bg-pink-900/15" : "hover:bg-blue-50/30 dark:hover:bg-blue-900/15")}
           onClick={() => setIsExpanded(!isExpanded)}
         >
           <div className="flex items-center justify-between">
@@ -147,7 +147,7 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
                 className={cn(
                   "w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 flex-shrink-0",
                   isExpanded 
-                    ? cn("ring-2", isMother ? "bg-gradient-to-br from-pink-100 to-pink-50 dark:from-pink-900/40 dark:to-pink-800/30 ring-pink-300/50 dark:ring-pink-600/50" : "bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/40 dark:to-blue-800/30 ring-blue-300/50 dark:ring-blue-600/50")
+                    ? cn("ring-2", isMother ? "bg-gradient-to-br from-pink-200 to-pink-100 dark:from-pink-800/50 dark:to-pink-700/30 ring-pink-300/50 dark:ring-pink-600/40 shadow-lg dark:shadow-pink-900/50" : "bg-gradient-to-br from-blue-200 to-blue-100 dark:from-blue-800/50 dark:to-blue-700/30 ring-blue-300/50 dark:ring-blue-600/40 shadow-lg dark:shadow-blue-900/50")
                     : "bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 ring-1 ring-gray-200/50 dark:ring-gray-700/50"
                 )}
               >

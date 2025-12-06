@@ -128,7 +128,7 @@ export function TalentsCard({ student, onUpdate }: TalentsCardProps) {
   }, [form, defaultValues, student]);
 
   return (
-    <Card className="border border-gray-200/60 dark:border-gray-700/40 bg-white dark:bg-gray-900/30 transition-all duration-300 hover:border-orange-300/60 dark:hover:border-orange-600/40 hover:shadow-[0_8px_24px_rgba(249,115,22,0.08)] dark:hover:shadow-[0_8px_24px_rgba(249,115,22,0.12)] backdrop-blur-sm">
+    <Card className="border border-orange-100/30 dark:border-orange-800/20 bg-gradient-to-br from-white/95 via-orange-50/15 to-orange-100/5 dark:from-gray-900/95 dark:via-orange-950/10 dark:to-orange-900/5 shadow-lg dark:shadow-2xl backdrop-blur-xl transition-all duration-500 hover:shadow-2xl hover:border-orange-200/50 dark:hover:shadow-orange-900/40 dark:hover:border-orange-700/30">
       <CardHeader 
         className="pb-4 cursor-pointer select-none hover:bg-orange-50/40 dark:hover:bg-orange-900/15 transition-colors duration-200"
         onClick={() => setIsExpanded(!isExpanded)}
@@ -138,7 +138,7 @@ export function TalentsCard({ student, onUpdate }: TalentsCardProps) {
             <div className={cn(
               "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0",
               isExpanded 
-                ? "bg-gradient-to-br from-orange-100 to-orange-50 dark:from-orange-900/50 dark:to-orange-800/30 ring-2 ring-orange-300/50 dark:ring-orange-600/50" 
+                ? "bg-gradient-to-br from-orange-200 to-orange-100 dark:from-orange-800/50 dark:to-orange-700/30 ring-2 ring-orange-300/50 dark:ring-orange-600/40" 
                 : "bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 ring-1 ring-gray-200/50 dark:ring-gray-700/50"
             )}>
               <Sparkles className={cn(

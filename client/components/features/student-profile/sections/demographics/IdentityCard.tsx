@@ -108,8 +108,8 @@ export function IdentityCard({ student, onUpdate }: IdentityCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-white to-blue-50/30 dark:from-gray-900 dark:to-blue-950/20 shadow-sm dark:shadow-lg backdrop-blur transition-all duration-500 hover:shadow-lg dark:hover:shadow-blue-900/30">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-transparent pointer-events-none" />
+      <Card className="relative overflow-hidden border border-blue-100/30 dark:border-blue-800/20 bg-gradient-to-br from-white/95 via-blue-50/20 to-blue-100/10 dark:from-gray-900/95 dark:via-blue-950/10 dark:to-blue-900/5 shadow-lg dark:shadow-2xl backdrop-blur-xl transition-all duration-500 hover:shadow-2xl hover:border-blue-200/50 dark:hover:shadow-blue-900/40 dark:hover:border-blue-700/30">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/8 via-blue-400/3 to-transparent pointer-events-none" />
         
         <CardHeader 
           className="relative pb-0 pt-6 px-6 cursor-pointer group"
@@ -124,9 +124,9 @@ export function IdentityCard({ student, onUpdate }: IdentityCardProps) {
               >
                 <div className={cn(
                   "w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-400",
-                  "bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/40 dark:to-blue-800/20",
-                  "shadow-md dark:shadow-lg border border-blue-200/50 dark:border-blue-700/30",
-                  isExpanded && "shadow-lg dark:shadow-blue-900/50 border-blue-300 dark:border-blue-600/50 ring-2 ring-blue-200 dark:ring-blue-700/50"
+                  "bg-gradient-to-br from-blue-200 to-blue-100 dark:from-blue-800/50 dark:to-blue-700/30",
+                  "shadow-lg dark:shadow-xl border border-blue-300/40 dark:border-blue-600/30",
+                  isExpanded && "shadow-xl dark:shadow-blue-900/60 border-blue-400 dark:border-blue-500/50 ring-2 ring-blue-300/50 dark:ring-blue-600/40"
                 )}>
                   <User className={cn(
                     "h-7 w-7 text-blue-600 dark:text-blue-300 transition-all duration-400",

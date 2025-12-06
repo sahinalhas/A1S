@@ -92,8 +92,8 @@ export function GuardianCard({ student, onUpdate }: GuardianCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.2 }}
     >
-      <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-900 dark:to-purple-950/20 shadow-sm dark:shadow-lg backdrop-blur transition-all duration-500 hover:shadow-lg dark:hover:shadow-purple-900/30">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent pointer-events-none" />
+      <Card className="relative overflow-hidden border border-purple-100/30 dark:border-purple-800/20 bg-gradient-to-br from-white/95 via-purple-50/20 to-purple-100/10 dark:from-gray-900/95 dark:via-purple-950/10 dark:to-purple-900/5 shadow-lg dark:shadow-2xl backdrop-blur-xl transition-all duration-500 hover:shadow-2xl hover:border-purple-200/50 dark:hover:shadow-purple-900/40 dark:hover:border-purple-700/30">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/8 via-purple-400/3 to-transparent pointer-events-none" />
         
         <CardHeader 
           className="relative pb-0 pt-6 px-6 cursor-pointer group"
@@ -108,9 +108,9 @@ export function GuardianCard({ student, onUpdate }: GuardianCardProps) {
               >
                 <div className={cn(
                   "w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-400",
-                  "bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/40 dark:to-purple-800/20",
-                  "shadow-md dark:shadow-lg border border-purple-200/50 dark:border-purple-700/30",
-                  isExpanded && "shadow-lg dark:shadow-purple-900/50 border-purple-300 dark:border-purple-600/50 ring-2 ring-purple-200 dark:ring-purple-700/50"
+                  "bg-gradient-to-br from-purple-200 to-purple-100 dark:from-purple-800/50 dark:to-purple-700/30",
+                  "shadow-lg dark:shadow-xl border border-purple-300/40 dark:border-purple-600/30",
+                  isExpanded && "shadow-xl dark:shadow-purple-900/60 border-purple-400 dark:border-purple-500/50 ring-2 ring-purple-300/50 dark:ring-purple-600/40"
                 )}>
                   <UserCheck className={cn(
                     "h-7 w-7 text-purple-600 dark:text-purple-300 transition-all duration-400",
