@@ -18,7 +18,16 @@ export class StandardizedProfileRepository {
       ORDER BY assessmentDate DESC 
       LIMIT 1
     `);
-    return stmt.get(studentId) as AcademicProfile | null;
+    const row = stmt.get(studentId) as any;
+    if (!row) return null;
+    
+    return {
+      ...row,
+      strongSubjects: typeof row.strongSubjects === 'string' ? JSON.parse(row.strongSubjects) : row.strongSubjects,
+      weakSubjects: typeof row.weakSubjects === 'string' ? JSON.parse(row.weakSubjects) : row.weakSubjects,
+      strongSkills: typeof row.strongSkills === 'string' ? JSON.parse(row.strongSkills) : row.strongSkills,
+      weakSkills: typeof row.weakSkills === 'string' ? JSON.parse(row.weakSkills) : row.weakSkills,
+    } as AcademicProfile;
   }
 
   upsertAcademicProfile(profile: AcademicProfile): void {
@@ -77,7 +86,17 @@ export class StandardizedProfileRepository {
       ORDER BY assessmentDate DESC 
       LIMIT 1
     `);
-    return stmt.get(studentId) as SocialEmotionalProfile | null;
+    const row = stmt.get(studentId) as any;
+    if (!row) return null;
+    
+    return {
+      ...row,
+      strongSocialSkills: typeof row.strongSocialSkills === 'string' ? JSON.parse(row.strongSocialSkills) : row.strongSocialSkills,
+      developingSocialSkills: typeof row.developingSocialSkills === 'string' ? JSON.parse(row.developingSocialSkills) : row.developingSocialSkills,
+      identifiedRiskFactors: typeof row.identifiedRiskFactors === 'string' ? JSON.parse(row.identifiedRiskFactors) : row.identifiedRiskFactors,
+      protectiveFactors: typeof row.protectiveFactors === 'string' ? JSON.parse(row.protectiveFactors) : row.protectiveFactors,
+      recommendedInterventions: typeof row.recommendedInterventions === 'string' ? JSON.parse(row.recommendedInterventions) : row.recommendedInterventions,
+    } as SocialEmotionalProfile;
   }
 
   upsertSocialEmotionalProfile(profile: SocialEmotionalProfile): void {
