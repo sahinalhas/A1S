@@ -11,7 +11,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { EnhancedTextarea } from "@/components/molecules/EnhancedTextarea";
 import { MultiSelect } from "@/components/molecules/MultiSelect";
 import { GraduationCap } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { 
  ACADEMIC_SUBJECTS, 
  ACADEMIC_SKILLS,
@@ -102,22 +101,17 @@ export default function StandardizedAcademicSection({
  }, [form, componentId, registerFormSubmit, unregisterFormSubmit]);
 
  return (
- <Card className="relative overflow-hidden border border-emerald-100/30 dark:border-emerald-800/20 bg-gradient-to-br from-white/95 via-emerald-50/20 to-emerald-100/10 dark:from-gray-900/95 dark:via-emerald-950/10 dark:to-emerald-900/5 shadow-lg dark:shadow-2xl backdrop-blur-xl transition-all duration-500 hover:shadow-2xl hover:border-emerald-200/50 dark:hover:shadow-emerald-900/40 dark:hover:border-emerald-700/30">
- <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/8 via-emerald-400/3 to-transparent pointer-events-none" />
- <CardHeader className="relative">
- <div className="flex items-center gap-4">
- <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-emerald-200 to-emerald-100 dark:from-emerald-800/50 dark:to-emerald-700/30 shadow-lg dark:shadow-xl border border-emerald-300/40 dark:border-emerald-600/30">
- <GraduationCap className="h-6 w-6 text-emerald-600 dark:text-emerald-300" />
- </div>
- <div className="min-w-0">
- <CardTitle className="text-lg font-bold text-gray-900 dark:text-gray-50">Akademik Profil</CardTitle>
- <CardDescription className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+ <Card>
+ <CardHeader>
+ <CardTitle className="flex items-center gap-2">
+ <GraduationCap className="h-5 w-5" />
+ Akademik Profil
+ </CardTitle>
+ <CardDescription>
  Ölçülebilir akademik yetkinlikler ve öğrenme stilleri
  </CardDescription>
- </div>
- </div>
  </CardHeader>
- <CardContent className="relative">
+ <CardContent>
  <Form {...form}>
  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
  <FormField
