@@ -90,32 +90,32 @@ export function ContactCard({ student, onUpdate }: ContactCardProps) {
   }, [form, defaultValues]);
 
   return (
-    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg">
+    <Card className="border border-gray-200/60 dark:border-gray-700/40 bg-white dark:bg-gray-900/30 transition-all duration-300 hover:border-emerald-300/60 dark:hover:border-emerald-600/40 hover:shadow-[0_8px_24px_rgba(16,185,129,0.08)] dark:hover:shadow-[0_8px_24px_rgba(16,185,129,0.12)] backdrop-blur-sm">
       <CardHeader 
-        className="pb-4 cursor-pointer select-none hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors duration-200"
+        className="pb-4 cursor-pointer select-none hover:bg-emerald-50/40 dark:hover:bg-emerald-900/15 transition-colors duration-200"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <div className={cn(
-              "w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300",
+              "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0",
               isExpanded 
-                ? "bg-emerald-100 dark:bg-emerald-900/30" 
-                : "bg-gray-100 dark:bg-gray-800"
+                ? "bg-gradient-to-br from-emerald-100 to-emerald-50 dark:from-emerald-900/50 dark:to-emerald-800/30 ring-2 ring-emerald-300/50 dark:ring-emerald-600/50" 
+                : "bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 ring-1 ring-gray-200/50 dark:ring-gray-700/50"
             )}>
               <Phone className={cn(
-                "h-5 w-5 transition-colors duration-300",
+                "h-6 w-6 transition-all duration-300",
                 isExpanded
-                  ? "text-emerald-600 dark:text-emerald-400"
+                  ? "text-emerald-600 dark:text-emerald-300 scale-110"
                   : "text-gray-600 dark:text-gray-400"
               )} />
             </div>
-            <div>
-              <CardTitle className="text-base font-semibold text-gray-900 dark:text-gray-100">
+            <div className="min-w-0">
+              <CardTitle className="text-lg font-bold text-gray-900 dark:text-gray-50">
                 İletişim Bilgileri
               </CardTitle>
               {!isExpanded && getSummaryItems.length > 0 && (
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1.5 font-medium">
                   {getSummaryItems.length} bilgi kayıtlı
                 </p>
               )}
@@ -123,12 +123,13 @@ export function ContactCard({ student, onUpdate }: ContactCardProps) {
           </div>
           <motion.div
             animate={{ rotate: isExpanded ? 180 : 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="flex-shrink-0"
           >
             <ChevronDown className={cn(
-              "h-5 w-5 transition-colors duration-300",
+              "h-5 w-5 transition-all duration-300",
               isExpanded
-                ? "text-emerald-600 dark:text-emerald-400"
+                ? "text-emerald-600 dark:text-emerald-300 scale-110"
                 : "text-gray-400 dark:text-gray-500"
             )} />
           </motion.div>
@@ -151,14 +152,14 @@ export function ContactCard({ student, onUpdate }: ContactCardProps) {
                       key={index}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.2, delay: index * 0.05 }}
-                      className="p-3 rounded-lg bg-gradient-to-br from-emerald-50/50 to-teal-50/30 dark:from-emerald-900/10 dark:to-teal-900/5 border border-emerald-100/50 dark:border-emerald-800/30 hover:border-emerald-200/70 dark:hover:border-emerald-700/50 transition-colors duration-200"
+                      transition={{ duration: 0.3, delay: index * 0.08 }}
+                      className="p-3.5 rounded-lg bg-gradient-to-br from-emerald-50/70 to-teal-50/40 dark:from-emerald-900/20 dark:to-teal-900/10 border border-emerald-100/60 dark:border-emerald-800/30 hover:border-emerald-200/80 dark:hover:border-emerald-700/60 hover:shadow-md dark:hover:shadow-emerald-900/20 transition-all duration-200 group"
                     >
-                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 flex items-center gap-1.5">
-                        {item.icon && <span className="text-emerald-500 dark:text-emerald-400">{item.icon}</span>}
+                      <p className="text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-2 flex items-center gap-2 uppercase tracking-wide">
+                        {item.icon && <span className="text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">{item.icon}</span>}
                         {item.label}
                       </p>
-                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 line-clamp-2">{item.value}</p>
+                      <p className="text-sm font-bold text-gray-900 dark:text-gray-100 line-clamp-2">{item.value}</p>
                     </motion.div>
                   ))}
                 </div>

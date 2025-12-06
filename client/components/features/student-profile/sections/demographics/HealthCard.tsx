@@ -135,41 +135,42 @@ export function HealthCard({ student, onUpdate }: HealthCardProps) {
   }, [form, defaultValues, student]);
 
   return (
-    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg">
+    <Card className="border border-gray-200/60 dark:border-gray-700/40 bg-white dark:bg-gray-900/30 transition-all duration-300 hover:border-red-300/60 dark:hover:border-red-600/40 hover:shadow-[0_8px_24px_rgba(239,68,68,0.08)] dark:hover:shadow-[0_8px_24px_rgba(239,68,68,0.12)] backdrop-blur-sm">
       <CardHeader 
-        className="pb-4 cursor-pointer select-none hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors duration-200"
+        className="pb-4 cursor-pointer select-none hover:bg-red-50/40 dark:hover:bg-red-900/15 transition-colors duration-200"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <div className={cn(
-              "w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300",
+              "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0",
               isExpanded 
-                ? "bg-red-100 dark:bg-red-900/30" 
-                : "bg-gray-100 dark:bg-gray-800"
+                ? "bg-gradient-to-br from-red-100 to-red-50 dark:from-red-900/50 dark:to-red-800/30 ring-2 ring-red-300/50 dark:ring-red-600/50" 
+                : "bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 ring-1 ring-gray-200/50 dark:ring-gray-700/50"
             )}>
               <Heart className={cn(
-                "h-5 w-5 transition-colors duration-300",
+                "h-6 w-6 transition-all duration-300",
                 isExpanded
-                  ? "text-red-600 dark:text-red-400"
+                  ? "text-red-600 dark:text-red-300 scale-110"
                   : "text-gray-600 dark:text-gray-400"
               )} />
             </div>
-            <div>
-              <CardTitle className="text-base font-semibold text-gray-900 dark:text-gray-100">Sağlık Bilgileri</CardTitle>
+            <div className="min-w-0">
+              <CardTitle className="text-lg font-bold text-gray-900 dark:text-gray-50">Sağlık Bilgileri</CardTitle>
               {!isExpanded && getSummaryItems.length > 0 && (
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{getSummaryItems.length} alan doldurulmuş</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1.5 font-medium">{getSummaryItems.length} alan doldurulmuş</p>
               )}
             </div>
           </div>
           <motion.div
             animate={{ rotate: isExpanded ? 180 : 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="flex-shrink-0"
           >
             <ChevronDown className={cn(
-              "h-5 w-5 transition-colors duration-300",
+              "h-5 w-5 transition-all duration-300",
               isExpanded
-                ? "text-red-600 dark:text-red-400"
+                ? "text-red-600 dark:text-red-300 scale-110"
                 : "text-gray-400 dark:text-gray-500"
             )} />
           </motion.div>
@@ -182,9 +183,9 @@ export function HealthCard({ student, onUpdate }: HealthCardProps) {
               {getSummaryItems.length > 0 ? (
                 <div className="space-y-3 py-2">
                   {getSummaryItems.map((item, index) => (
-                    <motion.div key={index} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, delay: index * 0.05 }} className="p-3 rounded-lg bg-gradient-to-br from-red-50/50 to-pink-50/30 dark:from-red-900/10 dark:to-pink-900/5 border border-red-100/50 dark:border-red-800/30 hover:border-red-200/70 dark:hover:border-red-700/50 transition-colors duration-200">
-                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1.5">{item.icon && <span className="text-red-500 dark:text-red-400">{item.icon}</span>}{item.label}</p>
-                      <div className="flex flex-wrap gap-1.5">{item.items?.map((val, i) => (<span key={i} className="inline-flex items-center px-2 py-1 text-xs font-medium bg-red-100 dark:bg-red-700/40 text-red-900 dark:text-red-100 rounded">{val}</span>))}</div>
+                    <motion.div key={index} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: index * 0.08 }} className="p-3.5 rounded-lg bg-gradient-to-br from-red-50/70 to-pink-50/40 dark:from-red-900/20 dark:to-pink-900/10 border border-red-100/60 dark:border-red-800/30 hover:border-red-200/80 dark:hover:border-red-700/60 hover:shadow-md dark:hover:shadow-red-900/20 transition-all duration-200 group">
+                      <p className="text-xs font-bold text-red-700 dark:text-red-300 mb-2 flex items-center gap-2 uppercase tracking-wide">{item.icon && <span className="text-red-600 dark:text-red-400 group-hover:scale-110 transition-transform">{item.icon}</span>}{item.label}</p>
+                      <div className="flex flex-wrap gap-2">{item.items?.map((val, i) => (<span key={i} className="inline-flex items-center px-2.5 py-1.5 text-xs font-bold bg-red-100 dark:bg-red-700/50 text-red-900 dark:text-red-100 rounded-md">{val}</span>))}</div>
                     </motion.div>
                   ))}
                 </div>

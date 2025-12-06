@@ -121,37 +121,40 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
 
   const colorScheme = isMother ? { bg: "bg-pink-100 dark:bg-pink-900/30", text: "text-pink-600 dark:text-pink-400", border: "border-pink-100/50 dark:border-pink-800/30", hover: "hover:border-pink-200/70 dark:hover:border-pink-700/50", gradient: "from-pink-50/50 to-rose-50/30 dark:from-pink-900/10 dark:to-rose-900/5" } : { bg: "bg-blue-100 dark:bg-blue-900/30", text: "text-blue-600 dark:text-blue-400", border: "border-blue-100/50 dark:border-blue-800/30", hover: "hover:border-blue-200/70 dark:hover:border-blue-700/50", gradient: "from-blue-50/50 to-cyan-50/30 dark:from-blue-900/10 dark:to-cyan-900/5" };
 
+  const colorMap = isMother ? { bg: "bg-pink-100 dark:bg-pink-900/30", text: "text-pink-600 dark:text-pink-300", ring: "ring-pink-300/50 dark:ring-pink-600/50", shadow: "hover:shadow-[0_8px_24px_rgba(236,72,153,0.08)] dark:hover:shadow-[0_8px_24px_rgba(236,72,153,0.12)]", border: "hover:border-pink-300/60 dark:hover:border-pink-600/40", hover: "hover:bg-pink-50/40 dark:hover:bg-pink-900/15" } : { bg: "bg-blue-100 dark:bg-blue-900/30", text: "text-blue-600 dark:text-blue-300", ring: "ring-blue-300/50 dark:ring-blue-600/50", shadow: "hover:shadow-[0_8px_24px_rgba(59,130,246,0.08)] dark:hover:shadow-[0_8px_24px_rgba(59,130,246,0.12)]", border: "hover:border-blue-300/60 dark:hover:border-blue-600/40", hover: "hover:bg-blue-50/40 dark:hover:bg-blue-900/15" };
+
   return (
-    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg">
+    <Card className={cn("border border-gray-200/60 dark:border-gray-700/40 bg-white dark:bg-gray-900/30 transition-all duration-300", colorMap.border, colorMap.shadow, "backdrop-blur-sm")}>
       <CardHeader 
-        className="pb-4 cursor-pointer select-none hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors duration-200"
+        className={cn("pb-4 cursor-pointer select-none transition-colors duration-200", colorMap.hover)}
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <div className={cn(
-              "w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300",
-              isExpanded ? colorScheme.bg : "bg-gray-100 dark:bg-gray-800"
+              "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0 ring-1",
+              isExpanded ? cn("bg-gradient-to-br", isMother ? "from-pink-100 to-pink-50 dark:from-pink-900/50 dark:to-pink-800/30" : "from-blue-100 to-blue-50 dark:from-blue-900/50 dark:to-blue-800/30", "ring-2", colorMap.ring) : "bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 ring-gray-200/50 dark:ring-gray-700/50"
             )}>
               <Users className={cn(
-                "h-5 w-5 transition-colors duration-300",
-                isExpanded ? colorScheme.text : "text-gray-600 dark:text-gray-400"
+                "h-6 w-6 transition-all duration-300",
+                isExpanded ? cn(colorMap.text, "scale-110") : "text-gray-600 dark:text-gray-400"
               )} />
             </div>
-            <div>
-              <CardTitle className="text-base font-semibold text-gray-900 dark:text-gray-100">{title}</CardTitle>
+            <div className="min-w-0">
+              <CardTitle className="text-lg font-bold text-gray-900 dark:text-gray-50">{title}</CardTitle>
               {!isExpanded && getSummaryItems.length > 0 && (
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{defaultValues.name || "Eksik bilgiler"}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1.5 truncate font-medium">{defaultValues.name || "Eksik bilgiler"}</p>
               )}
             </div>
           </div>
           <motion.div
             animate={{ rotate: isExpanded ? 180 : 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="flex-shrink-0"
           >
             <ChevronDown className={cn(
-              "h-5 w-5 transition-colors duration-300",
-              isExpanded ? colorScheme.text : "text-gray-400 dark:text-gray-500"
+              "h-5 w-5 transition-all duration-300",
+              isExpanded ? cn(colorMap.text, "scale-110") : "text-gray-400 dark:text-gray-500"
             )} />
           </motion.div>
         </div>
@@ -173,14 +176,14 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
                       key={index}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.2, delay: index * 0.05 }}
-                      className={cn("p-3 rounded-lg bg-gradient-to-br border transition-colors duration-200", colorScheme.gradient, colorScheme.border, colorScheme.hover)}
+                      transition={{ duration: 0.3, delay: index * 0.08 }}
+                      className={cn("p-3.5 rounded-lg bg-gradient-to-br border transition-all duration-200 group hover:shadow-md", isMother ? "from-pink-50/70 to-rose-50/40 dark:from-pink-900/20 dark:to-rose-900/10 border-pink-100/60 dark:border-pink-800/30 hover:border-pink-200/80 dark:hover:border-pink-700/60 dark:hover:shadow-pink-900/20" : "from-blue-50/70 to-cyan-50/40 dark:from-blue-900/20 dark:to-cyan-900/10 border-blue-100/60 dark:border-blue-800/30 hover:border-blue-200/80 dark:hover:border-blue-700/60 dark:hover:shadow-blue-900/20")}
                     >
-                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 flex items-center gap-1.5">
-                        {item.icon && <span className={colorScheme.text}>{item.icon}</span>}
+                      <p className={cn("text-xs font-bold mb-2 flex items-center gap-2 uppercase tracking-wide", isMother ? "text-pink-700 dark:text-pink-300" : "text-blue-700 dark:text-blue-300")}>
+                        {item.icon && <span className={cn("group-hover:scale-110 transition-transform", isMother ? "text-pink-600 dark:text-pink-400" : "text-blue-600 dark:text-blue-400")}>{item.icon}</span>}
                         {item.label}
                       </p>
-                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 line-clamp-2">{item.value}</p>
+                      <p className="text-sm font-bold text-gray-900 dark:text-gray-100 line-clamp-2">{item.value}</p>
                     </motion.div>
                   ))}
                 </div>
