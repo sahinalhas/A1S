@@ -107,6 +107,39 @@ function ensureInitialized(): void {
   isInitialized = true;
 }
 
+const JSON_ARRAY_FIELDS = [
+  'tags', 'interests', 'chronicDiseases', 'allergies', 'medications',
+  'creativeTalents', 'physicalTalents', 'primaryInterests', 'exploratoryInterests',
+  'clubMemberships', 'competitionsParticipated'
+] as const;
+
+function safeJsonParse(value: unknown): unknown[] | undefined {
+  if (!value) return undefined;
+  if (Array.isArray(value)) return value;
+  if (typeof value === 'string') {
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+  return undefined;
+}
+
+function parseStudentRow(row: Record<string, unknown>): Student {
+  const student = { ...row } as unknown as Student;
+  
+  for (const field of JSON_ARRAY_FIELDS) {
+    const value = row[field];
+    if (value !== undefined && value !== null) {
+      (student as unknown as Record<string, unknown>)[field] = safeJsonParse(value);
+    }
+  }
+  
+  return student;
+}
+
 function validateStudent(student: Student): boolean {
   if (!student || !student.id) {
     console.warn('Skipping invalid student: missing id', student);
@@ -136,7 +169,8 @@ export function loadStudents(): Student[] {
     ensureInitialized();
     const db = getDatabase();
     const stmt = db.prepare('SELECT * FROM students ORDER BY name, surname');
-    const students = stmt.all() as Student[];
+    const rows = stmt.all() as Record<string, unknown>[];
+    const students = rows.map(parseStudentRow);
     return students.filter(validateStudent);
   } catch (error) {
     console.error('Database error in loadStudents:', error);
@@ -155,7 +189,8 @@ export function loadStudentsBySchool(schoolId: string): Student[] {
   
   try {
     ensureInitialized();
-    const students = statements!.getStudentsBySchool.all(schoolId) as Student[];
+    const rows = statements!.getStudentsBySchool.all(schoolId) as Record<string, unknown>[];
+    const students = rows.map(parseStudentRow);
     return students.filter(validateStudent);
   } catch (error) {
     console.error('Database error in loadStudentsBySchool:', error);
@@ -173,8 +208,8 @@ export function getStudentByIdAndSchool(studentId: string, schoolId: string): St
   
   try {
     ensureInitialized();
-    const student = statements!.getStudentByIdAndSchool.get(studentId, schoolId) as Student | undefined;
-    return student || null;
+    const row = statements!.getStudentByIdAndSchool.get(studentId, schoolId) as Record<string, unknown> | undefined;
+    return row ? parseStudentRow(row) : null;
   } catch (error) {
     console.error('Error in getStudentByIdAndSchool:', error);
     return null;
@@ -191,8 +226,8 @@ export function getStudentById(studentId: string): Student | null {
   
   try {
     ensureInitialized();
-    const student = statements!.getStudent.get(studentId) as Student | undefined;
-    return student || null;
+    const row = statements!.getStudent.get(studentId) as Record<string, unknown> | undefined;
+    return row ? parseStudentRow(row) : null;
   } catch (error) {
     console.error('Error in getStudentById:', error);
     return null;
