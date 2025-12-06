@@ -78,6 +78,32 @@ export interface Student {
   studentExpectations?: string;
   familyExpectations?: string;
 
+  // Health Information
+  chronicDiseases?: string;
+  allergies?: string;
+  medications?: string;
+  medicalHistory?: string;
+  specialNeeds?: string;
+  physicalLimitations?: string;
+
+  // Emergency Contacts
+  emergencyContact1Name?: string;
+  emergencyContact1Phone?: string;
+  emergencyContact1Relation?: string;
+  emergencyContact2Name?: string;
+  emergencyContact2Phone?: string;
+  emergencyContact2Relation?: string;
+  healthAdditionalNotes?: string;
+
+  // Talents & Interests
+  creativeTalents?: string;
+  physicalTalents?: string;
+  primaryInterests?: string;
+  exploratoryInterests?: string;
+  clubMemberships?: string;
+  competitionsParticipated?: string;
+  talentsAdditionalNotes?: string;
+
   // Legacy fields for compatibility
   primaryLearningStyle?: string;
   englishScore?: number;

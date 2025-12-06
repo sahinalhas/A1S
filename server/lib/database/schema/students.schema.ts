@@ -126,6 +126,14 @@ export function createStudentsTables(db: Database.Database): void {
     'emergencyContact2Phone TEXT',
     'emergencyContact2Relation TEXT',
     'healthAdditionalNotes TEXT',
+    // Talents & Interests
+    'creativeTalents TEXT',
+    'physicalTalents TEXT',
+    'primaryInterests TEXT',
+    'exploratoryInterests TEXT',
+    'clubMemberships TEXT',
+    'competitionsParticipated TEXT',
+    'talentsAdditionalNotes TEXT',
   ];
 
   for (const columnDef of extendedColumns) {
