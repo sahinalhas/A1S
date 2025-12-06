@@ -86,12 +86,12 @@ export function HealthCard({ student, onUpdate }: HealthCardProps) {
   }, [student]);
 
   const getSummaryItems = useMemo(() => {
-    const items: { label: string; value: string; icon?: React.ReactNode }[] = [];
-    if (defaultValues.bloodType) items.push({ label: "Kan Grubu", value: defaultValues.bloodType, icon: <Droplets className="h-3.5 w-3.5" /> });
-    if ((student.chronicDiseases || []).length > 0) items.push({ label: "Hastalık", value: `${(student.chronicDiseases || []).length} kronik`, icon: <AlertTriangle className="h-3.5 w-3.5" /> });
-    if ((student.allergies || []).length > 0) items.push({ label: "Alerji", value: `${(student.allergies || []).length} alerji` });
-    if ((student.medications || []).length > 0) items.push({ label: "İlaç", value: `${(student.medications || []).length} ilaç`, icon: <Pill className="h-3.5 w-3.5" /> });
-    if (defaultValues.emergencyContact1Name) items.push({ label: "Acil", value: defaultValues.emergencyContact1Name, icon: <Phone className="h-3.5 w-3.5" /> });
+    const items: { label: string; items?: string[]; icon?: React.ReactNode }[] = [];
+    if (defaultValues.bloodType) items.push({ label: "Kan Grubu", items: [defaultValues.bloodType], icon: <Droplets className="h-3.5 w-3.5" /> });
+    if ((student.chronicDiseases || []).length > 0) items.push({ label: "Kronik Hastalıklar", items: student.chronicDiseases, icon: <AlertTriangle className="h-3.5 w-3.5" /> });
+    if ((student.allergies || []).length > 0) items.push({ label: "Alerjiler", items: student.allergies });
+    if ((student.medications || []).length > 0) items.push({ label: "İlaçlar", items: student.medications, icon: <Pill className="h-3.5 w-3.5" /> });
+    if (defaultValues.emergencyContact1Name) items.push({ label: "Acil Kişi", items: [defaultValues.emergencyContact1Name], icon: <Phone className="h-3.5 w-3.5" /> });
     return items;
   }, [defaultValues, student]);
 
@@ -154,11 +154,15 @@ export function HealthCard({ student, onUpdate }: HealthCardProps) {
           {!isExpanded ? (
             <motion.div key="summary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
               {getSummaryItems.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-3">
                   {getSummaryItems.map((item, index) => (
                     <div key={index} className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50">
-                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 flex items-center gap-1">{item.icon}{item.label}</p>
-                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{item.value}</p>
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1">{item.icon}{item.label}</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {item.items?.map((val, i) => (
+                          <span key={i} className="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded">{val}</span>
+                        ))}
+                      </div>
                     </div>
                   ))}
                 </div>

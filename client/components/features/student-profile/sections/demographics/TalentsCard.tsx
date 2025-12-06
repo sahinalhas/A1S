@@ -71,11 +71,11 @@ export function TalentsCard({ student, onUpdate }: TalentsCardProps) {
   }, [student]);
 
   const getSummaryItems = useMemo(() => {
-    const items: { label: string; value: string; icon?: React.ReactNode }[] = [];
-    if ((student.creativeTalents || []).length > 0) items.push({ label: "Sanatsal", value: `${(student.creativeTalents || []).length} yetenek`, icon: <Palette className="h-3.5 w-3.5" /> });
-    if ((student.physicalTalents || []).length > 0) items.push({ label: "Sportif", value: `${(student.physicalTalents || []).length} yetenek`, icon: <Dumbbell className="h-3.5 w-3.5" /> });
-    if ((student.primaryInterests || []).length > 0) items.push({ label: "İlgi", value: `${(student.primaryInterests || []).length} alan`, icon: <Lightbulb className="h-3.5 w-3.5" /> });
-    if ((student.clubMemberships || []).length > 0) items.push({ label: "Kulüp", value: `${(student.clubMemberships || []).length} kulüp`, icon: <Users className="h-3.5 w-3.5" /> });
+    const items: { label: string; items?: string[]; icon?: React.ReactNode }[] = [];
+    if ((student.creativeTalents || []).length > 0) items.push({ label: "Sanatsal Yetenekler", items: student.creativeTalents, icon: <Palette className="h-3.5 w-3.5" /> });
+    if ((student.physicalTalents || []).length > 0) items.push({ label: "Sportif Yetenekler", items: student.physicalTalents, icon: <Dumbbell className="h-3.5 w-3.5" /> });
+    if ((student.primaryInterests || []).length > 0) items.push({ label: "İlgi Alanları", items: student.primaryInterests, icon: <Lightbulb className="h-3.5 w-3.5" /> });
+    if ((student.clubMemberships || []).length > 0) items.push({ label: "Kulüp Üyelikleri", items: student.clubMemberships, icon: <Users className="h-3.5 w-3.5" /> });
     return items;
   }, [student]);
 
@@ -147,11 +147,15 @@ export function TalentsCard({ student, onUpdate }: TalentsCardProps) {
           {!isExpanded ? (
             <motion.div key="summary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
               {getSummaryItems.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-3">
                   {getSummaryItems.map((item, index) => (
                     <div key={index} className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50">
-                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 flex items-center gap-1">{item.icon}{item.label}</p>
-                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{item.value}</p>
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1">{item.icon}{item.label}</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {item.items?.map((val, i) => (
+                          <span key={i} className="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded">{val}</span>
+                        ))}
+                      </div>
                     </div>
                   ))}
                 </div>
