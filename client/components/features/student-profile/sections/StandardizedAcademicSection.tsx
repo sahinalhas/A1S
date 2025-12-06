@@ -27,6 +27,7 @@ import {
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useFormDirty } from "@/pages/StudentProfile/StudentProfile";
+import { getSelectedSchoolId } from "@/lib/school-context";
 
 const academicProfileSchema = z.object({
   assessmentDate: z.string().optional(),
@@ -174,8 +175,12 @@ export default function StandardizedAcademicSection({
     setIsLoading(true);
     try {
       console.log("Loading academic profile for student:", studentId);
+      const schoolId = getSelectedSchoolId();
       const response = await fetch(`/api/standardized-profile/${studentId}/academic`, {
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+          'X-School-Id': schoolId || ''
+        }
       });
       console.log("Load response status:", response.status);
       
@@ -253,10 +258,14 @@ export default function StandardizedAcademicSection({
       };
 
       console.log("Submitting academic profile:", payload);
+      const schoolId = getSelectedSchoolId();
 
       const response = await fetch(`/api/standardized-profile/${studentId}/academic`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-School-Id': schoolId || ''
+        },
         credentials: 'include',
         body: JSON.stringify(payload),
       });
