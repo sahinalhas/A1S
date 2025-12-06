@@ -53,10 +53,10 @@ export function GuardianCard({ student, onUpdate }: GuardianCardProps) {
 
   const getSummaryItems = useMemo(() => {
     const items: { label: string; value: string; icon?: React.ReactNode }[] = [];
-    if (defaultValues.guardianName) items.push({ label: "Ad Soyad", value: defaultValues.guardianName, icon: <UserCheck className="h-3.5 w-3.5" /> });
-    if (defaultValues.guardianRelation) items.push({ label: "Yakınlık", value: defaultValues.guardianRelation, icon: <Link className="h-3.5 w-3.5" /> });
-    if (defaultValues.guardianPhone) items.push({ label: "Telefon", value: defaultValues.guardianPhone, icon: <Phone className="h-3.5 w-3.5" /> });
-    if (defaultValues.guardianEmail) items.push({ label: "E-posta", value: defaultValues.guardianEmail, icon: <Mail className="h-3.5 w-3.5" /> });
+    if (defaultValues.guardianName) items.push({ label: "Ad Soyad", value: defaultValues.guardianName, icon: <UserCheck className="h-4 w-4" /> });
+    if (defaultValues.guardianRelation) items.push({ label: "Yakınlık", value: defaultValues.guardianRelation, icon: <Link className="h-4 w-4" /> });
+    if (defaultValues.guardianPhone) items.push({ label: "Telefon", value: defaultValues.guardianPhone, icon: <Phone className="h-4 w-4" /> });
+    if (defaultValues.guardianEmail) items.push({ label: "E-posta", value: defaultValues.guardianEmail, icon: <Mail className="h-4 w-4" /> });
     return items;
   }, [defaultValues]);
 
@@ -87,101 +87,182 @@ export function GuardianCard({ student, onUpdate }: GuardianCardProps) {
   }, [form, defaultValues]);
 
   return (
-    <Card className="border border-gray-200/60 dark:border-gray-700/40 bg-white dark:bg-gray-900/30 transition-all duration-300 hover:border-purple-300/60 dark:hover:border-purple-600/40 hover:shadow-[0_8px_24px_rgba(168,85,247,0.08)] dark:hover:shadow-[0_8px_24px_rgba(168,85,247,0.12)] backdrop-blur-sm">
-      <CardHeader 
-        className="pb-4 cursor-pointer select-none hover:bg-purple-50/40 dark:hover:bg-purple-900/15 transition-colors duration-200"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className={cn(
-              "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0",
-              isExpanded 
-                ? "bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/50 dark:to-purple-800/30 ring-2 ring-purple-300/50 dark:ring-purple-600/50" 
-                : "bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 ring-1 ring-gray-200/50 dark:ring-gray-700/50"
-            )}>
-              <UserCheck className={cn(
-                "h-6 w-6 transition-all duration-300",
-                isExpanded
-                  ? "text-purple-600 dark:text-purple-300 scale-110"
-                  : "text-gray-600 dark:text-gray-400"
-              )} />
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.2 }}
+    >
+      <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-900 dark:to-purple-950/20 shadow-sm dark:shadow-lg backdrop-blur transition-all duration-500 hover:shadow-lg dark:hover:shadow-purple-900/30">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent pointer-events-none" />
+        
+        <CardHeader 
+          className="relative pb-0 pt-6 px-6 cursor-pointer group"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start gap-4 flex-1 min-w-0">
+              <motion.div
+                animate={{ scale: isExpanded ? 1.08 : 1 }}
+                transition={{ duration: 0.3 }}
+                className="flex-shrink-0"
+              >
+                <div className={cn(
+                  "w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-400",
+                  "bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/40 dark:to-purple-800/20",
+                  "shadow-md dark:shadow-lg border border-purple-200/50 dark:border-purple-700/30",
+                  isExpanded && "shadow-lg dark:shadow-purple-900/50 border-purple-300 dark:border-purple-600/50 ring-2 ring-purple-200 dark:ring-purple-700/50"
+                )}>
+                  <UserCheck className={cn(
+                    "h-7 w-7 text-purple-600 dark:text-purple-300 transition-all duration-400",
+                    isExpanded && "scale-125"
+                  )} />
+                </div>
+              </motion.div>
+              
+              <div className="min-w-0 pt-1">
+                <CardTitle className="text-base font-bold text-gray-900 dark:text-gray-50 group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-colors duration-300">
+                  Vasi Bilgileri
+                </CardTitle>
+                {!isExpanded && getSummaryItems.length > 0 && (
+                  <motion.p 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-sm text-gray-600 dark:text-gray-400 mt-2 truncate font-medium"
+                  >
+                    {defaultValues.guardianName || "Eksik bilgiler"}
+                  </motion.p>
+                )}
+              </div>
             </div>
-            <div className="min-w-0">
-              <CardTitle className="text-lg font-bold text-gray-900 dark:text-gray-50">Vasi Bilgileri</CardTitle>
-              {!isExpanded && getSummaryItems.length > 0 && (
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1.5 truncate font-medium">{defaultValues.guardianName || "Eksik bilgiler"}</p>
-              )}
-            </div>
-          </div>
-          <motion.div
-            animate={{ rotate: isExpanded ? 180 : 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="flex-shrink-0"
-          >
-            <ChevronDown className={cn(
-              "h-5 w-5 transition-all duration-300",
-              isExpanded
-                ? "text-purple-600 dark:text-purple-300 scale-110"
-                : "text-gray-400 dark:text-gray-500"
-            )} />
-          </motion.div>
-        </div>
-      </CardHeader>
-      <CardContent className="pt-0 overflow-hidden">
-        <AnimatePresence mode="wait">
-          {!isExpanded ? (
+            
             <motion.div
-              key="summary"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
+              animate={{ rotate: isExpanded ? 180 : 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="flex-shrink-0 pt-1"
             >
-              {getSummaryItems.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-2">
-                  {getSummaryItems.map((item, index) => (
-                    <motion.div 
-                      key={index}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.08 }}
-                      className="p-3.5 rounded-lg bg-gradient-to-br from-purple-50/70 to-violet-50/40 dark:from-purple-900/20 dark:to-violet-900/10 border border-purple-100/60 dark:border-purple-800/30 hover:border-purple-200/80 dark:hover:border-purple-700/60 hover:shadow-md dark:hover:shadow-purple-900/20 transition-all duration-200 group"
+              <div className="p-2 rounded-lg bg-purple-100/50 dark:bg-purple-900/30 group-hover:bg-purple-200/60 dark:group-hover:bg-purple-900/50 transition-colors duration-300">
+                <ChevronDown className="h-5 w-5 text-purple-600 dark:text-purple-300" />
+              </div>
+            </motion.div>
+          </div>
+        </CardHeader>
+
+        <CardContent className="relative pt-4 px-6 pb-6 overflow-hidden">
+          <AnimatePresence mode="wait">
+            {!isExpanded ? (
+              <motion.div
+                key="summary"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                {getSummaryItems.length > 0 ? (
+                  <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
+                    {getSummaryItems.map((item, index) => (
+                      <motion.div 
+                        key={index}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                        className="group/item"
+                      >
+                        <div className="p-4 rounded-xl bg-gradient-to-br from-purple-50/80 to-purple-100/40 dark:from-purple-900/20 dark:to-purple-800/10 border border-purple-200/60 dark:border-purple-700/30 hover:border-purple-300 dark:hover:border-purple-600/50 hover:bg-purple-50/90 dark:hover:bg-purple-900/30 transition-all duration-300 group-hover/item:shadow-md dark:group-hover/item:shadow-purple-900/30">
+                          <div className="flex items-center gap-2 mb-2">
+                            {item.icon && <span className="text-purple-600 dark:text-purple-400 group-hover/item:scale-120 transition-transform duration-300">{item.icon}</span>}
+                            <p className="text-xs font-bold text-purple-700 dark:text-purple-300 uppercase tracking-widest">{item.label}</p>
+                          </div>
+                          <p className="text-sm font-bold text-gray-900 dark:text-gray-50 line-clamp-2">{item.value}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="py-8 text-center">
+                    <div className="inline-block p-4 rounded-full bg-purple-100/50 dark:bg-purple-900/20 mb-3">
+                      <UserCheck className="h-6 w-6 text-purple-400 dark:text-purple-500" />
+                    </div>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Henüz bilgi girilmemiş</p>
+                  </div>
+                )}
+              </motion.div>
+            ) : (
+              <motion.div 
+                key="form" 
+                initial={{ opacity: 0, y: 10 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                exit={{ opacity: 0, y: -10 }} 
+                transition={{ duration: 0.3 }}
+                className="space-y-5"
+              >
+                <Form {...form}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="guardianName" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><UserCheck className="h-4 w-4 text-purple-600 dark:text-purple-400" />Ad Soyad</FormLabel>
+                        <FormControl><Input {...field} className="h-11 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:ring-purple-500 rounded-lg" placeholder="Vasi adı soyadı" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                    <FormField control={form.control} name="guardianRelation" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><Link className="h-4 w-4 text-purple-600 dark:text-purple-400" />Yakınlık</FormLabel>
+                        <FormControl><Input {...field} className="h-11 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:ring-purple-500 rounded-lg" placeholder="Örn: Amca, Teyze" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="guardianPhone" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><Phone className="h-4 w-4 text-purple-600 dark:text-purple-400" />Telefon</FormLabel>
+                        <FormControl><Input {...field} className="h-11 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:ring-purple-500 rounded-lg" placeholder="Telefon numarası" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                    <FormField control={form.control} name="guardianEmail" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><Mail className="h-4 w-4 text-purple-600 dark:text-purple-400" />E-posta</FormLabel>
+                        <FormControl><Input type="email" {...field} className="h-11 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:ring-purple-500 rounded-lg" placeholder="E-posta adresi" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  </div>
+                  <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700 mt-6">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleCancel}
+                      disabled={isSaving}
+                      className="h-11 px-6"
                     >
-                      <p className="text-xs font-bold text-purple-700 dark:text-purple-300 mb-2 flex items-center gap-2 uppercase tracking-wide">
-                        {item.icon && <span className="text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">{item.icon}</span>}
-                        {item.label}
-                      </p>
-                      <p className="text-sm font-bold text-gray-900 dark:text-gray-100 line-clamp-2">{item.value}</p>
+                      İptal
+                    </Button>
+                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                      <Button
+                        onClick={form.handleSubmit(onSubmit)}
+                        disabled={isSaving || !isDirty}
+                        className={cn(
+                          "h-11 px-6 bg-purple-600 hover:bg-purple-700 text-white transition-all duration-300",
+                          showSuccess && "bg-green-600 hover:bg-green-700"
+                        )}
+                      >
+                        {isSaving ? (
+                          <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Kaydediliyor</>
+                        ) : showSuccess ? (
+                          <><Check className="h-4 w-4 mr-2" />Kaydedildi</>
+                        ) : (
+                          <><Save className="h-4 w-4 mr-2" />Kaydet</>
+                        )}
+                      </Button>
                     </motion.div>
-                  ))}
-                </div>
-              ) : (
-                <div className="py-4 text-center">
-                  <p className="text-sm text-gray-400 dark:text-gray-500 italic">Henüz bilgi girilmemiş</p>
-                </div>
-              )}
-            </motion.div>
-          ) : (
-            <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="py-4">
-              <Form {...form}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField control={form.control} name="guardianName" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><UserCheck className="h-3.5 w-3.5" />Ad Soyad</FormLabel><FormControl><Input {...field} className="h-10" placeholder="Vasi adı soyadı" /></FormControl><FormMessage /></FormItem>)} />
-                  <FormField control={form.control} name="guardianRelation" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Link className="h-3.5 w-3.5" />Yakınlık</FormLabel><FormControl><Input {...field} className="h-10" placeholder="Örn: Amca, Teyze" /></FormControl><FormMessage /></FormItem>)} />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <FormField control={form.control} name="guardianPhone" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Phone className="h-3.5 w-3.5" />Telefon</FormLabel><FormControl><Input {...field} className="h-10" placeholder="Telefon numarası" /></FormControl><FormMessage /></FormItem>)} />
-                  <FormField control={form.control} name="guardianEmail" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Mail className="h-3.5 w-3.5" />E-posta</FormLabel><FormControl><Input type="email" {...field} className="h-10" placeholder="E-posta adresi" /></FormControl><FormMessage /></FormItem>)} />
-                </div>
-                <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <Button type="button" variant="outline" size="sm" onClick={handleCancel} disabled={isSaving}>İptal</Button>
-                  <Button size="sm" onClick={form.handleSubmit(onSubmit)} disabled={isSaving || !isDirty} className={cn("transition-all duration-300", showSuccess && "bg-green-600 hover:bg-green-700")}>{isSaving ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</> : showSuccess ? <><Check className="h-4 w-4 mr-1" />Kaydedildi</> : <><Save className="h-4 w-4 mr-1" />Kaydet</>}</Button>
-                </div>
-              </Form>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </CardContent>
-    </Card>
+                  </div>
+                </Form>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }

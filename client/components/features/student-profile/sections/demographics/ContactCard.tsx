@@ -55,10 +55,10 @@ export function ContactCard({ student, onUpdate }: ContactCardProps) {
 
   const getSummaryItems = useMemo(() => {
     const items: { label: string; value: string; icon?: React.ReactNode }[] = [];
-    if (defaultValues.phone) items.push({ label: "Telefon", value: defaultValues.phone, icon: <Phone className="h-3.5 w-3.5" /> });
-    if (defaultValues.email) items.push({ label: "E-posta", value: defaultValues.email, icon: <Mail className="h-3.5 w-3.5" /> });
-    if (defaultValues.province) items.push({ label: "İl", value: defaultValues.province, icon: <MapPin className="h-3.5 w-3.5" /> });
-    if (defaultValues.district) items.push({ label: "İlçe", value: defaultValues.district, icon: <Home className="h-3.5 w-3.5" /> });
+    if (defaultValues.phone) items.push({ label: "Telefon", value: defaultValues.phone, icon: <Phone className="h-4 w-4" /> });
+    if (defaultValues.email) items.push({ label: "E-posta", value: defaultValues.email, icon: <Mail className="h-4 w-4" /> });
+    if (defaultValues.province) items.push({ label: "İl", value: defaultValues.province, icon: <MapPin className="h-4 w-4" /> });
+    if (defaultValues.district) items.push({ label: "İlçe", value: defaultValues.district, icon: <Home className="h-4 w-4" /> });
     if (defaultValues.address) items.push({ label: "Adres", value: defaultValues.address.substring(0, 30) + (defaultValues.address.length > 30 ? "..." : "") });
     return items;
   }, [defaultValues]);
@@ -90,167 +90,189 @@ export function ContactCard({ student, onUpdate }: ContactCardProps) {
   }, [form, defaultValues]);
 
   return (
-    <Card className="border border-gray-200/60 dark:border-gray-700/40 bg-white dark:bg-gray-900/30 transition-all duration-300 hover:border-emerald-300/60 dark:hover:border-emerald-600/40 hover:shadow-[0_8px_24px_rgba(16,185,129,0.08)] dark:hover:shadow-[0_8px_24px_rgba(16,185,129,0.12)] backdrop-blur-sm">
-      <CardHeader 
-        className="pb-4 cursor-pointer select-none hover:bg-emerald-50/40 dark:hover:bg-emerald-900/15 transition-colors duration-200"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className={cn(
-              "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0",
-              isExpanded 
-                ? "bg-gradient-to-br from-emerald-100 to-emerald-50 dark:from-emerald-900/50 dark:to-emerald-800/30 ring-2 ring-emerald-300/50 dark:ring-emerald-600/50" 
-                : "bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900 ring-1 ring-gray-200/50 dark:ring-gray-700/50"
-            )}>
-              <Phone className={cn(
-                "h-6 w-6 transition-all duration-300",
-                isExpanded
-                  ? "text-emerald-600 dark:text-emerald-300 scale-110"
-                  : "text-gray-600 dark:text-gray-400"
-              )} />
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.1 }}
+    >
+      <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-white to-emerald-50/30 dark:from-gray-900 dark:to-emerald-950/20 shadow-sm dark:shadow-lg backdrop-blur transition-all duration-500 hover:shadow-lg dark:hover:shadow-emerald-900/30">
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent pointer-events-none" />
+        
+        <CardHeader 
+          className="relative pb-0 pt-6 px-6 cursor-pointer group"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start gap-4 flex-1 min-w-0">
+              <motion.div
+                animate={{ scale: isExpanded ? 1.08 : 1 }}
+                transition={{ duration: 0.3 }}
+                className="flex-shrink-0"
+              >
+                <div className={cn(
+                  "w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-400",
+                  "bg-gradient-to-br from-emerald-100 to-emerald-50 dark:from-emerald-900/40 dark:to-emerald-800/20",
+                  "shadow-md dark:shadow-lg border border-emerald-200/50 dark:border-emerald-700/30",
+                  isExpanded && "shadow-lg dark:shadow-emerald-900/50 border-emerald-300 dark:border-emerald-600/50 ring-2 ring-emerald-200 dark:ring-emerald-700/50"
+                )}>
+                  <Phone className={cn(
+                    "h-7 w-7 text-emerald-600 dark:text-emerald-300 transition-all duration-400",
+                    isExpanded && "scale-125"
+                  )} />
+                </div>
+              </motion.div>
+              
+              <div className="min-w-0 pt-1">
+                <CardTitle className="text-base font-bold text-gray-900 dark:text-gray-50 group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors duration-300">
+                  İletişim Bilgileri
+                </CardTitle>
+                {!isExpanded && getSummaryItems.length > 0 && (
+                  <motion.p 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-sm text-gray-600 dark:text-gray-400 mt-2 font-medium"
+                  >
+                    {getSummaryItems.length} bilgi kayıtlı
+                  </motion.p>
+                )}
+              </div>
             </div>
-            <div className="min-w-0">
-              <CardTitle className="text-lg font-bold text-gray-900 dark:text-gray-50">
-                İletişim Bilgileri
-              </CardTitle>
-              {!isExpanded && getSummaryItems.length > 0 && (
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1.5 font-medium">
-                  {getSummaryItems.length} bilgi kayıtlı
-                </p>
-              )}
-            </div>
+            
+            <motion.div
+              animate={{ rotate: isExpanded ? 180 : 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="flex-shrink-0 pt-1"
+            >
+              <div className="p-2 rounded-lg bg-emerald-100/50 dark:bg-emerald-900/30 group-hover:bg-emerald-200/60 dark:group-hover:bg-emerald-900/50 transition-colors duration-300">
+                <ChevronDown className="h-5 w-5 text-emerald-600 dark:text-emerald-300" />
+              </div>
+            </motion.div>
           </div>
-          <motion.div
-            animate={{ rotate: isExpanded ? 180 : 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="flex-shrink-0"
-          >
-            <ChevronDown className={cn(
-              "h-5 w-5 transition-all duration-300",
-              isExpanded
-                ? "text-emerald-600 dark:text-emerald-300 scale-110"
-                : "text-gray-400 dark:text-gray-500"
-            )} />
-          </motion.div>
-        </div>
-      </CardHeader>
-      <CardContent className="pt-0 overflow-hidden">
-        <AnimatePresence mode="wait">
-          {!isExpanded ? (
-            <motion.div
-              key="summary"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {getSummaryItems.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-2">
-                  {getSummaryItems.map((item, index) => (
-                    <motion.div 
-                      key={index}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.08 }}
-                      className="p-3.5 rounded-lg bg-gradient-to-br from-emerald-50/70 to-teal-50/40 dark:from-emerald-900/20 dark:to-teal-900/10 border border-emerald-100/60 dark:border-emerald-800/30 hover:border-emerald-200/80 dark:hover:border-emerald-700/60 hover:shadow-md dark:hover:shadow-emerald-900/20 transition-all duration-200 group"
+        </CardHeader>
+
+        <CardContent className="relative pt-4 px-6 pb-6 overflow-hidden">
+          <AnimatePresence mode="wait">
+            {!isExpanded ? (
+              <motion.div
+                key="summary"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                {getSummaryItems.length > 0 ? (
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {getSummaryItems.map((item, index) => (
+                      <motion.div 
+                        key={index}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                        className="group/item"
+                      >
+                        <div className="p-4 rounded-xl bg-gradient-to-br from-emerald-50/80 to-emerald-100/40 dark:from-emerald-900/20 dark:to-emerald-800/10 border border-emerald-200/60 dark:border-emerald-700/30 hover:border-emerald-300 dark:hover:border-emerald-600/50 hover:bg-emerald-50/90 dark:hover:bg-emerald-900/30 transition-all duration-300 group-hover/item:shadow-md dark:group-hover/item:shadow-emerald-900/30">
+                          <div className="flex items-center gap-2 mb-2">
+                            {item.icon && <span className="text-emerald-600 dark:text-emerald-400 group-hover/item:scale-120 transition-transform duration-300">{item.icon}</span>}
+                            <p className="text-xs font-bold text-emerald-700 dark:text-emerald-300 uppercase tracking-widest">{item.label}</p>
+                          </div>
+                          <p className="text-sm font-bold text-gray-900 dark:text-gray-50 line-clamp-2">{item.value}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="py-8 text-center">
+                    <div className="inline-block p-4 rounded-full bg-emerald-100/50 dark:bg-emerald-900/20 mb-3">
+                      <Phone className="h-6 w-6 text-emerald-400 dark:text-emerald-500" />
+                    </div>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Henüz bilgi girilmemiş</p>
+                  </div>
+                )}
+              </motion.div>
+            ) : (
+              <motion.div 
+                key="form" 
+                initial={{ opacity: 0, y: 10 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                exit={{ opacity: 0, y: -10 }} 
+                transition={{ duration: 0.3 }}
+                className="space-y-5"
+              >
+                <Form {...form}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="phone" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><Phone className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />Telefon</FormLabel>
+                        <FormControl><Input {...field} className="h-11 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:ring-emerald-500 rounded-lg" placeholder="Telefon numarası" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                    <FormField control={form.control} name="email" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><Mail className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />E-posta</FormLabel>
+                        <FormControl><Input type="email" {...field} className="h-11 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:ring-emerald-500 rounded-lg" placeholder="E-posta adresi" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="province" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><MapPin className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />İl</FormLabel>
+                        <FormControl><Input {...field} className="h-11 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:ring-emerald-500 rounded-lg" placeholder="İl adı" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                    <FormField control={form.control} name="district" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300 mb-2"><Home className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />İlçe</FormLabel>
+                        <FormControl><Input {...field} className="h-11 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:ring-emerald-500 rounded-lg" placeholder="İlçe adı" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  </div>
+                  <FormField control={form.control} name="address" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">Adres</FormLabel>
+                      <FormControl><textarea {...field} className="flex min-h-24 w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-600" placeholder="Tam adres" /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                  <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700 mt-6">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleCancel}
+                      disabled={isSaving}
+                      className="h-11 px-6"
                     >
-                      <p className="text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-2 flex items-center gap-2 uppercase tracking-wide">
-                        {item.icon && <span className="text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">{item.icon}</span>}
-                        {item.label}
-                      </p>
-                      <p className="text-sm font-bold text-gray-900 dark:text-gray-100 line-clamp-2">{item.value}</p>
+                      İptal
+                    </Button>
+                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                      <Button
+                        onClick={form.handleSubmit(onSubmit)}
+                        disabled={isSaving || !isDirty}
+                        className={cn(
+                          "h-11 px-6 bg-emerald-600 hover:bg-emerald-700 text-white transition-all duration-300",
+                          showSuccess && "bg-green-600 hover:bg-green-700"
+                        )}
+                      >
+                        {isSaving ? (
+                          <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Kaydediliyor</>
+                        ) : showSuccess ? (
+                          <><Check className="h-4 w-4 mr-2" />Kaydedildi</>
+                        ) : (
+                          <><Save className="h-4 w-4 mr-2" />Kaydet</>
+                        )}
+                      </Button>
                     </motion.div>
-                  ))}
-                </div>
-              ) : (
-                <div className="py-4 text-center">
-                  <p className="text-sm text-gray-400 dark:text-gray-500 italic">Henüz bilgi girilmemiş</p>
-                </div>
-              )}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="form"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="py-4"
-            >
-              <Form {...form}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField control={form.control} name="phone" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Phone className="h-3.5 w-3.5" />Telefon</FormLabel>
-                      <FormControl><Input {...field} className="h-10" placeholder="Telefon numarası" /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <FormField control={form.control} name="email" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Mail className="h-3.5 w-3.5" />E-posta</FormLabel>
-                      <FormControl><Input type="email" {...field} className="h-10" placeholder="E-posta adresi" /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <FormField control={form.control} name="province" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><MapPin className="h-3.5 w-3.5" />İl</FormLabel>
-                      <FormControl><Input {...field} className="h-10" placeholder="İl adı" /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <FormField control={form.control} name="district" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Home className="h-3.5 w-3.5" />İlçe</FormLabel>
-                      <FormControl><Input {...field} className="h-10" placeholder="İlçe adı" /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                </div>
-                <FormField control={form.control} name="address" render={({ field }) => (
-                  <FormItem className="mt-4">
-                    <FormLabel className="text-sm font-medium">Adres</FormLabel>
-                    <FormControl><textarea {...field} className="flex min-h-20 w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-600" placeholder="Tam adres" /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )} />
-                <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={handleCancel}
-                    disabled={isSaving}
-                  >
-                    İptal
-                  </Button>
-                  <Button
-                    size="sm"
-                    onClick={form.handleSubmit(onSubmit)}
-                    disabled={isSaving || !isDirty}
-                    className={cn(
-                      "transition-all duration-300",
-                      showSuccess && "bg-green-600 hover:bg-green-700"
-                    )}
-                  >
-                    {isSaving ? (
-                      <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</>
-                    ) : showSuccess ? (
-                      <><Check className="h-4 w-4 mr-1" />Kaydedildi</>
-                    ) : (
-                      <><Save className="h-4 w-4 mr-1" />Kaydet</>
-                    )}
-                  </Button>
-                </div>
-              </Form>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </CardContent>
-    </Card>
+                  </div>
+                </Form>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }
