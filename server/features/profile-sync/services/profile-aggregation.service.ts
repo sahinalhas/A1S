@@ -19,10 +19,8 @@ import type {
   ProfileSyncLog
 } from '../types/profile-sync.types.js';
 import type {
-  StandardizedHealthProfile,
   AcademicProfile,
-  SocialEmotionalProfile,
-  TalentsInterestsProfile
+  SocialEmotionalProfile
 } from '../../../../shared/types/standardized-profile.types.js';
 
 export class ProfileAggregationService {
@@ -139,10 +137,6 @@ export class ProfileAggregationService {
 
     try {
       switch (domain) {
-        case 'health':
-          await this.updateHealthProfile(studentId, mappedFields);
-          break;
-        
         case 'academic':
           await this.updateAcademicProfile(studentId, mappedFields);
           break;
@@ -151,15 +145,12 @@ export class ProfileAggregationService {
           await this.updateSocialEmotionalProfile(studentId, mappedFields);
           break;
         
-        case 'talents_interests':
-          await this.updateTalentsInterestsProfile(studentId, mappedFields);
-          break;
-        
         case 'behavioral':
         case 'motivation':
         case 'risk_factors':
         case 'family':
-          // Bu alanlar için gelecekte ek tablolar eklenebilir
+        case 'health':
+        case 'talents_interests':
           console.log(`📝 Domain ${domain} için mapped fields:`, mappedFields);
           break;
         
@@ -172,47 +163,6 @@ export class ProfileAggregationService {
       console.error(`❌ Failed to update ${domain}:`, error);
       throw error;
     }
-  }
-
-  /**
-   * Sağlık profilini günceller - DOKTOR KONTROLÜ GİBİ BİLGİLER BURAYA YAZILIR
-   */
-  private async updateHealthProfile(studentId: string, fields: Record<string, any>): Promise<void> {
-    console.log(`🏥 Updating health profile for ${studentId}:`, fields);
-    
-    // Mevcut profili al
-    const existing = this.profileRepo.getStandardizedHealthProfile(studentId);
-    
-    // Tarih alanlarını normalize et
-    if (fields.lastHealthCheckup) {
-      fields.lastHealthCheckup = this.fieldMapper.normalizeDate(fields.lastHealthCheckup);
-    }
-    
-    // Profil oluştur veya güncelle
-    const profile: StandardizedHealthProfile = {
-      id: existing?.id || randomUUID(),
-      studentId,
-      bloodType: fields.bloodType || existing?.bloodType || null,
-      chronicDiseases: this.ensureJsonArray(fields.chronicDiseases || existing?.chronicDiseases || []),
-      allergies: this.ensureJsonArray(fields.allergies || existing?.allergies || []),
-      currentMedications: this.ensureJsonArray(fields.currentMedications || existing?.currentMedications || []),
-      medicalHistory: fields.medicalHistory || existing?.medicalHistory || null,
-      specialNeeds: fields.specialNeeds || existing?.specialNeeds || null,
-      physicalLimitations: fields.physicalLimitations || existing?.physicalLimitations || null,
-      emergencyContact1Name: fields.emergencyContact1Name || existing?.emergencyContact1Name || null,
-      emergencyContact1Phone: fields.emergencyContact1Phone || existing?.emergencyContact1Phone || null,
-      emergencyContact1Relation: fields.emergencyContact1Relation || existing?.emergencyContact1Relation || null,
-      emergencyContact2Name: fields.emergencyContact2Name || existing?.emergencyContact2Name || null,
-      emergencyContact2Phone: fields.emergencyContact2Phone || existing?.emergencyContact2Phone || null,
-      emergencyContact2Relation: fields.emergencyContact2Relation || existing?.emergencyContact2Relation || null,
-      physicianName: fields.physicianName || existing?.physicianName || null,
-      physicianPhone: fields.physicianPhone || existing?.physicianPhone || null,
-      lastHealthCheckup: fields.lastHealthCheckup || existing?.lastHealthCheckup || null,
-      additionalNotes: fields.additionalNotes || existing?.additionalNotes || null
-    };
-    
-    this.profileRepo.upsertStandardizedHealthProfile(profile);
-    console.log(`✅ Health profile updated! Last checkup: ${profile.lastHealthCheckup}`);
   }
 
   /**
@@ -275,34 +225,6 @@ export class ProfileAggregationService {
     
     this.profileRepo.upsertSocialEmotionalProfile(profile);
     console.log(`✅ Social-emotional profile updated!`);
-  }
-
-  /**
-   * Yetenek ve ilgi alanları profilini günceller
-   */
-  private async updateTalentsInterestsProfile(studentId: string, fields: Record<string, any>): Promise<void> {
-    console.log(`🎨 Updating talents/interests profile for ${studentId}:`, fields);
-    
-    const existing = this.profileRepo.getTalentsInterestsProfile(studentId);
-    
-    const profile: TalentsInterestsProfile = {
-      id: existing?.id || randomUUID(),
-      studentId,
-      assessmentDate: new Date().toISOString(),
-      creativeTalents: this.ensureJsonArray(fields.creativeTalents || existing?.creativeTalents || []),
-      physicalTalents: this.ensureJsonArray(fields.physicalTalents || existing?.physicalTalents || []),
-      primaryInterests: this.ensureJsonArray(fields.primaryInterests || existing?.primaryInterests || []),
-      exploratoryInterests: this.ensureJsonArray(fields.exploratoryInterests || existing?.exploratoryInterests || []),
-      talentProficiency: existing?.talentProficiency || undefined,
-      weeklyEngagementHours: fields.weeklyEngagementHours || existing?.weeklyEngagementHours || null,
-      clubMemberships: this.ensureJsonArray(fields.clubMemberships || existing?.clubMemberships || []),
-      competitionsParticipated: this.ensureJsonArray(fields.competitionsParticipated || existing?.competitionsParticipated || []),
-      additionalNotes: fields.additionalNotes || existing?.additionalNotes || null,
-      assessedBy: 'AI Auto-Sync'
-    };
-    
-    this.profileRepo.upsertTalentsInterestsProfile(profile);
-    console.log(`✅ Talents/interests profile updated!`);
   }
 
   /**

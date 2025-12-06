@@ -430,7 +430,7 @@ Yanıtını JSON formatında ver (TypeScript ComparativeAnalysisReport tipine uy
         academicScore,
         behaviorScore,
         riskLevel,
-        keyStrengths: ctx?.talentsInterests?.talents?.slice(0, 3) || ['Değerlendirme gerekli'],
+        keyStrengths: ['Değerlendirme gerekli'],
         keyChallenges: ctx?.risk?.factors?.slice(0, 3) || ['Değerlendirme gerekli'],
         interventionPriority: riskLevel === 'ÇOK_YÜKSEK' ? 90 : riskLevel === 'YÜKSEK' ? 70 : riskLevel === 'ORTA' ? 50 : 30
       };

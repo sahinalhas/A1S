@@ -4,10 +4,9 @@
  */
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/organisms/Tabs";
-import { Heart, Brain, Target, Star, TrendingUp } from "lucide-react";
+import { Heart, Brain, Target, TrendingUp } from "lucide-react";
 import StandardizedSocialEmotionalSection from "./StandardizedSocialEmotionalSection";
 import KisilikProfiliSection from "./KisilikProfiliSection";
-import StandardizedTalentsSection from "./StandardizedTalentsSection";
 import MotivationProfileSection from "./MotivationProfileSection";
 import Degerlendirme360Section from "./Degerlendirme360Section";
 
@@ -15,7 +14,6 @@ const GELISIM_TABS = [
  { value:"sosyal-duygusal", label:"Sosyal-Duygusal", icon: Heart },
  { value:"coklu-zeka", label:"Çoklu Zeka", icon: Brain },
  { value:"degerlendirme-360", label:"360 Derece Değerlendirme", icon: Target },
- { value:"yetenekler", label:"Yetenekler & İlgiler", icon: Star },
  { value:"motivasyon", label:"Motivasyon", icon: TrendingUp },
 ] as const;
 
@@ -62,13 +60,6 @@ export default function DevelopmentProfileSection({
  <Degerlendirme360Section
  studentId={studentId}
  evaluations360={evaluations360}
- onUpdate={onUpdate}
- />
- </TabsContent>
-
- <TabsContent value="yetenekler" className="space-y-4">
- <StandardizedTalentsSection
- studentId={studentId}
  onUpdate={onUpdate}
  />
  </TabsContent>

@@ -22,8 +22,6 @@ export interface StudentQualityReport {
     basic: ProfileQualityReport;
     academic: ProfileQualityReport;
     socialEmotional: ProfileQualityReport;
-    talentsInterests: ProfileQualityReport;
-    health: ProfileQualityReport;
     motivation: ProfileQualityReport;
     riskProtective: ProfileQualityReport;
   };
@@ -259,75 +257,6 @@ export class ProfileQualityValidator {
   }
   
   /**
-   * Validate health profile
-   * Sağlık profilini doğrula
-   */
-  validateHealthProfile(profile: Record<string, any> | null | undefined): ProfileQualityReport {
-    const criticalFields = ['emergencyContact1Name', 'emergencyContact1Phone'];
-    const optionalFields = ['bloodType', 'chronicDiseases', 'allergies', 'currentMedications', 'emergencyContact2Name', 'lastHealthCheckup'];
-    
-    const missingCritical: string[] = [];
-    const missingOptional: string[] = [];
-    const issues: string[] = [];
-    const recommendations: string[] = [];
-    
-    if (!profile) {
-      return {
-        profileType: 'Sağlık Profili',
-        qualityScore: 0,
-        status: 'incomplete',
-        missingCriticalFields: ['Profil oluşturulmamış'],
-        missingOptionalFields: [],
-        dataQualityIssues: [],
-        recommendations: ['Sağlık profili oluşturulmalı - acil durum bilgileri kritik']
-      };
-    }
-    
-    criticalFields.forEach(field => {
-      if (!profile[field]) {
-        missingCritical.push(field);
-      }
-    });
-    
-    optionalFields.forEach(field => {
-      if (!profile[field] || (Array.isArray(profile[field]) && profile[field].length === 0)) {
-        missingOptional.push(field);
-      }
-    });
-    
-    // Kritik sağlık durumları kontrolü
-    if (profile.chronicDiseases && Array.isArray(profile.chronicDiseases) && profile.chronicDiseases.length > 0) {
-      recommendations.push('Kronik hastalık mevcut - düzenli takip gerekli');
-    }
-    
-    if (profile.allergies && Array.isArray(profile.allergies) && profile.allergies.length > 0) {
-      recommendations.push('Alerji bilgisi mevcut - öğretmenlere bildirilmeli');
-    }
-    
-    if (!profile.lastHealthCheckup) {
-      recommendations.push('Sağlık kontrolü tarihi eksik');
-    }
-    
-    const qualityScore = this.calculateQualityScore(
-      criticalFields.length,
-      criticalFields.length - missingCritical.length,
-      optionalFields.length,
-      optionalFields.length - missingOptional.length,
-      issues.length
-    );
-    
-    return {
-      profileType: 'Sağlık Profili',
-      qualityScore,
-      status: this.getQualityStatus(qualityScore),
-      missingCriticalFields: missingCritical,
-      missingOptionalFields: missingOptional,
-      dataQualityIssues: issues,
-      recommendations
-    };
-  }
-  
-  /**
    * Calculate overall quality score
    * Genel kalite skorunu hesapla
    */
@@ -395,16 +324,12 @@ export class ProfileQualityValidator {
     student: any,
     academic: any,
     socialEmotional: any,
-    talentsInterests: any,
-    health: any,
     motivation: any,
     riskProtective: any
   ): StudentQualityReport {
     const basicReport = this.validateBasicInfo(student);
     const academicReport = this.validateAcademicProfile(academic);
     const selReport = this.validateSocialEmotionalProfile(socialEmotional);
-    const talentsReport = this.validateTalentsInterestsProfile(talentsInterests);
-    const healthReport = this.validateHealthProfile(health);
     const motivationReport = this.validateMotivationProfile(motivation);
     const riskReport = this.validateRiskProtectiveProfile(riskProtective);
     
@@ -412,17 +337,15 @@ export class ProfileQualityValidator {
       (basicReport.qualityScore + 
        academicReport.qualityScore + 
        selReport.qualityScore + 
-       talentsReport.qualityScore + 
-       healthReport.qualityScore + 
        motivationReport.qualityScore + 
-       riskReport.qualityScore) / 7
+       riskReport.qualityScore) / 5
     );
     
     const criticalWarnings: string[] = [];
     const actionItems: string[] = [];
     
     // Kritik uyarıları topla
-    [basicReport, academicReport, selReport, talentsReport, healthReport, motivationReport, riskReport].forEach(report => {
+    [basicReport, academicReport, selReport, motivationReport, riskReport].forEach(report => {
       if (report.missingCriticalFields.length > 0) {
         criticalWarnings.push(`${report.profileType}: ${report.missingCriticalFields.join(', ')} eksik`);
       }
@@ -434,7 +357,7 @@ export class ProfileQualityValidator {
     });
     
     // Eylem planı oluştur
-    [basicReport, academicReport, selReport, talentsReport, healthReport, motivationReport, riskReport].forEach(report => {
+    [basicReport, academicReport, selReport, motivationReport, riskReport].forEach(report => {
       report.recommendations.forEach(rec => {
         actionItems.push(`${report.profileType}: ${rec}`);
       });
@@ -447,38 +370,11 @@ export class ProfileQualityValidator {
         basic: basicReport,
         academic: academicReport,
         socialEmotional: selReport,
-        talentsInterests: talentsReport,
-        health: healthReport,
         motivation: motivationReport,
         riskProtective: riskReport
       },
       criticalWarnings,
       actionItems
-    };
-  }
-  
-  private validateTalentsInterestsProfile(profile: Record<string, any> | null | undefined): ProfileQualityReport {
-    if (!profile) {
-      return {
-        profileType: 'Yetenek ve İlgi Profili',
-        qualityScore: 0,
-        status: 'incomplete',
-        missingCriticalFields: ['Profil oluşturulmamış'],
-        missingOptionalFields: [],
-        dataQualityIssues: [],
-        recommendations: ['Yetenek ve ilgi profili oluşturulmalı']
-      };
-    }
-    
-    const score = 50; // Basit skor
-    return {
-      profileType: 'Yetenek ve İlgi Profili',
-      qualityScore: score,
-      status: this.getQualityStatus(score),
-      missingCriticalFields: [],
-      missingOptionalFields: [],
-      dataQualityIssues: [],
-      recommendations: []
     };
   }
   

@@ -38,8 +38,6 @@ export class UnifiedScoringEngine {
     // Tüm profil verilerini al
     const academic = repo.getAcademicProfile(studentId);
     const socialEmotional = repo.getSocialEmotionalProfile(studentId);
-    const talentsInterests = repo.getTalentsInterestsProfile(studentId);
-    const health = repo.getStandardizedHealthProfile(studentId);
     const behaviorIncidents = repo.getStandardizedBehaviorIncidents(studentId);
     const motivation = repo.getMotivationProfile(studentId);
     const riskProtective = repo.getRiskProtectiveProfile(studentId);
@@ -48,8 +46,6 @@ export class UnifiedScoringEngine {
     const aggregateScores = this.scoreCalculator.calculateAggregateScores({
       academic: academic as any,
       socialEmotional: socialEmotional as any,
-      talentsInterests: talentsInterests as any,
-      health: health as any,
       behaviorIncidents: behaviorIncidents as any,
       motivation: motivation as any,
       riskProtective: riskProtective ? {
@@ -105,24 +101,18 @@ export class UnifiedScoringEngine {
 
     const academic = repo.getAcademicProfile(studentId);
     const socialEmotional = repo.getSocialEmotionalProfile(studentId);
-    const talentsInterests = repo.getTalentsInterestsProfile(studentId);
-    const health = repo.getStandardizedHealthProfile(studentId);
     const behaviorIncidents = repo.getStandardizedBehaviorIncidents(studentId);
 
     const scores = {
       akademikProfil: this.calculateAcademicProfileCompleteness(academic),
       sosyalDuygusalProfil: this.calculateSocialEmotionalProfileCompleteness(socialEmotional),
-      yetenekIlgiProfil: this.calculateTalentsInterestsProfileCompleteness(talentsInterests),
-      saglikProfil: this.calculateHealthProfileCompleteness(health),
       davranisalProfil: this.calculateBehaviorProfileCompleteness(behaviorIncidents)
     };
 
     const overall = Math.round(
       (scores.akademikProfil +
         scores.sosyalDuygusalProfil +
-        scores.yetenekIlgiProfil +
-        scores.saglikProfil +
-        scores.davranisalProfil) / 5
+        scores.davranisalProfil) / 3
     );
 
     const eksikAlanlar: { kategori: string; alanlar: string[] }[] = [];
@@ -141,25 +131,11 @@ export class UnifiedScoringEngine {
       }
     }
 
-    if (scores.yetenekIlgiProfil < 100) {
-      const eksik = this.getTalentsInterestsMissingFields(talentsInterests);
-      if (eksik.length > 0) {
-        eksikAlanlar.push({ kategori: 'Yetenek ve İlgi Alanları', alanlar: eksik });
-      }
-    }
-
-    if (scores.saglikProfil < 100) {
-      const eksik = this.getHealthMissingFields(health);
-      if (eksik.length > 0) {
-        eksikAlanlar.push({ kategori: 'Sağlık Profili', alanlar: eksik });
-      }
-    }
-
     return {
       overall,
-      temelBilgiler: 0, // Will be set from basic student info
-      iletisimBilgileri: 0, // Will be set from basic student info
-      veliBilgileri: 0, // Will be set from basic student info
+      temelBilgiler: 0,
+      iletisimBilgileri: 0,
+      veliBilgileri: 0,
       ...scores,
       eksikAlanlar
     };
@@ -203,39 +179,6 @@ export class UnifiedScoringEngine {
     if (profile.friendCircleQuality) score++;
     if (profile.socialRole) score++;
     if (profile.bullyingStatus) score++;
-
-    return Math.round((score / total) * 100);
-  }
-
-  private calculateTalentsInterestsProfileCompleteness(profile: any): number {
-    if (!profile) return 0;
-
-    let score = 0;
-    let total = 6;
-
-    if (profile.creativeTalents) score++;
-    if (profile.physicalTalents) score++;
-    if (profile.primaryInterests) score++;
-    if (profile.exploratoryInterests) score++;
-    if (profile.talentProficiency) score++;
-    if (profile.weeklyEngagementHours) score++;
-
-    return Math.round((score / total) * 100);
-  }
-
-  private calculateHealthProfileCompleteness(profile: any): number {
-    if (!profile) return 0;
-
-    let score = 0;
-    let total = 7;
-
-    if (profile.bloodType) score++;
-    if (profile.chronicDiseases) score++;
-    if (profile.allergies) score++;
-    if (profile.currentMedications) score++;
-    if (profile.emergencyContact1Name && profile.emergencyContact1Phone) score++;
-    if (profile.emergencyContact2Name && profile.emergencyContact2Phone) score++;
-    if (profile.lastHealthCheckup) score++;
 
     return Math.round((score / total) * 100);
   }
@@ -291,36 +234,6 @@ export class UnifiedScoringEngine {
     if (!profile.emotionRegulationLevel) missing.push('Duygu düzenlemesi');
     if (!profile.friendCircleSize) missing.push('Arkadaş çevresi');
     if (!profile.socialRole) missing.push('Sosyal rol');
-
-    return missing;
-  }
-
-  private getTalentsInterestsMissingFields(profile: any): string[] {
-    const missing: string[] = [];
-
-    if (!profile) {
-      return ['Yetenek ve ilgi profili oluşturulmamış'];
-    }
-
-    if (!profile.creativeTalents) missing.push('Yaratıcı yetenekler');
-    if (!profile.physicalTalents) missing.push('Fiziksel yetenekler');
-    if (!profile.primaryInterests) missing.push('Birincil ilgi alanları');
-
-    return missing;
-  }
-
-  private getHealthMissingFields(profile: any): string[] {
-    const missing: string[] = [];
-
-    if (!profile) {
-      return ['Sağlık profili oluşturulmamış'];
-    }
-
-    if (!profile.bloodType) missing.push('Kan grubu');
-    if (!profile.emergencyContact1Name || !profile.emergencyContact1Phone) {
-      missing.push('Birinci acil durum kişisi');
-    }
-    if (!profile.lastHealthCheckup) missing.push('Son sağlık kontrolü');
 
     return missing;
   }

@@ -17,15 +17,6 @@ interface ProfileData {
   friendCircleQuality?: string;
   socialRole?: string;
   bullyingStatus?: string;
-  creativeTalents?: string;
-  physicalTalents?: string;
-  primaryInterests?: string;
-  weeklyEngagementHours?: number;
-  chronicDiseases?: string;
-  allergies?: string;
-  currentMedications?: string;
-  specialNeeds?: boolean;
-  physicalLimitations?: boolean;
   severity?: string;
   frequency?: string;
   interventionEffectiveness?: number;
@@ -54,8 +45,6 @@ interface ProfileData {
 export interface AggregateScores {
   academicScore: number;
   socialEmotionalScore: number;
-  talentsInterestsScore: number;
-  healthWellnessScore: number;
   behaviorScore: number;
   motivationScore: number;
   riskScore: number;
@@ -75,20 +64,6 @@ export interface AggregateScores {
       strongSkillsCount: number;
       developingSkillsCount: number;
       socialContextScore: number;
-      score: number;
-    };
-    talentsInterests: {
-      creativeTalentsCount: number;
-      physicalTalentsCount: number;
-      interestsCount: number;
-      engagementHours: number;
-      score: number;
-    };
-    health: {
-      chronicDiseasesCount: number;
-      allergiesCount: number;
-      medicationsCount: number;
-      healthStatusScore: number;
       score: number;
     };
     behavior: {
@@ -202,41 +177,6 @@ export class AggregateScoreCalculator {
     if (selProfile.friendCircleQuality) score += friendQualityMap[selProfile.friendCircleQuality] || 0;
     if (selProfile.socialRole) score += socialRoleMap[selProfile.socialRole] || 0;
     if (selProfile.bullyingStatus) score += bullyingMap[selProfile.bullyingStatus] || 0;
-
-    return Math.min(100, Math.max(0, score));
-  }
-
-  calculateTalentsInterestsScore(talentsProfile: ProfileData | null | undefined): number {
-    if (!talentsProfile) return 0;
-
-    const creativeTalents = talentsProfile.creativeTalents ? JSON.parse(talentsProfile.creativeTalents).length : 0;
-    const physicalTalents = talentsProfile.physicalTalents ? JSON.parse(talentsProfile.physicalTalents).length : 0;
-    const primaryInterests = talentsProfile.primaryInterests ? JSON.parse(talentsProfile.primaryInterests).length : 0;
-    const engagementHours = talentsProfile.weeklyEngagementHours || 0;
-
-    const talentScore = (creativeTalents + physicalTalents) * 8;
-    const interestScore = primaryInterests * 6;
-    const engagementScore = Math.min(40, engagementHours * 2);
-
-    const totalScore = (talentScore + interestScore + engagementScore) / 3;
-    return Math.min(100, Math.max(0, totalScore));
-  }
-
-  calculateHealthWellnessScore(healthProfile: ProfileData | null | undefined): number {
-    if (!healthProfile) return 50;
-
-    let score = 100;
-
-    const chronicDiseases = healthProfile.chronicDiseases ? JSON.parse(healthProfile.chronicDiseases).length : 0;
-    const allergies = healthProfile.allergies ? JSON.parse(healthProfile.allergies).length : 0;
-    const medications = healthProfile.currentMedications ? JSON.parse(healthProfile.currentMedications).length : 0;
-
-    score -= chronicDiseases * 8;
-    score -= allergies * 3;
-    score -= medications * 5;
-
-    if (healthProfile.specialNeeds) score -= 10;
-    if (healthProfile.physicalLimitations) score -= 10;
 
     return Math.min(100, Math.max(0, score));
   }
@@ -355,28 +295,22 @@ export class AggregateScoreCalculator {
   calculateAggregateScores(profileData: {
     academic?: ProfileData | null;
     socialEmotional?: ProfileData | null;
-    talentsInterests?: ProfileData | null;
-    health?: ProfileData | null;
     behaviorIncidents?: ProfileData[];
     motivation?: ProfileData | null;
     riskProtective?: ProfileData | null;
   }): AggregateScores {
     const academicScore = this.calculateAcademicScore(profileData.academic);
     const socialEmotionalScore = this.calculateSocialEmotionalScore(profileData.socialEmotional);
-    const talentsInterestsScore = this.calculateTalentsInterestsScore(profileData.talentsInterests);
-    const healthWellnessScore = this.calculateHealthWellnessScore(profileData.health);
     const behaviorScore = this.calculateBehaviorScore(profileData.behaviorIncidents || []);
     const motivationScore = this.calculateMotivationScore(profileData.motivation);
     const riskScore = this.calculateRiskScore(profileData.riskProtective);
     const protectiveScore = this.calculateProtectiveScore(profileData.riskProtective);
 
     const overallScore = (
-      academicScore * 0.20 +
-      socialEmotionalScore * 0.20 +
-      talentsInterestsScore * 0.10 +
-      healthWellnessScore * 0.10 +
-      behaviorScore * 0.15 +
-      motivationScore * 0.10 +
+      academicScore * 0.25 +
+      socialEmotionalScore * 0.25 +
+      behaviorScore * 0.20 +
+      motivationScore * 0.15 +
       riskScore * 0.075 +
       protectiveScore * 0.075
     );
@@ -384,8 +318,6 @@ export class AggregateScoreCalculator {
     return {
       academicScore: Math.round(academicScore),
       socialEmotionalScore: Math.round(socialEmotionalScore),
-      talentsInterestsScore: Math.round(talentsInterestsScore),
-      healthWellnessScore: Math.round(healthWellnessScore),
       behaviorScore: Math.round(behaviorScore),
       motivationScore: Math.round(motivationScore),
       riskScore: Math.round(riskScore),
@@ -414,20 +346,6 @@ export class AggregateScoreCalculator {
           developingSkillsCount: profileData.socialEmotional?.developingSocialSkills ? JSON.parse(profileData.socialEmotional.developingSocialSkills).length : 0,
           socialContextScore: profileData.socialEmotional ? this.calculateSocialContextScore(profileData.socialEmotional) : 0,
           score: Math.round(socialEmotionalScore)
-        },
-        talentsInterests: {
-          creativeTalentsCount: profileData.talentsInterests?.creativeTalents ? JSON.parse(profileData.talentsInterests.creativeTalents).length : 0,
-          physicalTalentsCount: profileData.talentsInterests?.physicalTalents ? JSON.parse(profileData.talentsInterests.physicalTalents).length : 0,
-          interestsCount: profileData.talentsInterests?.primaryInterests ? JSON.parse(profileData.talentsInterests.primaryInterests).length : 0,
-          engagementHours: profileData.talentsInterests?.weeklyEngagementHours || 0,
-          score: Math.round(talentsInterestsScore)
-        },
-        health: {
-          chronicDiseasesCount: profileData.health?.chronicDiseases ? JSON.parse(profileData.health.chronicDiseases).length : 0,
-          allergiesCount: profileData.health?.allergies ? JSON.parse(profileData.health.allergies).length : 0,
-          medicationsCount: profileData.health?.currentMedications ? JSON.parse(profileData.health.currentMedications).length : 0,
-          healthStatusScore: Math.round(healthWellnessScore),
-          score: Math.round(healthWellnessScore)
         },
         behavior: {
           incidentCount: profileData.behaviorIncidents?.length || 0,

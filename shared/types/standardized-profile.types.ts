@@ -69,74 +69,6 @@ export interface SocialEmotionalProfile {
   updated_at?: string;
 }
 
-// ==================== TALENTS & INTERESTS ====================
-
-export interface TalentsInterestsProfile {
-  id: string;
-  studentId: string;
-  assessmentDate: string;
-
-  // Talents (from CREATIVE_TALENTS & PHYSICAL_TALENTS)
-  creativeTalents: string[];
-  physicalTalents: string[];
-
-  // Interest areas (from INTEREST_AREAS)
-  primaryInterests: string[];
-  exploratoryInterests: string[];
-
-  // Proficiency levels (1-10 scale for each talent)
-  talentProficiency?: Record<string, number>;
-
-  // Engagement frequency
-  weeklyEngagementHours?: number;
-  clubMemberships: string[];
-  competitionsParticipated: string[];
-
-  // Detailed activities
-  hobbiesDetailed?: string;
-  extracurricularActivities?: string;
-
-  additionalNotes?: string;
-  assessedBy?: string;
-  created_at?: string;
-  updated_at?: string;
-}
-
-// ==================== HEALTH PROFILE (STANDARDIZED) ====================
-
-export interface StandardizedHealthProfile {
-  id: string;
-  studentId: string;
-
-  // Standardized medical info
-  bloodType?: string; // from BLOOD_TYPES
-  chronicDiseases: string[]; // from CHRONIC_DISEASES
-  allergies: string[]; // from ALLERGIES
-  currentMedications: string[]; // from MEDICATION_TYPES
-
-  // Medical history (still text but categorized)
-  medicalHistory?: string;
-  specialNeeds?: string;
-  physicalLimitations?: string;
-
-  // Emergency contacts
-  emergencyContact1Name?: string;
-  emergencyContact1Phone?: string;
-  emergencyContact1Relation?: string;
-  emergencyContact2Name?: string;
-  emergencyContact2Phone?: string;
-  emergencyContact2Relation?: string;
-
-  // Healthcare providers
-  physicianName?: string;
-  physicianPhone?: string;
-  lastHealthCheckup?: string;
-
-  additionalNotes?: string;
-  created_at?: string;
-  updated_at?: string;
-}
-
 // ==================== INTERVENTION TRACKING ====================
 
 export interface StandardizedIntervention {
@@ -335,8 +267,6 @@ export interface AIReadyStudentProfile {
   // All standardized components
   academic?: AcademicProfile;
   socialEmotional?: SocialEmotionalProfile;
-  talentsInterests?: TalentsInterestsProfile;
-  health?: StandardizedHealthProfile;
   motivation?: MotivationProfile;
   riskProtective?: RiskProtectiveProfile;
 

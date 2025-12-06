@@ -86,21 +86,6 @@ export interface StudentContext {
     }>;
   };
 
-  // Yetenek ve İlgiler
-  talentsInterests?: {
-    talents?: string[];
-    interests?: string[];
-    hobbies?: string[];
-    careerGoals?: string[];
-  };
-
-  // Sağlık Bilgileri (Genel)
-  health?: {
-    conditions?: string[];
-    medications?: string[];
-    notes?: string;
-  };
-
   // Skorlar
   scores?: UnifiedStudentScores;
   completeness?: ProfileCompleteness;

@@ -107,8 +107,6 @@ export interface ProfileCompleteness {
   veliBilgileri: number;
   akademikProfil: number;
   sosyalDuygusalProfil: number;
-  yetenekIlgiProfil: number;
-  saglikProfil: number;
   davranisalProfil: number;
   
   eksikAlanlar: {

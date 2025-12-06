@@ -2,8 +2,6 @@ import type Database from 'better-sqlite3';
 import type {
   AcademicProfile,
   SocialEmotionalProfile,
-  TalentsInterestsProfile,
-  StandardizedHealthProfile,
   StandardizedIntervention,
   StandardizedBehaviorIncident,
   MotivationProfile,
@@ -130,122 +128,6 @@ export class StandardizedProfileRepository {
       profile.recommendedInterventions ? JSON.stringify(profile.recommendedInterventions) : '[]',
       profile.additionalNotes,
       profile.assessedBy
-    );
-  }
-
-  getTalentsInterestsProfile(studentId: string): TalentsInterestsProfile | null {
-    const stmt = this.db.prepare(`
-      SELECT * FROM talents_interests_profiles 
-      WHERE studentId = ? 
-      ORDER BY assessmentDate DESC 
-      LIMIT 1
-    `);
-    return stmt.get(studentId) as TalentsInterestsProfile | null;
-  }
-
-  upsertTalentsInterestsProfile(profile: TalentsInterestsProfile): void {
-    const stmt = this.db.prepare(`
-      INSERT INTO talents_interests_profiles (
-        id, studentId, assessmentDate, creativeTalents, physicalTalents,
-        primaryInterests, exploratoryInterests, talentProficiency,
-        weeklyEngagementHours, clubMemberships, competitionsParticipated,
-        hobbiesDetailed, extracurricularActivities,
-        additionalNotes, assessedBy, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
-      ON CONFLICT(id) DO UPDATE SET
-        assessmentDate = excluded.assessmentDate,
-        creativeTalents = excluded.creativeTalents,
-        physicalTalents = excluded.physicalTalents,
-        primaryInterests = excluded.primaryInterests,
-        exploratoryInterests = excluded.exploratoryInterests,
-        talentProficiency = excluded.talentProficiency,
-        weeklyEngagementHours = excluded.weeklyEngagementHours,
-        clubMemberships = excluded.clubMemberships,
-        competitionsParticipated = excluded.competitionsParticipated,
-        hobbiesDetailed = excluded.hobbiesDetailed,
-        extracurricularActivities = excluded.extracurricularActivities,
-        additionalNotes = excluded.additionalNotes,
-        assessedBy = excluded.assessedBy,
-        updated_at = CURRENT_TIMESTAMP
-    `);
-
-    stmt.run(
-      profile.id,
-      profile.studentId,
-      profile.assessmentDate,
-      JSON.stringify(profile.creativeTalents),
-      JSON.stringify(profile.physicalTalents),
-      JSON.stringify(profile.primaryInterests),
-      JSON.stringify(profile.exploratoryInterests),
-      profile.talentProficiency ? JSON.stringify(profile.talentProficiency) : null,
-      profile.weeklyEngagementHours,
-      JSON.stringify(profile.clubMemberships),
-      JSON.stringify(profile.competitionsParticipated),
-      profile.hobbiesDetailed || null,
-      profile.extracurricularActivities || null,
-      profile.additionalNotes,
-      profile.assessedBy
-    );
-  }
-
-  getStandardizedHealthProfile(studentId: string): StandardizedHealthProfile | null {
-    const stmt = this.db.prepare(`
-      SELECT * FROM standardized_health_profiles 
-      WHERE studentId = ?
-    `);
-    return stmt.get(studentId) as StandardizedHealthProfile | null;
-  }
-
-  upsertStandardizedHealthProfile(profile: StandardizedHealthProfile): void {
-    const stmt = this.db.prepare(`
-      INSERT INTO standardized_health_profiles (
-        id, studentId, bloodType, chronicDiseases, allergies, currentMedications,
-        medicalHistory, specialNeeds, physicalLimitations,
-        emergencyContact1Name, emergencyContact1Phone, emergencyContact1Relation,
-        emergencyContact2Name, emergencyContact2Phone, emergencyContact2Relation,
-        physicianName, physicianPhone, lastHealthCheckup, additionalNotes, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
-      ON CONFLICT(studentId) DO UPDATE SET
-        bloodType = excluded.bloodType,
-        chronicDiseases = excluded.chronicDiseases,
-        allergies = excluded.allergies,
-        currentMedications = excluded.currentMedications,
-        medicalHistory = excluded.medicalHistory,
-        specialNeeds = excluded.specialNeeds,
-        physicalLimitations = excluded.physicalLimitations,
-        emergencyContact1Name = excluded.emergencyContact1Name,
-        emergencyContact1Phone = excluded.emergencyContact1Phone,
-        emergencyContact1Relation = excluded.emergencyContact1Relation,
-        emergencyContact2Name = excluded.emergencyContact2Name,
-        emergencyContact2Phone = excluded.emergencyContact2Phone,
-        emergencyContact2Relation = excluded.emergencyContact2Relation,
-        physicianName = excluded.physicianName,
-        physicianPhone = excluded.physicianPhone,
-        lastHealthCheckup = excluded.lastHealthCheckup,
-        additionalNotes = excluded.additionalNotes,
-        updated_at = CURRENT_TIMESTAMP
-    `);
-
-    stmt.run(
-      profile.id,
-      profile.studentId,
-      profile.bloodType,
-      JSON.stringify(profile.chronicDiseases),
-      JSON.stringify(profile.allergies),
-      JSON.stringify(profile.currentMedications),
-      profile.medicalHistory,
-      profile.specialNeeds,
-      profile.physicalLimitations,
-      profile.emergencyContact1Name,
-      profile.emergencyContact1Phone,
-      profile.emergencyContact1Relation,
-      profile.emergencyContact2Name,
-      profile.emergencyContact2Phone,
-      profile.emergencyContact2Relation,
-      profile.physicianName,
-      profile.physicianPhone,
-      profile.lastHealthCheckup,
-      profile.additionalNotes
     );
   }
 

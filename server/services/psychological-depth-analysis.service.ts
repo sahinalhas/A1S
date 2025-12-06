@@ -407,7 +407,6 @@ Yanıtını JSON formatında ver (TypeScript PsychologicalDepthAnalysis tipine u
     const attendance = context.attendance || {};
     const risk = context.risk || {};
     const interventions = context.interventions || {};
-    const talentsInterests = context.talentsInterests || {};
     const patterns = context.patternInsights || [];
 
     const academicPerf = academic.gpa || 0;
@@ -446,12 +445,11 @@ Yanıtını JSON formatında ver (TypeScript PsychologicalDepthAnalysis tipine u
           level: motivationLevel,
           indicators: [
             academicPerf >= 70 ? 'Akademik başarı motivasyon göstergesi' : 'Akademik performans düşük',
-            performanceTrend === 'improving' ? 'Gelişen performans trendi' : performanceTrend === 'declining' ? 'Düşen performans trendi' : 'Stabil performans',
-            ...(talentsInterests.interests || []).length > 0 ? ['İlgi alanları belirlenmiş'] : []
+            performanceTrend === 'improving' ? 'Gelişen performans trendi' : performanceTrend === 'declining' ? 'Düşen performans trendi' : 'Stabil performans'
           ],
           developmentAreas: [
             academicPerf < 60 ? 'Akademik motivasyon artırma' : 'Motivasyonu sürdürme',
-            ...(talentsInterests.interests || []).length === 0 ? ['İlgi alanları keşfi'] : []
+            'İlgi alanları keşfi'
           ]
         },
         extrinsicMotivation: {
@@ -463,7 +461,7 @@ Yanıtını JSON formatında ver (TypeScript PsychologicalDepthAnalysis tipine u
           effectiveRewards: [
             'Akademik başarı takdiri',
             'Sosyal kabul ve onay',
-            ...(talentsInterests.talents || []).length > 0 ? ['Yetenek alanlarında fırsatlar'] : []
+            'Yetenek alanlarında fırsatlar'
           ]
         },
         learningOrientation: learningOrientation,
@@ -477,7 +475,6 @@ Yanıtını JSON formatında ver (TypeScript PsychologicalDepthAnalysis tipine u
         },
         resilienceFactors: {
           strengths: [
-            ...(talentsInterests.talents || []),
             attendanceRate >= 90 ? 'Yüksek devam düzenli' : attendanceRate >= 80 ? 'İyi devam' : '',
             hasPositiveBehavior ? 'Olumlu davranış kapasitesi' : '',
             ...risk.protectiveFactors || []
@@ -637,8 +634,6 @@ Yanıtını JSON formatında ver (TypeScript PsychologicalDepthAnalysis tipine u
           ...(criticalPatterns.length === 0 && warningPatterns.length === 0 && !isHighRisk ? ['Genel gelişim takibi'] : [])
         ],
         strengthsToLeverage: [
-          ...(talentsInterests.talents || []),
-          ...(talentsInterests.interests || []),
           ...(risk.protectiveFactors || []),
           attendanceRate >= 90 ? 'Yüksek devam motivasyonu' : '',
           hasPositiveBehavior ? 'Olumlu davranış potansiyeli' : ''
@@ -717,8 +712,6 @@ Yanıtını JSON formatında ver (TypeScript PsychologicalDepthAnalysis tipine u
           socialIntegrationLevel === 'İZOLE' ? 'Sosyal entegrasyon programına dahil et. ' : ''
         }${
           avgSEL < 5 ? 'SEL yetkinliklerini geliştir. ' : ''
-        }${
-          (talentsInterests.talents || []).length > 0 ? `Yeteneklerini kullan: ${(talentsInterests.talents || []).join(', ')}. ` : ''
         }Düzenli izleme ve değerlendirme yap. ${
           patterns.length > 0 ? `Tespit edilen pattern'lere özel müdahale et: ${patterns.slice(0, 3).map((p: any) => p.title).join(', ')}.` : ''
         }`

@@ -41,8 +41,6 @@ export class StudentContextService {
       attendance: await this.getAttendanceContext(studentId),
       risk: await this.getRiskContext(studentId),
       interventions: await this.getInterventionContext(studentId),
-      talentsInterests: await this.getTalentsInterestsContext(studentId),
-      health: await this.getHealthContext(studentId),
       // DERİN PATTERN ANALİZİ - YENİ!
       patternInsights: await this.patternAnalyzer.analyzeStudentPatterns(studentId),
       // HOLİSTİK PROFİL VERİLERİ - YENİ!
@@ -271,53 +269,6 @@ export class StudentContextService {
   }
 
   /**
-   * Get talents and interests context
-   */
-  private async getTalentsInterestsContext(studentId: string): Promise<StudentContext['talentsInterests']> {
-    const profile = this.db.prepare(
-      'SELECT * FROM talents_interests_profiles WHERE studentId = ? ORDER BY assessmentDate DESC LIMIT 1'
-    ).get(studentId) as any;
-
-    if (!profile) {
-      return undefined;
-    }
-
-    const talents: string[] = [];
-    if (profile.creativeTalents) talents.push(...safeJsonParseArray(profile.creativeTalents, [], 'creative talents'));
-    if (profile.physicalTalents) talents.push(...safeJsonParseArray(profile.physicalTalents, [], 'physical talents'));
-
-    const interests: string[] = [];
-    if (profile.primaryInterests) interests.push(...safeJsonParseArray(profile.primaryInterests, [], 'primary interests'));
-    if (profile.exploratoryInterests) interests.push(...safeJsonParseArray(profile.exploratoryInterests, [], 'exploratory interests'));
-
-    return {
-      talents,
-      interests,
-      hobbies: safeJsonParseArray(profile.clubMemberships, [], 'club memberships'),
-      careerGoals: safeJsonParseArray(profile.careerAspirations, [], 'career aspirations')
-    };
-  }
-
-  /**
-   * Get health context
-   */
-  private async getHealthContext(studentId: string): Promise<StudentContext['health']> {
-    const health = this.db.prepare(
-      'SELECT * FROM standardized_health_profiles WHERE studentId = ?'
-    ).get(studentId) as any;
-
-    if (!health) {
-      return undefined;
-    }
-
-    return {
-      conditions: safeJsonParseArray(health.chronicDiseases, [], 'chronic diseases'),
-      medications: safeJsonParseArray(health.currentMedications, [], 'current medications'),
-      notes: health.additionalNotes
-    };
-  }
-
-  /**
    * Get holistic profile context (YENİ!)
    */
   private async getHolisticProfileContext(studentId: string): Promise<StudentContext['holisticProfile']> {
@@ -483,19 +434,6 @@ export class StudentContextService {
         text += `- ${int.title} (${int.status})\n`;
       });
       text += `\n`;
-    }
-
-    if (context.talentsInterests) {
-      text += `## Yetenek ve İlgi Alanları\n`;
-      if (context.talentsInterests.talents && context.talentsInterests.talents.length > 0) {
-        text += `- Yetenekler: ${context.talentsInterests.talents.join(', ')}\n`;
-      }
-      if (context.talentsInterests.interests && context.talentsInterests.interests.length > 0) {
-        text += `- İlgi Alanları: ${context.talentsInterests.interests.join(', ')}\n`;
-      }
-      if (context.talentsInterests.careerGoals && context.talentsInterests.careerGoals.length > 0) {
-        text += `- Kariyer Hedefleri: ${context.talentsInterests.careerGoals.join(', ')}\n`;
-      }
     }
 
     // HOLİSTİK PROFİL VERİLERİ - ÖĞRENCİYİ TANIMAYAN BAĞLAM!

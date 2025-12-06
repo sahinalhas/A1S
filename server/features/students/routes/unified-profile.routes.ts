@@ -52,8 +52,6 @@ export async function getUnifiedProfile(req: Request, res: Response) {
     
     const academic = profileRepo.getAcademicProfile(id);
     const socialEmotional = profileRepo.getSocialEmotionalProfile(id);
-    const talentsInterests = profileRepo.getTalentsInterestsProfile(id);
-    const health = profileRepo.getStandardizedHealthProfile(id);
     const motivation = profileRepo.getMotivationProfile(id);
     const riskProtective = profileRepo.getRiskProtectiveProfile(id);
     
@@ -61,8 +59,6 @@ export async function getUnifiedProfile(req: Request, res: Response) {
       student,
       academic,
       socialEmotional,
-      talentsInterests,
-      health,
       motivation,
       riskProtective
     );
@@ -76,8 +72,6 @@ export async function getUnifiedProfile(req: Request, res: Response) {
       profiles: {
         academic,
         socialEmotional,
-        talentsInterests,
-        health,
         motivation,
         riskProtective
       }
@@ -163,8 +157,6 @@ export async function getQualityReport(req: Request, res: Response) {
     
     const academic = profileRepo.getAcademicProfile(id);
     const socialEmotional = profileRepo.getSocialEmotionalProfile(id);
-    const talentsInterests = profileRepo.getTalentsInterestsProfile(id);
-    const health = profileRepo.getStandardizedHealthProfile(id);
     const motivation = profileRepo.getMotivationProfile(id);
     const riskProtective = profileRepo.getRiskProtectiveProfile(id);
     
@@ -172,8 +164,6 @@ export async function getQualityReport(req: Request, res: Response) {
       student,
       academic,
       socialEmotional,
-      talentsInterests,
-      health,
       motivation,
       riskProtective
     );

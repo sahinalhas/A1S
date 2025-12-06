@@ -10,8 +10,6 @@ import getDatabase from '../lib/database.js';
 import type { 
   AcademicProfile,
   SocialEmotionalProfile,
-  TalentsInterestsProfile,
-  StandardizedHealthProfile,
   MotivationProfile,
   RiskProtectiveProfile
 } from '../../shared/types/standardized-profile.types.js';
@@ -36,12 +34,6 @@ export class AutoProfileInitializer {
       
       // Sosyal-Duygusal Profil
       await this.initializeSocialEmotionalProfile(studentId, today, assessedBy);
-      
-      // Yetenek ve İlgi Profili
-      await this.initializeTalentsInterestsProfile(studentId, today, assessedBy);
-      
-      // Sağlık Profili
-      await this.initializeHealthProfile(studentId, assessedBy);
       
       // Motivasyon Profili
       await this.initializeMotivationProfile(studentId, today, assessedBy);
@@ -163,109 +155,6 @@ export class AutoProfileInitializer {
     );
   }
 
-  private async initializeTalentsInterestsProfile(
-    studentId: string, 
-    date: string, 
-    assessedBy: string
-  ): Promise<void> {
-    const profile: TalentsInterestsProfile = {
-      id: randomUUID(),
-      studentId,
-      assessmentDate: date,
-      creativeTalents: [],
-      physicalTalents: [],
-      primaryInterests: [],
-      exploratoryInterests: [],
-      talentProficiency: {},
-      weeklyEngagementHours: 0,
-      clubMemberships: [],
-      competitionsParticipated: [],
-      additionalNotes: 'İlk profil oluşturuldu. Yetenek tespiti bekleniyor.',
-      assessedBy
-    };
-
-    const stmt = this.db.prepare(`
-      INSERT INTO talents_interests_profiles (
-        id, studentId, assessmentDate, creativeTalents, physicalTalents,
-        primaryInterests, exploratoryInterests, talentProficiency,
-        weeklyEngagementHours, clubMemberships, competitionsParticipated,
-        additionalNotes, assessedBy
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `);
-
-    stmt.run(
-      profile.id,
-      profile.studentId,
-      profile.assessmentDate,
-      JSON.stringify(profile.creativeTalents),
-      JSON.stringify(profile.physicalTalents),
-      JSON.stringify(profile.primaryInterests),
-      JSON.stringify(profile.exploratoryInterests),
-      JSON.stringify(profile.talentProficiency),
-      profile.weeklyEngagementHours,
-      JSON.stringify(profile.clubMemberships),
-      JSON.stringify(profile.competitionsParticipated),
-      profile.additionalNotes,
-      profile.assessedBy
-    );
-  }
-
-  private async initializeHealthProfile(studentId: string, assessedBy: string): Promise<void> {
-    const profile: StandardizedHealthProfile = {
-      id: randomUUID(),
-      studentId,
-      bloodType: undefined,
-      chronicDiseases: [],
-      allergies: [],
-      currentMedications: [],
-      medicalHistory: undefined,
-      specialNeeds: undefined,
-      physicalLimitations: undefined,
-      emergencyContact1Name: undefined,
-      emergencyContact1Phone: undefined,
-      emergencyContact1Relation: undefined,
-      emergencyContact2Name: undefined,
-      emergencyContact2Phone: undefined,
-      emergencyContact2Relation: undefined,
-      physicianName: undefined,
-      physicianPhone: undefined,
-      lastHealthCheckup: undefined,
-      additionalNotes: 'İlk profil oluşturuldu. Sağlık bilgileri bekleniyor.'
-    };
-
-    const stmt = this.db.prepare(`
-      INSERT INTO standardized_health_profiles (
-        id, studentId, bloodType, chronicDiseases, allergies, currentMedications,
-        medicalHistory, specialNeeds, physicalLimitations,
-        emergencyContact1Name, emergencyContact1Phone, emergencyContact1Relation,
-        emergencyContact2Name, emergencyContact2Phone, emergencyContact2Relation,
-        physicianName, physicianPhone, lastHealthCheckup, additionalNotes
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `);
-
-    stmt.run(
-      profile.id,
-      profile.studentId,
-      profile.bloodType,
-      JSON.stringify(profile.chronicDiseases),
-      JSON.stringify(profile.allergies),
-      JSON.stringify(profile.currentMedications),
-      profile.medicalHistory,
-      profile.specialNeeds,
-      profile.physicalLimitations,
-      profile.emergencyContact1Name,
-      profile.emergencyContact1Phone,
-      profile.emergencyContact1Relation,
-      profile.emergencyContact2Name,
-      profile.emergencyContact2Phone,
-      profile.emergencyContact2Relation,
-      profile.physicianName,
-      profile.physicianPhone,
-      profile.lastHealthCheckup,
-      profile.additionalNotes
-    );
-  }
-
   private async initializeMotivationProfile(
     studentId: string, 
     date: string, 
@@ -329,8 +218,6 @@ export class AutoProfileInitializer {
   async checkProfilesExist(studentId: string): Promise<{
     academic: boolean;
     socialEmotional: boolean;
-    talentsInterests: boolean;
-    health: boolean;
     motivation: boolean;
     riskProtective: boolean;
   }> {
@@ -343,8 +230,6 @@ export class AutoProfileInitializer {
     return {
       academic: checkProfile('academic_profiles'),
       socialEmotional: checkProfile('social_emotional_profiles'),
-      talentsInterests: checkProfile('talents_interests_profiles'),
-      health: checkProfile('standardized_health_profiles'),
       motivation: checkProfile('motivation_profiles'),
       riskProtective: checkProfile('risk_protective_profiles')
     };
@@ -366,16 +251,6 @@ export class AutoProfileInitializer {
     if (!existing.socialEmotional) {
       await this.initializeSocialEmotionalProfile(studentId, today, assessedBy);
       console.log(`✓ Sosyal-duygusal profil oluşturuldu: ${studentId}`);
-    }
-
-    if (!existing.talentsInterests) {
-      await this.initializeTalentsInterestsProfile(studentId, today, assessedBy);
-      console.log(`✓ Yetenek ve ilgi profili oluşturuldu: ${studentId}`);
-    }
-
-    if (!existing.health) {
-      await this.initializeHealthProfile(studentId, assessedBy);
-      console.log(`✓ Sağlık profili oluşturuldu: ${studentId}`);
     }
 
     if (!existing.motivation) {
