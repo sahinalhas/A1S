@@ -48,7 +48,7 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    mode: "onSubmit",
+    mode: "onChange",
     defaultValues: {
       name: (student[getField("name")] as string) || "",
       phone: (student[getField("phone")] as string) || "",
@@ -60,8 +60,7 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
     },
   });
 
-  const { dirtyFields } = useFormState({ control: form.control });
-  const isDirty = Object.keys(dirtyFields).length > 0;
+  const isDirty = form.formState.isDirty;
 
   const onSubmit = useCallback(async (data: FormValues) => {
     setIsSaving(true);

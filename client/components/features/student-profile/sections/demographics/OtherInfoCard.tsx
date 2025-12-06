@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Input } from "@/components/atoms/Input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/atoms/Select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/organisms/Form";
-import { useForm, useFormState } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
@@ -35,7 +35,7 @@ export function OtherInfoCard({ student, onUpdate }: OtherInfoCardProps) {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    mode: "onSubmit",
+    mode: "onChange",
     defaultValues: {
       numberOfSiblings: student.numberOfSiblings ?? "",
       livingWith: student.livingWith || "",
@@ -46,8 +46,7 @@ export function OtherInfoCard({ student, onUpdate }: OtherInfoCardProps) {
     },
   });
 
-  const { dirtyFields } = useFormState({ control: form.control });
-  const isDirty = Object.keys(dirtyFields).length > 0;
+  const isDirty = form.formState.isDirty;
 
   const onSubmit = useCallback(async (data: FormValues) => {
     setIsSaving(true);

@@ -4,7 +4,7 @@ import { upsertStudent } from "@/lib/api/endpoints/students.api";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/organisms/Card";
 import { Input } from "@/components/atoms/Input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/organisms/Form";
-import { useForm, useFormState } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
@@ -33,7 +33,7 @@ export function ContactCard({ student, onUpdate }: ContactCardProps) {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    mode: "onSubmit",
+    mode: "onChange",
     defaultValues: {
       phone: student.phone || "",
       email: student.email || "",
@@ -43,8 +43,7 @@ export function ContactCard({ student, onUpdate }: ContactCardProps) {
     },
   });
 
-  const { dirtyFields } = useFormState({ control: form.control });
-  const isDirty = Object.keys(dirtyFields).length > 0;
+  const isDirty = form.formState.isDirty;
 
   const onSubmit = useCallback(async (data: FormValues) => {
     setIsSaving(true);
