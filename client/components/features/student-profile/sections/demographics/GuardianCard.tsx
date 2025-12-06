@@ -77,7 +77,7 @@ export function GuardianCard({ student, onUpdate }: GuardianCardProps) {
           <div>
             <CardTitle className="flex items-center gap-2 text-lg">
               <UserCheck className="h-5 w-5 text-amber-600" />
-              Vasi / Acil İletişim
+              Vasi Bilgileri
             </CardTitle>
             <CardDescription>Acil durumlarda ulaşılacak kişi</CardDescription>
           </div>
