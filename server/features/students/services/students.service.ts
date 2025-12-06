@@ -123,6 +123,30 @@ export function normalizeStudentData(student: StudentInput): Student {
     studentExpectations: student.studentExpectations ? String(student.studentExpectations).trim() : undefined,
     familyExpectations: student.familyExpectations ? String(student.familyExpectations).trim() : undefined,
     
+    // Health extended fields
+    chronicDiseases: Array.isArray(student.chronicDiseases) ? student.chronicDiseases : undefined,
+    allergies: Array.isArray(student.allergies) ? student.allergies : undefined,
+    medications: Array.isArray(student.medications) ? student.medications : undefined,
+    medicalHistory: student.medicalHistory ? String(student.medicalHistory).trim() : undefined,
+    specialNeeds: student.specialNeeds ? String(student.specialNeeds).trim() : undefined,
+    physicalLimitations: student.physicalLimitations ? String(student.physicalLimitations).trim() : undefined,
+    emergencyContact1Name: student.emergencyContact1Name ? String(student.emergencyContact1Name).trim() : undefined,
+    emergencyContact1Phone: student.emergencyContact1Phone ? String(student.emergencyContact1Phone).trim() : undefined,
+    emergencyContact1Relation: student.emergencyContact1Relation ? String(student.emergencyContact1Relation).trim() : undefined,
+    emergencyContact2Name: student.emergencyContact2Name ? String(student.emergencyContact2Name).trim() : undefined,
+    emergencyContact2Phone: student.emergencyContact2Phone ? String(student.emergencyContact2Phone).trim() : undefined,
+    emergencyContact2Relation: student.emergencyContact2Relation ? String(student.emergencyContact2Relation).trim() : undefined,
+    healthAdditionalNotes: student.healthAdditionalNotes ? String(student.healthAdditionalNotes).trim() : undefined,
+    
+    // Talents & Interests fields
+    creativeTalents: Array.isArray(student.creativeTalents) ? student.creativeTalents : undefined,
+    physicalTalents: Array.isArray(student.physicalTalents) ? student.physicalTalents : undefined,
+    primaryInterests: Array.isArray(student.primaryInterests) ? student.primaryInterests : undefined,
+    exploratoryInterests: Array.isArray(student.exploratoryInterests) ? student.exploratoryInterests : undefined,
+    clubMemberships: Array.isArray(student.clubMemberships) ? student.clubMemberships : undefined,
+    competitionsParticipated: Array.isArray(student.competitionsParticipated) ? student.competitionsParticipated : undefined,
+    talentsAdditionalNotes: student.talentsAdditionalNotes ? String(student.talentsAdditionalNotes).trim() : undefined,
+    
     // Legacy fields
     primaryLearningStyle: student.primaryLearningStyle ? String(student.primaryLearningStyle).trim() : undefined,
     englishScore: typeof student.englishScore === 'number' ? student.englishScore : undefined,
