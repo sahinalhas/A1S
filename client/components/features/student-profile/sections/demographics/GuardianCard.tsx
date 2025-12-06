@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { UserCheck, Phone, Mail, Link, Save, Check, Loader2, Pencil, X } from "lucide-react";
+import { UserCheck, Phone, Mail, Link, Save, Check, Loader2, ChevronDown } from "lucide-react";
 import { Button } from "@/components/atoms/Button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -87,109 +87,94 @@ export function GuardianCard({ student, onUpdate }: GuardianCardProps) {
   }, [form, defaultValues]);
 
   return (
-    <Card className="border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 shadow-sm hover:shadow-md transition-shadow duration-300">
-      <CardHeader className="pb-3">
+    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg">
+      <CardHeader 
+        className="pb-4 cursor-pointer select-none hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors duration-200"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-gray-100">
-            <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-              <UserCheck className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-            </div>
-            Vasi Bilgileri
-          </CardTitle>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsExpanded(!isExpanded)}
-            className={cn(
-              "h-9 gap-1.5 text-sm transition-colors",
+          <div className="flex items-center gap-3">
+            <div className={cn(
+              "w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300",
               isExpanded 
-                ? "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" 
-                : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
-            )}
+                ? "bg-purple-100 dark:bg-purple-900/30" 
+                : "bg-gray-100 dark:bg-gray-800"
+            )}>
+              <UserCheck className={cn(
+                "h-5 w-5 transition-colors duration-300",
+                isExpanded
+                  ? "text-purple-600 dark:text-purple-400"
+                  : "text-gray-600 dark:text-gray-400"
+              )} />
+            </div>
+            <div>
+              <CardTitle className="text-base font-semibold text-gray-900 dark:text-gray-100">Vasi Bilgileri</CardTitle>
+              {!isExpanded && getSummaryItems.length > 0 && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{defaultValues.guardianName || "Eksik bilgiler"}</p>
+              )}
+            </div>
+          </div>
+          <motion.div
+            animate={{ rotate: isExpanded ? 180 : 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            {isExpanded ? (
-              <><X className="h-4 w-4" />Kapat</>
-            ) : (
-              <><Pencil className="h-4 w-4" />Düzenle</>
-            )}
-          </Button>
+            <ChevronDown className={cn(
+              "h-5 w-5 transition-colors duration-300",
+              isExpanded
+                ? "text-purple-600 dark:text-purple-400"
+                : "text-gray-400 dark:text-gray-500"
+            )} />
+          </motion.div>
         </div>
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent className="pt-0 overflow-hidden">
         <AnimatePresence mode="wait">
           {!isExpanded ? (
             <motion.div
               key="summary"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
             >
               {getSummaryItems.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-2">
                   {getSummaryItems.map((item, index) => (
-                    <div 
-                      key={index} 
-                      className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50"
+                    <motion.div 
+                      key={index}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.2, delay: index * 0.05 }}
+                      className="p-3 rounded-lg bg-gradient-to-br from-purple-50/50 to-violet-50/30 dark:from-purple-900/10 dark:to-violet-900/5 border border-purple-100/50 dark:border-purple-800/30 hover:border-purple-200/70 dark:hover:border-purple-700/50 transition-colors duration-200"
                     >
-                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 flex items-center gap-1">
-                        {item.icon}
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 flex items-center gap-1.5">
+                        {item.icon && <span className="text-purple-500 dark:text-purple-400">{item.icon}</span>}
                         {item.label}
                       </p>
-                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{item.value}</p>
-                    </div>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 line-clamp-2">{item.value}</p>
+                    </motion.div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500 dark:text-gray-400 italic">Henüz bilgi girilmemiş</p>
+                <div className="py-4 text-center">
+                  <p className="text-sm text-gray-400 dark:text-gray-500 italic">Henüz bilgi girilmemiş</p>
+                </div>
               )}
             </motion.div>
           ) : (
-            <motion.div
-              key="form"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
+            <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="py-4">
               <Form {...form}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField control={form.control} name="guardianName" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><UserCheck className="h-3.5 w-3.5" />Ad Soyad</FormLabel>
-                      <FormControl><Input {...field} className="h-10" placeholder="Vasi adı soyadı" /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <FormField control={form.control} name="guardianRelation" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Link className="h-3.5 w-3.5" />Yakınlık</FormLabel>
-                      <FormControl><Input {...field} className="h-10" placeholder="Örn: Amca, Teyze" /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
+                  <FormField control={form.control} name="guardianName" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><UserCheck className="h-3.5 w-3.5" />Ad Soyad</FormLabel><FormControl><Input {...field} className="h-10" placeholder="Vasi adı soyadı" /></FormControl><FormMessage /></FormItem>)} />
+                  <FormField control={form.control} name="guardianRelation" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Link className="h-3.5 w-3.5" />Yakınlık</FormLabel><FormControl><Input {...field} className="h-10" placeholder="Örn: Amca, Teyze" /></FormControl><FormMessage /></FormItem>)} />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <FormField control={form.control} name="guardianPhone" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Phone className="h-3.5 w-3.5" />Telefon</FormLabel>
-                      <FormControl><Input {...field} className="h-10" placeholder="Telefon numarası" /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <FormField control={form.control} name="guardianEmail" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Mail className="h-3.5 w-3.5" />E-posta</FormLabel>
-                      <FormControl><Input type="email" {...field} className="h-10" placeholder="E-posta adresi" /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
+                  <FormField control={form.control} name="guardianPhone" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Phone className="h-3.5 w-3.5" />Telefon</FormLabel><FormControl><Input {...field} className="h-10" placeholder="Telefon numarası" /></FormControl><FormMessage /></FormItem>)} />
+                  <FormField control={form.control} name="guardianEmail" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Mail className="h-3.5 w-3.5" />E-posta</FormLabel><FormControl><Input type="email" {...field} className="h-10" placeholder="E-posta adresi" /></FormControl><FormMessage /></FormItem>)} />
                 </div>
-                <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
                   <Button type="button" variant="outline" size="sm" onClick={handleCancel} disabled={isSaving}>İptal</Button>
-                  <Button size="sm" onClick={form.handleSubmit(onSubmit)} disabled={isSaving || !isDirty} className={cn("transition-all duration-300", showSuccess && "bg-green-600 hover:bg-green-700")}>
-                    {isSaving ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</> : showSuccess ? <><Check className="h-4 w-4 mr-1" />Kaydedildi</> : <><Save className="h-4 w-4 mr-1" />Kaydet</>}
-                  </Button>
+                  <Button size="sm" onClick={form.handleSubmit(onSubmit)} disabled={isSaving || !isDirty} className={cn("transition-all duration-300", showSuccess && "bg-green-600 hover:bg-green-700")}>{isSaving ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</> : showSuccess ? <><Check className="h-4 w-4 mr-1" />Kaydedildi</> : <><Save className="h-4 w-4 mr-1" />Kaydet</>}</Button>
                 </div>
               </Form>
             </motion.div>

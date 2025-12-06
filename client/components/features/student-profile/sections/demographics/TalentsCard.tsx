@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Sparkles, Palette, Dumbbell, Lightbulb, Users, Trophy, Save, Check, Loader2, X, Pencil } from "lucide-react";
+import { Sparkles, Palette, Dumbbell, Lightbulb, Users, Trophy, Save, Check, Loader2, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/atoms/Button";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/atoms/Badge";
@@ -128,104 +128,77 @@ export function TalentsCard({ student, onUpdate }: TalentsCardProps) {
   }, [form, defaultValues, student]);
 
   return (
-    <Card className="border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 shadow-sm hover:shadow-md transition-shadow duration-300">
-      <CardHeader className="pb-3">
+    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg">
+      <CardHeader 
+        className="pb-4 cursor-pointer select-none hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors duration-200"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-gray-100">
-            <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-              <Sparkles className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+          <div className="flex items-center gap-3">
+            <div className={cn(
+              "w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300",
+              isExpanded 
+                ? "bg-orange-100 dark:bg-orange-900/30" 
+                : "bg-gray-100 dark:bg-gray-800"
+            )}>
+              <Sparkles className={cn(
+                "h-5 w-5 transition-colors duration-300",
+                isExpanded
+                  ? "text-orange-600 dark:text-orange-400"
+                  : "text-gray-600 dark:text-gray-400"
+              )} />
             </div>
-            Yetenek & İlgi Alanları
-          </CardTitle>
-          <Button variant="ghost" size="sm" onClick={() => setIsExpanded(!isExpanded)} className={cn("h-9 gap-1.5 text-sm transition-colors", isExpanded ? "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100")}>
-            {isExpanded ? <><X className="h-4 w-4" />Kapat</> : <><Pencil className="h-4 w-4" />Düzenle</>}
-          </Button>
+            <div>
+              <CardTitle className="text-base font-semibold text-gray-900 dark:text-gray-100">Yetenek & İlgi Alanları</CardTitle>
+              {!isExpanded && getSummaryItems.length > 0 && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{getSummaryItems.length} alan doldurulmuş</p>
+              )}
+            </div>
+          </div>
+          <motion.div
+            animate={{ rotate: isExpanded ? 180 : 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <ChevronDown className={cn(
+              "h-5 w-5 transition-colors duration-300",
+              isExpanded
+                ? "text-orange-600 dark:text-orange-400"
+                : "text-gray-400 dark:text-gray-500"
+            )} />
+          </motion.div>
         </div>
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent className="pt-0 overflow-hidden">
         <AnimatePresence mode="wait">
           {!isExpanded ? (
-            <motion.div key="summary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+            <motion.div key="summary" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3 }}>
               {getSummaryItems.length > 0 ? (
-                <div className="space-y-3">
+                <div className="space-y-3 py-2">
                   {getSummaryItems.map((item, index) => (
-                    <div key={index} className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50">
-                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1">{item.icon}{item.label}</p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {item.items?.map((val, i) => (
-                          <span key={i} className="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded">{val}</span>
-                        ))}
-                      </div>
-                    </div>
+                    <motion.div key={index} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, delay: index * 0.05 }} className="p-3 rounded-lg bg-gradient-to-br from-orange-50/50 to-amber-50/30 dark:from-orange-900/10 dark:to-amber-900/5 border border-orange-100/50 dark:border-orange-800/30 hover:border-orange-200/70 dark:hover:border-orange-700/50 transition-colors duration-200">
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1.5">{item.icon && <span className="text-orange-500 dark:text-orange-400">{item.icon}</span>}{item.label}</p>
+                      <div className="flex flex-wrap gap-1.5">{item.items?.map((val, i) => (<span key={i} className="inline-flex items-center px-2 py-1 text-xs font-medium bg-orange-100 dark:bg-orange-700/40 text-orange-900 dark:text-orange-100 rounded">{val}</span>))}</div>
+                    </motion.div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500 dark:text-gray-400 italic">Henüz bilgi girilmemiş</p>
+                <div className="py-4 text-center">
+                  <p className="text-sm text-gray-400 dark:text-gray-500 italic">Henüz bilgi girilmemiş</p>
+                </div>
               )}
             </motion.div>
           ) : (
-            <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+            <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="py-4">
               <Form {...form}>
                 <div className="space-y-4">
-                  <div>
-                    <p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Palette className="h-3.5 w-3.5" />Yaratıcı & Sanatsal Yetenekler</p>
-                    <div className="flex flex-wrap gap-2">{creativeTalentOptions.map(talent => (
-                      <Badge key={talent} variant={creativeTalents.includes(talent) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(talent, creativeTalents, setCreativeTalents)}>{talent}</Badge>
-                    ))}</div>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Dumbbell className="h-3.5 w-3.5" />Fiziksel & Sportif Yetenekler</p>
-                    <div className="flex flex-wrap gap-2">{physicalTalentOptions.map(talent => (
-                      <Badge key={talent} variant={physicalTalents.includes(talent) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(talent, physicalTalents, setPhysicalTalents)}>{talent}</Badge>
-                    ))}</div>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Lightbulb className="h-3.5 w-3.5" />Ana İlgi Alanları</p>
-                    <div className="flex flex-wrap gap-2">{interestOptions.map(interest => (
-                      <Badge key={interest} variant={primaryInterests.includes(interest) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(interest, primaryInterests, setPrimaryInterests)}>{interest}</Badge>
-                    ))}</div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                    <FormField control={form.control} name="hobbiesDetailed" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium">Hobiler</FormLabel>
-                        <FormControl><Textarea {...field} placeholder="Düzenli aktiviteler..." className="min-h-[60px] text-sm" /></FormControl>
-                      </FormItem>
-                    )} />
-                    <FormField control={form.control} name="extracurricularActivities" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium">Okul Dışı Aktiviteler</FormLabel>
-                        <FormControl><Textarea {...field} placeholder="Kurslar, spor, gönüllülük..." className="min-h-[60px] text-sm" /></FormControl>
-                      </FormItem>
-                    )} />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Users className="h-3.5 w-3.5" />Kulüp Üyelikleri</p>
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {clubs.map(club => (
-                        <Badge key={club} variant="secondary" className="flex items-center gap-1">{club}
-                          <X className="h-3 w-3 cursor-pointer" onClick={() => setClubs(clubs.filter(c => c !== club))} />
-                        </Badge>
-                      ))}
-                    </div>
-                    <div className="flex gap-2">
-                      <Input value={newClub} onChange={(e) => setNewClub(e.target.value)} placeholder="Kulüp adı ekle..." className="h-9 max-w-xs text-sm" onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addClub())} />
-                      <Button type="button" size="sm" onClick={addClub} variant="outline">Ekle</Button>
-                    </div>
-                  </div>
-                  <FormField control={form.control} name="talentsAdditionalNotes" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-sm font-medium">Ek Notlar</FormLabel>
-                      <FormControl><Textarea {...field} placeholder="Diğer yetenekler, başarılar..." className="min-h-[60px] text-sm" /></FormControl>
-                    </FormItem>
-                  )} />
+                  <div><p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Palette className="h-3.5 w-3.5" />Yaratıcı & Sanatsal Yetenekler</p><div className="flex flex-wrap gap-2">{creativeTalentOptions.map(talent => (<Badge key={talent} variant={creativeTalents.includes(talent) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(talent, creativeTalents, setCreativeTalents)}>{talent}</Badge>))}</div></div>
+                  <div><p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Dumbbell className="h-3.5 w-3.5" />Fiziksel & Sportif Yetenekler</p><div className="flex flex-wrap gap-2">{physicalTalentOptions.map(talent => (<Badge key={talent} variant={physicalTalents.includes(talent) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(talent, physicalTalents, setPhysicalTalents)}>{talent}</Badge>))}</div></div>
+                  <div><p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Lightbulb className="h-3.5 w-3.5" />Ana İlgi Alanları</p><div className="flex flex-wrap gap-2">{interestOptions.map(interest => (<Badge key={interest} variant={primaryInterests.includes(interest) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(interest, primaryInterests, setPrimaryInterests)}>{interest}</Badge>))}</div></div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2"><FormField control={form.control} name="hobbiesDetailed" render={({ field }) => (<FormItem><FormLabel className="text-sm font-medium">Hobiler</FormLabel><FormControl><Textarea {...field} placeholder="Düzenli aktiviteler..." className="min-h-[60px] text-sm" /></FormControl></FormItem>)} /><FormField control={form.control} name="extracurricularActivities" render={({ field }) => (<FormItem><FormLabel className="text-sm font-medium">Okul Dışı Aktiviteler</FormLabel><FormControl><Textarea {...field} placeholder="Kurslar, spor, gönüllülük..." className="min-h-[60px] text-sm" /></FormControl></FormItem>)} /></div>
+                  <div><p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Users className="h-3.5 w-3.5" />Kulüp Üyelikleri</p><div className="flex flex-wrap gap-2 mb-2">{clubs.map(club => (<Badge key={club} variant="secondary" className="flex items-center gap-1">{club}<X className="h-3 w-3 cursor-pointer" onClick={() => setClubs(clubs.filter(c => c !== club))} /></Badge>))}</div><div className="flex gap-2"><Input value={newClub} onChange={(e) => setNewClub(e.target.value)} placeholder="Kulüp adı ekle..." className="h-9 max-w-xs text-sm" onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addClub())} /><Button type="button" size="sm" onClick={addClub} variant="outline">Ekle</Button></div></div>
+                  <FormField control={form.control} name="talentsAdditionalNotes" render={({ field }) => (<FormItem><FormLabel className="text-sm font-medium">Ek Notlar</FormLabel><FormControl><Textarea {...field} placeholder="Diğer yetenekler, başarılar..." className="min-h-[60px] text-sm" /></FormControl></FormItem>)} />
                 </div>
-                <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <Button type="button" variant="outline" size="sm" onClick={handleCancel} disabled={isSaving}>İptal</Button>
-                  <Button size="sm" onClick={form.handleSubmit(onSubmit)} disabled={isSaving || !isDirty} className={cn("transition-all duration-300", showSuccess && "bg-green-600 hover:bg-green-700")}>
-                    {isSaving ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</> : showSuccess ? <><Check className="h-4 w-4 mr-1" />Kaydedildi</> : <><Save className="h-4 w-4 mr-1" />Kaydet</>}
-                  </Button>
-                </div>
+                <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700"><Button type="button" variant="outline" size="sm" onClick={handleCancel} disabled={isSaving}>İptal</Button><Button size="sm" onClick={form.handleSubmit(onSubmit)} disabled={isSaving || !isDirty} className={cn("transition-all duration-300", showSuccess && "bg-green-600 hover:bg-green-700")}>{isSaving ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</> : showSuccess ? <><Check className="h-4 w-4 mr-1" />Kaydedildi</> : <><Save className="h-4 w-4 mr-1" />Kaydet</>}</Button></div>
               </Form>
             </motion.div>
           )}

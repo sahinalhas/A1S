@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Heart, Droplets, AlertTriangle, Pill, Phone, FileText, Save, Check, Loader2, Pencil, X } from "lucide-react";
+import { Heart, Droplets, AlertTriangle, Pill, Phone, FileText, Save, Check, Loader2, ChevronDown } from "lucide-react";
 import { Button } from "@/components/atoms/Button";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/atoms/Badge";
@@ -135,140 +135,78 @@ export function HealthCard({ student, onUpdate }: HealthCardProps) {
   }, [form, defaultValues, student]);
 
   return (
-    <Card className="border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 shadow-sm hover:shadow-md transition-shadow duration-300">
-      <CardHeader className="pb-3">
+    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg">
+      <CardHeader 
+        className="pb-4 cursor-pointer select-none hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors duration-200"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-gray-100">
-            <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-              <Heart className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+          <div className="flex items-center gap-3">
+            <div className={cn(
+              "w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300",
+              isExpanded 
+                ? "bg-red-100 dark:bg-red-900/30" 
+                : "bg-gray-100 dark:bg-gray-800"
+            )}>
+              <Heart className={cn(
+                "h-5 w-5 transition-colors duration-300",
+                isExpanded
+                  ? "text-red-600 dark:text-red-400"
+                  : "text-gray-600 dark:text-gray-400"
+              )} />
             </div>
-            Sağlık Bilgileri
-          </CardTitle>
-          <Button variant="ghost" size="sm" onClick={() => setIsExpanded(!isExpanded)} className={cn("h-9 gap-1.5 text-sm transition-colors", isExpanded ? "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100")}>
-            {isExpanded ? <><X className="h-4 w-4" />Kapat</> : <><Pencil className="h-4 w-4" />Düzenle</>}
-          </Button>
+            <div>
+              <CardTitle className="text-base font-semibold text-gray-900 dark:text-gray-100">Sağlık Bilgileri</CardTitle>
+              {!isExpanded && getSummaryItems.length > 0 && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{getSummaryItems.length} alan doldurulmuş</p>
+              )}
+            </div>
+          </div>
+          <motion.div
+            animate={{ rotate: isExpanded ? 180 : 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <ChevronDown className={cn(
+              "h-5 w-5 transition-colors duration-300",
+              isExpanded
+                ? "text-red-600 dark:text-red-400"
+                : "text-gray-400 dark:text-gray-500"
+            )} />
+          </motion.div>
         </div>
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent className="pt-0 overflow-hidden">
         <AnimatePresence mode="wait">
           {!isExpanded ? (
-            <motion.div key="summary" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+            <motion.div key="summary" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3 }}>
               {getSummaryItems.length > 0 ? (
-                <div className="space-y-3">
+                <div className="space-y-3 py-2">
                   {getSummaryItems.map((item, index) => (
-                    <div key={index} className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50">
-                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1">{item.icon}{item.label}</p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {item.items?.map((val, i) => (
-                          <span key={i} className="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded">{val}</span>
-                        ))}
-                      </div>
-                    </div>
+                    <motion.div key={index} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, delay: index * 0.05 }} className="p-3 rounded-lg bg-gradient-to-br from-red-50/50 to-pink-50/30 dark:from-red-900/10 dark:to-pink-900/5 border border-red-100/50 dark:border-red-800/30 hover:border-red-200/70 dark:hover:border-red-700/50 transition-colors duration-200">
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1.5">{item.icon && <span className="text-red-500 dark:text-red-400">{item.icon}</span>}{item.label}</p>
+                      <div className="flex flex-wrap gap-1.5">{item.items?.map((val, i) => (<span key={i} className="inline-flex items-center px-2 py-1 text-xs font-medium bg-red-100 dark:bg-red-700/40 text-red-900 dark:text-red-100 rounded">{val}</span>))}</div>
+                    </motion.div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500 dark:text-gray-400 italic">Henüz bilgi girilmemiş</p>
+                <div className="py-4 text-center">
+                  <p className="text-sm text-gray-400 dark:text-gray-500 italic">Henüz bilgi girilmemiş</p>
+                </div>
               )}
             </motion.div>
           ) : (
-            <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+            <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="py-4">
               <Form {...form}>
                 <div className="space-y-4">
-                  <FormField control={form.control} name="bloodType" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-sm font-medium">Kan Grubu</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl><SelectTrigger className="h-10"><SelectValue placeholder="Seçiniz" /></SelectTrigger></FormControl>
-                        <SelectContent>{bloodTypes.map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}</SelectContent>
-                      </Select>
-                    </FormItem>
-                  )} />
-                  <div>
-                    <p className="text-sm font-medium mb-2 flex items-center gap-1.5"><AlertTriangle className="h-3.5 w-3.5" />Kronik Hastalıklar</p>
-                    <div className="flex flex-wrap gap-2">{chronicDiseaseOptions.map(disease => (
-                      <Badge key={disease} variant={selectedDiseases.includes(disease) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(disease, selectedDiseases, setSelectedDiseases)}>{disease}</Badge>
-                    ))}</div>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium mb-2">Alerjiler</p>
-                    <div className="flex flex-wrap gap-2">{allergyOptions.map(allergy => (
-                      <Badge key={allergy} variant={selectedAllergies.includes(allergy) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(allergy, selectedAllergies, setSelectedAllergies)}>{allergy}</Badge>
-                    ))}</div>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Pill className="h-3.5 w-3.5" />Kullanılan İlaçlar</p>
-                    <div className="flex flex-wrap gap-2">{medicationOptions.map(med => (
-                      <Badge key={med} variant={selectedMedications.includes(med) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(med, selectedMedications, setSelectedMedications)}>{med}</Badge>
-                    ))}</div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-                    <FormField control={form.control} name="medicalHistory" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium">Tıbbi Geçmiş</FormLabel>
-                        <FormControl><Textarea {...field} placeholder="Ameliyatlar..." className="min-h-[60px] text-sm" /></FormControl>
-                      </FormItem>
-                    )} />
-                    <FormField control={form.control} name="specialNeeds" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium">Özel İhtiyaçlar</FormLabel>
-                        <FormControl><Textarea {...field} placeholder="Özel bakım..." className="min-h-[60px] text-sm" /></FormControl>
-                      </FormItem>
-                    )} />
-                    <FormField control={form.control} name="physicalLimitations" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium">Fiziksel Kısıtlamalar</FormLabel>
-                        <FormControl><Textarea {...field} placeholder="Hareket kısıtlamaları..." className="min-h-[60px] text-sm" /></FormControl>
-                      </FormItem>
-                    )} />
-                  </div>
-                  <div className="pt-2">
-                    <p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" />Acil Durum Kişileri</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-                        <p className="text-xs font-medium text-gray-500">1. Kişi</p>
-                        <FormField control={form.control} name="emergencyContact1Name" render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-xs">Ad Soyad</FormLabel>
-                            <FormControl><Input {...field} className="h-9 text-sm" /></FormControl>
-                          </FormItem>
-                        )} />
-                        <FormField control={form.control} name="emergencyContact1Phone" render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-xs">Telefon</FormLabel>
-                            <FormControl><Input {...field} className="h-9 text-sm" /></FormControl>
-                          </FormItem>
-                        )} />
-                      </div>
-                      <div className="space-y-2 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-                        <p className="text-xs font-medium text-gray-500">2. Kişi</p>
-                        <FormField control={form.control} name="emergencyContact2Name" render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-xs">Ad Soyad</FormLabel>
-                            <FormControl><Input {...field} className="h-9 text-sm" /></FormControl>
-                          </FormItem>
-                        )} />
-                        <FormField control={form.control} name="emergencyContact2Phone" render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-xs">Telefon</FormLabel>
-                            <FormControl><Input {...field} className="h-9 text-sm" /></FormControl>
-                          </FormItem>
-                        )} />
-                      </div>
-                    </div>
-                  </div>
-                  <FormField control={form.control} name="healthAdditionalNotes" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-sm font-medium">Ek Notlar</FormLabel>
-                      <FormControl><Textarea {...field} placeholder="Diğer önemli bilgiler..." className="min-h-[60px] text-sm" /></FormControl>
-                    </FormItem>
-                  )} />
+                  <FormField control={form.control} name="bloodType" render={({ field }) => (<FormItem><FormLabel className="text-sm font-medium">Kan Grubu</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger className="h-10"><SelectValue placeholder="Seçiniz" /></SelectTrigger></FormControl><SelectContent>{bloodTypes.map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}</SelectContent></Select></FormItem>)} />
+                  <div><p className="text-sm font-medium mb-2 flex items-center gap-1.5"><AlertTriangle className="h-3.5 w-3.5" />Kronik Hastalıklar</p><div className="flex flex-wrap gap-2">{chronicDiseaseOptions.map(disease => (<Badge key={disease} variant={selectedDiseases.includes(disease) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(disease, selectedDiseases, setSelectedDiseases)}>{disease}</Badge>))}</div></div>
+                  <div><p className="text-sm font-medium mb-2">Alerjiler</p><div className="flex flex-wrap gap-2">{allergyOptions.map(allergy => (<Badge key={allergy} variant={selectedAllergies.includes(allergy) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(allergy, selectedAllergies, setSelectedAllergies)}>{allergy}</Badge>))}</div></div>
+                  <div><p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Pill className="h-3.5 w-3.5" />Kullanılan İlaçlar</p><div className="flex flex-wrap gap-2">{medicationOptions.map(med => (<Badge key={med} variant={selectedMedications.includes(med) ? "default" : "outline"} className="cursor-pointer" onClick={() => toggleSelection(med, selectedMedications, setSelectedMedications)}>{med}</Badge>))}</div></div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2"><FormField control={form.control} name="medicalHistory" render={({ field }) => (<FormItem><FormLabel className="text-sm font-medium">Tıbbi Geçmiş</FormLabel><FormControl><Textarea {...field} placeholder="Ameliyatlar..." className="min-h-[60px] text-sm" /></FormControl></FormItem>)} /><FormField control={form.control} name="specialNeeds" render={({ field }) => (<FormItem><FormLabel className="text-sm font-medium">Özel İhtiyaçlar</FormLabel><FormControl><Textarea {...field} placeholder="Özel bakım..." className="min-h-[60px] text-sm" /></FormControl></FormItem>)} /><FormField control={form.control} name="physicalLimitations" render={({ field }) => (<FormItem><FormLabel className="text-sm font-medium">Fiziksel Kısıtlamalar</FormLabel><FormControl><Textarea {...field} placeholder="Hareket kısıtlamaları..." className="min-h-[60px] text-sm" /></FormControl></FormItem>)} /></div>
+                  <div className="pt-2"><p className="text-sm font-medium mb-2 flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" />Acil Durum Kişileri</p><div className="grid grid-cols-1 md:grid-cols-2 gap-4"><div className="space-y-2 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg"><p className="text-xs font-medium text-gray-500">1. Kişi</p><FormField control={form.control} name="emergencyContact1Name" render={({ field }) => (<FormItem><FormLabel className="text-xs">Ad Soyad</FormLabel><FormControl><Input {...field} className="h-9 text-sm" /></FormControl></FormItem>)} /><FormField control={form.control} name="emergencyContact1Phone" render={({ field }) => (<FormItem><FormLabel className="text-xs">Telefon</FormLabel><FormControl><Input {...field} className="h-9 text-sm" /></FormControl></FormItem>)} /></div><div className="space-y-2 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg"><p className="text-xs font-medium text-gray-500">2. Kişi</p><FormField control={form.control} name="emergencyContact2Name" render={({ field }) => (<FormItem><FormLabel className="text-xs">Ad Soyad</FormLabel><FormControl><Input {...field} className="h-9 text-sm" /></FormControl></FormItem>)} /><FormField control={form.control} name="emergencyContact2Phone" render={({ field }) => (<FormItem><FormLabel className="text-xs">Telefon</FormLabel><FormControl><Input {...field} className="h-9 text-sm" /></FormControl></FormItem>)} /></div></div></div>
+                  <FormField control={form.control} name="healthAdditionalNotes" render={({ field }) => (<FormItem><FormLabel className="text-sm font-medium">Ek Notlar</FormLabel><FormControl><Textarea {...field} placeholder="Diğer önemli bilgiler..." className="min-h-[60px] text-sm" /></FormControl></FormItem>)} />
                 </div>
-                <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <Button type="button" variant="outline" size="sm" onClick={handleCancel} disabled={isSaving}>İptal</Button>
-                  <Button size="sm" onClick={form.handleSubmit(onSubmit)} disabled={isSaving || !isDirty} className={cn("transition-all duration-300", showSuccess && "bg-green-600 hover:bg-green-700")}>
-                    {isSaving ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</> : showSuccess ? <><Check className="h-4 w-4 mr-1" />Kaydedildi</> : <><Save className="h-4 w-4 mr-1" />Kaydet</>}
-                  </Button>
-                </div>
+                <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700"><Button type="button" variant="outline" size="sm" onClick={handleCancel} disabled={isSaving}>İptal</Button><Button size="sm" onClick={form.handleSubmit(onSubmit)} disabled={isSaving || !isDirty} className={cn("transition-all duration-300", showSuccess && "bg-green-600 hover:bg-green-700")}>{isSaving ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</> : showSuccess ? <><Check className="h-4 w-4 mr-1" />Kaydedildi</> : <><Save className="h-4 w-4 mr-1" />Kaydet</>}</Button></div>
               </Form>
             </motion.div>
           )}

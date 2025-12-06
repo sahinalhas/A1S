@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { User, Hash, GraduationCap, Calendar, MapPin, Save, Check, Loader2, Pencil, X } from "lucide-react";
+import { User, Hash, GraduationCap, Calendar, MapPin, Save, Check, Loader2, ChevronDown } from "lucide-react";
 import { Button } from "@/components/atoms/Button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -103,61 +103,82 @@ export function IdentityCard({ student, onUpdate }: IdentityCardProps) {
   }, [form, defaultValues]);
 
   return (
-    <Card className="border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 shadow-sm hover:shadow-md transition-shadow duration-300">
-      <CardHeader className="pb-3">
+    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg">
+      <CardHeader 
+        className="pb-4 cursor-pointer select-none hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors duration-200"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-gray-100">
-            <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-              <User className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-            </div>
-            Temel Kimlik Bilgileri
-          </CardTitle>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsExpanded(!isExpanded)}
-            className={cn(
-              "h-9 gap-1.5 text-sm transition-colors",
+          <div className="flex items-center gap-3">
+            <div className={cn(
+              "w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300",
               isExpanded 
-                ? "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" 
-                : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
-            )}
+                ? "bg-blue-100 dark:bg-blue-900/30" 
+                : "bg-gray-100 dark:bg-gray-800"
+            )}>
+              <User className={cn(
+                "h-5 w-5 transition-colors duration-300",
+                isExpanded
+                  ? "text-blue-600 dark:text-blue-400"
+                  : "text-gray-600 dark:text-gray-400"
+              )} />
+            </div>
+            <div>
+              <CardTitle className="text-base font-semibold text-gray-900 dark:text-gray-100">
+                Temel Kimlik Bilgileri
+              </CardTitle>
+              {!isExpanded && getSummaryItems.length > 0 && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {defaultValues.name && defaultValues.surname ? `${defaultValues.name} ${defaultValues.surname}` : "Eksik bilgiler"}
+                </p>
+              )}
+            </div>
+          </div>
+          <motion.div
+            animate={{ rotate: isExpanded ? 180 : 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            {isExpanded ? (
-              <><X className="h-4 w-4" />Kapat</>
-            ) : (
-              <><Pencil className="h-4 w-4" />Düzenle</>
-            )}
-          </Button>
+            <ChevronDown className={cn(
+              "h-5 w-5 transition-colors duration-300",
+              isExpanded
+                ? "text-blue-600 dark:text-blue-400"
+                : "text-gray-400 dark:text-gray-500"
+            )} />
+          </motion.div>
         </div>
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent className="pt-0 overflow-hidden">
         <AnimatePresence mode="wait">
           {!isExpanded ? (
             <motion.div
               key="summary"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
             >
               {getSummaryItems.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-2">
                   {getSummaryItems.map((item, index) => (
-                    <div 
-                      key={index} 
-                      className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50"
+                    <motion.div 
+                      key={index}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.2, delay: index * 0.05 }}
+                      className="p-3 rounded-lg bg-gradient-to-br from-blue-50/50 to-cyan-50/30 dark:from-blue-900/10 dark:to-cyan-900/5 border border-blue-100/50 dark:border-blue-800/30 hover:border-blue-200/70 dark:hover:border-blue-700/50 transition-colors duration-200"
                     >
-                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 flex items-center gap-1">
-                        {item.icon}
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 flex items-center gap-1.5">
+                        {item.icon && <span className="text-blue-500 dark:text-blue-400">{item.icon}</span>}
                         {item.label}
                       </p>
-                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{item.value}</p>
-                    </div>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 line-clamp-2">{item.value}</p>
+                    </motion.div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500 dark:text-gray-400 italic">Henüz bilgi girilmemiş</p>
+                <div className="py-4 text-center">
+                  <p className="text-sm text-gray-400 dark:text-gray-500 italic">Henüz bilgi girilmemiş</p>
+                </div>
               )}
             </motion.div>
           ) : (
@@ -167,6 +188,7 @@ export function IdentityCard({ student, onUpdate }: IdentityCardProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
+              className="py-4"
             >
               <Form {...form}>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -237,7 +259,7 @@ export function IdentityCard({ student, onUpdate }: IdentityCardProps) {
                     </FormItem>
                   )} />
                 </div>
-                <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
                   <Button
                     type="button"
                     variant="outline"

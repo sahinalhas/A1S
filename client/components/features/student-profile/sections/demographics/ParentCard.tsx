@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Users, Phone, Mail, GraduationCap, Briefcase, Save, Check, Loader2, Pencil, X } from "lucide-react";
+import { Users, Phone, Mail, GraduationCap, Briefcase, Save, Check, Loader2, ChevronDown } from "lucide-react";
 import { Button } from "@/components/atoms/Button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -119,150 +119,96 @@ export function ParentCard({ student, onUpdate, parentType }: ParentCardProps) {
     setIsExpanded(false);
   }, [form, defaultValues]);
 
+  const colorScheme = isMother ? { bg: "bg-pink-100 dark:bg-pink-900/30", text: "text-pink-600 dark:text-pink-400", border: "border-pink-100/50 dark:border-pink-800/30", hover: "hover:border-pink-200/70 dark:hover:border-pink-700/50", gradient: "from-pink-50/50 to-rose-50/30 dark:from-pink-900/10 dark:to-rose-900/5" } : { bg: "bg-blue-100 dark:bg-blue-900/30", text: "text-blue-600 dark:text-blue-400", border: "border-blue-100/50 dark:border-blue-800/30", hover: "hover:border-blue-200/70 dark:hover:border-blue-700/50", gradient: "from-blue-50/50 to-cyan-50/30 dark:from-blue-900/10 dark:to-cyan-900/5" };
+
   return (
-    <Card className="border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 shadow-sm hover:shadow-md transition-shadow duration-300">
-      <CardHeader className="pb-3">
+    <Card className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg">
+      <CardHeader 
+        className="pb-4 cursor-pointer select-none hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors duration-200"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-gray-100">
-            <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-              <Users className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+          <div className="flex items-center gap-3">
+            <div className={cn(
+              "w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300",
+              isExpanded ? colorScheme.bg : "bg-gray-100 dark:bg-gray-800"
+            )}>
+              <Users className={cn(
+                "h-5 w-5 transition-colors duration-300",
+                isExpanded ? colorScheme.text : "text-gray-600 dark:text-gray-400"
+              )} />
             </div>
-            {title}
-          </CardTitle>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsExpanded(!isExpanded)}
-            className={cn(
-              "h-9 gap-1.5 text-sm transition-colors",
-              isExpanded 
-                ? "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" 
-                : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
-            )}
+            <div>
+              <CardTitle className="text-base font-semibold text-gray-900 dark:text-gray-100">{title}</CardTitle>
+              {!isExpanded && getSummaryItems.length > 0 && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{defaultValues.name || "Eksik bilgiler"}</p>
+              )}
+            </div>
+          </div>
+          <motion.div
+            animate={{ rotate: isExpanded ? 180 : 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            {isExpanded ? (
-              <><X className="h-4 w-4" />Kapat</>
-            ) : (
-              <><Pencil className="h-4 w-4" />Düzenle</>
-            )}
-          </Button>
+            <ChevronDown className={cn(
+              "h-5 w-5 transition-colors duration-300",
+              isExpanded ? colorScheme.text : "text-gray-400 dark:text-gray-500"
+            )} />
+          </motion.div>
         </div>
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent className="pt-0 overflow-hidden">
         <AnimatePresence mode="wait">
           {!isExpanded ? (
             <motion.div
               key="summary"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
             >
               {getSummaryItems.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-2">
                   {getSummaryItems.map((item, index) => (
-                    <div 
-                      key={index} 
-                      className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50"
+                    <motion.div 
+                      key={index}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.2, delay: index * 0.05 }}
+                      className={cn("p-3 rounded-lg bg-gradient-to-br border transition-colors duration-200", colorScheme.gradient, colorScheme.border, colorScheme.hover)}
                     >
-                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 flex items-center gap-1">
-                        {item.icon}
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5 flex items-center gap-1.5">
+                        {item.icon && <span className={colorScheme.text}>{item.icon}</span>}
                         {item.label}
                       </p>
-                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{item.value}</p>
-                    </div>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 line-clamp-2">{item.value}</p>
+                    </motion.div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500 dark:text-gray-400 italic">Henüz bilgi girilmemiş</p>
+                <div className="py-4 text-center">
+                  <p className="text-sm text-gray-400 dark:text-gray-500 italic">Henüz bilgi girilmemiş</p>
+                </div>
               )}
             </motion.div>
           ) : (
-            <motion.div
-              key="form"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
+            <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="py-4">
               <Form {...form}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField control={form.control} name="name" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Users className="h-3.5 w-3.5" />Ad Soyad</FormLabel>
-                      <FormControl><Input {...field} className="h-10" placeholder={isMother ? "Anne adı" : "Baba adı"} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <FormField control={form.control} name="phone" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Phone className="h-3.5 w-3.5" />Telefon</FormLabel>
-                      <FormControl><Input {...field} className="h-10" placeholder="Telefon numarası" /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
+                  <FormField control={form.control} name="name" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Users className="h-3.5 w-3.5" />Ad Soyad</FormLabel><FormControl><Input {...field} className="h-10" placeholder={isMother ? "Anne adı" : "Baba adı"} /></FormControl><FormMessage /></FormItem>)} />
+                  <FormField control={form.control} name="phone" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Phone className="h-3.5 w-3.5" />Telefon</FormLabel><FormControl><Input {...field} className="h-10" placeholder="Telefon numarası" /></FormControl><FormMessage /></FormItem>)} />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <FormField control={form.control} name="email" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Mail className="h-3.5 w-3.5" />E-posta</FormLabel>
-                      <FormControl><Input type="email" {...field} className="h-10" placeholder="E-posta adresi" /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <FormField control={form.control} name="education" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><GraduationCap className="h-3.5 w-3.5" />Öğrenim Düzeyi</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl><SelectTrigger className="h-10"><SelectValue placeholder="Seçiniz" /></SelectTrigger></FormControl>
-                        <SelectContent>
-                          {educationOptions.map(opt => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
+                  <FormField control={form.control} name="email" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Mail className="h-3.5 w-3.5" />E-posta</FormLabel><FormControl><Input type="email" {...field} className="h-10" placeholder="E-posta adresi" /></FormControl><FormMessage /></FormItem>)} />
+                  <FormField control={form.control} name="education" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><GraduationCap className="h-3.5 w-3.5" />Öğrenim Düzeyi</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger className="h-10"><SelectValue placeholder="Seçiniz" /></SelectTrigger></FormControl><SelectContent>{educationOptions.map(opt => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>)} />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <FormField control={form.control} name="occupation" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Briefcase className="h-3.5 w-3.5" />Meslek</FormLabel>
-                      <FormControl><Input {...field} className="h-10" placeholder="Meslek adı" /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-                  <FormField control={form.control} name="vitalStatus" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-sm font-medium">Durumu</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl><SelectTrigger className="h-10"><SelectValue placeholder="Seçiniz" /></SelectTrigger></FormControl>
-                        <SelectContent>
-                          <SelectItem value="Sağ">Sağ</SelectItem>
-                          <SelectItem value="Vefat Etmiş">Vefat Etmiş</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
+                  <FormField control={form.control} name="occupation" render={({ field }) => (<FormItem><FormLabel className="flex items-center gap-1.5 text-sm font-medium"><Briefcase className="h-3.5 w-3.5" />Meslek</FormLabel><FormControl><Input {...field} className="h-10" placeholder="Meslek adı" /></FormControl><FormMessage /></FormItem>)} />
+                  <FormField control={form.control} name="vitalStatus" render={({ field }) => (<FormItem><FormLabel className="text-sm font-medium">Durumu</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger className="h-10"><SelectValue placeholder="Seçiniz" /></SelectTrigger></FormControl><SelectContent><SelectItem value="Sağ">Sağ</SelectItem><SelectItem value="Vefat Etmiş">Vefat Etmiş</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                 </div>
-                <FormField control={form.control} name="livingStatus" render={({ field }) => (
-                  <FormItem className="mt-4">
-                    <FormLabel className="text-sm font-medium">Yaşadıkları Yer</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl><SelectTrigger className="h-10"><SelectValue placeholder="Seçiniz" /></SelectTrigger></FormControl>
-                      <SelectContent>
-                        <SelectItem value="Birlikte">Birlikte</SelectItem>
-                        <SelectItem value="Ayrı">Ayrı</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )} />
-                <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <FormField control={form.control} name="livingStatus" render={({ field }) => (<FormItem className="mt-4"><FormLabel className="text-sm font-medium">Yaşadıkları Yer</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger className="h-10"><SelectValue placeholder="Seçiniz" /></SelectTrigger></FormControl><SelectContent><SelectItem value="Birlikte">Birlikte</SelectItem><SelectItem value="Ayrı">Ayrı</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
+                <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
                   <Button type="button" variant="outline" size="sm" onClick={handleCancel} disabled={isSaving}>İptal</Button>
-                  <Button size="sm" onClick={form.handleSubmit(onSubmit)} disabled={isSaving || !isDirty} className={cn("transition-all duration-300", showSuccess && "bg-green-600 hover:bg-green-700")}>
-                    {isSaving ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</> : showSuccess ? <><Check className="h-4 w-4 mr-1" />Kaydedildi</> : <><Save className="h-4 w-4 mr-1" />Kaydet</>}
-                  </Button>
+                  <Button size="sm" onClick={form.handleSubmit(onSubmit)} disabled={isSaving || !isDirty} className={cn("transition-all duration-300", showSuccess && "bg-green-600 hover:bg-green-700")}>{isSaving ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Kaydediliyor</> : showSuccess ? <><Check className="h-4 w-4 mr-1" />Kaydedildi</> : <><Save className="h-4 w-4 mr-1" />Kaydet</>}</Button>
                 </div>
               </Form>
             </motion.div>
