@@ -1031,6 +1031,60 @@ const weeklyScheduleStyles = StyleSheet.create({
     fontSize: 6,
     color: '#1e3a5f',
   },
+  compactCalendarBox: {
+    marginTop: 6,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    borderRadius: 3,
+    padding: 4,
+    backgroundColor: '#fafafa',
+  },
+  compactCalendarTitle: {
+    fontSize: 6,
+    fontWeight: 700,
+    color: '#1e3a5f',
+    textAlign: 'center',
+    marginBottom: 3,
+  },
+  compactCalendarGrid: {
+    width: '100%',
+  },
+  compactCalendarHeaderRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#cbd5e1',
+    paddingBottom: 1,
+    marginBottom: 1,
+  },
+  compactCalendarHeaderCell: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  compactCalendarHeaderText: {
+    fontSize: 4,
+    fontWeight: 700,
+    color: '#64748b',
+  },
+  compactCalendarWeekRow: {
+    flexDirection: 'row',
+    marginBottom: 0.5,
+  },
+  compactCalendarDayCell: {
+    flex: 1,
+    height: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 1,
+  },
+  compactCalendarDayToday: {
+    backgroundColor: '#fef3c7',
+    borderWidth: 0.5,
+    borderColor: '#fcd34d',
+  },
+  compactCalendarDayText: {
+    fontSize: 4.5,
+    color: '#1e3a5f',
+  },
 });
 
 const WEEKLY_DAYS = [
@@ -1250,37 +1304,27 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
         <View style={weeklyScheduleStyles.mainContent}>
           <View style={weeklyScheduleStyles.column}>
             {leftDays.map(renderDaySection)}
-          </View>
-          <View style={weeklyScheduleStyles.column}>
-            {rightDays.map(renderDaySection)}
-          </View>
-        </View>
-
-        
-
-        {/* 2-Month Calendar */}
-        <View style={weeklyScheduleStyles.twoMonthCalendarSection}>
-          <View style={weeklyScheduleStyles.calendarRow}>
-            {/* First Month */}
-            <View style={weeklyScheduleStyles.monthCalendarBox}>
-              <Text style={weeklyScheduleStyles.monthCalendarTitle}>
+            
+            {/* 2-Month Calendar - Left Column Bottom */}
+            <View style={weeklyScheduleStyles.compactCalendarBox}>
+              <Text style={weeklyScheduleStyles.compactCalendarTitle}>
                 {monthNames[firstMonthIndex]} {firstMonthYear}
               </Text>
-              <View style={weeklyScheduleStyles.calendarGrid}>
-                <View style={weeklyScheduleStyles.calendarHeaderRow}>
+              <View style={weeklyScheduleStyles.compactCalendarGrid}>
+                <View style={weeklyScheduleStyles.compactCalendarHeaderRow}>
                   {dayNames.map((dayName, idx) => (
-                    <View key={idx} style={weeklyScheduleStyles.calendarHeaderCell}>
-                      <Text style={weeklyScheduleStyles.calendarHeaderText}>{dayName}</Text>
+                    <View key={idx} style={weeklyScheduleStyles.compactCalendarHeaderCell}>
+                      <Text style={weeklyScheduleStyles.compactCalendarHeaderText}>{dayName}</Text>
                     </View>
                   ))}
                 </View>
                 {firstMonthCalendar.map((week, weekIdx) => (
-                  <View key={weekIdx} style={weeklyScheduleStyles.calendarWeekRow}>
+                  <View key={weekIdx} style={weeklyScheduleStyles.compactCalendarWeekRow}>
                     {week.map((day, dayIdx) => {
                       const isToday = firstMonthIndex === month && firstMonthYear === year && day === today;
                       return (
-                        <View key={dayIdx} style={isToday ? [weeklyScheduleStyles.calendarDayCell, weeklyScheduleStyles.calendarDayToday] : weeklyScheduleStyles.calendarDayCell}>
-                          <Text style={weeklyScheduleStyles.calendarDayText}>
+                        <View key={dayIdx} style={isToday ? [weeklyScheduleStyles.compactCalendarDayCell, weeklyScheduleStyles.compactCalendarDayToday] : weeklyScheduleStyles.compactCalendarDayCell}>
+                          <Text style={weeklyScheduleStyles.compactCalendarDayText}>
                             {day || ''}
                           </Text>
                         </View>
@@ -1290,27 +1334,31 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
                 ))}
               </View>
             </View>
-
-            {/* Second Month */}
-            <View style={weeklyScheduleStyles.monthCalendarBox}>
-              <Text style={weeklyScheduleStyles.monthCalendarTitle}>
+          </View>
+          
+          <View style={weeklyScheduleStyles.column}>
+            {rightDays.map(renderDaySection)}
+            
+            {/* 2-Month Calendar - Right Column Bottom */}
+            <View style={weeklyScheduleStyles.compactCalendarBox}>
+              <Text style={weeklyScheduleStyles.compactCalendarTitle}>
                 {monthNames[secondMonthIndex]} {secondMonthYear}
               </Text>
-              <View style={weeklyScheduleStyles.calendarGrid}>
-                <View style={weeklyScheduleStyles.calendarHeaderRow}>
+              <View style={weeklyScheduleStyles.compactCalendarGrid}>
+                <View style={weeklyScheduleStyles.compactCalendarHeaderRow}>
                   {dayNames.map((dayName, idx) => (
-                    <View key={idx} style={weeklyScheduleStyles.calendarHeaderCell}>
-                      <Text style={weeklyScheduleStyles.calendarHeaderText}>{dayName}</Text>
+                    <View key={idx} style={weeklyScheduleStyles.compactCalendarHeaderCell}>
+                      <Text style={weeklyScheduleStyles.compactCalendarHeaderText}>{dayName}</Text>
                     </View>
                   ))}
                 </View>
                 {secondMonthCalendar.map((week, weekIdx) => (
-                  <View key={weekIdx} style={weeklyScheduleStyles.calendarWeekRow}>
+                  <View key={weekIdx} style={weeklyScheduleStyles.compactCalendarWeekRow}>
                     {week.map((day, dayIdx) => {
                       const isToday = secondMonthIndex === month && secondMonthYear === year && day === today;
                       return (
-                        <View key={dayIdx} style={isToday ? [weeklyScheduleStyles.calendarDayCell, weeklyScheduleStyles.calendarDayToday] : weeklyScheduleStyles.calendarDayCell}>
-                          <Text style={weeklyScheduleStyles.calendarDayText}>
+                        <View key={dayIdx} style={isToday ? [weeklyScheduleStyles.compactCalendarDayCell, weeklyScheduleStyles.compactCalendarDayToday] : weeklyScheduleStyles.compactCalendarDayCell}>
+                          <Text style={weeklyScheduleStyles.compactCalendarDayText}>
                             {day || ''}
                           </Text>
                         </View>
