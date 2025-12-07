@@ -116,7 +116,7 @@ export default function Login() {
  transition={{ delay: 0.2, duration: 0.4 }}
  >
  <CardDescription className="text-sm text-muted-foreground">
- MEB uyumlu dijital rehberlik yönetimi
+ Dijital rehberlik yönetimi
  </CardDescription>
  </motion.div>
  </CardHeader>
