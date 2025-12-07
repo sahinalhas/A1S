@@ -402,7 +402,7 @@ const WeeklyPlanDocument: React.FC<WeeklyPlanDocumentProps> = ({
   const totalMinutes = plan.reduce((sum, p) => sum + p.allocated, 0);
   const totalHours = Math.floor(totalMinutes / 60);
   const totalMins = totalMinutes % 60;
-  
+
   const uniqueSubjects = new Set(plan.map(p => p.subjectId)).size;
   const uniqueTopics = new Set(plan.map(p => p.topicId)).size;
 
@@ -718,6 +718,64 @@ interface WeeklySchedulePDFStyles {
   weeklyEmptyRow: any;
   weeklyFooter: any;
   weeklyBrandText: any;
+  weeklyColDay: any;
+  weeklyColTime: any;
+  weeklyColSubject: any;
+  weeklyColStars: any;
+  successTrackerSection: any;
+  trackerTitle: any;
+  monthCalendar: any;
+  calendarDayBox: any;
+  calendarDayFilled: any;
+  calendarDayNumber: any;
+  progressSummary: any;
+  progressText: any;
+  weeklyDayHeaderBg: any;
+  weeklyDayName: any;
+  weeklyText: any;
+  weeklyTextBold: any;
+  weeklyStarsText: any;
+  weeklyCategoryBadge: any;
+  weeklyCategoryBadgeTYT: any;
+  weeklyCategoryBadgeAYT: any;
+  weeklyCategoryBadgeYDT: any;
+  weeklyCategoryBadgeLGS: any;
+  weeklyCategoryBadgeDefault: any;
+  weeklyCategoryText: any;
+  mainContent: any;
+  column: any;
+  twoMonthCalendarSection: any;
+  calendarRow: any;
+  monthCalendarBox: any;
+  monthCalendarTitle: any;
+  calendarGrid: any;
+  calendarHeaderRow: any;
+  calendarHeaderCell: any;
+  calendarHeaderText: any;
+  calendarWeekRow: any;
+  calendarDayCell: any;
+  calendarDayToday: any;
+  calendarDayText: any;
+  compactCalendarBox: any;
+  compactCalendarTitle: any;
+  compactCalendarGrid: any;
+  compactCalendarHeaderRow: any;
+  compactCalendarHeaderCell: any;
+  compactCalendarHeaderText: any;
+  compactCalendarWeekRow: any;
+  compactCalendarDayCell: any;
+  compactCalendarDayToday: any;
+  compactCalendarDayText: any;
+  miniCalendarBox: any;
+  miniCalendarTitle: any;
+  miniCalendarGrid: any;
+  miniCalendarHeaderRow: any;
+  miniCalendarHeaderCell: any;
+  miniCalendarHeaderText: any;
+  miniCalendarWeekRow: any;
+  miniCalendarDayCell: any;
+  miniCalendarDayToday: any;
+  miniCalendarDayText: any;
 }
 
 const weeklyScheduleStyles = StyleSheet.create({
@@ -1085,6 +1143,60 @@ const weeklyScheduleStyles = StyleSheet.create({
     fontSize: 4.5,
     color: '#1e3a5f',
   },
+  miniCalendarBox: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    borderRadius: 3,
+    padding: 4,
+    backgroundColor: '#f9fafb',
+  },
+  miniCalendarTitle: {
+    fontSize: 5,
+    fontWeight: 700,
+    color: '#1e3a5f',
+    textAlign: 'center',
+    marginBottom: 2,
+  },
+  miniCalendarGrid: {
+    width: '100%',
+  },
+  miniCalendarHeaderRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#cbd5e1',
+    paddingBottom: 1,
+    marginBottom: 1,
+  },
+  miniCalendarHeaderCell: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  miniCalendarHeaderText: {
+    fontSize: 4,
+    fontWeight: 700,
+    color: '#64748b',
+  },
+  miniCalendarWeekRow: {
+    flexDirection: 'row',
+    marginBottom: 0.5,
+  },
+  miniCalendarDayCell: {
+    flex: 1,
+    height: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 1,
+  },
+  miniCalendarDayToday: {
+    backgroundColor: '#fef3c7',
+    borderWidth: 0.5,
+    borderColor: '#fcd34d',
+  },
+  miniCalendarDayText: {
+    fontSize: 4.5,
+    color: '#1e3a5f',
+  },
 });
 
 const WEEKLY_DAYS = [
@@ -1129,7 +1241,7 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
 }) => {
   const now = new Date();
   const dateRangeShort = `${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear()}`;
-  
+
   const totalHours = Math.floor(totalMinutes / 60);
   const totalMins = totalMinutes % 60;
   const slotCount = slots.length;
@@ -1146,7 +1258,7 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
   const renderDaySection = (day: { value: number; label: string; short: string }) => {
     const daySlots = slotsByDay.get(day.value) || [];
     const emptyRowsNeeded = Math.max(0, maxSlots - daySlots.length);
-    
+
     return (
       <View key={day.value} style={weeklyScheduleStyles.weeklyTable}>
         <View style={weeklyScheduleStyles.weeklyDayHeaderBg}>
@@ -1220,52 +1332,52 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
   const today = currentDate.getDate();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const remainingDays = daysInMonth - today;
-  
+
   // Hangi ayları göstereceğimizi belirle
   let firstMonthIndex = month;
   let firstMonthYear = year;
-  
+
   // Eğer mevcut ayda 7 günden az kalmışsa, sonraki aylardan başla
   if (remainingDays < 7) {
     firstMonthIndex = (month + 1) % 12;
     firstMonthYear = month === 11 ? year + 1 : year;
   }
-  
+
   const secondMonthIndex = (firstMonthIndex + 1) % 12;
   const secondMonthYear = firstMonthIndex === 11 ? firstMonthYear + 1 : firstMonthYear;
-  
+
   const monthNames = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
   const dayNames = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
-  
+
   // İki ay için takvim verisi oluştur
   const generateMonthCalendar = (monthIdx: number, yearVal: number) => {
     const firstDay = new Date(yearVal, monthIdx, 1);
     const lastDay = new Date(yearVal, monthIdx + 1, 0);
     const daysCount = lastDay.getDate();
     const startDayOfWeek = (firstDay.getDay() + 6) % 7; // Pazartesi = 0
-    
+
     const weeks: Array<Array<number | null>> = [];
     let currentWeek: Array<number | null> = new Array(7).fill(null);
-    
+
     // İlk haftayı boş günlerle doldur
     for (let i = 0; i < startDayOfWeek; i++) {
       currentWeek[i] = null;
     }
-    
+
     // Günleri yerleştir
     for (let day = 1; day <= daysCount; day++) {
       const dayOfWeek = (startDayOfWeek + day - 1) % 7;
       currentWeek[dayOfWeek] = day;
-      
+
       if (dayOfWeek === 6 || day === daysCount) {
         weeks.push([...currentWeek]);
         currentWeek = new Array(7).fill(null);
       }
     }
-    
+
     return weeks;
   };
-  
+
   const firstMonthCalendar = generateMonthCalendar(firstMonthIndex, firstMonthYear);
   const secondMonthCalendar = generateMonthCalendar(secondMonthIndex, secondMonthYear);
 
@@ -1304,68 +1416,69 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
         <View style={weeklyScheduleStyles.mainContent}>
           <View style={weeklyScheduleStyles.column}>
             {leftDays.map(renderDaySection)}
-            
-            {/* 2-Month Calendar - Left Column Bottom */}
-            <View style={weeklyScheduleStyles.compactCalendarBox}>
-              <Text style={weeklyScheduleStyles.compactCalendarTitle}>
-                {monthNames[firstMonthIndex]} {firstMonthYear}
-              </Text>
-              <View style={weeklyScheduleStyles.compactCalendarGrid}>
-                <View style={weeklyScheduleStyles.compactCalendarHeaderRow}>
-                  {dayNames.map((dayName, idx) => (
-                    <View key={idx} style={weeklyScheduleStyles.compactCalendarHeaderCell}>
-                      <Text style={weeklyScheduleStyles.compactCalendarHeaderText}>{dayName}</Text>
-                    </View>
-                  ))}
-                </View>
-                {firstMonthCalendar.map((week, weekIdx) => (
-                  <View key={weekIdx} style={weeklyScheduleStyles.compactCalendarWeekRow}>
-                    {week.map((day, dayIdx) => {
-                      const isToday = firstMonthIndex === month && firstMonthYear === year && day === today;
-                      return (
-                        <View key={dayIdx} style={isToday ? [weeklyScheduleStyles.compactCalendarDayCell, weeklyScheduleStyles.compactCalendarDayToday] : weeklyScheduleStyles.compactCalendarDayCell}>
-                          <Text style={weeklyScheduleStyles.compactCalendarDayText}>
-                            {day || ''}
-                          </Text>
-                        </View>
-                      );
-                    })}
-                  </View>
-                ))}
-              </View>
-            </View>
           </View>
-          
+
           <View style={weeklyScheduleStyles.column}>
             {rightDays.map(renderDaySection)}
-            
-            {/* 2-Month Calendar - Right Column Bottom */}
-            <View style={weeklyScheduleStyles.compactCalendarBox}>
-              <Text style={weeklyScheduleStyles.compactCalendarTitle}>
-                {monthNames[secondMonthIndex]} {secondMonthYear}
-              </Text>
-              <View style={weeklyScheduleStyles.compactCalendarGrid}>
-                <View style={weeklyScheduleStyles.compactCalendarHeaderRow}>
-                  {dayNames.map((dayName, idx) => (
-                    <View key={idx} style={weeklyScheduleStyles.compactCalendarHeaderCell}>
-                      <Text style={weeklyScheduleStyles.compactCalendarHeaderText}>{dayName}</Text>
+
+            {/* 2-Month Calendar - Bottom Right, Side by Side */}
+            <View style={{ flexDirection: 'row', gap: 4, marginTop: 6 }}>
+              <View style={weeklyScheduleStyles.miniCalendarBox}>
+                <Text style={weeklyScheduleStyles.miniCalendarTitle}>
+                  {monthNames[firstMonthIndex]} {firstMonthYear}
+                </Text>
+                <View style={weeklyScheduleStyles.miniCalendarGrid}>
+                  <View style={weeklyScheduleStyles.miniCalendarHeaderRow}>
+                    {dayNames.map((dayName, idx) => (
+                      <View key={idx} style={weeklyScheduleStyles.miniCalendarHeaderCell}>
+                        <Text style={weeklyScheduleStyles.miniCalendarHeaderText}>{dayName}</Text>
+                      </View>
+                    ))}
+                  </View>
+                  {firstMonthCalendar.map((week, weekIdx) => (
+                    <View key={weekIdx} style={weeklyScheduleStyles.miniCalendarWeekRow}>
+                      {week.map((day, dayIdx) => {
+                        const isToday = firstMonthIndex === month && firstMonthYear === year && day === today;
+                        return (
+                          <View key={dayIdx} style={isToday ? [weeklyScheduleStyles.miniCalendarDayCell, weeklyScheduleStyles.miniCalendarDayToday] : weeklyScheduleStyles.miniCalendarDayCell}>
+                            <Text style={weeklyScheduleStyles.miniCalendarDayText}>
+                              {day || ''}
+                            </Text>
+                          </View>
+                        );
+                      })}
                     </View>
                   ))}
                 </View>
-                {secondMonthCalendar.map((week, weekIdx) => (
-                  <View key={weekIdx} style={weeklyScheduleStyles.compactCalendarWeekRow}>
-                    {week.map((day, dayIdx) => {
-                      const isToday = secondMonthIndex === month && secondMonthYear === year && day === today;
-                      return (
-                        <View key={dayIdx} style={isToday ? [weeklyScheduleStyles.compactCalendarDayCell, weeklyScheduleStyles.compactCalendarDayToday] : weeklyScheduleStyles.compactCalendarDayCell}>
-                          <Text style={weeklyScheduleStyles.compactCalendarDayText}>
-                            {day || ''}
-                          </Text>
-                        </View>
-                      );
-                    })}
+              </View>
+
+              <View style={weeklyScheduleStyles.miniCalendarBox}>
+                <Text style={weeklyScheduleStyles.miniCalendarTitle}>
+                  {monthNames[secondMonthIndex]} {secondMonthYear}
+                </Text>
+                <View style={weeklyScheduleStyles.miniCalendarGrid}>
+                  <View style={weeklyScheduleStyles.miniCalendarHeaderRow}>
+                    {dayNames.map((dayName, idx) => (
+                      <View key={idx} style={weeklyScheduleStyles.miniCalendarHeaderCell}>
+                        <Text style={weeklyScheduleStyles.miniCalendarHeaderText}>{dayName}</Text>
+                      </View>
+                    ))}
                   </View>
-                ))}
+                  {secondMonthCalendar.map((week, weekIdx) => (
+                    <View key={weekIdx} style={weeklyScheduleStyles.miniCalendarWeekRow}>
+                      {week.map((day, dayIdx) => {
+                        const isToday = secondMonthIndex === month && secondMonthYear === year && day === today;
+                        return (
+                          <View key={dayIdx} style={isToday ? [weeklyScheduleStyles.miniCalendarDayCell, weeklyScheduleStyles.miniCalendarDayToday] : weeklyScheduleStyles.miniCalendarDayCell}>
+                            <Text style={weeklyScheduleStyles.miniCalendarDayText}>
+                              {day || ''}
+                            </Text>
+                          </View>
+                        );
+                      })}
+                    </View>
+                  ))}
+                </View>
               </View>
             </View>
           </View>
