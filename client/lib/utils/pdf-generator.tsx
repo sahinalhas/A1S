@@ -1164,28 +1164,7 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
           </View>
         </View>
 
-        {/* Monthly Success Tracker */}
-        <View style={weeklyScheduleStyles.successTrackerSection}>
-          <Text style={weeklyScheduleStyles.trackerTitle}>Aylık Başarı Takibi - {monthName} {year}{remainingDays < 7 ? ` / ${nextMonthName}` : ''}</Text>
-          <View style={weeklyScheduleStyles.monthCalendar}>
-            {calendarDays.map((dayObj, idx) => {
-              const isDayPassed = dayObj.isCurrentMonth && dayObj.day <= today;
-              return (
-                <View 
-                  key={`${dayObj.monthLabel}-${dayObj.day}`}
-                  style={isDayPassed ? [weeklyScheduleStyles.calendarDayBox, weeklyScheduleStyles.calendarDayFilled] : weeklyScheduleStyles.calendarDayBox}
-                >
-                  <Text style={weeklyScheduleStyles.calendarDayNumber}>{dayObj.day}</Text>
-                </View>
-              );
-            })}
-          </View>
-          <View style={weeklyScheduleStyles.progressSummary}>
-            <Text style={weeklyScheduleStyles.progressText}>
-              İlerleme: {today}/{daysInMonth} ({Math.round((today / daysInMonth) * 100)}%)
-            </Text>
-          </View>
-        </View>
+        
 
         {/* Footer */}
         <View style={weeklyScheduleStyles.weeklyFooter}>
