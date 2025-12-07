@@ -969,6 +969,68 @@ const weeklyScheduleStyles = StyleSheet.create({
   column: {
     flex: 1,
   },
+  twoMonthCalendarSection: {
+    marginTop: 8,
+    marginBottom: 6,
+  },
+  calendarRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  monthCalendarBox: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    borderRadius: 3,
+    padding: 6,
+    backgroundColor: '#fafafa',
+  },
+  monthCalendarTitle: {
+    fontSize: 8,
+    fontWeight: 700,
+    color: '#1e3a5f',
+    textAlign: 'center',
+    marginBottom: 4,
+  },
+  calendarGrid: {
+    width: '100%',
+  },
+  calendarHeaderRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#cbd5e1',
+    paddingBottom: 2,
+    marginBottom: 2,
+  },
+  calendarHeaderCell: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  calendarHeaderText: {
+    fontSize: 5,
+    fontWeight: 700,
+    color: '#64748b',
+  },
+  calendarWeekRow: {
+    flexDirection: 'row',
+    marginBottom: 1,
+  },
+  calendarDayCell: {
+    flex: 1,
+    aspectRatio: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 2,
+  },
+  calendarDayToday: {
+    backgroundColor: '#fef3c7',
+    borderWidth: 1,
+    borderColor: '#fcd34d',
+  },
+  calendarDayText: {
+    fontSize: 6,
+    color: '#1e3a5f',
+  },
 });
 
 const WEEKLY_DAYS = [
@@ -1097,31 +1159,61 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
   const leftDays = WEEKLY_DAYS.slice(0, 4);
   const rightDays = WEEKLY_DAYS.slice(4);
 
-  // Aylık takvim oluştur
+  // 2 Aylık takvim oluştur
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
   const today = currentDate.getDate();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const remainingDays = daysInMonth - today;
-  const monthName = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'][month];
-  const nextMonthName = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'][(month + 1) % 12];
   
-  // Takvim günlerini render et - ayın sonu 7 günden az ise gelecek ayı da ekle
-  const calendarDays: Array<{ day: number; isCurrentMonth: boolean; monthLabel: string }> = [];
+  // Hangi ayları göstereceğimizi belirle
+  let firstMonthIndex = month;
+  let firstMonthYear = year;
   
-  // Mevcut ayın günleri
-  for (let i = 1; i <= daysInMonth; i++) {
-    calendarDays.push({ day: i, isCurrentMonth: true, monthLabel: monthName });
-  }
-  
-  // Eğer ayın sonu 7 günden az ise gelecek ayı da ekle
+  // Eğer mevcut ayda 7 günden az kalmışsa, sonraki aylardan başla
   if (remainingDays < 7) {
-    const nextMonthDays = 7 - remainingDays;
-    for (let i = 1; i <= nextMonthDays; i++) {
-      calendarDays.push({ day: i, isCurrentMonth: false, monthLabel: nextMonthName });
-    }
+    firstMonthIndex = (month + 1) % 12;
+    firstMonthYear = month === 11 ? year + 1 : year;
   }
+  
+  const secondMonthIndex = (firstMonthIndex + 1) % 12;
+  const secondMonthYear = firstMonthIndex === 11 ? firstMonthYear + 1 : firstMonthYear;
+  
+  const monthNames = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+  const dayNames = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+  
+  // İki ay için takvim verisi oluştur
+  const generateMonthCalendar = (monthIdx: number, yearVal: number) => {
+    const firstDay = new Date(yearVal, monthIdx, 1);
+    const lastDay = new Date(yearVal, monthIdx + 1, 0);
+    const daysCount = lastDay.getDate();
+    const startDayOfWeek = (firstDay.getDay() + 6) % 7; // Pazartesi = 0
+    
+    const weeks: Array<Array<number | null>> = [];
+    let currentWeek: Array<number | null> = new Array(7).fill(null);
+    
+    // İlk haftayı boş günlerle doldur
+    for (let i = 0; i < startDayOfWeek; i++) {
+      currentWeek[i] = null;
+    }
+    
+    // Günleri yerleştir
+    for (let day = 1; day <= daysCount; day++) {
+      const dayOfWeek = (startDayOfWeek + day - 1) % 7;
+      currentWeek[dayOfWeek] = day;
+      
+      if (dayOfWeek === 6 || day === daysCount) {
+        weeks.push([...currentWeek]);
+        currentWeek = new Array(7).fill(null);
+      }
+    }
+    
+    return weeks;
+  };
+  
+  const firstMonthCalendar = generateMonthCalendar(firstMonthIndex, firstMonthYear);
+  const secondMonthCalendar = generateMonthCalendar(secondMonthIndex, secondMonthYear);
 
   return (
     <Document>
@@ -1165,6 +1257,71 @@ const WeeklyScheduleDocument: React.FC<WeeklyScheduleDocumentProps> = ({
         </View>
 
         
+
+        {/* 2-Month Calendar */}
+        <View style={weeklyScheduleStyles.twoMonthCalendarSection}>
+          <View style={weeklyScheduleStyles.calendarRow}>
+            {/* First Month */}
+            <View style={weeklyScheduleStyles.monthCalendarBox}>
+              <Text style={weeklyScheduleStyles.monthCalendarTitle}>
+                {monthNames[firstMonthIndex]} {firstMonthYear}
+              </Text>
+              <View style={weeklyScheduleStyles.calendarGrid}>
+                <View style={weeklyScheduleStyles.calendarHeaderRow}>
+                  {dayNames.map((dayName, idx) => (
+                    <View key={idx} style={weeklyScheduleStyles.calendarHeaderCell}>
+                      <Text style={weeklyScheduleStyles.calendarHeaderText}>{dayName}</Text>
+                    </View>
+                  ))}
+                </View>
+                {firstMonthCalendar.map((week, weekIdx) => (
+                  <View key={weekIdx} style={weeklyScheduleStyles.calendarWeekRow}>
+                    {week.map((day, dayIdx) => {
+                      const isToday = firstMonthIndex === month && firstMonthYear === year && day === today;
+                      return (
+                        <View key={dayIdx} style={isToday ? [weeklyScheduleStyles.calendarDayCell, weeklyScheduleStyles.calendarDayToday] : weeklyScheduleStyles.calendarDayCell}>
+                          <Text style={weeklyScheduleStyles.calendarDayText}>
+                            {day || ''}
+                          </Text>
+                        </View>
+                      );
+                    })}
+                  </View>
+                ))}
+              </View>
+            </View>
+
+            {/* Second Month */}
+            <View style={weeklyScheduleStyles.monthCalendarBox}>
+              <Text style={weeklyScheduleStyles.monthCalendarTitle}>
+                {monthNames[secondMonthIndex]} {secondMonthYear}
+              </Text>
+              <View style={weeklyScheduleStyles.calendarGrid}>
+                <View style={weeklyScheduleStyles.calendarHeaderRow}>
+                  {dayNames.map((dayName, idx) => (
+                    <View key={idx} style={weeklyScheduleStyles.calendarHeaderCell}>
+                      <Text style={weeklyScheduleStyles.calendarHeaderText}>{dayName}</Text>
+                    </View>
+                  ))}
+                </View>
+                {secondMonthCalendar.map((week, weekIdx) => (
+                  <View key={weekIdx} style={weeklyScheduleStyles.calendarWeekRow}>
+                    {week.map((day, dayIdx) => {
+                      const isToday = secondMonthIndex === month && secondMonthYear === year && day === today;
+                      return (
+                        <View key={dayIdx} style={isToday ? [weeklyScheduleStyles.calendarDayCell, weeklyScheduleStyles.calendarDayToday] : weeklyScheduleStyles.calendarDayCell}>
+                          <Text style={weeklyScheduleStyles.calendarDayText}>
+                            {day || ''}
+                          </Text>
+                        </View>
+                      );
+                    })}
+                  </View>
+                ))}
+              </View>
+            </View>
+          </View>
+        </View>
 
         {/* Footer */}
         <View style={weeklyScheduleStyles.weeklyFooter}>
