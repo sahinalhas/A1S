@@ -180,8 +180,13 @@ export default function Rehber360Layout() {
  const [sidebarOpen, setSidebarOpen] = useState(true);
  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
  const [showTipNotification, setShowTipNotification] = useState(false);
+ const [openMenuItem, setOpenMenuItem] = useState<string | null>(null);
  const isMobile = useIsMobile();
  const tipQueueStatus = useGuidanceTipQueue();
+
+ const handleMenuToggle = (to: string) => {
+   setOpenMenuItem(openMenuItem === to ? null : to);
+ };
 
  useEffect(() => {
  loadSettings().then(settings => {
@@ -294,6 +299,8 @@ export default function Rehber360Layout() {
      end={item.end}
      subItems={item.subItems}
      collapsed={!sidebarOpen}
+     isOpen={openMenuItem === item.to}
+     onToggle={handleMenuToggle}
    />
  ))}
  </nav>
@@ -361,6 +368,8 @@ export default function Rehber360Layout() {
      end={item.end}
      subItems={item.subItems}
      collapsed={false}
+     isOpen={openMenuItem === item.to}
+     onToggle={handleMenuToggle}
      onNavigate={() => setMobileMenuOpen(false)}
    />
  ))}

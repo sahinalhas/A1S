@@ -16,6 +16,8 @@ interface CollapsibleMenuItemProps {
   subItems?: SubMenuItem[];
   collapsed?: boolean;
   onNavigate?: () => void;
+  isOpen?: boolean;
+  onToggle?: (to: string) => void;
 }
 
 export function CollapsibleMenuItem({
@@ -26,14 +28,17 @@ export function CollapsibleMenuItem({
   subItems,
   collapsed,
   onNavigate,
+  isOpen: isOpenProp,
+  onToggle,
 }: CollapsibleMenuItemProps) {
   const [isOpen, setIsOpen] = React.useState(false);
+  const isOpenState = isOpenProp !== undefined ? isOpenProp : isOpen;
   const [scrollOffset, setScrollOffset] = React.useState(0);
   const subMenuRef = React.useRef<HTMLDivElement>(null);
   const hasSubItems = subItems && subItems.length > 0;
 
   const handleWheel = React.useCallback((e: WheelEvent) => {
-    if (!hasSubItems || !isOpen) return;
+    if (!hasSubItems || !isOpenState) return;
     e.preventDefault();
     
     const itemHeight = 36;
@@ -43,21 +48,21 @@ export function CollapsibleMenuItem({
       const newOffset = prev + e.deltaY * 0.5;
       return Math.max(0, Math.min(maxOffset, newOffset));
     });
-  }, [hasSubItems, isOpen, subItems?.length]);
+  }, [hasSubItems, isOpenState, subItems?.length]);
 
   React.useEffect(() => {
     const element = subMenuRef.current;
-    if (element && isOpen) {
+    if (element && isOpenState) {
       element.addEventListener("wheel", handleWheel, { passive: false });
       return () => element.removeEventListener("wheel", handleWheel);
     }
-  }, [handleWheel, isOpen]);
+  }, [handleWheel, isOpenState]);
 
   React.useEffect(() => {
-    if (!isOpen) {
+    if (!isOpenState) {
       setScrollOffset(0);
     }
-  }, [isOpen]);
+  }, [isOpenState]);
 
   if (!hasSubItems) {
     return (
@@ -111,14 +116,20 @@ export function CollapsibleMenuItem({
   return (
     <div className="relative">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          if (onToggle) {
+            onToggle(to);
+          } else {
+            setIsOpen(!isOpen);
+          }
+        }}
         className={cn(
           "w-full group flex items-center gap-3 px-3 py-2 rounded-lg",
           "text-xs font-medium text-sidebar-foreground/70",
           "transition-all duration-200 ease-out",
           "hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
           "relative",
-          isOpen && "bg-sidebar-accent/30",
+          isOpenState && "bg-sidebar-accent/30",
           collapsed && "justify-center px-2 py-2.5"
         )}
       >
@@ -141,7 +152,7 @@ export function CollapsibleMenuItem({
       <div
         className={cn(
           "overflow-hidden transition-all duration-300 ease-out",
-          isOpen ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0"
+          isOpenState ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0"
         )}
       >
         <div
