@@ -1,30 +1,9 @@
 import {
  Link,
- NavLink,
  Outlet,
- useLocation,
- useNavigate,
  Navigate,
 } from "react-router-dom";
 import { Button } from "@/components/atoms/Button";
-import { Separator } from "@/components/atoms/Separator";
-import { Avatar, AvatarFallback } from "@/components/atoms/Avatar";
-import {
- DropdownMenu,
- DropdownMenuContent,
- DropdownMenuItem,
- DropdownMenuLabel,
- DropdownMenuSeparator,
- DropdownMenuTrigger,
-} from "@/components/organisms/DropdownMenu";
-import {
- Breadcrumb,
- BreadcrumbItem,
- BreadcrumbLink,
- BreadcrumbList,
- BreadcrumbPage,
- BreadcrumbSeparator,
-} from "@/components/molecules/Breadcrumb";
 import {
  Sun,
  Moon,
@@ -32,39 +11,31 @@ import {
  CalendarDays,
  FileText,
  MessageSquare,
- BarChart3,
  Settings,
- Search,
  ClipboardList,
- LogOut,
- User,
- Bell,
  Home,
  Menu,
  X,
  PanelLeftClose,
- PanelLeftOpen,
  Lightbulb,
  BookOpen,
  Brain,
 } from "lucide-react";
 import { NotificationCenter } from "@/components/features/notifications";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { loadSettings, updateSettings, SETTINGS_KEY, AppSettings } from "@/lib/app-settings";
-import { useQuery } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api/core/client";
-import { Input } from "@/components/atoms/Input";
-import { Card } from "@/components/organisms/Card";
 import { ScrollArea } from "@/components/organisms/ScrollArea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/organisms/Tooltip/tooltip";
 import { useAuth } from "@/lib/auth-context";
 import AIStatusIndicator from "@/components/features/common/AIStatusIndicator";
 import { useIsMobile } from "@/hooks/utils/mobile.utils";
 import { cn } from "@/lib/utils";
-import { prefetchRoute } from "@/hooks/usePrefetchRoutes";
 import GuidanceTipBalloon from "@/components/features/guidance-tips/GuidanceTipBalloon";
 import { useGuidanceTipQueue } from "@/hooks/useGuidanceTipQueue";
 import SchoolSwitcher from "@/components/features/school/SchoolSwitcher";
+import { CollapsibleMenuItem } from "@/components/organisms/Sidebar/CollapsibleMenuItem";
+import { SidebarSearch } from "@/components/organisms/Sidebar/SidebarSearch";
+import { SidebarUserProfile } from "@/components/organisms/Sidebar/SidebarUserProfile";
 
 // 2025 Ultra Minimalist Logo
 function AppLogo({ collapsed }: { collapsed?: boolean }) {
@@ -100,70 +71,112 @@ function AppLogo({ collapsed }: { collapsed?: boolean }) {
  );
 }
 
-// Modern breadcrumb
-function useBreadcrumbs() {
- const location = useLocation();
- const crumbs = useMemo(() => {
- const map: Record<string, string> = {
-"": "Gösterge Paneli",
- ogrenci: "Öğrenci Yönetimi",
- gorusmeler: "Görüşme & Randevu",
- anketler: "Ölçek & Anketler",
- raporlar: "Analiz & Raporlar",
-"olcme-degerlendirme": "Sınav & Denemeler",
- ayarlar: "Profil & Ayarlar",
-"ai-araclari": "AI Asistanım", // Raporlar sayfasından AI Analiz buraya taşındı
-"icerik-yonetimi": "İçerik Kütüphanesi",
- };
- const parts = location.pathname.split("/").filter(Boolean);
- return parts.map((p, i) => ({
- key: p,
- label: map[p] || p,
- to: "/" + parts.slice(0, i + 1).join("/"),
- }));
- }, [location.pathname]);
- return crumbs;
-}
-
-// Modern navigation
+// Modern navigation with submenus
 const navigationItems = [
- { label: "Gösterge Paneli", icon: Home, to: "/", end: true },
- { label: "Öğrenci Yönetimi", icon: Users2, to: "/ogrenci" },
- { label: "Görüşme & Randevu", icon: CalendarDays, to: "/gorusmeler" },
- {
-  icon: Brain,
-  label: 'AI Asistanım',
-  to: '/ai-araclari',
-  description: 'AI sohbet, toplu analiz, risk takip ve günlük planlama',
+ { 
+   label: "Gösterge Paneli", 
+   icon: Home, 
+   to: "/", 
+   end: true,
+   subItems: [
+     { label: "Genel Bakış", to: "/" },
+     { label: "İstatistikler", to: "/?tab=stats" },
+     { label: "Hızlı Erişim", to: "/?tab=quick" },
+   ]
  },
- { label: "Analiz & Raporlar", icon: FileText, to: "/raporlar" },
- { label: "Sınav & Denemeler", icon: ClipboardList, to: "/olcme-degerlendirme" },
- { label: "Ölçek & Anketler", icon: MessageSquare, to: "/anketler" },
- { label: "İçerik Kütüphanesi", icon: BookOpen, to: "/icerik-yonetimi" },
- { label: "Profil & Ayarlar", icon: Settings, to: "/ayarlar" },
+ { 
+   label: "Öğrenci Yönetimi", 
+   icon: Users2, 
+   to: "/ogrenci",
+   subItems: [
+     { label: "Öğrenci Listesi", to: "/ogrenci" },
+     { label: "Yeni Öğrenci", to: "/ogrenci?action=new" },
+     { label: "Sınıflar", to: "/ogrenci?tab=classes" },
+     { label: "Risk Durumu", to: "/ogrenci?tab=risk" },
+   ]
+ },
+ { 
+   label: "Görüşme & Randevu", 
+   icon: CalendarDays, 
+   to: "/gorusmeler",
+   subItems: [
+     { label: "Tüm Görüşmeler", to: "/gorusmeler" },
+     { label: "Takvim", to: "/gorusmeler?view=calendar" },
+     { label: "Yeni Randevu", to: "/gorusmeler?action=new" },
+     { label: "Bekleyen", to: "/gorusmeler?status=pending" },
+   ]
+ },
+ {
+   icon: Brain,
+   label: 'AI Asistanım',
+   to: '/ai-araclari',
+   subItems: [
+     { label: "AI Sohbet", to: "/ai-araclari" },
+     { label: "Toplu Analiz", to: "/ai-araclari?tab=batch" },
+     { label: "Risk Takip", to: "/ai-araclari?tab=risk" },
+     { label: "Günlük Plan", to: "/ai-araclari?tab=daily" },
+   ]
+ },
+ { 
+   label: "Analiz & Raporlar", 
+   icon: FileText, 
+   to: "/raporlar",
+   subItems: [
+     { label: "Genel Raporlar", to: "/raporlar" },
+     { label: "Öğrenci Raporları", to: "/raporlar?type=student" },
+     { label: "İstatistikler", to: "/raporlar?type=stats" },
+   ]
+ },
+ { 
+   label: "Sınav & Denemeler", 
+   icon: ClipboardList, 
+   to: "/olcme-degerlendirme",
+   subItems: [
+     { label: "Sınav Listesi", to: "/olcme-degerlendirme" },
+     { label: "Sonuçlar", to: "/olcme-degerlendirme?tab=results" },
+     { label: "Analizler", to: "/olcme-degerlendirme?tab=analysis" },
+   ]
+ },
+ { 
+   label: "Ölçek & Anketler", 
+   icon: MessageSquare, 
+   to: "/anketler",
+   subItems: [
+     { label: "Aktif Anketler", to: "/anketler" },
+     { label: "Şablonlar", to: "/anketler?tab=templates" },
+     { label: "Sonuçlar", to: "/anketler?tab=results" },
+   ]
+ },
+ { 
+   label: "İçerik Kütüphanesi", 
+   icon: BookOpen, 
+   to: "/icerik-yonetimi",
+   subItems: [
+     { label: "Tüm İçerikler", to: "/icerik-yonetimi" },
+     { label: "Kategoriler", to: "/icerik-yonetimi?tab=categories" },
+   ]
+ },
+ { 
+   label: "Profil & Ayarlar", 
+   icon: Settings, 
+   to: "/ayarlar",
+   subItems: [
+     { label: "Hesap Ayarları", to: "/ayarlar" },
+     { label: "Bildirimler", to: "/ayarlar?tab=notifications" },
+     { label: "Tema", to: "/ayarlar?tab=theme" },
+   ]
+ },
 ];
 
 export default function Rehber360Layout() {
- const { isAuthenticated, isLoading, logout } = useAuth();
+ const { isAuthenticated, isLoading } = useAuth();
  const [dark, setDark] = useState(false);
  const [account, setAccount] = useState<AppSettings["account"] | undefined>(undefined);
- const [searchOpen, setSearchOpen] = useState(false);
- const [searchQuery, setSearchQuery] = useState("");
  const [sidebarOpen, setSidebarOpen] = useState(true);
  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
  const [showTipNotification, setShowTipNotification] = useState(false);
  const isMobile = useIsMobile();
- const crumbs = useBreadcrumbs();
- const navigate = useNavigate();
  const tipQueueStatus = useGuidanceTipQueue();
-
- const initials = useMemo(() => {
- const n = account?.displayName || "";
- const parts = n.trim().split(/\s+/).filter(Boolean);
- const first = parts[0]?.[0] || "K";
- const second = parts[1]?.[0] || "";
- return (first + second).toUpperCase();
- }, [account]);
 
  useEffect(() => {
  loadSettings().then(settings => {
@@ -195,50 +208,6 @@ export default function Rehber360Layout() {
  return () => window.removeEventListener("storage", onStorage);
  }, []);
 
- const { data: searchResults, isLoading: isSearchLoading, error: searchError } = useQuery<{
- students: any[];
- counselingSessions: any[];
- surveys: any[];
- pages: any[];
- }>({
- queryKey: ['/api/search/global', searchQuery],
- queryFn: async () => {
- if (!searchQuery.trim() || searchQuery.length < 2) {
- return { students: [], counselingSessions: [], surveys: [], pages: [] };
- }
- return apiClient.get(`/api/search/global?q=${encodeURIComponent(searchQuery)}`, {
- showErrorToast: false
- });
- },
- enabled: searchQuery.length >= 2,
- });
-
- useEffect(() => {
- const onKey = (e: KeyboardEvent) => {
- if (e.key && e.key.toLowerCase() === "k" && (e.metaKey || e.ctrlKey)) {
- e.preventDefault();
- setSearchOpen((v) => !v);
- if (!searchOpen) {
- setTimeout(() => {
- document.getElementById('header-search-input')?.focus();
- }, 100);
- }
- }
- if (e.key === "Escape" && searchOpen) {
- e.preventDefault();
- setSearchOpen(false);
- setSearchQuery("");
- }
- };
- window.addEventListener("keydown", onKey);
- return () => window.removeEventListener("keydown", onKey);
- }, [searchOpen]);
-
- const handleLogout = async () => {
- await logout();
- navigate('/login');
- };
-
  if (isLoading) {
  return (
  <div className="flex items-center justify-center h-screen bg-background">
@@ -269,8 +238,8 @@ export default function Rehber360Layout() {
  <div className="absolute inset-0 bg-gradient-to-b from-sidebar via-sidebar to-sidebar-background opacity-90" />
  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-chart-2/5 opacity-30" />
 
- {/* Header section */}
- <div className="relative h-16 flex items-center justify-between px-3 border-b border-sidebar-border/50 bg-sidebar/80">
+ {/* Header section with Logo */}
+ <div className="relative h-14 flex items-center justify-between px-3 border-b border-sidebar-border/50 bg-sidebar/80">
  {sidebarOpen && <AppLogo collapsed={false} />}
  <TooltipProvider>
  <Tooltip>
@@ -279,13 +248,10 @@ export default function Rehber360Layout() {
  variant="ghost"
  size="icon"
  onClick={() => setSidebarOpen(!sidebarOpen)}
- className={cn(
-"shrink-0",
-""
- )}
+ className="shrink-0 h-8 w-8"
  >
  <PanelLeftClose className={cn(
-"h-4 w-4",
+"h-4 w-4 transition-transform duration-200",
  sidebarOpen ?"rotate-0" :"rotate-180"
  )} />
  </Button>
@@ -299,72 +265,51 @@ export default function Rehber360Layout() {
  </TooltipProvider>
  </div>
 
- {/* Navigation section */}
- <ScrollArea className="relative flex-1 px-3 py-4">
- <TooltipProvider>
- <nav className={cn(
-"space-y-1",
- !sidebarOpen &&"space-y-1"
- )}>
- {navigationItems.map((item, index) => (
- <Tooltip key={item.to} delayDuration={sidebarOpen ? 0 : 100}>
- <TooltipTrigger asChild>
- <NavLink
- to={item.to}
- end={item.end}
- onMouseEnter={() => prefetchRoute(item.to)}
- className={({ isActive }) => cn(
-"group flex items-center gap-3 px-3 py-2 rounded-lg",
-"",
-"text-xs font-medium text-sidebar-foreground/70",
-"relative",
- isActive &&"bg-sidebar-accent text-sidebar-accent-foreground",
- !sidebarOpen &&"justify-center px-2 py-2.5",
-""
- )}
- style={{ animationDelay: `${index * 30}ms` }}
- >
- {/* Active indicator */}
- <div className={cn(
-"absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 rounded-r-full",
-"bg-gradient-to-b from-primary to-chart-2",
-"opacity-0 group-",
- !sidebarOpen &&"left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full"
- )}/>
+ {/* Search section */}
+ <div className="relative px-3 py-3 border-b border-sidebar-border/30">
+ <SidebarSearch collapsed={!sidebarOpen} />
+ </div>
 
- <item.icon className={cn(
-"shrink-0",
- sidebarOpen ?"h-4 w-4" :"h-5 w-5",
-"group- group-"
- )} />
-
- <span className={cn(
-"truncate whitespace-nowrap overflow-hidden",
- sidebarOpen ?"opacity-100 w-auto delay-75" :"opacity-0 w-0"
- )}>
- {item.label}
- </span>
- </NavLink>
- </TooltipTrigger>
- {!sidebarOpen && (
- <TooltipContent side="right" className="bg-sidebar border-sidebar-border">
- <p className="text-sidebar-foreground text-xs font-medium">{item.label}</p>
- </TooltipContent>
+ {/* Navigation section with Collapsible Menus */}
+ <ScrollArea className="relative flex-1 px-3 py-3">
+ <div className="mb-2">
+ {sidebarOpen && (
+   <span className="px-3 text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
+     Ana Menü
+   </span>
  )}
- </Tooltip>
+ </div>
+ <nav className="space-y-0.5">
+ {navigationItems.map((item) => (
+   <CollapsibleMenuItem
+     key={item.to}
+     icon={item.icon}
+     label={item.label}
+     to={item.to}
+     end={item.end}
+     subItems={item.subItems}
+     collapsed={!sidebarOpen}
+   />
  ))}
  </nav>
- </TooltipProvider>
  </ScrollArea>
 
  {/* School Switcher */}
- <div className="relative border-t border-sidebar-border/50 px-3 py-3 bg-sidebar/80">
+ <div className="relative border-t border-sidebar-border/50 px-3 py-2 bg-sidebar/80">
  <SchoolSwitcher collapsed={!sidebarOpen} />
  </div>
 
- {/* Footer section */}
- <div className="relative border-t border-sidebar-border/50 px-3 py-4 bg-sidebar/80">
+ {/* AI Status */}
+ <div className="relative border-t border-sidebar-border/50 px-3 py-2 bg-sidebar/80">
  <AIStatusIndicator collapsed={!sidebarOpen} />
+ </div>
+
+ {/* User Profile Footer */}
+ <div className="relative border-t border-sidebar-border/50 px-3 py-2 bg-sidebar/80">
+ <SidebarUserProfile 
+   collapsed={!sidebarOpen} 
+   displayName={account?.displayName}
+ />
  </div>
  </aside>
  )}
@@ -382,64 +327,57 @@ export default function Rehber360Layout() {
  <Button
  variant="ghost"
  size="icon"
- className=""
+ className="h-8 w-8"
  onClick={() => setMobileMenuOpen(false)}
  >
  <X className="h-4 w-4" />
  </Button>
  </div>
 
- {/* Mobile navigation */}
- <ScrollArea className="relative flex-1 p-4">
- <nav className="space-y-1">
- {navigationItems.map((item, index) => (
- <NavLink
- key={item.to}
- to={item.to}
- end={item.end}
- onClick={() => setMobileMenuOpen(false)}
- onMouseEnter={() => prefetchRoute(item.to)}
- style={{ animationDelay: `${index * 30}ms` }}
- >
- {( { isActive }) => (
- <div className={cn(
-"group flex items-center gap-3 px-3 py-2.5 rounded-lg",
-"",
-"text-xs font-medium text-sidebar-foreground/70",
-"relative",
- isActive &&"bg-sidebar-accent text-sidebar-accent-foreground",
-""
- )}>
- {/* Active indicator */}
- <div className={cn(
-"absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 rounded-r-full",
-"bg-gradient-to-b from-primary to-chart-2",
- isActive ?"opacity-100" :"opacity-0 group-"
- )}/>
-
- <item.icon className={cn(
-"h-4 w-4 shrink-0",
-"group- group-"
- )}/>
-
- <span className="truncate whitespace-nowrap">
- {item.label}
- </span>
+ {/* Mobile search */}
+ <div className="relative px-4 py-3 border-b border-sidebar-border/30">
+ <SidebarSearch collapsed={false} />
  </div>
- )}
- </NavLink>
+
+ {/* Mobile navigation with Collapsible Menus */}
+ <ScrollArea className="relative flex-1 p-4">
+ <div className="mb-2">
+   <span className="px-3 text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
+     Ana Menü
+   </span>
+ </div>
+ <nav className="space-y-0.5">
+ {navigationItems.map((item) => (
+   <CollapsibleMenuItem
+     key={item.to}
+     icon={item.icon}
+     label={item.label}
+     to={item.to}
+     end={item.end}
+     subItems={item.subItems}
+     collapsed={false}
+     onNavigate={() => setMobileMenuOpen(false)}
+   />
  ))}
  </nav>
  </ScrollArea>
 
  {/* Mobile school switcher */}
- <div className="relative border-t border-sidebar-border/50 p-4 bg-sidebar/80">
+ <div className="relative border-t border-sidebar-border/50 p-3 bg-sidebar/80">
  <SchoolSwitcher collapsed={false} />
  </div>
 
- {/* Mobile footer */}
- <div className="relative border-t border-sidebar-border/50 p-4 bg-sidebar/80">
+ {/* Mobile AI Status */}
+ <div className="relative border-t border-sidebar-border/50 p-3 bg-sidebar/80">
  <AIStatusIndicator />
+ </div>
+
+ {/* Mobile User Profile */}
+ <div className="relative border-t border-sidebar-border/50 p-3 bg-sidebar/80">
+ <SidebarUserProfile 
+   collapsed={false} 
+   displayName={account?.displayName}
+ />
  </div>
  </div>
  </div>
@@ -461,162 +399,6 @@ export default function Rehber360Layout() {
  )}
 
  <div className="ml-auto flex items-center gap-1">
- {!searchOpen ? (
- <Button
- variant="ghost"
- size="icon"
- className="h-7 w-7"
- onClick={() => {
- setSearchOpen(true);
- setTimeout(() => {
- document.getElementById('header-search-input')?.focus();
- }, 100);
- }}
- >
- <Search className="h-3.5 w-3.5" />
- </Button>
- ) : (
- <div className="relative w-[260px] fade-in slide-in-from-right-2">
- <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/60" />
- <Input
- id="header-search-input"
- value={searchQuery}
- onChange={(e) => setSearchQuery(e.target.value)}
- placeholder="Ara... (⌘K)"
- className="h-7 pl-8 pr-2.5 text-[11px] border-border/30 focus-visible:ring-1 focus-visible:ring-primary/15 rounded-md"
- onBlur={() => {
- setTimeout(() => {
- setSearchOpen(false);
- setSearchQuery("");
- }, 50);
- }}
- />
- {searchQuery && searchQuery.length >= 2 && (
- <Card className="absolute top-9 w-full max-h-[380px] overflow-hidden border-border/30 z-50 fade-in slide-in-from-top-2">
- <ScrollArea className="h-full max-h-[400px]">
- {isSearchLoading && (
- <div className="p-4 text-sm text-muted-foreground text-center flex items-center justify-center gap-2">
- <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
- Aranıyor...
- </div>
- )}
- {searchError && (
- <div className="p-4 text-sm text-destructive text-center">
- Arama sırasında bir hata oluştu
- </div>
- )}
- {!isSearchLoading && !searchError && searchResults && (
- <>
- {searchResults.students.length > 0 && (
- <div className="p-2">
- <div className="px-2 py-1 text-xs font-semibold text-muted-foreground">
- Öğrenciler
- </div>
- {searchResults.students.map((student) => (
- <button
- key={student.id}
- onMouseDown={() => {
- navigate(`/ogrenci/${student.id}`);
- setSearchOpen(false);
- setSearchQuery("");
- }}
- className="w-full flex items-center gap-2 px-2 py-2 rounded text-left hover:bg-accent"
- >
- <Users2 className="h-4 w-4 text-muted-foreground" />
- <div className="flex-1 text-sm">
- <div>{student.name} {student.surname}</div>
- {student.class && (
- <div className="text-xs text-muted-foreground">{student.class}</div>
- )}
- </div>
- </button>
- ))}
- </div>
- )}
- {searchResults.counselingSessions?.length > 0 && (
- <div className="p-2">
- <div className="px-2 py-1 text-xs font-semibold text-muted-foreground">
- Görüşmeler
- </div>
- {searchResults.counselingSessions.map((session) => (
- <button
- key={session.id}
- onMouseDown={() => {
- navigate(`/gorusmeler`);
- setSearchOpen(false);
- setSearchQuery("");
- }}
- className="w-full flex items-center gap-2 px-2 py-2 rounded text-left hover:bg-accent"
- >
- <MessageSquare className="h-4 w-4 text-muted-foreground" />
- <div className="flex-1 text-sm">
- <div>{session.title}</div>
- {session.studentNames && (
- <div className="text-xs text-muted-foreground">{session.studentNames}</div>
- )}
- </div>
- </button>
- ))}
- </div>
- )}
- {searchResults.surveys?.length > 0 && (
- <div className="p-2">
- <div className="px-2 py-1 text-xs font-semibold text-muted-foreground">
- Anketler
- </div>
- {searchResults.surveys.map((survey) => (
- <button
- key={survey.id}
- onMouseDown={() => {
- navigate(`/anketler`);
- setSearchOpen(false);
- setSearchQuery("");
- }}
- className="w-full flex items-center gap-2 px-2 py-2 rounded text-left hover:bg-accent"
- >
- <FileText className="h-4 w-4 text-muted-foreground" />
- <div className="text-sm">{survey.title}</div>
- </button>
- ))}
- </div>
- )}
- {searchResults.pages?.length > 0 && (
- <div className="p-2">
- <div className="px-2 py-1 text-xs font-semibold text-muted-foreground">
- Sayfalar
- </div>
- {searchResults.pages.map((page) => (
- <button
- key={page.path}
- onMouseDown={() => {
- navigate(page.path);
- setSearchOpen(false);
- setSearchQuery("");
- }}
- className="w-full flex items-center gap-2 px-2 py-2 rounded text-left hover:bg-accent"
- >
- <Search className="h-4 w-4 text-muted-foreground" />
- <div className="text-sm">{page.label}</div>
- </button>
- ))}
- </div>
- )}
- {searchResults.students.length === 0 &&
- searchResults.counselingSessions?.length === 0 &&
- searchResults.surveys?.length === 0 &&
- searchResults.pages?.length === 0 && (
- <div className="p-4 text-sm text-muted-foreground text-center">
- Sonuç bulunamadı
- </div>
- )}
- </>
- )}
- </ScrollArea>
- </Card>
- )}
- </div>
- )}
-
  <Button
  variant="ghost"
  size="icon"
@@ -648,42 +430,6 @@ export default function Rehber360Layout() {
  </span>
  )}
  </Button>
-
- <DropdownMenu>
- <DropdownMenuTrigger asChild>
- <Button variant="ghost" size="icon" className="rounded-full h-7 w-7">
- <Avatar className="h-6 w-6">
- <AvatarFallback className="text-[10px] font-semibold">
- {initials}
- </AvatarFallback>
- </Avatar>
- </Button>
- </DropdownMenuTrigger>
- <DropdownMenuContent align="end" className="w-48">
- <DropdownMenuLabel>Hesabım</DropdownMenuLabel>
- <DropdownMenuSeparator />
- <DropdownMenuItem asChild>
- <Link to="/ayarlar" className="flex items-center gap-2">
- <User className="h-4 w-4" />
- Profil
- </Link>
- </DropdownMenuItem>
- <DropdownMenuItem asChild>
- <Link to="/bildirimler" className="flex items-center gap-2">
- <Bell className="h-4 w-4" />
- Bildirimler
- </Link>
- </DropdownMenuItem>
- <DropdownMenuSeparator />
- <DropdownMenuItem
- onClick={handleLogout}
- className="flex items-center gap-2 text-destructive focus:text-destructive"
- >
- <LogOut className="h-4 w-4" />
- Çıkış Yap
- </DropdownMenuItem>
- </DropdownMenuContent>
- </DropdownMenu>
  </div>
  </div>
  </header>

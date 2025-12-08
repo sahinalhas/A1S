@@ -1,0 +1,214 @@
+import * as React from "react";
+import { ChevronDown } from "lucide-react";
+import { NavLink } from "react-router-dom";
+import { cn } from "@/lib/utils";
+import { prefetchRoute } from "@/hooks/usePrefetchRoutes";
+
+interface SubMenuItem {
+  label: string;
+  to: string;
+}
+
+interface CollapsibleMenuItemProps {
+  icon: React.ElementType;
+  label: string;
+  to: string;
+  end?: boolean;
+  subItems?: SubMenuItem[];
+  collapsed?: boolean;
+  onNavigate?: () => void;
+}
+
+export function CollapsibleMenuItem({
+  icon: Icon,
+  label,
+  to,
+  end,
+  subItems,
+  collapsed,
+  onNavigate,
+}: CollapsibleMenuItemProps) {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [scrollOffset, setScrollOffset] = React.useState(0);
+  const subMenuRef = React.useRef<HTMLDivElement>(null);
+  const hasSubItems = subItems && subItems.length > 0;
+
+  const handleWheel = React.useCallback((e: WheelEvent) => {
+    if (!hasSubItems || !isOpen) return;
+    e.preventDefault();
+    
+    const itemHeight = 36;
+    const maxOffset = Math.max(0, (subItems.length - 3) * itemHeight);
+    
+    setScrollOffset((prev) => {
+      const newOffset = prev + e.deltaY * 0.5;
+      return Math.max(0, Math.min(maxOffset, newOffset));
+    });
+  }, [hasSubItems, isOpen, subItems?.length]);
+
+  React.useEffect(() => {
+    const element = subMenuRef.current;
+    if (element && isOpen) {
+      element.addEventListener("wheel", handleWheel, { passive: false });
+      return () => element.removeEventListener("wheel", handleWheel);
+    }
+  }, [handleWheel, isOpen]);
+
+  React.useEffect(() => {
+    if (!isOpen) {
+      setScrollOffset(0);
+    }
+  }, [isOpen]);
+
+  if (!hasSubItems) {
+    return (
+      <NavLink
+        to={to}
+        end={end}
+        onMouseEnter={() => prefetchRoute(to)}
+        onClick={onNavigate}
+        className={({ isActive }) =>
+          cn(
+            "group flex items-center gap-3 px-3 py-2 rounded-lg",
+            "text-xs font-medium text-sidebar-foreground/70",
+            "transition-all duration-200 ease-out",
+            "hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
+            "relative",
+            isActive && "bg-sidebar-accent text-sidebar-accent-foreground",
+            collapsed && "justify-center px-2 py-2.5"
+          )
+        }
+      >
+        {({ isActive }) => (
+          <>
+            <div
+              className={cn(
+                "absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 rounded-r-full",
+                "bg-gradient-to-b from-primary to-chart-2",
+                isActive ? "opacity-100" : "opacity-0",
+                collapsed && "left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full"
+              )}
+            />
+            <Icon
+              className={cn(
+                "shrink-0 transition-colors",
+                collapsed ? "h-5 w-5" : "h-4 w-4"
+              )}
+            />
+            <span
+              className={cn(
+                "truncate whitespace-nowrap overflow-hidden transition-all",
+                collapsed ? "opacity-0 w-0" : "opacity-100 w-auto"
+              )}
+            >
+              {label}
+            </span>
+          </>
+        )}
+      </NavLink>
+    );
+  }
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={cn(
+          "w-full group flex items-center gap-3 px-3 py-2 rounded-lg",
+          "text-xs font-medium text-sidebar-foreground/70",
+          "transition-all duration-200 ease-out",
+          "hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
+          "relative",
+          isOpen && "bg-sidebar-accent/30",
+          collapsed && "justify-center px-2 py-2.5"
+        )}
+      >
+        <Icon
+          className={cn(
+            "shrink-0 transition-colors",
+            collapsed ? "h-5 w-5" : "h-4 w-4"
+          )}
+        />
+        <span
+          className={cn(
+            "flex-1 text-left truncate whitespace-nowrap overflow-hidden transition-all",
+            collapsed ? "opacity-0 w-0" : "opacity-100 w-auto"
+          )}
+        >
+          {label}
+        </span>
+        {!collapsed && (
+          <ChevronDown
+            className={cn(
+              "h-3.5 w-3.5 shrink-0 transition-transform duration-300 ease-out",
+              isOpen && "rotate-180"
+            )}
+          />
+        )}
+      </button>
+
+      <div
+        className={cn(
+          "overflow-hidden transition-all duration-300 ease-out",
+          isOpen ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0"
+        )}
+      >
+        <div
+          ref={subMenuRef}
+          className={cn(
+            "relative ml-4 pl-3 border-l border-sidebar-border/50",
+            "py-1 overflow-hidden",
+            collapsed && "ml-0 pl-0 border-l-0"
+          )}
+          style={{ height: Math.min(subItems.length, 3) * 36 + 8 }}
+        >
+          <div
+            className="transition-transform duration-200 ease-out"
+            style={{
+              transform: `translateY(-${scrollOffset}px)`,
+            }}
+          >
+            {subItems.map((item, index) => {
+              const distanceFromCenter = Math.abs(
+                scrollOffset / 36 - index + 1
+              );
+              const opacity = Math.max(0.4, 1 - distanceFromCenter * 0.3);
+              const scale = Math.max(0.9, 1 - distanceFromCenter * 0.05);
+
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  onMouseEnter={() => prefetchRoute(item.to)}
+                  onClick={onNavigate}
+                  style={{
+                    opacity,
+                    transform: `scale(${scale})`,
+                  }}
+                  className={({ isActive }) =>
+                    cn(
+                      "flex items-center h-9 px-3 rounded-md",
+                      "text-xs font-medium text-sidebar-foreground/60",
+                      "transition-all duration-200 ease-out",
+                      "hover:text-sidebar-foreground hover:bg-sidebar-accent/30",
+                      isActive &&
+                        "text-primary bg-primary/10 font-semibold"
+                    )
+                  }
+                >
+                  <span className="truncate">{item.label}</span>
+                </NavLink>
+              );
+            })}
+          </div>
+
+          {subItems.length > 3 && isOpen && (
+            <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-sidebar to-transparent pointer-events-none" />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default CollapsibleMenuItem;
