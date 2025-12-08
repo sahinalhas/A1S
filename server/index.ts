@@ -8,6 +8,7 @@ import { securityHeaders } from "./middleware/security-headers.js";
 import { sanitizeAllInputs } from "./middleware/validation.js";
 import { ensureCsrfSession } from "./middleware/csrf.middleware.js";
 import { handleMulterError } from "./middleware/file-validation.middleware.js";
+import { logger } from "./utils/logger.js";
 
 /**
  * BACKEND MODULARIZATION - COMPLETE
@@ -68,11 +69,7 @@ export async function createServer() {
   app.use(handleMulterError);
 
   app.use((err: Error & { statusCode?: number; code?: string }, req: Request, res: Response, _next: NextFunction) => {
-    import('./utils/logger.js').then(({ logger }) => {
-      logger.error('Unhandled error', 'ErrorHandler', err);
-    }).catch(() => {
-      console.error('Unhandled error:', err);
-    });
+    logger.error('Unhandled error', 'ErrorHandler', err);
 
     const isDevelopment = env.NODE_ENV === 'development';
 

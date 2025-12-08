@@ -40,13 +40,11 @@ const envSchema = z.object({
   SESSION_SECRET: z
     .string()
     .min(32, 'SESSION_SECRET must be at least 32 characters')
-    .optional()
     .default('dev-session-secret-change-in-production'),
 
   ENCRYPTION_KEY: z
     .string()
     .min(32, 'ENCRYPTION_KEY must be at least 32 characters')
-    .optional()
     .default('dev-encryption-key-change-in-production'),
 
   // AI Provider Configuration (all optional)
@@ -136,15 +134,19 @@ try {
  * Production environment checks and warnings
  */
 if (env.NODE_ENV === 'production') {
-  // Warn about default secrets in production
+  // Error on default secrets in production
   if (env.SESSION_SECRET.startsWith('dev-')) {
-    console.warn('⚠️  WARNING: Using default SESSION_SECRET in production!');
-    console.warn('   Generate a secure secret with: openssl rand -base64 32');
+    console.error('❌ FATAL: Using default SESSION_SECRET in production!');
+    console.error('   Generate a secure secret with: openssl rand -base64 32');
+    console.error('   Set SESSION_SECRET environment variable before starting production.');
+    process.exit(1);
   }
 
   if (env.ENCRYPTION_KEY.startsWith('dev-')) {
-    console.warn('⚠️  WARNING: Using default ENCRYPTION_KEY in production!');
-    console.warn('   Generate a secure key with: openssl rand -base64 32');
+    console.error('❌ FATAL: Using default ENCRYPTION_KEY in production!');
+    console.error('   Generate a secure key with: openssl rand -base64 32');
+    console.error('   Set ENCRYPTION_KEY environment variable before starting production.');
+    process.exit(1);
   }
 
   // Warn about default admin password in production

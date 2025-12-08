@@ -65,17 +65,13 @@ function isProductionOriginAllowed(
 
   const allowedOrigins = buildProductionAllowedOrigins();
 
-  // If no explicit origins, allow Replit origins
+  // If no explicit origins configured in production, reject the request
   if (allowedOrigins.length === 0) {
-    if (isReplitOrigin(origin)) {
-      return callback(null, true);
-    }
-
-    console.warn(
-      `CORS: No explicit origins configured. Allowing origin: ${origin}. ` +
-        'Consider setting ALLOWED_ORIGINS environment variable.'
+    console.error(
+      `CORS: No explicit origins configured in production. Rejecting origin: ${origin}. ` +
+        'Set ALLOWED_ORIGINS environment variable with your production domain.'
     );
-    return callback(null, true);
+    return callback(new Error('Not allowed by CORS - no origins configured'), false);
   }
 
   // Check if origin is in allowed list
