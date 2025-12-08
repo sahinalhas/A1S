@@ -1,5 +1,4 @@
 import * as React from "react";
-import { ChevronDown } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { prefetchRoute } from "@/hooks/usePrefetchRoutes";
@@ -137,14 +136,6 @@ export function CollapsibleMenuItem({
         >
           {label}
         </span>
-        {!collapsed && (
-          <ChevronDown
-            className={cn(
-              "h-3.5 w-3.5 shrink-0 transition-transform duration-300 ease-out",
-              isOpen && "rotate-180"
-            )}
-          />
-        )}
       </button>
 
       <div

@@ -93,6 +93,11 @@ const navigationItems = [
      { label: "Yeni Öğrenci", to: "/ogrenci?action=new" },
      { label: "Sınıflar", to: "/ogrenci?tab=classes" },
      { label: "Risk Durumu", to: "/ogrenci?tab=risk" },
+     { label: "Dashboard", to: "/ogrenci/:id?tab=overview" },
+     { label: "Akademik Durum", to: "/ogrenci/:id?tab=academic" },
+     { label: "Psikososyal Durum", to: "/ogrenci/:id?tab=psychosocial" },
+     { label: "Kariyer Rehberliği", to: "/ogrenci/:id?tab=career" },
+     { label: "Tanıtıcı Bilgiler", to: "/ogrenci/:id?tab=demographics" },
    ]
  },
  { 
