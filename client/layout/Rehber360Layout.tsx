@@ -137,9 +137,12 @@ const navigationItems = [
    icon: ClipboardList, 
    to: "/olcme-degerlendirme",
    subItems: [
-     { label: "Sınav Listesi", to: "/olcme-degerlendirme" },
-     { label: "Sonuçlar", to: "/olcme-degerlendirme?tab=results" },
+     { label: "Genel Bakış", to: "/olcme-degerlendirme?tab=overview" },
+     { label: "Denemeler", to: "/olcme-degerlendirme?tab=practice-exams" },
+     { label: "Okul Sınavları", to: "/olcme-degerlendirme?tab=school-exams" },
      { label: "Analizler", to: "/olcme-degerlendirme?tab=analysis" },
+     { label: "Gelişmiş Analitik", to: "/olcme-degerlendirme?tab=advanced" },
+     { label: "Öğrenci Panosu", to: "/olcme-degerlendirme?tab=student-dashboard" },
    ]
  },
  { 
