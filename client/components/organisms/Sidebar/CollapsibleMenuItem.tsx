@@ -33,36 +33,7 @@ export function CollapsibleMenuItem({
 }: CollapsibleMenuItemProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const isOpenState = isOpenProp !== undefined ? isOpenProp : isOpen;
-  const [scrollOffset, setScrollOffset] = React.useState(0);
-  const subMenuRef = React.useRef<HTMLDivElement>(null);
   const hasSubItems = subItems && subItems.length > 0;
-
-  const handleWheel = React.useCallback((e: WheelEvent) => {
-    if (!hasSubItems || !isOpenState) return;
-    e.preventDefault();
-    
-    const itemHeight = 36;
-    const maxOffset = Math.max(0, (subItems.length - 3) * itemHeight);
-    
-    setScrollOffset((prev) => {
-      const newOffset = prev + e.deltaY * 0.5;
-      return Math.max(0, Math.min(maxOffset, newOffset));
-    });
-  }, [hasSubItems, isOpenState, subItems?.length]);
-
-  React.useEffect(() => {
-    const element = subMenuRef.current;
-    if (element && isOpenState) {
-      element.addEventListener("wheel", handleWheel, { passive: false });
-      return () => element.removeEventListener("wheel", handleWheel);
-    }
-  }, [handleWheel, isOpenState]);
-
-  React.useEffect(() => {
-    if (!isOpenState) {
-      setScrollOffset(0);
-    }
-  }, [isOpenState]);
 
   if (!hasSubItems) {
     return (
@@ -152,59 +123,38 @@ export function CollapsibleMenuItem({
       <div
         className={cn(
           "overflow-hidden transition-all duration-300 ease-out",
-          isOpenState ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0"
+          isOpenState ? "max-h-[148px] opacity-100" : "max-h-0 opacity-0"
         )}
       >
         <div
-          ref={subMenuRef}
           className={cn(
             "relative ml-4 pl-3 border-l border-sidebar-border/50",
-            "py-1 overflow-hidden",
+            "py-1 overflow-y-auto max-h-[140px]",
             collapsed && "ml-0 pl-0 border-l-0"
           )}
-          style={{ height: Math.min(subItems.length, 3) * 36 + 8 }}
         >
-          <div
-            className="transition-transform duration-200 ease-out"
-            style={{
-              transform: `translateY(-${scrollOffset}px)`,
-            }}
-          >
-            {subItems.map((item, index) => {
-              const distanceFromCenter = Math.abs(
-                scrollOffset / 36 - index + 1
-              );
-              const opacity = Math.max(0.4, 1 - distanceFromCenter * 0.3);
-              const scale = Math.max(0.9, 1 - distanceFromCenter * 0.05);
+          {subItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              onMouseEnter={() => prefetchRoute(item.to)}
+              onClick={onNavigate}
+              className={({ isActive }) =>
+                cn(
+                  "flex items-center h-9 px-3 rounded-md",
+                  "text-xs font-medium text-sidebar-foreground/60",
+                  "transition-all duration-200 ease-out",
+                  "hover:text-sidebar-foreground hover:bg-sidebar-accent/30",
+                  isActive &&
+                    "text-primary bg-primary/10 font-semibold"
+                )
+              }
+            >
+              <span className="truncate">{item.label}</span>
+            </NavLink>
+          ))}
 
-              return (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  onMouseEnter={() => prefetchRoute(item.to)}
-                  onClick={onNavigate}
-                  style={{
-                    opacity,
-                    transform: `scale(${scale})`,
-                  }}
-                  className={({ isActive }) =>
-                    cn(
-                      "flex items-center h-9 px-3 rounded-md",
-                      "text-xs font-medium text-sidebar-foreground/60",
-                      "transition-all duration-200 ease-out",
-                      "hover:text-sidebar-foreground hover:bg-sidebar-accent/30",
-                      isActive &&
-                        "text-primary bg-primary/10 font-semibold"
-                    )
-                  }
-                >
-                  <span className="truncate">{item.label}</span>
-                </NavLink>
-              );
-            })}
-          </div>
-
-          {subItems.length > 3 && isOpen && (
+          {subItems.length > 3 && (
             <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-sidebar to-transparent pointer-events-none" />
           )}
         </div>
