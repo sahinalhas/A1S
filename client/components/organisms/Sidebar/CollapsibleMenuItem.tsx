@@ -47,7 +47,7 @@ export function CollapsibleMenuItem({
             "group flex items-center gap-3 px-3 py-2 rounded-lg",
             "text-xs font-medium text-sidebar-foreground/70",
             "transition-all duration-200 ease-out",
-            "hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
+            "hover:text-sidebar-foreground/90",
             "relative",
             isActive && "bg-sidebar-accent text-sidebar-accent-foreground",
             collapsed && "justify-center px-2 py-2.5"
@@ -98,9 +98,8 @@ export function CollapsibleMenuItem({
           "w-full group flex items-center gap-3 px-3 py-2 rounded-lg",
           "text-xs font-medium text-sidebar-foreground/70",
           "transition-all duration-200 ease-out",
-          "hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
+          "hover:text-sidebar-foreground/90",
           "relative",
-          isOpenState && "bg-sidebar-accent/30",
           collapsed && "justify-center px-2 py-2.5"
         )}
       >
@@ -144,9 +143,9 @@ export function CollapsibleMenuItem({
                   "flex items-center h-9 px-3 rounded-md",
                   "text-xs font-medium text-sidebar-foreground/60",
                   "transition-all duration-200 ease-out",
-                  "hover:text-sidebar-foreground hover:bg-sidebar-accent/30",
+                  "hover:text-sidebar-foreground/80",
                   isActive &&
-                    "text-primary bg-primary/10 font-semibold"
+                    "text-sidebar-foreground bg-sidebar-accent/50 font-semibold"
                 )
               }
             >
