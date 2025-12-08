@@ -355,7 +355,7 @@ export default function Rehber360Layout() {
  </div>
 
  {/* Mobile navigation with Collapsible Menus */}
- <ScrollArea className="relative flex-1 p-4">
+ <div className="relative flex-1 overflow-y-auto overflow-x-hidden p-4">
  <div className="mb-2">
    <span className="px-3 text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
      Ana Menü
@@ -377,7 +377,7 @@ export default function Rehber360Layout() {
    />
  ))}
  </nav>
- </ScrollArea>
+ </div>
 
  {/* Mobile school switcher */}
  <div className="relative border-t border-sidebar-border/50 p-3 bg-sidebar/80">
