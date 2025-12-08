@@ -2,6 +2,11 @@ import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { prefetchRoute } from "@/hooks/usePrefetchRoutes";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/organisms/Popover";
 
 interface SubMenuItem {
   label: string;
@@ -85,81 +90,75 @@ export function CollapsibleMenuItem({
   }
 
   return (
-    <div className="relative">
-      <button
-        onClick={() => {
-          if (onToggle) {
-            onToggle(to);
-          } else {
-            setIsOpen(!isOpen);
-          }
-        }}
-        className={cn(
-          "w-full group flex items-center gap-3 px-3 py-2 rounded-lg",
-          "text-xs font-medium text-sidebar-foreground/70",
-          "transition-all duration-200 ease-out",
-          "hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
-          "relative",
-          isOpenState && "bg-sidebar-accent/30",
-          collapsed && "justify-center px-2 py-2.5"
-        )}
-      >
-        <Icon
+    <Popover open={isOpenState} onOpenChange={(open) => {
+      if (onToggle) {
+        if (open) onToggle(to);
+        else onToggle("");
+      } else {
+        setIsOpen(open);
+      }
+    }}>
+      <PopoverTrigger asChild>
+        <button
           className={cn(
-            "shrink-0 transition-colors",
-            collapsed ? "h-5 w-5" : "h-4 w-4"
-          )}
-        />
-        <span
-          className={cn(
-            "flex-1 text-left truncate whitespace-nowrap overflow-hidden transition-all",
-            collapsed ? "opacity-0 w-0" : "opacity-100 w-auto"
+            "w-full group flex items-center gap-3 px-3 py-2 rounded-lg",
+            "text-xs font-medium text-sidebar-foreground/70",
+            "transition-all duration-200 ease-out",
+            "hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
+            "relative",
+            isOpenState && "bg-sidebar-accent/30",
+            collapsed && "justify-center px-2 py-2.5"
           )}
         >
-          {label}
-        </span>
-      </button>
-
-      <div
-        className={cn(
-          "overflow-hidden transition-all duration-300 ease-out",
-          isOpenState ? "max-h-[148px] opacity-100" : "max-h-0 opacity-0"
-        )}
+          <Icon
+            className={cn(
+              "shrink-0 transition-colors",
+              collapsed ? "h-5 w-5" : "h-4 w-4"
+            )}
+          />
+          <span
+            className={cn(
+              "flex-1 text-left truncate whitespace-nowrap overflow-hidden transition-all",
+              collapsed ? "opacity-0 w-0" : "opacity-100 w-auto"
+            )}
+          >
+            {label}
+          </span>
+        </button>
+      </PopoverTrigger>
+      
+      <PopoverContent 
+        side="right" 
+        align="start"
+        className="w-48 p-2 bg-white dark:bg-slate-950 border border-gray-200 dark:border-slate-800 shadow-lg rounded-xl"
       >
-        <div
-          className={cn(
-            "relative ml-4 pl-3 border-l border-sidebar-border/50",
-            "py-1 overflow-y-auto max-h-[140px]",
-            collapsed && "ml-0 pl-0 border-l-0"
-          )}
-        >
+        <div className="flex flex-col gap-1">
           {subItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               onMouseEnter={() => prefetchRoute(item.to)}
-              onClick={onNavigate}
+              onClick={() => {
+                onNavigate?.();
+                setIsOpen(false);
+              }}
               className={({ isActive }) =>
                 cn(
-                  "flex items-center h-9 px-3 rounded-md",
-                  "text-xs font-medium text-sidebar-foreground/60",
+                  "flex items-center h-9 px-3 rounded-lg",
+                  "text-sm font-medium text-gray-700 dark:text-gray-300",
                   "transition-all duration-200 ease-out",
-                  "hover:text-sidebar-foreground hover:bg-sidebar-accent/30",
+                  "hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-800",
                   isActive &&
-                    "text-primary bg-primary/10 font-semibold"
+                    "text-primary bg-blue-50 dark:bg-blue-950/30 font-semibold"
                 )
               }
             >
               <span className="truncate">{item.label}</span>
             </NavLink>
           ))}
-
-          {subItems.length > 3 && (
-            <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-sidebar to-transparent pointer-events-none" />
-          )}
         </div>
-      </div>
-    </div>
+      </PopoverContent>
+    </Popover>
   );
 }
 
