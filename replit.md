@@ -8,6 +8,19 @@ I prefer simple language and clear explanations. I want iterative development, w
 
 ## Recent Changes (December 2024)
 
+### Sidebar Redesign Complete (2024-12-08)
+Complete sidebar redesign with new components:
+- **CollapsibleMenuItem**: Expandable menu items with sub-menu support and mouse wheel scroll effect
+- **SidebarSearch**: Search functionality moved from header to sidebar header, with floating panel for collapsed mode
+- **SidebarUserProfile**: User profile moved from header to sidebar footer
+
+**Key Features:**
+- All navigation items are expandable with sub-menus
+- Smooth carousel/scroll effect for sub-menu navigation
+- Search accessible in both expanded and collapsed sidebar states (⌘K shortcut)
+- User profile with avatar, role, and logout in sidebar footer
+- No messages section (per user request)
+
 ### Module Consolidation Complete (2024-12-05)
 Successfully consolidated redundant modules for cleaner architecture:
 - `exams` + `exam-management` → **exam-management** (unified exam handling)
