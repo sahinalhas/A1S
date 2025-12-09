@@ -162,65 +162,22 @@ export function deleteDrpUc(id: number): void {
   db.prepare('DELETE FROM drp_uc WHERE id = ?').run(id);
 }
 
-export interface HierarchyItem {
-  id: string;
-  title: string;
-  children?: HierarchyItem[];
-  items?: HierarchyItem[];
-}
-
 export function getFullHierarchy() {
+  const db = getDatabase();
+  
   const anaKategoriler = getAnaKategoriler();
+  const hizmetAlanlari = getHizmetAlanlari();
+  const drpBirler = getDrpBirler();
+  const drpIkiler = getDrpIkiler();
+  const drpUcler = getDrpUcler();
   
-  const individual: HierarchyItem[] = [];
-  const group: HierarchyItem[] = [];
-  
-  for (const anaKat of anaKategoriler) {
-    const hizmetAlanlari = getHizmetAlanlari(anaKat.id);
-    
-    const children: HierarchyItem[] = hizmetAlanlari.map(ha => {
-      const drpBirler = getDrpBirler(ha.id);
-      
-      return {
-        id: String(ha.id),
-        title: ha.ad,
-        children: drpBirler.map(db => {
-          const drpIkiler = getDrpIkiler(db.id);
-          
-          return {
-            id: String(db.id),
-            title: db.ad,
-            children: drpIkiler.map(di => {
-              const drpUcler = getDrpUcler(di.id);
-              
-              return {
-                id: String(di.id),
-                title: di.ad,
-                items: drpUcler.map(du => ({
-                  id: String(du.id),
-                  title: du.aciklama
-                }))
-              };
-            })
-          };
-        })
-      };
-    });
-    
-    const category: HierarchyItem = {
-      id: String(anaKat.id),
-      title: anaKat.ad,
-      children
-    };
-    
-    if (anaKat.ad === 'Bireysel Çalışmalar') {
-      individual.push(category);
-    } else if (anaKat.ad === 'Grup Çalışmaları') {
-      group.push(category);
-    }
-  }
-  
-  return { individual, group };
+  return {
+    ana_kategoriler: anaKategoriler,
+    drp_hizmet_alani: hizmetAlanlari,
+    drp_bir: drpBirler,
+    drp_iki: drpIkiler,
+    drp_uc: drpUcler
+  };
 }
 
 export function getStats() {
