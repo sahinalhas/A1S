@@ -255,6 +255,11 @@ export function createCounselingTables(db: Database.Database): void {
   safeAddColumn(db, 'family_participation', 'recordedAt', 'TEXT');
   safeAddColumn(db, 'family_participation', 'notes', 'TEXT');
 
+  safeAddColumn(db, 'counseling_sessions', 'drpHizmetAlaniId', 'INTEGER');
+  safeAddColumn(db, 'counseling_sessions', 'drpBirId', 'INTEGER');
+  safeAddColumn(db, 'counseling_sessions', 'drpIkiId', 'INTEGER');
+  safeAddColumn(db, 'counseling_sessions', 'drpUcId', 'INTEGER');
+
   safeAddColumn(db, 'counseling_sessions', 'mebbis_transferred', 'INTEGER DEFAULT 0');
   safeAddColumn(db, 'counseling_sessions', 'mebbis_transfer_date', 'TEXT');
   safeAddColumn(db, 'counseling_sessions', 'mebbis_transfer_error', 'TEXT');

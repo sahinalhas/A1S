@@ -121,6 +121,10 @@ export function createCounselingSession(data: Omit<CounselingSession, 'groupName
     disciplineStatus: data.disciplineStatus ? sanitizeString(data.disciplineStatus) : undefined,
     institutionalCooperation: data.institutionalCooperation ? sanitizeString(data.institutionalCooperation) : undefined,
     sessionDetails: data.sessionDetails ? sanitizeString(data.sessionDetails) : undefined,
+    drpHizmetAlaniId: data.drpHizmetAlaniId,
+    drpBirId: data.drpBirId,
+    drpIkiId: data.drpIkiId,
+    drpUcId: data.drpUcId,
     completed: 0
   };
   
@@ -149,6 +153,10 @@ export function completeCounselingSession(
     followUpPlan?: string;
     actionItems?: unknown[];
     autoCompleted?: boolean;
+    drpHizmetAlaniId?: number | null;
+    drpBirId?: number | null;
+    drpIkiId?: number | null;
+    drpUcId?: number | null;
   }
 ): { success: boolean; notFound?: boolean } {
   console.warn('[DEPRECATED] completeCounselingSession() called without schoolId. Use completeCounselingSessionBySchool() instead.');
@@ -178,7 +186,11 @@ export function completeCounselingSession(
     sanitizedOutcomes,
     completionData.followUpNeeded ? 1 : 0,
     sanitizedFollowUpPlan,
-    actionItems
+    actionItems,
+    completionData.drpHizmetAlaniId || null,
+    completionData.drpBirId || null,
+    completionData.drpIkiId || null,
+    completionData.drpUcId || null
   );
   
   if (result.changes === 0) {
@@ -208,6 +220,10 @@ export function completeCounselingSessionBySchool(
     followUpPlan?: string;
     actionItems?: unknown[];
     autoCompleted?: boolean;
+    drpHizmetAlaniId?: number | null;
+    drpBirId?: number | null;
+    drpIkiId?: number | null;
+    drpUcId?: number | null;
   }
 ): { success: boolean; notFound?: boolean } {
   const sanitizedId = sanitizeString(id);
@@ -237,7 +253,11 @@ export function completeCounselingSessionBySchool(
     sanitizedOutcomes,
     completionData.followUpNeeded ? 1 : 0,
     sanitizedFollowUpPlan,
-    actionItems
+    actionItems,
+    completionData.drpHizmetAlaniId || null,
+    completionData.drpBirId || null,
+    completionData.drpIkiId || null,
+    completionData.drpUcId || null
   );
   
   if (result.changes === 0) {
