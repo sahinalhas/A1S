@@ -188,25 +188,28 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
         <button
           onClick={handleOpenSearch}
           className={cn(
-            "flex items-center justify-center w-full h-9 rounded-lg",
+            "flex items-center justify-center w-full h-10 rounded-xl",
             "bg-sidebar-accent/30 hover:bg-sidebar-accent/50",
             "text-sidebar-foreground/60 hover:text-sidebar-foreground",
-            "transition-all duration-200"
+            "transition-all duration-300 group relative overflow-hidden",
+            "ring-1 ring-sidebar-border/30 hover:ring-primary/30"
           )}
         >
-          <Search className="h-4 w-4" />
+          {/* Hover glow */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <Search className="h-4 w-4 relative z-10" />
         </button>
 
         {searchOpen && (
           <>
-            <div 
-              className="fixed inset-0 z-40" 
+            <div
+              className="fixed inset-0 z-40 backdrop-blur-sm bg-background/20"
               onClick={handleCloseSearch}
             />
-            <Card className="fixed left-16 top-24 w-72 max-h-[400px] overflow-hidden border-sidebar-border/50 z-50 shadow-xl">
-              <div className="p-3 border-b border-sidebar-border/30">
+            <Card className="fixed left-16 top-24 w-80 max-h-[420px] overflow-hidden border-sidebar-border/50 z-50 shadow-2xl backdrop-blur-xl bg-sidebar/95">
+              <div className="p-3 border-b border-sidebar-border/30 bg-gradient-to-r from-sidebar to-sidebar-accent/20">
                 <div className="flex items-center gap-2">
-                  <Search className="h-4 w-4 text-sidebar-foreground/50" />
+                  <Search className="h-4 w-4 text-primary" />
                   <Input
                     ref={inputRef}
                     value={searchQuery}
@@ -216,7 +219,7 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
                   />
                   <button
                     onClick={handleCloseSearch}
-                    className="p-1 rounded hover:bg-sidebar-accent/50 text-sidebar-foreground/50 hover:text-sidebar-foreground"
+                    className="p-1.5 rounded-lg hover:bg-sidebar-accent/50 text-sidebar-foreground/50 hover:text-sidebar-foreground transition-all duration-200"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -224,7 +227,7 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
               </div>
               {searchQuery && searchQuery.length >= 2 && renderSearchResults()}
               {(!searchQuery || searchQuery.length < 2) && (
-                <div className="p-4 text-xs text-sidebar-foreground/50 text-center">
+                <div className="p-6 text-xs text-sidebar-foreground/50 text-center">
                   Aramak için en az 2 karakter girin
                 </div>
               )}
@@ -239,18 +242,21 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
     <div className="relative">
       <div
         className={cn(
-          "flex items-center gap-2 h-9 px-3 rounded-lg",
+          "flex items-center gap-2 h-10 px-3 rounded-xl",
           "bg-sidebar-accent/30 hover:bg-sidebar-accent/50",
-          "border border-sidebar-border/50",
-          "transition-all duration-200 cursor-text"
+          "ring-1 ring-sidebar-border/30 hover:ring-primary/30",
+          "transition-all duration-300 cursor-text group relative overflow-hidden"
         )}
         onClick={handleOpenSearch}
       >
-        <Search className="h-3.5 w-3.5 text-sidebar-foreground/50" />
+        {/* Hover glow */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+        <Search className="h-4 w-4 text-sidebar-foreground/50 group-hover:text-primary transition-colors duration-300 relative z-10" />
         {!searchOpen ? (
-          <div className="flex-1 flex items-center justify-between">
-            <span className="text-xs text-sidebar-foreground/50">Ara...</span>
-            <kbd className="hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border border-sidebar-border/50 bg-sidebar px-1.5 font-mono text-[10px] font-medium text-sidebar-foreground/50">
+          <div className="flex-1 flex items-center justify-between relative z-10">
+            <span className="text-sm text-sidebar-foreground/50">Ara...</span>
+            <kbd className="hidden sm:inline-flex h-5 select-none items-center gap-1 rounded-md border border-sidebar-border/50 bg-sidebar/50 px-1.5 font-mono text-[10px] font-medium text-sidebar-foreground/50">
               <span className="text-xs">⌘</span>K
             </kbd>
           </div>
@@ -260,7 +266,7 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Ara..."
-            className="flex-1 h-6 p-0 border-0 bg-transparent text-xs focus-visible:ring-0 placeholder:text-sidebar-foreground/40"
+            className="flex-1 h-6 p-0 border-0 bg-transparent text-sm focus-visible:ring-0 placeholder:text-sidebar-foreground/40 relative z-10"
             onBlur={() => {
               setTimeout(() => {
                 setSearchOpen(false);
@@ -272,7 +278,7 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
       </div>
 
       {searchQuery && searchQuery.length >= 2 && (
-        <Card className="absolute top-11 left-0 right-0 max-h-[300px] overflow-hidden border-sidebar-border/50 z-50 shadow-lg">
+        <Card className="absolute top-12 left-0 right-0 max-h-[320px] overflow-hidden border-sidebar-border/50 z-50 shadow-xl backdrop-blur-xl bg-sidebar/95">
           {renderSearchResults()}
         </Card>
       )}

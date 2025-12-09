@@ -44,15 +44,18 @@ export function SidebarUserProfile({
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex items-center justify-center w-full p-2 rounded-lg hover:bg-sidebar-accent/50 transition-colors">
-            <Avatar className="h-8 w-8">
-              <AvatarFallback className="text-xs font-semibold bg-primary/10 text-primary">
+          <button className="flex items-center justify-center w-full p-2 rounded-xl hover:bg-sidebar-accent/50 transition-all duration-300 group relative overflow-hidden">
+            {/* Hover glow */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+
+            <Avatar className="h-9 w-9 ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300 relative z-10">
+              <AvatarFallback className="text-sm font-bold bg-gradient-to-br from-primary to-chart-2 text-primary-foreground">
                 {initials}
               </AvatarFallback>
             </Avatar>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent side="right" align="end" className="w-48">
+        <DropdownMenuContent side="right" align="end" className="w-56">
           <DropdownMenuLabel>{displayName || "Kullanıcı"}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
@@ -85,31 +88,34 @@ export function SidebarUserProfile({
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
-            "w-full flex items-center gap-3 p-2 rounded-lg",
-            "hover:bg-sidebar-accent/50 transition-all duration-200",
-            "group"
+            "w-full flex items-center gap-3 p-2.5 rounded-xl",
+            "hover:bg-sidebar-accent/50 transition-all duration-300",
+            "group relative overflow-hidden"
           )}
         >
-          <Avatar className="h-9 w-9 shrink-0">
-            <AvatarFallback className="text-xs font-semibold bg-primary/10 text-primary">
+          {/* Hover glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+
+          <Avatar className="h-10 w-10 shrink-0 ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300 relative z-10">
+            <AvatarFallback className="text-sm font-bold bg-gradient-to-br from-primary via-primary to-chart-2 text-primary-foreground">
               {initials}
             </AvatarFallback>
           </Avatar>
-          <div className="flex-1 text-left min-w-0">
-            <div className="text-xs font-medium text-sidebar-foreground truncate">
+          <div className="flex-1 text-left min-w-0 relative z-10">
+            <div className="text-sm font-semibold text-sidebar-foreground truncate">
               {displayName || "Kullanıcı"}
             </div>
-            <div className="text-[10px] text-sidebar-foreground/50 truncate">
+            <div className="text-xs text-sidebar-foreground/60 truncate">
               {role || "Rehber Öğretmen"}
             </div>
           </div>
-          <ChevronUp className="h-4 w-4 text-sidebar-foreground/50 group-hover:text-sidebar-foreground transition-colors" />
+          <ChevronUp className="h-4 w-4 text-sidebar-foreground/50 group-hover:text-sidebar-foreground group-hover:-translate-y-0.5 transition-all duration-300 relative z-10" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent side="top" align="start" className="w-[200px]">
+      <DropdownMenuContent side="top" align="start" className="w-[220px]">
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium">{displayName || "Kullanıcı"}</p>
+            <p className="text-sm font-semibold">{displayName || "Kullanıcı"}</p>
             <p className="text-xs text-muted-foreground">
               {role || "Rehber Öğretmen"}
             </p>
