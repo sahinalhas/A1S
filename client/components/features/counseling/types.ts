@@ -16,6 +16,10 @@ export const individualSessionSchema = z.object({
  sessionDate: z.date(),
  sessionTime: z.string().min(1,"Görüşme saati seçilmelidir"),
  sessionDetails: z.string().optional(),
+ drpHizmetAlaniId: z.number().optional(),
+ drpBirId: z.number().optional(),
+ drpIkiId: z.number().optional(),
+ drpUcId: z.number().optional(),
 }).refine((data) => {
  if (data.participantType === PARTICIPANT_TYPES.VELI) {
  return !!data.parentName && !!data.parentRelationship;
@@ -57,6 +61,10 @@ export const groupSessionSchema = z.object({
  sessionDate: z.date(),
  sessionTime: z.string().min(1,"Görüşme saati seçilmelidir"),
  sessionDetails: z.string().optional(),
+ drpHizmetAlaniId: z.number().optional(),
+ drpBirId: z.number().optional(),
+ drpIkiId: z.number().optional(),
+ drpUcId: z.number().optional(),
 }).refine((data) => {
  if (data.participantType === PARTICIPANT_TYPES.VELI) {
  return !!data.parentName && !!data.parentRelationship;
@@ -104,6 +112,10 @@ export const completeSessionSchema = z.object({
  dueDate: z.string().optional(),
  priority: z.enum(['low', 'medium', 'high']).optional(),
  })).default([]),
+ drpHizmetAlaniId: z.number().optional(),
+ drpBirId: z.number().optional(),
+ drpIkiId: z.number().optional(),
+ drpUcId: z.number().optional(),
 }).refine((data) => {
  if (data.followUpNeeded) {
  return data.followUpDate && data.followUpTime;
@@ -192,6 +204,10 @@ export interface CounselingSession {
  exitTime?: string;
  exitClassHourId?: number;
  topic?: string;
+ drpHizmetAlaniId?: number;
+ drpBirId?: number;
+ drpIkiId?: number;
+ drpUcId?: number;
  participantType: string;
  relationshipType?: string;
  otherParticipants?: string;
