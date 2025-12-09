@@ -15,7 +15,9 @@ interface DBStatements {
   insertSession: any;
   insertSessionStudent: any;
   completeSession: any;
+  completeSessionBySchool: any;
   extendSession: any;
+  extendSessionBySchool: any;
   getSessionsToAutoComplete: any;
   getSessionsToAutoCompleteBySchool: any;
   autoCompleteSession: any;
@@ -78,8 +80,8 @@ function ensureInitialized(): void {
         participantType, relationshipType, otherParticipants, parentName,
         parentRelationship, teacherName, teacherBranch, otherParticipantDescription,
         sessionMode, sessionLocation, disciplineStatus, institutionalCooperation,
-        sessionDetails, completed
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        sessionDetails, completed, drpHizmetAlaniId, drpBirId, drpIkiId, drpUcId
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `),
     insertSessionStudent: db.prepare(`
       INSERT INTO counseling_session_students (sessionId, studentId)
@@ -93,6 +95,7 @@ function ensureInitialized(): void {
           emotionalState = ?, physicalState = ?, communicationQuality = ?,
           sessionTags = ?, achievedOutcomes = ?, followUpNeeded = ?,
           followUpPlan = ?, actionItems = ?,
+          drpHizmetAlaniId = ?, drpBirId = ?, drpIkiId = ?, drpUcId = ?,
           updated_at = CURRENT_TIMESTAMP
       WHERE id = ?
     `),
@@ -104,6 +107,7 @@ function ensureInitialized(): void {
           emotionalState = ?, physicalState = ?, communicationQuality = ?,
           sessionTags = ?, achievedOutcomes = ?, followUpNeeded = ?,
           followUpPlan = ?, actionItems = ?,
+          drpHizmetAlaniId = ?, drpBirId = ?, drpIkiId = ?, drpUcId = ?,
           updated_at = CURRENT_TIMESTAMP
       WHERE id = ? AND schoolId = ?
     `),
@@ -229,7 +233,11 @@ export function createSession(session: CounselingSession, studentIds: string[]):
       session.disciplineStatus || null,
       session.institutionalCooperation || null,
       session.sessionDetails || null,
-      0
+      0,
+      session.drpHizmetAlaniId || null,
+      session.drpBirId || null,
+      session.drpIkiId || null,
+      session.drpUcId || null
     );
     
     for (const studentId of studentIds) {
@@ -257,7 +265,11 @@ export function completeSession(
   achievedOutcomes?: string | null,
   followUpNeeded?: number,
   followUpPlan?: string | null,
-  actionItems?: string | null
+  actionItems?: string | null,
+  drpHizmetAlaniId?: number | null,
+  drpBirId?: number | null,
+  drpIkiId?: number | null,
+  drpUcId?: number | null
 ): { changes: number } {
   console.warn('[DEPRECATED] completeSession() called without schoolId. Use completeSessionBySchool() instead.');
   ensureInitialized();
@@ -278,6 +290,10 @@ export function completeSession(
     followUpNeeded !== undefined ? followUpNeeded : 0,
     followUpPlan || null,
     actionItems || null,
+    drpHizmetAlaniId || null,
+    drpBirId || null,
+    drpIkiId || null,
+    drpUcId || null,
     id
   );
   return { changes: result.changes };
@@ -301,7 +317,11 @@ export function completeSessionBySchool(
   achievedOutcomes?: string | null,
   followUpNeeded?: number,
   followUpPlan?: string | null,
-  actionItems?: string | null
+  actionItems?: string | null,
+  drpHizmetAlaniId?: number | null,
+  drpBirId?: number | null,
+  drpIkiId?: number | null,
+  drpUcId?: number | null
 ): { changes: number } {
   ensureInitialized();
   const result = statements!.completeSessionBySchool.run(
@@ -321,6 +341,10 @@ export function completeSessionBySchool(
     followUpNeeded !== undefined ? followUpNeeded : 0,
     followUpPlan || null,
     actionItems || null,
+    drpHizmetAlaniId || null,
+    drpBirId || null,
+    drpIkiId || null,
+    drpUcId || null,
     id,
     schoolId
   );

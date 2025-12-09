@@ -41,6 +41,10 @@ export interface CounselingSession {
   exitTime?: string;
   exitClassHourId?: number;
   topic?: string;
+  drpHizmetAlaniId?: number;
+  drpBirId?: number;
+  drpIkiId?: number;
+  drpUcId?: number;
   participantType: string;
   relationshipType?: string;
   otherParticipants?: string;
