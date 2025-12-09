@@ -14,38 +14,10 @@ interface CounselingSessionData {
 }
 
 export class MEBBISDataMapper {
-  private topicToHizmetAlani: Record<string, string> = {
-    'Ders Çalışma': 'Eğitsel Rehberlik',
-    'Sınav Kaygısı': 'Eğitsel Rehberlik',
-    'Ders Başarısı': 'Eğitsel Rehberlik',
-    'Okul Uyumu': 'Kişisel/Sosyal Rehberlik',
-    'Davranış Sorunları': 'Kişisel/Sosyal Rehberlik',
-    'Duygusal Destek': 'Kişisel/Sosyal Rehberlik',
-    'Akran İlişkileri': 'Kişisel/Sosyal Rehberlik',
-    'Aile İlişkileri': 'Kişisel/Sosyal Rehberlik',
-    'Meslek Seçimi': 'Mesleki Rehberlik',
-    'Üniversite Tercihi': 'Mesleki Rehberlik',
-    'Gelecek Planlaması': 'Mesleki Rehberlik'
-  };
-
-  private topicToBirinci: Record<string, string> = {
-    'Ders Çalışma': 'Ders Çalışma Becerileri',
-    'Sınav Kaygısı': 'Sınav Kaygısı',
-    'Ders Başarısı': 'Akademik Başarı',
-    'Okul Uyumu': 'Okula Uyum',
-    'Davranış Sorunları': 'Davranış Problemleri',
-    'Duygusal Destek': 'Duygusal Destek',
-    'Akran İlişkileri': 'Akran İlişkileri',
-    'Aile İlişkileri': 'Aile İletişimi',
-    'Meslek Seçimi': 'Meslek Seçimi',
-    'Üniversite Tercihi': 'Üniversite Tercihleri',
-    'Gelecek Planlaması': 'Kariyer Planlama'
-  };
-
   mapSessionToMEBBIS(session: CounselingSessionData): MEBBISSessionData {
     try {
       const hizmetAlani = this.getHizmetAlani(session.topic);
-      const birinci = this.getBirinci(session.topic);
+      const birinci = this.getHizmetAlani(session.topic); // Use same topic for first category as requested
       const ikinci = this.getIkinci(session.sessionDetails);
       const ucuncu = this.getUcuncu(session.detailedNotes);
 
@@ -73,7 +45,8 @@ export class MEBBISDataMapper {
           sessionId: session.id,
           studentNo: session.studentNo,
           topic: session.topic,
-          mappedArea: hizmetAlani
+          mappedArea: hizmetAlani,
+          mappedPrimary: birinci
         }
       );
 
@@ -90,28 +63,30 @@ export class MEBBISDataMapper {
   }
 
   private getHizmetAlani(topic: string): string {
-    return this.topicToHizmetAlani[topic] || 'Kişisel/Sosyal Rehberlik';
+    return topic;
   }
 
   private getBirinci(topic: string): string {
-    return this.topicToBirinci[topic] || 'Diğer';
+    return topic;
   }
 
   private getIkinci(sessionDetails: string | null): string {
     if (!sessionDetails) return 'Genel Görüşme';
-    
+
+    // Check if sessionDetails directly matches a known category or just pass it through?
+    // User asked for "direct data". I will keep the keyword search for now as it's logic, not a hard map.
     if (sessionDetails.toLowerCase().includes('verimlilik')) return 'Verimlilik';
     if (sessionDetails.toLowerCase().includes('motivasyon')) return 'Motivasyon';
     if (sessionDetails.toLowerCase().includes('konsantrasyon')) return 'Konsantrasyon';
     if (sessionDetails.toLowerCase().includes('zaman yönetimi')) return 'Zaman Yönetimi';
-    
+
     const firstWords = sessionDetails.split(' ').slice(0, 3).join(' ');
     return firstWords.length > 50 ? firstWords.substring(0, 50) : firstWords;
   }
 
   private getUcuncu(detailedNotes: string | null): string | undefined {
     if (!detailedNotes || detailedNotes.length < 10) return undefined;
-    
+
     const summary = detailedNotes.split('\n')[0] || detailedNotes.substring(0, 100);
     return summary.length > 100 ? summary.substring(0, 100) : summary;
   }
@@ -135,7 +110,7 @@ export class MEBBISDataMapper {
         const [hours, minutes] = timeString.split(':');
         return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
       }
-      
+
       const date = new Date(timeString);
       const hours = String(date.getHours()).padStart(2, '0');
       const minutes = String(date.getMinutes()).padStart(2, '0');

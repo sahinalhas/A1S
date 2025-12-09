@@ -76,6 +76,31 @@ export class MEBBISAutomationService {
     }
   }
 
+  private async waitForDropdownPopulated(selector: string, timeout = 10000): Promise<void> {
+    if (!this.page) throw new Error('Page not initialized');
+
+    logger.debug(`Waiting for dropdown ${selector} to propagate...`, 'MEBBISAutomation');
+
+    try {
+      await this.page.waitForFunction(
+        (sel) => {
+          const el = document.querySelector(sel) as HTMLSelectElement;
+          // Wait until there is more than 1 option OR the only option is not a placeholder value like "-1" or "Seçiniz"
+          return el && el.options.length > 0 &&
+            (el.options.length > 1 || (el.value !== '-1' && el.value !== ''));
+        },
+        { timeout },
+        selector
+      );
+
+      const optionCount = await this.page.$eval(selector, (el) => (el as HTMLSelectElement).options.length);
+      logger.debug(`Dropdown ${selector} populated with ${optionCount} options.`, 'MEBBISAutomation');
+
+    } catch (error) {
+      logger.warn(`Dropdown ${selector} population wait timed out or failed. Proceeding anyway...`, 'MEBBISAutomation');
+    }
+  }
+
   private async findChromiumPath(): Promise<string | undefined> {
     const { execSync } = await import('child_process');
     const fs = await import('fs');
@@ -547,19 +572,22 @@ export class MEBBISAutomationService {
         return { success: false, error: errorMsg };
       }
 
+      logger.info(`Session Data to Fill: ${JSON.stringify(data, null, 2)}`, 'MEBBISAutomation');
+
       await this.retry(async () => {
         await this.selectDropdownOption('#drp_hizmet_alani', data.hizmetAlani);
-        await this.wait(1000);
+        // Wait for next dropdown to populate after selection
+        await this.waitForDropdownPopulated('#drp_bir');
       }, 2, 1000, 'Service area selection');
 
       await this.retry(async () => {
         await this.selectDropdownOption('#drp_bir', data.birinci);
-        await this.wait(1000);
+        await this.waitForDropdownPopulated('#drp_iki');
       }, 2, 1000, 'Primary category selection');
 
       await this.retry(async () => {
         await this.selectDropdownOption('#drp_iki', data.ikinci);
-        await this.wait(1000);
+        await this.wait(500); // No next dependent dropdown known, safe short wait
       }, 2, 1000, 'Secondary category selection');
 
       if (data.ucuncu) {
