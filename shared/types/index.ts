@@ -390,19 +390,3 @@ export type {
   QuickAction,
 } from './exam-management.types.js';
 
-/**
- * ============================================================================
- * GUIDANCE STANDARDS TYPES
- * ============================================================================
- */
-export type {
-  GuidanceItem,
-  GuidanceCategory,
-  GuidanceStandard,
-  GuidanceStandardsResponse,
-  CreateCategoryRequest,
-  UpdateCategoryRequest,
-  CreateItemRequest,
-  UpdateItemRequest,
-  ReorderItemsRequest,
-} from './guidance-standards.types.js';
