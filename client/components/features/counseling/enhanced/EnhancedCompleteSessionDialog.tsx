@@ -201,6 +201,18 @@ export default function EnhancedCompleteSessionDialog({
     }
   };
 
+  const handleTopicChange = (topicId: string) => {
+    form.setValue('topic', topicId);
+    
+    const selectedTopic = topics.find(t => t.id === topicId);
+    if (selectedTopic) {
+      form.setValue('drpHizmetAlaniId', selectedTopic.drpHizmetAlaniId);
+      form.setValue('drpBirId', selectedTopic.drpBirId);
+      form.setValue('drpIkiId', selectedTopic.drpIkiId);
+      form.setValue('drpUcId', selectedTopic.drpUcId);
+    }
+  };
+
   const getSubmitButtonText = () => {
     if (followUpNeeded) {
       return "Kaydet ve Takip Planla";
@@ -410,7 +422,7 @@ export default function EnhancedCompleteSessionDialog({
                             <CounselingTopicSelector
                               topics={topics}
                               value={field.value}
-                              onValueChange={field.onChange}
+                              onValueChange={handleTopicChange}
                               placeholder="Konu seç..."
                             />
                           </FormControl>

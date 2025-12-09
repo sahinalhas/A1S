@@ -191,6 +191,10 @@ export interface CounselingTopic {
  title: string;
  category: string;
  fullPath: string;
+ drpHizmetAlaniId: number;
+ drpBirId: number;
+ drpIkiId: number;
+ drpUcId: number;
 }
 
 export interface CounselingSession {

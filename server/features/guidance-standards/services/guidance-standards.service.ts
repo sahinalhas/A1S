@@ -144,6 +144,10 @@ interface CounselingTopic {
   title: string;
   category: string;
   fullPath: string;
+  drpHizmetAlaniId: number;
+  drpBirId: number;
+  drpIkiId: number;
+  drpUcId: number;
 }
 
 export function getIndividualTopicsFlat(): CounselingTopic[] {
@@ -168,7 +172,11 @@ export function getIndividualTopicsFlat(): CounselingTopic[] {
             id: String(du.id),
             title: du.aciklama,
             category: di.ad,
-            fullPath: `${ha.ad} > ${db.ad} > ${di.ad}`
+            fullPath: `${ha.ad} > ${db.ad} > ${di.ad}`,
+            drpHizmetAlaniId: ha.id,
+            drpBirId: db.id,
+            drpIkiId: di.id,
+            drpUcId: du.id
           });
         }
       }
