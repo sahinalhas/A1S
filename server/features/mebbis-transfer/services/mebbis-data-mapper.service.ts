@@ -71,17 +71,7 @@ export class MEBBISDataMapper {
   }
 
   private getIkinci(sessionDetails: string | null): string {
-    if (!sessionDetails) return 'Genel Görüşme';
-
-    // Check if sessionDetails directly matches a known category or just pass it through?
-    // User asked for "direct data". I will keep the keyword search for now as it's logic, not a hard map.
-    if (sessionDetails.toLowerCase().includes('verimlilik')) return 'Verimlilik';
-    if (sessionDetails.toLowerCase().includes('motivasyon')) return 'Motivasyon';
-    if (sessionDetails.toLowerCase().includes('konsantrasyon')) return 'Konsantrasyon';
-    if (sessionDetails.toLowerCase().includes('zaman yönetimi')) return 'Zaman Yönetimi';
-
-    const firstWords = sessionDetails.split(' ').slice(0, 3).join(' ');
-    return firstWords.length > 50 ? firstWords.substring(0, 50) : firstWords;
+    return sessionDetails || '';
   }
 
   private getUcuncu(detailedNotes: string | null): string | undefined {
