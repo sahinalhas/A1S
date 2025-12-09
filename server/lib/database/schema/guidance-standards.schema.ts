@@ -338,18 +338,15 @@ export function seedGuidanceStandards(db: Database.Database): void {
 
 export function resetGuidanceStandardsToDefaults(db: Database.Database): void {
   try {
-    db.exec('BEGIN TRANSACTION');
     db.exec('DELETE FROM drp_uc');
     db.exec('DELETE FROM drp_iki');
     db.exec('DELETE FROM drp_bir');
     db.exec('DELETE FROM drp_hizmet_alani');
     db.exec('DELETE FROM ana_kategoriler');
-    db.exec('COMMIT');
     
     seedGuidanceStandards(db);
     console.log('✅ Guidance standards reset to defaults');
   } catch (error) {
-    db.exec('ROLLBACK');
     console.error('❌ Error resetting guidance standards:', error);
     throw error;
   }
