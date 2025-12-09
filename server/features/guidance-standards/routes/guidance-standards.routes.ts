@@ -10,7 +10,7 @@ router.get('/', async (_req: Request, res: Response) => {
     const standards = guidanceStandardsService.getAllStandards();
     res.json({
       success: true,
-      data: standards
+      data: { standards }
     });
   } catch (error) {
     console.error('Error fetching guidance standards:', error);
