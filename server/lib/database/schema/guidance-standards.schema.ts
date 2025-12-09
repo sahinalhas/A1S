@@ -1,7 +1,10 @@
 export function createGuidanceStandardsTables(): void {
-  console.log('✅ Guidance standards tables already created in PostgreSQL');
+  // Guidance standards data is loaded from shared/data/default-guidance-standards.ts
+  // No database tables needed
+  console.log('✅ Guidance standards loaded from default data');
 }
 
 export function seedGuidanceStandards(): void {
-  console.log('✅ Guidance standards data already seeded from database');
+  // Guidance standards data is loaded from shared/data/default-guidance-standards.ts
+  console.log('✅ Guidance standards seeded from default data');
 }
