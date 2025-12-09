@@ -12,9 +12,9 @@ import type {
 const router = Router();
 router.use(validateSchoolAccess);
 
-router.get('/', (_req: Request, res: Response) => {
+router.get('/', async (_req: Request, res: Response) => {
   try {
-    const standards = guidanceStandardsService.getAllStandards();
+    const standards = await guidanceStandardsService.getAllStandards();
     res.json({
       success: true,
       data: { standards },
@@ -28,10 +28,10 @@ router.get('/', (_req: Request, res: Response) => {
   }
 });
 
-router.get('/category/:id', (req: Request, res: Response) => {
+router.get('/category/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const category = guidanceStandardsService.getCategoryWithChildren(id);
+    const category = await guidanceStandardsService.getCategoryWithChildren(id);
     
     if (!category) {
       return res.status(404).json({
@@ -53,7 +53,7 @@ router.get('/category/:id', (req: Request, res: Response) => {
   }
 });
 
-router.post('/category', (req: Request, res: Response) => {
+router.post('/category', async (req: Request, res: Response) => {
   try {
     const data = req.body as CreateCategoryRequest;
     
@@ -64,7 +64,7 @@ router.post('/category', (req: Request, res: Response) => {
       });
     }
     
-    const category = guidanceStandardsService.createCategory(data);
+    const category = await guidanceStandardsService.createCategory(data);
     
     res.status(201).json({
       success: true,
@@ -79,7 +79,7 @@ router.post('/category', (req: Request, res: Response) => {
   }
 });
 
-router.put('/category/:id', (req: Request, res: Response) => {
+router.put('/category/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const data = req.body as UpdateCategoryRequest;
@@ -91,7 +91,7 @@ router.put('/category/:id', (req: Request, res: Response) => {
       });
     }
     
-    guidanceStandardsService.updateCategory(id, data.title);
+    await guidanceStandardsService.updateCategory(id, data.title);
     
     res.json({
       success: true,
@@ -106,10 +106,10 @@ router.put('/category/:id', (req: Request, res: Response) => {
   }
 });
 
-router.delete('/category/:id', (req: Request, res: Response) => {
+router.delete('/category/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    guidanceStandardsService.deleteCategory(id);
+    await guidanceStandardsService.deleteCategory(id);
     
     res.json({
       success: true,
@@ -124,7 +124,7 @@ router.delete('/category/:id', (req: Request, res: Response) => {
   }
 });
 
-router.post('/item', (req: Request, res: Response) => {
+router.post('/item', async (req: Request, res: Response) => {
   try {
     const data = req.body as CreateItemRequest;
     
@@ -135,7 +135,7 @@ router.post('/item', (req: Request, res: Response) => {
       });
     }
     
-    const item = guidanceStandardsService.createItem(data);
+    const item = await guidanceStandardsService.createItem(data);
     
     res.status(201).json({
       success: true,
@@ -150,7 +150,7 @@ router.post('/item', (req: Request, res: Response) => {
   }
 });
 
-router.put('/item/:id', (req: Request, res: Response) => {
+router.put('/item/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const data = req.body as UpdateItemRequest;
@@ -162,7 +162,7 @@ router.put('/item/:id', (req: Request, res: Response) => {
       });
     }
     
-    guidanceStandardsService.updateItem(id, data.title);
+    await guidanceStandardsService.updateItem(id, data.title);
     
     res.json({
       success: true,
@@ -177,10 +177,10 @@ router.put('/item/:id', (req: Request, res: Response) => {
   }
 });
 
-router.delete('/item/:id', (req: Request, res: Response) => {
+router.delete('/item/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    guidanceStandardsService.deleteItem(id);
+    await guidanceStandardsService.deleteItem(id);
     
     res.json({
       success: true,
@@ -195,7 +195,7 @@ router.delete('/item/:id', (req: Request, res: Response) => {
   }
 });
 
-router.put('/items/reorder', (req: Request, res: Response) => {
+router.put('/items/reorder', async (req: Request, res: Response) => {
   try {
     const data = req.body as ReorderItemsRequest;
     
@@ -206,7 +206,7 @@ router.put('/items/reorder', (req: Request, res: Response) => {
       });
     }
     
-    guidanceStandardsService.reorderItems(data.items);
+    await guidanceStandardsService.reorderItems(data.items);
     
     res.json({
       success: true,
@@ -221,9 +221,9 @@ router.put('/items/reorder', (req: Request, res: Response) => {
   }
 });
 
-router.get('/export', (_req: Request, res: Response) => {
+router.get('/export', async (_req: Request, res: Response) => {
   try {
-    const standards = guidanceStandardsService.exportStandards();
+    const standards = await guidanceStandardsService.exportStandards();
     
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Content-Disposition', 'attachment; filename=rehberlik-standartlari.json');
@@ -237,7 +237,7 @@ router.get('/export', (_req: Request, res: Response) => {
   }
 });
 
-router.post('/import', (req: Request, res: Response) => {
+router.post('/import', async (req: Request, res: Response) => {
   try {
     const data = req.body;
     
@@ -248,7 +248,7 @@ router.post('/import', (req: Request, res: Response) => {
       });
     }
     
-    guidanceStandardsService.importStandards(data);
+    await guidanceStandardsService.importStandards(data);
     
     res.json({
       success: true,
@@ -263,9 +263,9 @@ router.post('/import', (req: Request, res: Response) => {
   }
 });
 
-router.post('/reset', (_req: Request, res: Response) => {
+router.post('/reset', async (_req: Request, res: Response) => {
   try {
-    guidanceStandardsService.resetToDefaults();
+    await guidanceStandardsService.resetToDefaults();
     
     res.json({
       success: true,

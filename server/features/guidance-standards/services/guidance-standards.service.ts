@@ -1,8 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import type { GuidanceCategory, GuidanceItem, GuidanceStandard } from '../../../../shared/types/index.js';
 import * as repository from '../repository/guidance-standards.repository.js';
-import { seedGuidanceStandards } from '../../../lib/database/schema/guidance-standards.schema.js';
-import getDatabase from '../../../lib/database.js';
 
 function buildCategoryTree(categories: GuidanceCategory[], items: GuidanceItem[]): GuidanceCategory[] {
   const categoryMap = new Map<string, GuidanceCategory>();
@@ -35,9 +33,9 @@ function buildCategoryTree(categories: GuidanceCategory[], items: GuidanceItem[]
   return rootCategories.sort((a, b) => a.order - b.order);
 }
 
-export function getAllStandards(): GuidanceStandard {
-  const allCategories = repository.getAllCategories();
-  const allItems = repository.getAllItems();
+export async function getAllStandards(): Promise<GuidanceStandard> {
+  const allCategories = await repository.getAllCategories();
+  const allItems = await repository.getAllItems();
   
   const individualCategories = allCategories.filter(c => c.type === 'individual');
   const groupCategories = allCategories.filter(c => c.type === 'group');
@@ -51,12 +49,12 @@ export function getAllStandards(): GuidanceStandard {
   };
 }
 
-export function getCategoryWithChildren(categoryId: string): GuidanceCategory | null {
-  const category = repository.getCategoryById(categoryId);
+export async function getCategoryWithChildren(categoryId: string): Promise<GuidanceCategory | null> {
+  const category = await repository.getCategoryById(categoryId);
   if (!category) return null;
   
-  const allCategories = repository.getAllCategories();
-  const allItems = repository.getAllItems();
+  const allCategories = await repository.getAllCategories();
+  const allItems = await repository.getAllItems();
   
   const descendantCategories = allCategories.filter(c => 
     c.id === categoryId || c.parentId === categoryId
@@ -66,25 +64,25 @@ export function getCategoryWithChildren(categoryId: string): GuidanceCategory | 
   return tree.length > 0 ? tree[0] : null;
 }
 
-export function createCategory(data: {
+export async function createCategory(data: {
   title: string;
   type: 'individual' | 'group';
   parentId: string | null;
-}): GuidanceCategory {
+}): Promise<GuidanceCategory> {
   let level = 1;
   let order = 1;
   
   if (data.parentId) {
-    const parent = repository.getCategoryById(data.parentId);
+    const parent = await repository.getCategoryById(data.parentId);
     if (!parent) {
       throw new Error('Parent category not found');
     }
     level = parent.level + 1;
     
-    const siblings = repository.getCategoriesByParent(data.parentId);
+    const siblings = await repository.getCategoriesByParent(data.parentId);
     order = siblings.length + 1;
   } else {
-    const rootCategories = repository.getCategoriesByParent(null).filter(c => c.type === data.type);
+    const rootCategories = (await repository.getCategoriesByParent(null)).filter(c => c.type === data.type);
     order = rootCategories.length + 1;
   }
   
@@ -98,36 +96,36 @@ export function createCategory(data: {
     isCustom: true,
   };
   
-  repository.createCategory(newCategory);
+  await repository.createCategory(newCategory);
   return { ...newCategory, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
 }
 
-export function updateCategory(id: string, title: string): void {
-  const existing = repository.getCategoryById(id);
+export async function updateCategory(id: string, title: string): Promise<void> {
+  const existing = await repository.getCategoryById(id);
   if (!existing) {
     throw new Error('Category not found');
   }
-  repository.updateCategory(id, title);
+  await repository.updateCategory(id, title);
 }
 
-export function deleteCategory(id: string): void {
-  const existing = repository.getCategoryById(id);
+export async function deleteCategory(id: string): Promise<void> {
+  const existing = await repository.getCategoryById(id);
   if (!existing) {
     throw new Error('Category not found');
   }
-  repository.deleteCategory(id);
+  await repository.deleteCategory(id);
 }
 
-export function createItem(data: {
+export async function createItem(data: {
   title: string;
   categoryId: string;
-}): GuidanceItem {
-  const category = repository.getCategoryById(data.categoryId);
+}): Promise<GuidanceItem> {
+  const category = await repository.getCategoryById(data.categoryId);
   if (!category) {
     throw new Error('Category not found');
   }
   
-  const existingItems = repository.getItemsByCategory(data.categoryId);
+  const existingItems = await repository.getItemsByCategory(data.categoryId);
   const order = existingItems.length + 1;
   
   const newItem: Omit<GuidanceItem, 'createdAt' | 'updatedAt'> = {
@@ -138,39 +136,39 @@ export function createItem(data: {
     isCustom: true,
   };
   
-  repository.createItem(newItem);
+  await repository.createItem(newItem);
   return { ...newItem, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
 }
 
-export function updateItem(id: string, title: string): void {
-  const existing = repository.getItemById(id);
+export async function updateItem(id: string, title: string): Promise<void> {
+  const existing = await repository.getItemById(id);
   if (!existing) {
     throw new Error('Item not found');
   }
-  repository.updateItem(id, title);
+  await repository.updateItem(id, title);
 }
 
-export function deleteItem(id: string): void {
-  const existing = repository.getItemById(id);
+export async function deleteItem(id: string): Promise<void> {
+  const existing = await repository.getItemById(id);
   if (!existing) {
     throw new Error('Item not found');
   }
-  repository.deleteItem(id);
+  await repository.deleteItem(id);
 }
 
-export function reorderItems(items: { id: string; order: number }[]): void {
-  repository.reorderItems(items);
+export async function reorderItems(items: { id: string; order: number }[]): Promise<void> {
+  await repository.reorderItems(items);
 }
 
-export function exportStandards(): GuidanceStandard {
+export async function exportStandards(): Promise<GuidanceStandard> {
   return getAllStandards();
 }
 
-export function importStandards(data: GuidanceStandard): void {
-  repository.deleteAllData();
+export async function importStandards(data: GuidanceStandard): Promise<void> {
+  await repository.deleteAllData();
   
-  const insertCategoryRecursive = (category: GuidanceCategory) => {
-    repository.createCategory({
+  const insertCategoryRecursive = async (category: GuidanceCategory) => {
+    await repository.createCategory({
       id: category.id,
       title: category.title,
       type: category.type,
@@ -182,7 +180,7 @@ export function importStandards(data: GuidanceStandard): void {
     
     if (category.items) {
       for (const item of category.items) {
-        repository.createItem({
+        await repository.createItem({
           id: item.id,
           title: item.title,
           categoryId: item.categoryId,
@@ -194,24 +192,22 @@ export function importStandards(data: GuidanceStandard): void {
     
     if (category.children) {
       for (const child of category.children) {
-        insertCategoryRecursive(child);
+        await insertCategoryRecursive(child);
       }
     }
   };
   
   for (const category of data.individual) {
-    insertCategoryRecursive(category);
+    await insertCategoryRecursive(category);
   }
   
   for (const category of data.group) {
-    insertCategoryRecursive(category);
+    await insertCategoryRecursive(category);
   }
 }
 
-export function resetToDefaults(): void {
-  const db = getDatabase();
-  repository.deleteAllData();
-  seedGuidanceStandards(db);
+export async function resetToDefaults(): Promise<void> {
+  await repository.deleteAllData();
 }
 
 interface CounselingTopic {
@@ -221,9 +217,9 @@ interface CounselingTopic {
   fullPath: string;
 }
 
-export function getIndividualTopicsFlat(): CounselingTopic[] {
-  const allCategories = repository.getAllCategories();
-  const allItems = repository.getAllItems();
+export async function getIndividualTopicsFlat(): Promise<CounselingTopic[]> {
+  const allCategories = await repository.getAllCategories();
+  const allItems = await repository.getAllItems();
   
   const individualCategories = allCategories.filter(c => c.type === 'individual');
   const individualTree = buildCategoryTree(individualCategories, allItems);
