@@ -43,7 +43,7 @@ function AppLogo({ collapsed }: { collapsed?: boolean }) {
     <Link
       to="/"
       className={cn(
-        "flex items-center gap-3 px-3 py-4 group transition-all duration-300",
+        "flex items-center gap-3 px-3 py-2 group transition-all duration-300",
         "hover:bg-accent/50 rounded-xl"
       )}
     >
@@ -78,95 +78,46 @@ const navigationItems = [
     icon: Home,
     to: "/",
     end: true,
-    subItems: [
-      { label: "Genel Bakış", to: "/" },
-      { label: "İstatistikler", to: "/?tab=stats" },
-      { label: "Hızlı Erişim", to: "/?tab=quick" },
-    ]
   },
   {
     label: "Öğrenci Yönetimi",
     icon: Users2,
     to: "/ogrenci",
-    subItems: [
-      { label: "Öğrenci Listesi", to: "/ogrenci" },
-      { label: "Yeni Öğrenci", to: "/ogrenci?action=new" },
-      { label: "Sınıflar", to: "/ogrenci?tab=classes" },
-    ]
   },
   {
     label: "Görüşme & Randevu",
     icon: CalendarDays,
     to: "/gorusmeler",
-    subItems: [
-      { label: "Tüm Görüşmeler", to: "/gorusmeler" },
-      { label: "Takvim", to: "/gorusmeler?view=calendar" },
-      { label: "Yeni Randevu", to: "/gorusmeler?action=new" },
-      { label: "Bekleyen", to: "/gorusmeler?status=pending" },
-    ]
   },
   {
     icon: Brain,
     label: 'AI Asistanım',
     to: '/ai-araclari',
-    subItems: [
-      { label: "AI Sohbet", to: "/ai-araclari" },
-      { label: "Toplu Analiz", to: "/ai-araclari?tab=batch" },
-      { label: "Risk Takip", to: "/ai-araclari?tab=risk" },
-      { label: "Günlük Plan", to: "/ai-araclari?tab=daily" },
-    ]
   },
   {
     label: "Analiz & Raporlar",
     icon: FileText,
     to: "/raporlar",
-    subItems: [
-      { label: "Genel Raporlar", to: "/raporlar" },
-      { label: "Öğrenci Raporları", to: "/raporlar?type=student" },
-      { label: "İstatistikler", to: "/raporlar?type=stats" },
-    ]
   },
   {
     label: "Sınav & Denemeler",
     icon: ClipboardList,
     to: "/olcme-degerlendirme",
-    subItems: [
-      { label: "Genel Bakış", to: "/olcme-degerlendirme?tab=overview" },
-      { label: "Denemeler", to: "/olcme-degerlendirme?tab=practice-exams" },
-      { label: "Okul Sınavları", to: "/olcme-degerlendirme?tab=school-exams" },
-      { label: "Analizler", to: "/olcme-degerlendirme?tab=analysis" },
-      { label: "Gelişmiş Analitik", to: "/olcme-degerlendirme?tab=advanced" },
-      { label: "Öğrenci Panosu", to: "/olcme-degerlendirme?tab=student-dashboard" },
-    ]
   },
   {
     label: "Ölçek & Anketler",
     icon: MessageSquare,
     to: "/anketler",
-    subItems: [
-      { label: "Aktif Anketler", to: "/anketler" },
-      { label: "Şablonlar", to: "/anketler?tab=templates" },
-      { label: "Sonuçlar", to: "/anketler?tab=results" },
-    ]
   },
   {
     label: "İçerik Kütüphanesi",
     icon: BookOpen,
     to: "/icerik-yonetimi",
-    subItems: [
-      { label: "Tüm İçerikler", to: "/icerik-yonetimi" },
-      { label: "Kategoriler", to: "/icerik-yonetimi?tab=categories" },
-    ]
   },
   {
     label: "Profil & Ayarlar",
     icon: Settings,
     to: "/ayarlar",
-    subItems: [
-      { label: "Hesap Ayarları", to: "/ayarlar" },
-      { label: "Bildirimler", to: "/ayarlar?tab=notifications" },
-      { label: "Tema", to: "/ayarlar?tab=theme" },
-    ]
   },
 ];
 
@@ -238,7 +189,7 @@ export default function Rehber360Layout() {
           className={cn(
             "flex flex-col border-r border-sidebar-border/50 bg-sidebar ease-in-out relative overflow-hidden",
             "transition-all duration-300",
-            sidebarOpen ? "w-60" : "w-16"
+            sidebarOpen ? "w-56" : "w-16"
           )}
         >
           {/* Enhanced gradient background with glassmorphism */}
@@ -247,7 +198,7 @@ export default function Rehber360Layout() {
           <div className="absolute inset-0 backdrop-blur-[2px]" />
 
           {/* Header section with Logo */}
-          <div className="relative h-16 flex items-center justify-between px-3 border-b border-sidebar-border/50 bg-sidebar/60 backdrop-blur-xl">
+          <div className="relative h-14 flex items-center justify-between px-3 border-b border-sidebar-border/50 bg-sidebar/60 backdrop-blur-xl">
             {sidebarOpen && <AppLogo collapsed={false} />}
             <TooltipProvider>
               <Tooltip>
@@ -273,20 +224,14 @@ export default function Rehber360Layout() {
             </TooltipProvider>
           </div>
 
-          {/* Search section */}
-          <div className="relative px-3 py-3 border-b border-sidebar-border/30 bg-sidebar/40 backdrop-blur-xl">
-            <SidebarSearch collapsed={!sidebarOpen} />
-          </div>
+
 
           {/* Navigation section with Collapsible Menus */}
           <ScrollArea className="relative flex-1 px-3 py-4">
-            <div className="mb-3">
-              {sidebarOpen && (
-                <span className="px-3 text-[10px] font-bold uppercase tracking-wider text-sidebar-foreground/40">
-                  Ana Menü
-                </span>
-              )}
+            <div className="mb-2">
+              <SidebarSearch collapsed={!sidebarOpen} />
             </div>
+
             <nav className="space-y-1">
               {navigationItems.map((item) => (
                 <CollapsibleMenuItem
@@ -304,10 +249,7 @@ export default function Rehber360Layout() {
             </nav>
           </ScrollArea>
 
-          {/* School Switcher */}
-          <div className="relative border-t border-sidebar-border/50 px-3 py-2.5 bg-sidebar/60 backdrop-blur-xl">
-            <SchoolSwitcher collapsed={!sidebarOpen} />
-          </div>
+
 
           {/* AI Status */}
           <div className="relative border-t border-sidebar-border/50 px-3 py-2.5 bg-sidebar/60 backdrop-blur-xl">
@@ -351,11 +293,7 @@ export default function Rehber360Layout() {
 
             {/* Mobile navigation with Collapsible Menus */}
             <div className="relative flex-1 overflow-y-auto overflow-x-hidden p-4">
-              <div className="mb-2">
-                <span className="px-3 text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
-                  Ana Menü
-                </span>
-              </div>
+
               <nav className="space-y-0.5">
                 {navigationItems.map((item) => (
                   <CollapsibleMenuItem
@@ -397,8 +335,8 @@ export default function Rehber360Layout() {
 
       {/* Main Content */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        <header className="sticky top-0 z-40 border-b border-border/30 bg-background/95 supports-[backdrop-filter]:bg-background/70">
-          <div className="flex h-10 items-center gap-2 px-3 md:px-5">
+        <header className="sticky top-0 z-40 h-14 border-b border-border/30 bg-background/95 supports-[backdrop-filter]:bg-background/70">
+          <div className="flex h-full items-center gap-2 px-3 md:px-5">
             {isMobile && (
               <Button
                 variant="ghost"
@@ -410,7 +348,10 @@ export default function Rehber360Layout() {
               </Button>
             )}
 
-            <div className="ml-auto flex items-center gap-1">
+            <div className="ml-auto flex items-center gap-2">
+              <div className="hidden md:block mr-2">
+                <SchoolSwitcher mode="header" />
+              </div>
               <Button
                 variant="ghost"
                 size="icon"

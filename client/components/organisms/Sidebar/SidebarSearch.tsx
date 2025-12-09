@@ -42,9 +42,6 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
       if (e.key && e.key.toLowerCase() === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         setSearchOpen((v) => !v);
-        if (!searchOpen) {
-          setTimeout(() => inputRef.current?.focus(), 100);
-        }
       }
       if (e.key === "Escape" && searchOpen) {
         e.preventDefault();
@@ -56,6 +53,12 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
     return () => window.removeEventListener("keydown", onKey);
   }, [searchOpen]);
 
+  React.useEffect(() => {
+    if (searchOpen) {
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [searchOpen]);
+
   const handleResultClick = (path: string) => {
     navigate(path);
     setSearchOpen(false);
@@ -64,7 +67,6 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
 
   const handleOpenSearch = () => {
     setSearchOpen(true);
-    setTimeout(() => inputRef.current?.focus(), 100);
   };
 
   const handleCloseSearch = () => {
@@ -73,35 +75,35 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
   };
 
   const renderSearchResults = () => (
-    <ScrollArea className="h-full max-h-[300px]">
+    <ScrollArea className="h-full max-h-[400px]">
       {isSearchLoading && (
-        <div className="p-4 text-xs text-sidebar-foreground/60 text-center flex items-center justify-center gap-2">
-          <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-primary"></div>
+        <div className="p-8 text-sm text-muted-foreground text-center flex flex-col items-center justify-center gap-3">
+          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-primary"></div>
           Aranıyor...
         </div>
       )}
       {!isSearchLoading && searchResults && (
-        <>
+        <div className="p-2 space-y-2">
           {searchResults.students.length > 0 && (
-            <div className="p-2">
-              <div className="px-2 py-1 text-[10px] font-semibold text-sidebar-foreground/50 uppercase tracking-wider">
+            <div>
+              <div className="px-2 py-1.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
                 Öğrenciler
               </div>
-              {searchResults.students.slice(0, 3).map((student) => (
+              {searchResults.students.slice(0, 5).map((student) => (
                 <button
                   key={student.id}
-                  onMouseDown={() =>
-                    handleResultClick(`/ogrenci/${student.id}`)
-                  }
-                  className="w-full flex items-center gap-2 px-2 py-1.5 rounded text-left hover:bg-sidebar-accent/50 transition-colors"
+                  onClick={() => handleResultClick(`/ogrenci/${student.id}`)}
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-accent/50 transition-colors group"
                 >
-                  <Users2 className="h-3.5 w-3.5 text-sidebar-foreground/50" />
-                  <div className="flex-1 text-xs">
-                    <div className="text-sidebar-foreground">
+                  <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:scale-105 transition-transform">
+                    <Users2 className="h-4 w-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium text-foreground truncate">
                       {student.name} {student.surname}
                     </div>
                     {student.class && (
-                      <div className="text-[10px] text-sidebar-foreground/50">
+                      <div className="text-xs text-muted-foreground">
                         {student.class}
                       </div>
                     )}
@@ -110,179 +112,179 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
               ))}
             </div>
           )}
+
           {searchResults.counselingSessions?.length > 0 && (
-            <div className="p-2">
-              <div className="px-2 py-1 text-[10px] font-semibold text-sidebar-foreground/50 uppercase tracking-wider">
+            <div>
+              <div className="px-2 py-1.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
                 Görüşmeler
               </div>
-              {searchResults.counselingSessions
-                .slice(0, 3)
-                .map((session) => (
-                  <button
-                    key={session.id}
-                    onMouseDown={() => handleResultClick(`/gorusmeler`)}
-                    className="w-full flex items-center gap-2 px-2 py-1.5 rounded text-left hover:bg-sidebar-accent/50 transition-colors"
-                  >
-                    <MessageSquare className="h-3.5 w-3.5 text-sidebar-foreground/50" />
-                    <div className="flex-1 text-xs text-sidebar-foreground">
+              {searchResults.counselingSessions.slice(0, 3).map((session) => (
+                <button
+                  key={session.id}
+                  onClick={() => handleResultClick(`/gorusmeler`)}
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-accent/50 transition-colors group"
+                >
+                  <div className="size-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500 shrink-0 group-hover:scale-105 transition-transform">
+                    <MessageSquare className="h-4 w-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium text-foreground truncate">
                       {session.title}
                     </div>
-                  </button>
-                ))}
+                  </div>
+                </button>
+              ))}
             </div>
           )}
+
           {searchResults.surveys?.length > 0 && (
-            <div className="p-2">
-              <div className="px-2 py-1 text-[10px] font-semibold text-sidebar-foreground/50 uppercase tracking-wider">
+            <div>
+              <div className="px-2 py-1.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
                 Anketler
               </div>
               {searchResults.surveys.slice(0, 3).map((survey) => (
                 <button
                   key={survey.id}
-                  onMouseDown={() => handleResultClick(`/anketler`)}
-                  className="w-full flex items-center gap-2 px-2 py-1.5 rounded text-left hover:bg-sidebar-accent/50 transition-colors"
+                  onClick={() => handleResultClick(`/anketler`)}
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-accent/50 transition-colors group"
                 >
-                  <FileText className="h-3.5 w-3.5 text-sidebar-foreground/50" />
-                  <div className="text-xs text-sidebar-foreground">
+                  <div className="size-8 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-500 shrink-0 group-hover:scale-105 transition-transform">
+                    <FileText className="h-4 w-4" />
+                  </div>
+                  <div className="text-sm font-medium text-foreground truncate">
                     {survey.title}
                   </div>
                 </button>
               ))}
             </div>
           )}
+
           {searchResults.pages?.length > 0 && (
-            <div className="p-2">
-              <div className="px-2 py-1 text-[10px] font-semibold text-sidebar-foreground/50 uppercase tracking-wider">
+            <div>
+              <div className="px-2 py-1.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
                 Sayfalar
               </div>
               {searchResults.pages.slice(0, 3).map((page) => (
                 <button
                   key={page.path}
-                  onMouseDown={() => handleResultClick(page.path)}
-                  className="w-full flex items-center gap-2 px-2 py-1.5 rounded text-left hover:bg-sidebar-accent/50 transition-colors"
+                  onClick={() => handleResultClick(page.path)}
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-accent/50 transition-colors group"
                 >
-                  <Search className="h-3.5 w-3.5 text-sidebar-foreground/50" />
-                  <div className="text-xs text-sidebar-foreground">
+                  <div className="size-8 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500 shrink-0 group-hover:scale-105 transition-transform">
+                    <Search className="h-4 w-4" />
+                  </div>
+                  <div className="text-sm font-medium text-foreground truncate">
                     {page.label}
                   </div>
                 </button>
               ))}
             </div>
           )}
+
           {searchResults.students.length === 0 &&
             searchResults.counselingSessions?.length === 0 &&
             searchResults.surveys?.length === 0 &&
             searchResults.pages?.length === 0 && (
-              <div className="p-4 text-xs text-sidebar-foreground/50 text-center">
-                Sonuç bulunamadı
+              <div className="py-12 text-center">
+                <div className="mx-auto rounded-full bg-muted/50 p-3 w-12 h-12 flex items-center justify-center mb-3">
+                  <Search className="h-6 w-6 text-muted-foreground" />
+                </div>
+                <p className="text-sm text-muted-foreground font-medium">Sonuç bulunamadı</p>
+                <p className="text-xs text-muted-foreground/70 mt-1">Lütfen farklı bir terim deneyin</p>
               </div>
             )}
-        </>
+        </div>
       )}
     </ScrollArea>
   );
 
-  if (collapsed) {
-    return (
-      <div className="relative">
-        <button
-          onClick={handleOpenSearch}
+  return (
+    <>
+      <button
+        onClick={handleOpenSearch}
+        className={cn(
+          "w-full group flex items-center gap-2.5 px-2.5 py-2 rounded-lg",
+          "text-xs font-medium text-sidebar-foreground/80",
+          "transition-all duration-300 ease-out",
+          "hover:text-sidebar-foreground hover:bg-sidebar-accent/50",
+          "relative overflow-hidden",
+          collapsed && "justify-center px-2 py-2.5"
+        )}
+      >
+        {/* Hover glow effect */}
+        <div
           className={cn(
-            "flex items-center justify-center w-full h-10 rounded-xl",
-            "bg-sidebar-accent/30 hover:bg-sidebar-accent/50",
-            "text-sidebar-foreground/60 hover:text-sidebar-foreground",
-            "transition-all duration-300 group relative overflow-hidden",
-            "ring-1 ring-sidebar-border/30 hover:ring-primary/30"
+            "absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0",
+            "opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+            "rounded-lg"
+          )}
+        />
+
+        <div className="relative z-10 shrink-0">
+          <Search className={cn(
+            "text-sidebar-foreground/70 group-hover:text-primary transition-colors",
+            collapsed ? "h-4.5 w-4.5" : "h-4 w-4"
+          )} />
+        </div>
+
+        <span
+          className={cn(
+            "flex-1 text-left truncate whitespace-nowrap overflow-hidden transition-all duration-300 relative z-10",
+            collapsed ? "opacity-0 w-0" : "opacity-100 w-auto"
           )}
         >
-          {/* Hover glow */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <Search className="h-4 w-4 relative z-10" />
-        </button>
+          Hızlı Arama
+        </span>
 
-        {searchOpen && (
-          <>
-            <div
-              className="fixed inset-0 z-40 backdrop-blur-sm bg-background/20"
-              onClick={handleCloseSearch}
-            />
-            <Card className="fixed left-16 top-24 w-80 max-h-[420px] overflow-hidden border-sidebar-border/50 z-50 shadow-2xl backdrop-blur-xl bg-sidebar/95">
-              <div className="p-3 border-b border-sidebar-border/30 bg-gradient-to-r from-sidebar to-sidebar-accent/20">
-                <div className="flex items-center gap-2">
-                  <Search className="h-4 w-4 text-primary" />
-                  <Input
-                    ref={inputRef}
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Ara..."
-                    className="flex-1 h-8 border-0 bg-transparent text-sm focus-visible:ring-0 placeholder:text-sidebar-foreground/40"
-                  />
-                  <button
-                    onClick={handleCloseSearch}
-                    className="p-1.5 rounded-lg hover:bg-sidebar-accent/50 text-sidebar-foreground/50 hover:text-sidebar-foreground transition-all duration-200"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-              {searchQuery && searchQuery.length >= 2 && renderSearchResults()}
-              {(!searchQuery || searchQuery.length < 2) && (
-                <div className="p-6 text-xs text-sidebar-foreground/50 text-center">
-                  Aramak için en az 2 karakter girin
-                </div>
-              )}
-            </Card>
-          </>
-        )}
-      </div>
-    );
-  }
-
-  return (
-    <div className="relative">
-      <div
-        className={cn(
-          "flex items-center gap-2 h-10 px-3 rounded-xl",
-          "bg-sidebar-accent/30 hover:bg-sidebar-accent/50",
-          "ring-1 ring-sidebar-border/30 hover:ring-primary/30",
-          "transition-all duration-300 cursor-text group relative overflow-hidden"
-        )}
-        onClick={handleOpenSearch}
-      >
-        {/* Hover glow */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-        <Search className="h-4 w-4 text-sidebar-foreground/50 group-hover:text-primary transition-colors duration-300 relative z-10" />
-        {!searchOpen ? (
-          <div className="flex-1 flex items-center justify-between relative z-10">
-            <span className="text-sm text-sidebar-foreground/50">Ara...</span>
-            <kbd className="hidden sm:inline-flex h-5 select-none items-center gap-1 rounded-md border border-sidebar-border/50 bg-sidebar/50 px-1.5 font-mono text-[10px] font-medium text-sidebar-foreground/50">
+        {!collapsed && (
+          <div className="relative z-10 flex items-center gap-0.5 ml-auto">
+            <kbd className="hidden sm:inline-flex h-4 items-center gap-1 rounded border border-sidebar-border/40 bg-sidebar/50 px-1 font-mono text-[10px] font-medium text-sidebar-foreground/40">
               <span className="text-xs">⌘</span>K
             </kbd>
           </div>
-        ) : (
-          <Input
-            ref={inputRef}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Ara..."
-            className="flex-1 h-6 p-0 border-0 bg-transparent text-sm focus-visible:ring-0 placeholder:text-sidebar-foreground/40 relative z-10"
-            onBlur={() => {
-              setTimeout(() => {
-                setSearchOpen(false);
-                setSearchQuery("");
-              }, 200);
-            }}
-          />
         )}
-      </div>
+      </button>
 
-      {searchQuery && searchQuery.length >= 2 && (
-        <Card className="absolute top-12 left-0 right-0 max-h-[320px] overflow-hidden border-sidebar-border/50 z-50 shadow-xl backdrop-blur-xl bg-sidebar/95">
-          {renderSearchResults()}
-        </Card>
+      {/* Centered Command Palette Modal */}
+      {searchOpen && (
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] px-4">
+          <div
+            className="fixed inset-0 bg-background/40 backdrop-blur-sm transition-opacity duration-300"
+            onClick={handleCloseSearch}
+          />
+          <Card className="relative w-full max-w-lg overflow-hidden border-border/50 shadow-2xl backdrop-blur-xl bg-background/95 ring-1 ring-border/50 animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center gap-3 px-4 py-3 border-b border-border/40">
+              <Search className="h-5 w-5 text-muted-foreground" />
+              <Input
+                ref={inputRef}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Öğrenci, görüşme veya sayfa ara..."
+                className="flex-1 h-9 border-0 bg-transparent text-base focus-visible:ring-0 placeholder:text-muted-foreground/50 px-0 shadow-none"
+              />
+              <div className="flex items-center gap-2">
+                <kbd className="hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                  <span className="text-xs">ESC</span>
+                </kbd>
+                <button
+                  onClick={handleCloseSearch}
+                  className="p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+            {searchQuery && searchQuery.length >= 2 ? (
+              renderSearchResults()
+            ) : (
+              <div className="p-12 text-center text-muted-foreground/60 text-sm">
+                Aramaya başlamak için yazmaya devam edin...
+              </div>
+            )}
+          </Card>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

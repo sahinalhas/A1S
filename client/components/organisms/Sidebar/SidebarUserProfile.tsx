@@ -48,8 +48,8 @@ export function SidebarUserProfile({
             {/* Hover glow */}
             <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
 
-            <Avatar className="h-9 w-9 ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300 relative z-10">
-              <AvatarFallback className="text-sm font-bold bg-gradient-to-br from-primary to-chart-2 text-primary-foreground">
+            <Avatar className="h-8 w-8 ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300 relative z-10">
+              <AvatarFallback className="text-xs font-bold bg-gradient-to-br from-primary to-chart-2 text-primary-foreground">
                 {initials}
               </AvatarFallback>
             </Avatar>
@@ -88,7 +88,7 @@ export function SidebarUserProfile({
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
-            "w-full flex items-center gap-3 p-2.5 rounded-xl",
+            "w-full flex items-center gap-3 p-2 rounded-xl",
             "hover:bg-sidebar-accent/50 transition-all duration-300",
             "group relative overflow-hidden"
           )}
@@ -96,20 +96,20 @@ export function SidebarUserProfile({
           {/* Hover glow effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
 
-          <Avatar className="h-10 w-10 shrink-0 ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300 relative z-10">
-            <AvatarFallback className="text-sm font-bold bg-gradient-to-br from-primary via-primary to-chart-2 text-primary-foreground">
+          <Avatar className="h-8 w-8 shrink-0 ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300 relative z-10">
+            <AvatarFallback className="text-xs font-bold bg-gradient-to-br from-primary via-primary to-chart-2 text-primary-foreground">
               {initials}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 text-left min-w-0 relative z-10">
-            <div className="text-sm font-semibold text-sidebar-foreground truncate">
+            <div className="text-xs font-semibold text-sidebar-foreground truncate">
               {displayName || "Kullanıcı"}
             </div>
-            <div className="text-xs text-sidebar-foreground/60 truncate">
+            <div className="text-[10px] text-sidebar-foreground/60 truncate">
               {role || "Rehber Öğretmen"}
             </div>
           </div>
-          <ChevronUp className="h-4 w-4 text-sidebar-foreground/50 group-hover:text-sidebar-foreground group-hover:-translate-y-0.5 transition-all duration-300 relative z-10" />
+          <ChevronUp className="h-3.5 w-3.5 text-sidebar-foreground/50 group-hover:text-sidebar-foreground group-hover:-translate-y-0.5 transition-all duration-300 relative z-10" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent side="top" align="start" className="w-[220px]">

@@ -45,8 +45,8 @@ export function CollapsibleMenuItem({
         onClick={onNavigate}
         className={({ isActive }) =>
           cn(
-            "group flex items-center gap-3 px-3 py-2.5 rounded-xl",
-            "text-sm font-medium text-sidebar-foreground/70",
+            "group flex items-center gap-2.5 px-2.5 py-2 rounded-lg", // Reduced padding
+            "text-sm font-medium text-sidebar-foreground/80",
             "transition-all duration-300 ease-out",
             "hover:text-sidebar-foreground hover:bg-sidebar-accent/50",
             "relative overflow-hidden",
@@ -55,7 +55,7 @@ export function CollapsibleMenuItem({
               "text-sidebar-foreground font-semibold",
               "shadow-sm"
             ],
-            collapsed && "justify-center px-2 py-3"
+            collapsed && "justify-center px-2 py-2.5"
           )
         }
       >
@@ -64,11 +64,11 @@ export function CollapsibleMenuItem({
             {/* Active indicator with gradient */}
             <div
               className={cn(
-                "absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r-full",
+                "absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 rounded-r-full",
                 "bg-gradient-to-b from-primary via-primary to-chart-2",
                 "transition-all duration-300",
                 isActive ? "opacity-100 scale-100" : "opacity-0 scale-50",
-                collapsed && "left-1/2 -translate-x-1/2 top-0 translate-y-0 w-6 h-1 rounded-b-full"
+                collapsed && "left-1/2 -translate-x-1/2 top-0 translate-y-0 w-4 h-0.5 rounded-b-full"
               )}
             />
 
@@ -77,7 +77,7 @@ export function CollapsibleMenuItem({
               className={cn(
                 "absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0",
                 "opacity-0 group-hover:opacity-100 transition-opacity duration-300",
-                "rounded-xl"
+                "rounded-lg"
               )}
             />
 
@@ -113,13 +113,13 @@ export function CollapsibleMenuItem({
           }
         }}
         className={cn(
-          "w-full group flex items-center gap-3 px-3 py-2.5 rounded-xl",
-          "text-sm font-medium text-sidebar-foreground/70",
+          "w-full group flex items-center gap-2.5 px-2.5 py-2 rounded-lg", // Reduced padding
+          "text-sm font-medium text-sidebar-foreground/80",
           "transition-all duration-300 ease-out",
           "hover:text-sidebar-foreground hover:bg-sidebar-accent/50",
           "relative overflow-hidden",
           isOpenState && "bg-sidebar-accent/30",
-          collapsed && "justify-center px-2 py-3"
+          collapsed && "justify-center px-2 py-2.5"
         )}
       >
         {/* Hover glow effect */}
@@ -127,7 +127,7 @@ export function CollapsibleMenuItem({
           className={cn(
             "absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0",
             "opacity-0 group-hover:opacity-100 transition-opacity duration-300",
-            "rounded-xl"
+            "rounded-lg"
           )}
         />
 
@@ -150,7 +150,7 @@ export function CollapsibleMenuItem({
         {!collapsed && (
           <ChevronRight
             className={cn(
-              "h-4 w-4 shrink-0 transition-all duration-300 relative z-10",
+              "h-3.5 w-3.5 shrink-0 transition-all duration-300 relative z-10",
               "text-sidebar-foreground/40",
               isOpenState && "rotate-90 text-primary"
             )}
@@ -161,13 +161,13 @@ export function CollapsibleMenuItem({
       <div
         className={cn(
           "overflow-hidden transition-all duration-300 ease-out",
-          isOpenState ? "max-h-[200px] opacity-100 mt-1" : "max-h-0 opacity-0"
+          isOpenState ? "max-h-[200px] opacity-100 mt-0.5" : "max-h-0 opacity-0"
         )}
       >
         <div
           className={cn(
-            "relative ml-4 pl-4 border-l-2 border-sidebar-border/30",
-            "py-1 overflow-y-auto max-h-[190px] space-y-0.5",
+            "relative ml-3.5 pl-3 border-l border-sidebar-border/40",
+            "py-0.5 overflow-y-auto max-h-[190px] space-y-0.5",
             collapsed && "ml-0 pl-0 border-l-0"
           )}
         >
@@ -179,8 +179,8 @@ export function CollapsibleMenuItem({
               onClick={onNavigate}
               className={({ isActive }) =>
                 cn(
-                  "flex items-center h-9 px-3 rounded-lg relative overflow-hidden group/sub",
-                  "text-xs font-medium text-sidebar-foreground/60",
+                  "flex items-center h-8 px-2.5 rounded-md relative overflow-hidden group/sub",
+                  "text-[11px] font-medium text-sidebar-foreground/60",
                   "transition-all duration-200 ease-out",
                   "hover:text-sidebar-foreground hover:bg-sidebar-accent/40",
                   isActive && [
@@ -195,7 +195,7 @@ export function CollapsibleMenuItem({
                   {/* Sub-item active indicator */}
                   <div
                     className={cn(
-                      "absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-r-full",
+                      "absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 rounded-r-full",
                       "bg-primary transition-all duration-200",
                       isActive ? "opacity-100" : "opacity-0"
                     )}
@@ -216,7 +216,7 @@ export function CollapsibleMenuItem({
           ))}
 
           {subItems.length > 4 && (
-            <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-sidebar via-sidebar/80 to-transparent pointer-events-none rounded-b-lg" />
+            <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-sidebar via-sidebar/80 to-transparent pointer-events-none rounded-b-lg" />
           )}
         </div>
       </div>

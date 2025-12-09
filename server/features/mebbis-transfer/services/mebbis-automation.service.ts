@@ -470,6 +470,47 @@ export class MEBBISAutomationService {
     }
   }
 
+  private async selectDropdownOption(selector: string, valueOrText: string): Promise<void> {
+    if (!this.page) throw new Error('Page not initialized');
+
+    try {
+      await this.page.waitForSelector(selector, { timeout: 5000 });
+
+      // Önce değer olarak seçmeyi dene (mapped value direkt ID olabilir)
+      const options = await this.page.evaluate((sel) => {
+        const el = document.querySelector(sel) as HTMLSelectElement;
+        if (!el) return [];
+        return Array.from(el.options as unknown as HTMLOptionElement[]).map(opt => ({
+          value: opt.value,
+          text: opt.text.trim()
+        }));
+      }, selector);
+
+      // 1. Tam eşleşen değer var mı?
+      const valueMatch = options.find(opt => opt.value === valueOrText);
+      if (valueMatch) {
+        await this.page.select(selector, valueOrText);
+        return;
+      }
+
+      // 2. Metin olarak eşleşen var mı?
+      const textMatch = options.find(opt => opt.text === valueOrText || opt.text.includes(valueOrText));
+      if (textMatch) {
+        logger.info(`Mapping text "${valueOrText}" to value "${textMatch.value}" for ${selector}`, 'MEBBISAutomation');
+        await this.page.select(selector, textMatch.value);
+        return;
+      }
+
+      logger.warn(`No matching option found for "${valueOrText}" in ${selector}`, 'MEBBISAutomation');
+      // Son çare direkt select dene, belki hata vermez
+      await this.page.select(selector, valueOrText);
+
+    } catch (error) {
+      const err = error as Error;
+      throw new Error(`Dropdown seçimi başarısız (${selector}): ${err.message}`);
+    }
+  }
+
   async fillSessionData(data: MEBBISSessionData): Promise<{ success: boolean; error?: string }> {
     if (!this.page) {
       throw new Error('Browser not initialized');
@@ -507,27 +548,23 @@ export class MEBBISAutomationService {
       }
 
       await this.retry(async () => {
-        await this.page!.waitForSelector('#drp_hizmet_alani', { timeout: 5000 });
-        await this.page!.select('#drp_hizmet_alani', data.hizmetAlani);
+        await this.selectDropdownOption('#drp_hizmet_alani', data.hizmetAlani);
         await this.wait(1000);
       }, 2, 1000, 'Service area selection');
 
       await this.retry(async () => {
-        await this.page!.waitForSelector('#drp_bir', { timeout: 5000 });
-        await this.page!.select('#drp_bir', data.birinci);
+        await this.selectDropdownOption('#drp_bir', data.birinci);
         await this.wait(1000);
       }, 2, 1000, 'Primary category selection');
 
       await this.retry(async () => {
-        await this.page!.waitForSelector('#drp_iki', { timeout: 5000 });
-        await this.page!.select('#drp_iki', data.ikinci);
+        await this.selectDropdownOption('#drp_iki', data.ikinci);
         await this.wait(1000);
       }, 2, 1000, 'Secondary category selection');
 
       if (data.ucuncu) {
         try {
-          await this.page.waitForSelector('#drp_uc', { timeout: 2000 });
-          await this.page.select('#drp_uc', data.ucuncu);
+          await this.selectDropdownOption('#drp_uc', data.ucuncu);
           await this.wait(800);
         } catch (e) {
           logger.debug('Third category not available or not required', 'MEBBISAutomation');
@@ -550,8 +587,7 @@ export class MEBBISAutomationService {
       }, data.gorusmeBitisSaati);
 
       await this.retry(async () => {
-        await this.page!.waitForSelector('#cmbCalismaYeri', { timeout: 5000 });
-        await this.page!.select('#cmbCalismaYeri', data.calismaYeri);
+        await this.selectDropdownOption('#cmbCalismaYeri', data.calismaYeri);
         await this.wait(800);
       }, 2, 1000, 'Workplace selection');
 
