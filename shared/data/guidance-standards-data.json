@@ -1,0 +1,2499 @@
+{
+  "ana_kategoriler": [
+    {
+      "id": 1,
+      "ad": "Grup Çalışmaları"
+    },
+    {
+      "id": 2,
+      "ad": "Bireysel Çalışmalar"
+    }
+  ],
+  "drp_hizmet_alani": [
+    {
+      "id": 1,
+      "ana_kategori_id": 1,
+      "ad": "Ö - GELİŞİMSEL VE ÖNLEYİCİ HİZMETLER"
+    },
+    {
+      "id": 2,
+      "ana_kategori_id": 1,
+      "ad": "İ - İYİLEŞTİRİCİ HİZMETLER"
+    },
+    {
+      "id": 3,
+      "ana_kategori_id": 1,
+      "ad": "D - DESTEK HİZMETLER"
+    },
+    {
+      "id": 4,
+      "ana_kategori_id": 2,
+      "ad": "Ö - GELİŞİMSEL VE ÖNLEYİCİ HİZMETLER"
+    },
+    {
+      "id": 5,
+      "ana_kategori_id": 2,
+      "ad": "İ - İYİLEŞTİRİCİ HİZMETLER"
+    },
+    {
+      "id": 6,
+      "ana_kategori_id": 2,
+      "ad": "D - DESTEK HİZMETLER"
+    }
+  ],
+  "drp_bir": [],
+  "drp_iki": [
+    {
+      "id": 1,
+      "drp_bir_id": 1,
+      "ad": "ÖSO - Okul Öncesi"
+    },
+    {
+      "id": 2,
+      "drp_bir_id": 1,
+      "ad": "ÖSİ - İlkokul"
+    },
+    {
+      "id": 3,
+      "drp_bir_id": 1,
+      "ad": "ÖSROrtaokul"
+    },
+    {
+      "id": 4,
+      "drp_bir_id": 1,
+      "ad": "ÖSL - Ortaöğretim"
+    },
+    {
+      "id": 5,
+      "drp_bir_id": 3,
+      "ad": "ÖOVK - SOSYAL DUYGUSAL GELİŞİM"
+    },
+    {
+      "id": 6,
+      "drp_bir_id": 3,
+      "ad": "ÖOVE - AKADEMİK GELİŞİM"
+    },
+    {
+      "id": 7,
+      "drp_bir_id": 3,
+      "ad": "ÖOVM - KARİYER GELİŞİMİ"
+    },
+    {
+      "id": 8,
+      "drp_bir_id": 7,
+      "ad": "DMV - VELİYE YÖNELİK"
+    },
+    {
+      "id": 9,
+      "drp_bir_id": 7,
+      "ad": "DMÖ - ÖĞRETMENE YÖNELİK"
+    },
+    {
+      "id": 10,
+      "drp_bir_id": 7,
+      "ad": "DMD - DİĞER KİŞİLERE YÖNELİK"
+    },
+    {
+      "id": 11,
+      "drp_bir_id": 9,
+      "ad": "DİT - TOPLANTILAR"
+    },
+    {
+      "id": 12,
+      "drp_bir_id": 9,
+      "ad": "DİF - FAALİYETLER"
+    },
+    {
+      "id": 13,
+      "drp_bir_id": 2,
+      "ad": "GRUP BİREYİ TANIMA"
+    },
+    {
+      "id": 14,
+      "drp_bir_id": 4,
+      "ad": "GRUP YÖNELTME"
+    },
+    {
+      "id": 15,
+      "drp_bir_id": 6,
+      "ad": "GRUP PSİKOSOSYAL"
+    },
+    {
+      "id": 16,
+      "drp_bir_id": 8,
+      "ad": "GRUP PROGRAM YÖNETİMİ"
+    },
+    {
+      "id": 17,
+      "drp_bir_id": 10,
+      "ad": "GRUP MESLEKİ GELİŞİM"
+    },
+    {
+      "id": 18,
+      "drp_bir_id": 11,
+      "ad": "BİREYSEL BİREYİ TANIMA"
+    },
+    {
+      "id": 19,
+      "drp_bir_id": 12,
+      "ad": "ÖOVK - SOSYAL DUYGUSAL GELİŞİM"
+    },
+    {
+      "id": 20,
+      "drp_bir_id": 12,
+      "ad": "ÖOVE - AKADEMİK GELİŞİM"
+    },
+    {
+      "id": 21,
+      "drp_bir_id": 12,
+      "ad": "ÖOVM - KARİYER GELİŞİMİ"
+    },
+    {
+      "id": 22,
+      "drp_bir_id": 13,
+      "ad": "BİREYSEL YÖNELTME"
+    },
+    {
+      "id": 23,
+      "drp_bir_id": 14,
+      "ad": "BİREYSEL DANIŞMA"
+    },
+    {
+      "id": 24,
+      "drp_bir_id": 15,
+      "ad": "İPbB - BİLDİRİM YÜKÜMLÜLÜĞÜ"
+    },
+    {
+      "id": 25,
+      "drp_bir_id": 15,
+      "ad": "İPbT - KORUYUCU VE DESTEKLEYİCİ TEDBİR"
+    },
+    {
+      "id": 26,
+      "drp_bir_id": 15,
+      "ad": "İPbİ - İNTHAR"
+    },
+    {
+      "id": 27,
+      "drp_bir_id": 16,
+      "ad": "BİREYSEL SEVK"
+    },
+    {
+      "id": 28,
+      "drp_bir_id": 17,
+      "ad": "DMV - VELİYE YÖNELİK"
+    },
+    {
+      "id": 29,
+      "drp_bir_id": 17,
+      "ad": "DMÖ - ÖĞRETMENE YÖNELİK"
+    }
+  ],
+  "drp_uc": [
+    {
+      "drp_iki_id": 1,
+      "kod": "ÖSO",
+      "aciklama": "Kimden, nereden, ne zaman ve nasıl yardım isteyebileceğini bilir."
+    },
+    {
+      "drp_iki_id": 2,
+      "kod": "ÖSİ1",
+      "aciklama": "Kimden, nereden, ne zaman ve nasıl yardım isteyebileceğini bilir."
+    },
+    {
+      "drp_iki_id": 2,
+      "kod": "ÖSİ2",
+      "aciklama": "Kişisel güvenliği için kişisel alanların gerekliliğini fark eder."
+    },
+    {
+      "drp_iki_id": 3,
+      "kod": "ÖSORS",
+      "aciklama": "Kimden, nereden, ne zaman ve nasıl yardım isteyebileceğini bilir."
+    },
+    {
+      "drp_iki_id": 3,
+      "kod": "ÖSORB",
+      "aciklama": "Sınavlara ilişkin duygularını açıklar."
+    },
+    {
+      "drp_iki_id": 4,
+      "kod": "ÖSL9",
+      "aciklama": "Zorbalıkla baş etme yollarını kullanır"
+    },
+    {
+      "drp_iki_id": 4,
+      "kod": "ÖSL9",
+      "aciklama": "Kimden, nereden, ne zaman ve nasıl yardım isteyebileceğini bilir."
+    },
+    {
+      "drp_iki_id": 4,
+      "kod": "ÖSL11",
+      "aciklama": "Ergen-ebeveyn ilişkilerini değerlendirir."
+    },
+    {
+      "drp_iki_id": 4,
+      "kod": "ÖSL034",
+      "aciklama": "Kişisel sınırların farkında olur."
+    },
+    {
+      "drp_iki_id": 4,
+      "kod": "ÖSL035",
+      "aciklama": "Kendini koruma becerisi kazanır"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.P.1.c",
+      "aciklama": "Yaşam Pencerem"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "S.l.2.a",
+      "aciklama": "Okul Risk Haritası"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "S.l.4.a",
+      "aciklama": "Sınıf Risk Haritası"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.G.4.c",
+      "aciklama": "Öğrenci Bilgi Formu"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.O.1.c",
+      "aciklama": "Bana Kendini Anlat"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.G.G.5.a",
+      "aciklama": "Kimdir Bu"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.G.G.6.a",
+      "aciklama": "Kime Göre Ben Neyim"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.G.G.9.a",
+      "aciklama": "Sosyometri"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.G.G.2.c",
+      "aciklama": "Çocuğumu Tanıyorum"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.G.3.c",
+      "aciklama": "Kendimi Tanıyorum"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.7.c",
+      "aciklama": "Şiddet Algısı Anketi"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.8.c",
+      "aciklama": "Şiddet Sıklığı Anketi"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.9.c",
+      "aciklama": "Şiddet Meşruiyeti Anketi"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.G.G.10.c",
+      "aciklama": "Şiddet Algısı Anketi (Veli)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.G.G.11.c",
+      "aciklama": "Şiddet Sıklığı Anketi (Veli)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.G.G.12.c",
+      "aciklama": "Şiddet Meşruiyeti Anketi (Veli)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.G.G.13.c",
+      "aciklama": "Şiddet Algısı Anketi (Öğretmen)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.G.G.14.c",
+      "aciklama": "Şiddet Sıklığı Anketi (Öğretmen)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.G.G.15.c",
+      "aciklama": "Şiddet Meşruiyeti Anketi (Öğretmen 4-6.sınıf)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.G.G.16.c",
+      "aciklama": "Şiddet Meşruiyeti Anketi (Öğretmen 7-12. sınıf)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.2.c",
+      "aciklama": "Devamsızlık Nedenleri Anketi"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.15.a",
+      "aciklama": "RİBA (İlkokul-Öğrenci Formu)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.16.a",
+      "aciklama": "RİBA (Ortaokul-Öğrenci Formu)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.17.a",
+      "aciklama": "RİBA (Lise-Öğrenci Formu)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.18.a",
+      "aciklama": "RİBA (Okul Öncesi-Öğretmen Formu)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.19.a",
+      "aciklama": "RİBA (İlkokul-Öğretmen Formu)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.20.a",
+      "aciklama": "RİBA(Ortaokul-Öğretmen Formu)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.21.a",
+      "aciklama": "RİBA (Lise-Öğretmen Formu)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.22.a",
+      "aciklama": "RİBA (Okul Öncesi-Veli Formu)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.23.a",
+      "aciklama": "RİBA (İlkokul-Veli Formu)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.24.a",
+      "aciklama": "RİBA (Ortaokul-Veli Formu)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.A.25.a",
+      "aciklama": "RİBA (Lise-Veli Formu)"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.K.I.1.c",
+      "aciklama": "Verimli Ders Çalışma Kontrol Listesi"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "B.G.D.1.c",
+      "aciklama": "Snellen Testi"
+    },
+    {
+      "drp_iki_id": 13,
+      "kod": "ÖOB2",
+      "aciklama": "Diğer"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Akran Arabuluculuğu"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Akran Zorbalığı"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Atılganlık"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Bireysel Farklılıklara Saygı"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Çatışma Çözme Becerileri"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Çocuklarda Cinsel Eğitim"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Duygu Kontrolü"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Eleştirel Düşünme Becerisi"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Ergenleri Bilgilendirme ve Farkındalık Kazandırma Eğitim Programı"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Geleceği Planlama"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Gelişim Dönemi Özellikleri"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Hak ve Sorumluluklarını Bilme"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "İhmal İstismardan Korunma"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "İletişim Becerileri"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "İş Birliği Geliştirme"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Karar Verme Becerisi"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Olumlu Davranış Geliştirme"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Otokontrol"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Öfke Kontrolü"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Öz Bakım Becerileri"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Öz Güven Geliştirme"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Özsaygı"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Problem Çözme Becerileri"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Sosyal Beceriler"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Stresle Baş Etme Becerileri"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Şiddeti Önleme"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg (TBM)",
+      "aciklama": "Alkol Bağımlılığı"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg (TBM)",
+      "aciklama": "Madde Bağımlılığı"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg (TBM)",
+      "aciklama": "Sağlıklı Yaşam"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg (TBM)",
+      "aciklama": "Teknoloji Bağımlılığı"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg (TBM)",
+      "aciklama": "Tütün Bağımlılığı"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Yaratıcı Düşünme Becerisi"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici -GÖÇ)"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-CİNSEL İSTİSMAR)"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-İNTHAR)"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-TERÖR)"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-DOĞAL AFET)"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-ÖLÜM YAS)"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-SALGIN HASTALIK)"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "PSD Programı(Önleyici Program)"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Psikolojik Sağlamlık"
+    },
+    {
+      "drp_iki_id": 5,
+      "kod": "ÖOVKg",
+      "aciklama": "Bilinçli Teknoloji Kullanımı"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Çalışma Programı Hazırlama"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Ders Seçimi"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Devamsızlığı Önleme"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Dikkat Geliştirme Çalışmaları"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Hedef Belirleme"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Motivasyon"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Okul Kuralları"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Okula ve Çevreye Uyum"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Okulun Fiziksel İmkânları"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Okulda Seçilebilecek Alan/Dallar"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Okuldaki ve Okul Çevresindeki Eğitim Olanakları"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Okullara/Sınavlara Başvuru Kılavuzları"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Okulun Sosyokültürel İmkânları"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Öğrenciyi İlgilendiren Yönetmelikler"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Öğrenme Stilleri"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Öz Disiplin Geliştirme"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Rehberlik ve Psikolojik Danışma Servisinin Tanıtılması"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Serbest Zamanı Değerlendirme"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Sınav Kaygısı"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Sınavda Başarılı Olma Stratejileri"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Sınavlarda Başarılı Olma Ve Çalışma Yolları"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Üst Öğrenim Kurumlarında Tercih Edilebilecek Alan/Dallar"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Üst Öğrenim Kurumlarının Tanıtılması"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Üst Öğrenimde Yararlanılacak Burslar ve Barınma Olanakları"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Üst Öğrenime Geçiş Sınavları"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Verimli Ders Çalışma Teknikleri"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Yurt Dışı Eğitim Olanakları"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Zaman Yönetimi"
+    },
+    {
+      "drp_iki_id": 6,
+      "kod": "ÖOVEg",
+      "aciklama": "Zekâ Türleri ve Özellikleri"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "Bir Meslek Elemanını Sınıfa/Okula Davet Etme"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "Çalışan/işveren Hak ve Sorumlulukları"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "Çevredeki İş Olanakları ve Çalışma Koşulları"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "İş Görüşmesi Becerileri"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "İş ve Mesleğe Hazırlayan Kurum ve Kursların Tanıtımı"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "İş ve Meslek Etiği"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "İş Yaşamına Yönelik Beceriler"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "Kariyer Planlama"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "Meslek Sahibi Olmanın Önemi"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "Meslek Seçerken Dikkat Edilmesi Gereken Hususlar"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "Meslek Tanıtımı"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "Meslek ile İlgi, Değer, Yetenek ve Kişisel Özellik İlişkisi"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "Mesleki Hedef Belirleme"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "Özgeçmiş Hazırlama"
+    },
+    {
+      "drp_iki_id": 7,
+      "kod": "ÖOVMg",
+      "aciklama": "Staj"
+    },
+    {
+      "drp_iki_id": 14,
+      "kod": "ÖOY",
+      "aciklama": "Alan/Dal Tercihleri"
+    },
+    {
+      "drp_iki_id": 14,
+      "kod": "ÖOY",
+      "aciklama": "Seçmeli Ders"
+    },
+    {
+      "drp_iki_id": 14,
+      "kod": "ÖOY",
+      "aciklama": "Sosyal Kulüpler"
+    },
+    {
+      "drp_iki_id": 14,
+      "kod": "ÖOY",
+      "aciklama": "Sosyal ve Kültürel Faaliyetler"
+    },
+    {
+      "drp_iki_id": 15,
+      "kod": "İpg",
+      "aciklama": "PSD Programı (Güçlendirici-GÖÇ)"
+    },
+    {
+      "drp_iki_id": 15,
+      "kod": "İpg",
+      "aciklama": "PSD Programı (Güçlendirici-CİNSEL İSTİSMAR)"
+    },
+    {
+      "drp_iki_id": 15,
+      "kod": "İpg",
+      "aciklama": "PSD Programı (Güçlendirici-İNTİHAR)"
+    },
+    {
+      "drp_iki_id": 15,
+      "kod": "İpg",
+      "aciklama": "PSD Programı (Güçlendirici-TERÖR)"
+    },
+    {
+      "drp_iki_id": 15,
+      "kod": "İpg",
+      "aciklama": "PSD Programı (Güçlendirici-DOĞAL AFET)"
+    },
+    {
+      "drp_iki_id": 15,
+      "kod": "İpg",
+      "aciklama": "PSD Programı (Güçlendirici-ÖLÜM YAS)"
+    },
+    {
+      "drp_iki_id": 15,
+      "kod": "İpg",
+      "aciklama": "PSD Programı (SALGIN HASTALIK)"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Aile İçi İletişim"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Akran Arabuluculuğu"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Akran Zorbalığı"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Alan/Dal Tanıtımı ve Seçimi"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Anne Baba Tutumları"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Atılganlık"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Baba Destek Programı"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "BİLSEM Tanıtımı"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Bireysel Farklılıklara Saygı"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Çatışma Çözme Becerileri"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Çevredeki İş Olanakları ve Çalışma Koşulları"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Çocuk ve Ergenlerin Gelişim Özellikleri"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Çocuklar ve Oyun"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Çocuklarda Cinsel Eğitim"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Çocuklarda Öz Disiplin Geliştirme"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Davranış Sorunları"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Ders Seçimi"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Devamsızlığı Önleme"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Dikkat Geliştirme Çalışmaları"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Ebeveynlik Becerileri"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Engel Türleri ve Tamlama Süreçleri"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Geleceği Planlama"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Hak ve Sorumluluklarını Bilme"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Hedef Belirleme"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "İhmal istismardan Korunma"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "İletişim Becerileri"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "İş Yaşamına Yönelik Beceriler"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "İşbirliği Geliştirme"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Karar Verme Becerisi"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Kariyer Planlama"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Kuşaklararası İletişim"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Meslek ve Değer İlişkisi"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Meslek ve İlgi İlişkisi"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Meslek ve Kişisel Özellik İlişkisi"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Meslek ve Yetenek İlişkisi"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Motivasyon"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Okul Başarısında Ailenin Rolü"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Okul Olgunluğu"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Okula Uyum Çalışmaları"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Olumlu Davranış Geliştirme"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Ofke Yönetimi"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Öğrenciyi İlgilendiren Yönetmelikler"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Öğrenme Stilleri"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Özel Eğitim Gereksinimli Öğrencilerin Eğitim Olanakları"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Özel Eğitim Gereksinimli Öğrencilerin Gelişim Özellikleri"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Özgüven Geliştirme"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Özsaygı Geliştirme"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Problem Çözme Becerileri"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-GÖÇ)"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-CİNSEL İSTİSMAR)"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-İNTHAR)"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-TERÖR)"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-DOĞAL AFET)"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-ÖLÜM YAS)"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-SALGIN HASTALIK)"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "PSD Programı (Önleyici Programlar)"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Rehberlik ve Psikolojik Danışma Servisinin Tanıtılması"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Sağlıklı Yaşam"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Serbest Zamanı Değerlendirme"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Sınav Kaygısı"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Stres Yönetimi"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Şiddetin Önlenmesi"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "TBM Alkol Bağımlılığı"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "TBM Madde Bağımlılığı"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "TBM Sağlıklı Yaşam"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "TBM Teknoloji Bağımlılığı"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "TBM Tütün Bağımlılığı"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Tek Ebeveynlik"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Üst Öğrenim Kurumları"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Üst Öğrenime Geçiş Sınavları"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Verimli Ders Çalışma Teknikleri"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Zaman Yönetimi"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Psikolojik Sağlamlık"
+    },
+    {
+      "drp_iki_id": 8,
+      "kod": "DMVE",
+      "aciklama": "Bilinçli Teknoloji Kullanımı"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Akran Arabuluculuğu"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Akran Zorbalığı"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Anne Baba Tutumları"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Atılganlık"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "BEP Hazırlama"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "BİLSEM Tanıtımı"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Bireyi Tanıma Teknikleri"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Bireysel Farklılıklara Saygı"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Çatışma Çözme Becerileri"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Çocuk Hak ve Sorumlulukları"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Çocuk ve Ergenlerin Gelişim Özellikleri"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Çocuklar ve Oyun"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Çocuklarda Cinsel Eğitim"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Davranış Değiştirme Teknikleri"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Destek Eğitim Odası Hizmetleri"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Devamsızlığı Önleme"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Dikkat Geliştirme Çalışmaları"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Engel Türleri ve Tanılama Süreçleri"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Geleceği Planlama"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Hak ve Sorumluluklarını Bilme"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Hedef Belirleme"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "İhmal İstismardan Korunma"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "İletişim Becerileri"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "İş Yaşamına Yönelik Beceriler"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "İşbirliği Geliştirme"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Karar Verme Becerisi"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Kuşaklararası İletişim"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Motivasyon"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Olumlu Davranış Geliştirme"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Öfke Yönetimi"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Öğrenme Stilleri"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Öğretmen Grubuyla Vaka Paylaşımı"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Özel Eğitim Gereksinimli Öğrencilerin Eğitim Olanakları"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Özel Eğitim Gereksinimli Öğrencilerin Gelişim Özellikleri"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Özgüven Geliştirme"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Özsaygı Geliştirme"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Problem Çözme Becerileri"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici GÖÇ)"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-CİNSEL İSTİSMAR)"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-İNTHAR)"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-TERÖR)"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-DOĞAL AFET)"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-ÖLÜM YAS)"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "PSD Programı (Güçlendirici Önleyici-SALGIN HASTALIK)"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "PSD Programı (Önleyici Programlar)"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Rehberlik ve Psikolojik Danışma Servisinin Tanıtılması"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Serbest Zamanı Değerlendirme"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Sınav Kaygısı"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Sınıf Rehberlik Programı"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Sınıf Yönetimi"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Stres Yönetimi"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "TBM Alkol Bağımlılığı"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "TBM Madde Bağımlılığı"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "TBM Sağlıklı Yaşam"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "TBM Teknoloji Bağımlılığı"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "TBM Tütün Bağımlılı"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Üst Öğrenim Kurumları"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Üst Öğrenime Geçiş Sınavları"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Verimli Ders Çalışma Teknikleri"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Yetenek, İlgi ve Değerler"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Zaman Yönetimi"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Şiddetin Önlenmesi"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Tek Ebeveynlik"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Psikolojik Sağlamlık"
+    },
+    {
+      "drp_iki_id": 9,
+      "kod": "DMÖE",
+      "aciklama": "Bilinçli Teknoloji Kullanımı"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Bağımlılıkla Mücadele"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Çocuk ve Ergenlerin Gelişim Özellikleri"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "İhmal, İstismar"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "İletişim Becerileri"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Okula Uyum Çalışmaları"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Öfke Yönetimi"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Özel Eğitim Gereksinimli Öğrencilerin Gelişim Özellikleri"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Stres Yönetimi"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Psikososyal Destek Programı (GÖÇ)"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Psikososyal Destek Programı (CİNSEL İSTİSMAR)"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Psikososyal Destek Programı (İNTİHAR)"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Psikososyal Destek Programı (TERÖR)"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Psikososyal Destek Programı (DOĞAL AFET)"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Psikososyal Destek Programı (ÖLÜM YAS)"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Psikososyal Destek Programı (SALGIN HASTALIK)"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Eğitim kurumunun tanıtımı"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Psikolojik Sağlamlık"
+    },
+    {
+      "drp_iki_id": 10,
+      "kod": "DMDE",
+      "aciklama": "Bilinçli Teknoloji Kullanımı"
+    },
+    {
+      "drp_iki_id": 16,
+      "kod": "DP",
+      "aciklama": "Araştırma Çalışmaları"
+    },
+    {
+      "drp_iki_id": 16,
+      "kod": "DP",
+      "aciklama": "BEP Dosyalarının Düzenlenmesi ve Güncellenmesi"
+    },
+    {
+      "drp_iki_id": 16,
+      "kod": "DP",
+      "aciklama": "BİLSEM Danışman Öğretmen Belirlenmesi"
+    },
+    {
+      "drp_iki_id": 16,
+      "kod": "DP",
+      "aciklama": "Okul Risk Haritasının Oluşturulması"
+    },
+    {
+      "drp_iki_id": 16,
+      "kod": "DP",
+      "aciklama": "Okul/Kurum RPD Programının Hazırlanması"
+    },
+    {
+      "drp_iki_id": 16,
+      "kod": "DP",
+      "aciklama": "Proje Çalışmaları"
+    },
+    {
+      "drp_iki_id": 16,
+      "kod": "DP",
+      "aciklama": "RPD Hizmetleri Yürütme Komisyonu Tarafından RPD İhtiyaç Analizi Çalışmalarının Yapılması"
+    },
+    {
+      "drp_iki_id": 16,
+      "kod": "DP",
+      "aciklama": "RPD Hizmetleri Yürütme Komisyonu Toplantısının Yapılması"
+    },
+    {
+      "drp_iki_id": 16,
+      "kod": "DP",
+      "aciklama": "RPD Hizmetleri Yürütme Komisyonunun Oluşturulması"
+    },
+    {
+      "drp_iki_id": 16,
+      "kod": "DP",
+      "aciklama": "Rehberlik ve Psikolojik Danışma Servisi Desimali Oluşturulması"
+    },
+    {
+      "drp_iki_id": 16,
+      "kod": "DP",
+      "aciklama": "Rehberlik ve Psikolojik Danışma Servisinin İhtiyaçlarının Belirlenmesi"
+    },
+    {
+      "drp_iki_id": 11,
+      "kod": "DİT",
+      "aciklama": "BEP Geliştirme Birimi Toplantıları"
+    },
+    {
+      "drp_iki_id": 11,
+      "kod": "DİT",
+      "aciklama": "Değerler Eğitimi Komisyonu Toplantısı"
+    },
+    {
+      "drp_iki_id": 11,
+      "kod": "DİT",
+      "aciklama": "Destek Eğitim Odası Toplantısı"
+    },
+    {
+      "drp_iki_id": 11,
+      "kod": "DİT",
+      "aciklama": "Okul Aile Birliği Toplantıları"
+    },
+    {
+      "drp_iki_id": 11,
+      "kod": "DİT",
+      "aciklama": "Okul Psikososyal Destek Hizmetleri Toplantıları"
+    },
+    {
+      "drp_iki_id": 11,
+      "kod": "DİT",
+      "aciklama": "RAM Mesleki Paylaşım Toplantıları"
+    },
+    {
+      "drp_iki_id": 11,
+      "kod": "DİT",
+      "aciklama": "RAM Psikososyal Destek Hizmetleri Toplantıları"
+    },
+    {
+      "drp_iki_id": 11,
+      "kod": "DİT",
+      "aciklama": "RAM Sene Başı/Sonu Toplantıları"
+    },
+    {
+      "drp_iki_id": 11,
+      "kod": "DİT",
+      "aciklama": "Sınıf Başarı Değerlendirme Toplantısı"
+    },
+    {
+      "drp_iki_id": 11,
+      "kod": "DİT",
+      "aciklama": "Şube Öğretmenler Kurulu Toplantıları"
+    },
+    {
+      "drp_iki_id": 11,
+      "kod": "DİT",
+      "aciklama": "Veli Toplantıları"
+    },
+    {
+      "drp_iki_id": 12,
+      "kod": "DİF",
+      "aciklama": "Aile Katılımı Çalışmaları"
+    },
+    {
+      "drp_iki_id": 12,
+      "kod": "DİF",
+      "aciklama": "Belirli Gün ve Haftalar ile İlgili Çalışmalar"
+    },
+    {
+      "drp_iki_id": 12,
+      "kod": "DİF",
+      "aciklama": "Değerler Eğitimi Çalışmaları"
+    },
+    {
+      "drp_iki_id": 12,
+      "kod": "DİF",
+      "aciklama": "Mezuniyet"
+    },
+    {
+      "drp_iki_id": 12,
+      "kod": "DİF",
+      "aciklama": "Öğrenci Meclisi Çalışmaları"
+    },
+    {
+      "drp_iki_id": 12,
+      "kod": "DİF",
+      "aciklama": "Sağlık Tarama Çalışmaları"
+    },
+    {
+      "drp_iki_id": 17,
+      "kod": "DG",
+      "aciklama": "Bilimsel Kongreye Katılma"
+    },
+    {
+      "drp_iki_id": 17,
+      "kod": "DG",
+      "aciklama": "Bilimsel Seminer, Konferansa Katılma"
+    },
+    {
+      "drp_iki_id": 17,
+      "kod": "DG",
+      "aciklama": "Hizmet İçi Eğitim Verme"
+    },
+    {
+      "drp_iki_id": 17,
+      "kod": "DG",
+      "aciklama": "Hizmet İçi Eğitime Katılma"
+    },
+    {
+      "drp_iki_id": 17,
+      "kod": "DG",
+      "aciklama": "Danışman Öğretmenlik (Staj Uygulamaları)"
+    },
+    {
+      "drp_iki_id": 17,
+      "kod": "DG",
+      "aciklama": "Yüksek Lisans Doktora Dersine Katılma"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.K.P.1.c",
+      "aciklama": "Yaşam Pencerem"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.K.G.4.c",
+      "aciklama": "Öğrenci Bilgi Formu"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.K.G.12.c",
+      "aciklama": "Yol Haritam"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.K.O.1.c",
+      "aciklama": "Bana Kendini Anlat"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.K.G.3.c",
+      "aciklama": "Kendimi Tanıyorum"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.K.A.7.c",
+      "aciklama": "Şiddet Algısı Anketi"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.K.A.8.c",
+      "aciklama": "Şiddet Sıklığı Anketi"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.K.A.9.c",
+      "aciklama": "Şiddet Meşruiyeti Anketi"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.10.c",
+      "aciklama": "Şiddet Algısı Anketi (Veli)"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.11.c",
+      "aciklama": "Şiddet Sıklığı Anketi (Veli)"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.12.c",
+      "aciklama": "Şiddet Meşruiyeti Anketi (Veli)"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.13.c",
+      "aciklama": "Şiddet Algısı Anketi (Öğretmen)"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.14.c",
+      "aciklama": "Şiddet Sıklığı Anketi (Öğretmen)"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.15.c",
+      "aciklama": "Şiddet Meşruiyeti Anketi (Öğretmen 4-6.sınıf)"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.16.c",
+      "aciklama": "Şiddet Meşruiyeti Anketi (Öğretmen 7-12. sınıf)"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.K.I.1.c",
+      "aciklama": "Verimli Ders Çalışma Kontrol Listesi"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.2.c",
+      "aciklama": "Çocuğumu Tamyorum Formu"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.1.c",
+      "aciklama": "Aile içi Gözlem Formu"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.3.c",
+      "aciklama": "DEHB Gözlem Formu"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.4.c",
+      "aciklama": "Ev Ziyaret Formu"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.7.c",
+      "aciklama": "Öğrenci Gözlem Kaydı"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.G.G.8.a",
+      "aciklama": "Özel Öğrenme Güçlüğü Gözlem Formu"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.K.G.7.c",
+      "aciklama": "Öğrenci-Ön görüşme Formu"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "B.K.A.2.c",
+      "aciklama": "Devamsızlık Nedenleri Anketi"
+    },
+    {
+      "drp_iki_id": 18,
+      "kod": "ÖOB99",
+      "aciklama": "Diğer"
+    },
+    {
+      "drp_iki_id": 19,
+      "kod": "ÖOVKb",
+      "aciklama": "Aile"
+    },
+    {
+      "drp_iki_id": 19,
+      "kod": "ÖOVKb",
+      "aciklama": "Arkadaşlık İlişkileri"
+    },
+    {
+      "drp_iki_id": 19,
+      "kod": "ÖOVKb",
+      "aciklama": "Davranış Sorunları"
+    },
+    {
+      "drp_iki_id": 19,
+      "kod": "ÖOVKb",
+      "aciklama": "Psikolojik Uyum"
+    },
+    {
+      "drp_iki_id": 19,
+      "kod": "ÖOVKb",
+      "aciklama": "Sağlık"
+    },
+    {
+      "drp_iki_id": 19,
+      "kod": "ÖOVKb",
+      "aciklama": "Sosyal Uyum"
+    },
+    {
+      "drp_iki_id": 19,
+      "kod": "ÖOVKb",
+      "aciklama": "Sosyo-ekonomik Konular"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Başarısızlık Nedenleri"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Çalışma Programı Hazırlama"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Ders Seçimi"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Devamsızlığı Önleme"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Devamsızlık Nedenleri"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Dikkat Geliştirme Çalışmaları"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Hedef Belirleme"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Motivasyon"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Okul Kuralları"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Okul ve Çevresindeki Eğitim Olanakları"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Okula ve Çevreye Uyum"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Okulda Seçilebilecek Alan/Dallar"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Okulun Fiziksel İmkânları"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Okulun Sosyo-kültürel İmkânları"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Öğrenciyi İlgilendiren Yönetmelikler"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Öğrenme Stilleri"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Öz Disiplin Geliştirme"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Rehberlik ve Psikolojik Danışma Servisinin Tanıtılması"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Serbest Zamanı Değerlendirme"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Sınav Kaygısı"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Sınavda Başarılı Olma Stratejileri"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Sosyal Kulüpler"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Üst Öğrenimde Yararlanılacak Burslar ve Barınma Olanakları"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Üst Öğrenime Geçiş Sınavları"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Verimli Ders Çalışma"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Yurt Dışı Eğitim Olanakları"
+    },
+    {
+      "drp_iki_id": 20,
+      "kod": "ÖOVEb",
+      "aciklama": "Zamanı Yönetimi"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Çalışan/İşveren Hak ve Sorumlulukları"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Çevredeki İş Olanakları ve Çalışma Koşulları"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "İş Görüşmesi Becerileri"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "İş ve Mesleğe Hazırlayan Kurum ve Kursların Tanıtımı"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "İş ve Meslek Etiği"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "İş Yaşamına Yönelik Beceriler"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Kariyer Planlama"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Meslek Sahibi Olmanın Önemi"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Meslek Seçerken Dikkat Edilmesi Gereken Hususlar"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Meslek Tanıtımı"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Meslek ve Değer İlişkisi"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Meslek ve İlgili İlişkisi"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Meslek ve Kişisel Özellik İlişkisi"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Meslek ve Yetenek İlişkisi"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Mesleki Hedef Belirleme"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Mesleklerin İncelenmesi"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Öz Geçmiş Hazırlama"
+    },
+    {
+      "drp_iki_id": 21,
+      "kod": "ÖOVMb",
+      "aciklama": "Staj"
+    },
+    {
+      "drp_iki_id": 22,
+      "kod": "ÖOY",
+      "aciklama": "Alan/Dal Tercihleri"
+    },
+    {
+      "drp_iki_id": 22,
+      "kod": "ÖOY",
+      "aciklama": "Seçmeli Ders"
+    },
+    {
+      "drp_iki_id": 22,
+      "kod": "ÖOY",
+      "aciklama": "Sosyal Kulüpler"
+    },
+    {
+      "drp_iki_id": 22,
+      "kod": "ÖOY",
+      "aciklama": "Üst Öğrenim Kurumuna Geçen Öğrencilerin İzlenmesi"
+    },
+    {
+      "drp_iki_id": 23,
+      "kod": "İB",
+      "aciklama": "Aile"
+    },
+    {
+      "drp_iki_id": 23,
+      "kod": "İB",
+      "aciklama": "Davranış Sorunları"
+    },
+    {
+      "drp_iki_id": 23,
+      "kod": "İB",
+      "aciklama": "Okula ve Çevreye Uyum"
+    },
+    {
+      "drp_iki_id": 23,
+      "kod": "İB",
+      "aciklama": "Psikolojik Uyum"
+    },
+    {
+      "drp_iki_id": 23,
+      "kod": "İB",
+      "aciklama": "Sağlık"
+    },
+    {
+      "drp_iki_id": 23,
+      "kod": "İB",
+      "aciklama": "Sosyal Uyum"
+    },
+    {
+      "drp_iki_id": 23,
+      "kod": "İB",
+      "aciklama": "Sosyo-ekonomik Konular"
+    },
+    {
+      "drp_iki_id": 23,
+      "kod": "İB",
+      "aciklama": "Yöneltme Yerleştirme"
+    },
+    {
+      "drp_iki_id": 23,
+      "kod": "İB",
+      "aciklama": "OBM"
+    },
+    {
+      "drp_iki_id": 24,
+      "kod": "İPbB",
+      "aciklama": "Cinsel İstismar"
+    },
+    {
+      "drp_iki_id": 24,
+      "kod": "İPbB",
+      "aciklama": "Duygusal İhmal"
+    },
+    {
+      "drp_iki_id": 24,
+      "kod": "İPbB",
+      "aciklama": "Duygusal İstismar"
+    },
+    {
+      "drp_iki_id": 24,
+      "kod": "İPbB",
+      "aciklama": "Eğitim ile İlgili İhmal"
+    },
+    {
+      "drp_iki_id": 24,
+      "kod": "İPbB",
+      "aciklama": "Ekonomik İstismar"
+    },
+    {
+      "drp_iki_id": 24,
+      "kod": "İPbB",
+      "aciklama": "Fiziksel İhmal"
+    },
+    {
+      "drp_iki_id": 24,
+      "kod": "İPbB",
+      "aciklama": "Fiziksel İstismar"
+    },
+    {
+      "drp_iki_id": 24,
+      "kod": "İPbB",
+      "aciklama": "Madde Bulundurma"
+    },
+    {
+      "drp_iki_id": 24,
+      "kod": "İPbB",
+      "aciklama": "Madde Kullanımı"
+    },
+    {
+      "drp_iki_id": 24,
+      "kod": "İPbB",
+      "aciklama": "Madde Satışı"
+    },
+    {
+      "drp_iki_id": 24,
+      "kod": "İPbB",
+      "aciklama": "Sağlık İhmalı"
+    },
+    {
+      "drp_iki_id": 25,
+      "kod": "İPbT",
+      "aciklama": "Danışmanlık Tedbiri"
+    },
+    {
+      "drp_iki_id": 25,
+      "kod": "İPbT",
+      "aciklama": "Danışmanlık ve Eğitim Tedbiri"
+    },
+    {
+      "drp_iki_id": 25,
+      "kod": "İPbT",
+      "aciklama": "Eğitim Tedbiri"
+    },
+    {
+      "drp_iki_id": 26,
+      "kod": "İPbİ",
+      "aciklama": "Tamamlanmamış İntihar"
+    },
+    {
+      "drp_iki_id": 26,
+      "kod": "İPbİ",
+      "aciklama": "Tamamlanmış İntihar"
+    },
+    {
+      "drp_iki_id": 27,
+      "kod": "İS",
+      "aciklama": "RAM RPD Hizmetleri Bölümüne Yönlendirme"
+    },
+    {
+      "drp_iki_id": 27,
+      "kod": "İS",
+      "aciklama": "Sağlık Kuruluşuna Yönlendirme"
+    },
+    {
+      "drp_iki_id": 27,
+      "kod": "İS",
+      "aciklama": "ASHÇB ’ye Bağlı Kuruluşlara Yönlendirme"
+    },
+    {
+      "drp_iki_id": 27,
+      "kod": "İS",
+      "aciklama": "Diğer"
+    },
+    {
+      "drp_iki_id": 28,
+      "kod": "DMVG",
+      "aciklama": "Aile"
+    },
+    {
+      "drp_iki_id": 28,
+      "kod": "DMVG",
+      "aciklama": "Akademik Konular"
+    },
+    {
+      "drp_iki_id": 28,
+      "kod": "DMVG",
+      "aciklama": "Davranış Sorunları"
+    },
+    {
+      "drp_iki_id": 28,
+      "kod": "DMVG",
+      "aciklama": "Okula ve Çevreye Uyum"
+    },
+    {
+      "drp_iki_id": 28,
+      "kod": "DMVG",
+      "aciklama": "Psikolojik Uyum"
+    },
+    {
+      "drp_iki_id": 28,
+      "kod": "DMVG",
+      "aciklama": "Sağlık"
+    },
+    {
+      "drp_iki_id": 28,
+      "kod": "DMVG",
+      "aciklama": "Sosyal Uyum"
+    },
+    {
+      "drp_iki_id": 28,
+      "kod": "DMVG",
+      "aciklama": "Sosyo-ekonomik Konular"
+    },
+    {
+      "drp_iki_id": 28,
+      "kod": "DMVG",
+      "aciklama": "Yönetime Yerleştirme"
+    },
+    {
+      "drp_iki_id": 29,
+      "kod": "DMÖG",
+      "aciklama": "Aile"
+    },
+    {
+      "drp_iki_id": 29,
+      "kod": "DMÖG",
+      "aciklama": "Akademik Konular"
+    },
+    {
+      "drp_iki_id": 29,
+      "kod": "DMÖG",
+      "aciklama": "Davranış Sorunları"
+    },
+    {
+      "drp_iki_id": 29,
+      "kod": "DMÖG",
+      "aciklama": "Okula ve Çevreye Uyum"
+    },
+    {
+      "drp_iki_id": 29,
+      "kod": "DMÖG",
+      "aciklama": "Psikolojik Uyum"
+    },
+    {
+      "drp_iki_id": 29,
+      "kod": "DMÖG",
+      "aciklama": "Sağlık"
+    },
+    {
+      "drp_iki_id": 29,
+      "kod": "DMÖG",
+      "aciklama": "Sosyal Uyum"
+    },
+    {
+      "drp_iki_id": 29,
+      "kod": "DMÖG",
+      "aciklama": "Sosyo-ekonomik Konular"
+    },
+    {
+      "drp_iki_id": 29,
+      "kod": "DMÖG",
+      "aciklama": "Yönetime Yerleştirme"
+    }
+  ]
+}
