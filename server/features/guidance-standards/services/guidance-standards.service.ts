@@ -34,11 +34,11 @@ function buildCategoryTree(categories: GuidanceCategory[], items: GuidanceItem[]
 }
 
 export async function getAllStandards(): Promise<GuidanceStandard> {
-  const allCategories = await repository.getAllCategories();
-  const allItems = await repository.getAllItems();
+  const allCategories = (await repository.getAllCategories()) as any[];
+  const allItems = (await repository.getAllItems()) as any[];
   
-  const individualCategories = allCategories.filter(c => c.type === 'individual');
-  const groupCategories = allCategories.filter(c => c.type === 'group');
+  const individualCategories = allCategories.filter(c => c.type === 'individual') as any[];
+  const groupCategories = allCategories.filter(c => c.type === 'group') as any[];
   
   const individualTree = buildCategoryTree(individualCategories, allItems);
   const groupTree = buildCategoryTree(groupCategories, allItems);
@@ -53,12 +53,12 @@ export async function getCategoryWithChildren(categoryId: string): Promise<Guida
   const category = await repository.getCategoryById(categoryId);
   if (!category) return null;
   
-  const allCategories = await repository.getAllCategories();
-  const allItems = await repository.getAllItems();
+  const allCategories = (await repository.getAllCategories()) as any[];
+  const allItems = (await repository.getAllItems()) as any[];
   
   const descendantCategories = allCategories.filter(c => 
-    c.id === categoryId || c.parentId === categoryId
-  );
+    c.id === categoryId || c.parent_id === categoryId
+  ) as any[];
   
   const tree = buildCategoryTree(descendantCategories, allItems);
   return tree.length > 0 ? tree[0] : null;
@@ -69,35 +69,21 @@ export async function createCategory(data: {
   type: 'individual' | 'group';
   parentId: string | null;
 }): Promise<GuidanceCategory> {
-  let level = 1;
-  let order = 1;
+  const newId = await repository.createCategory(data);
   
-  if (data.parentId) {
-    const parent = await repository.getCategoryById(data.parentId);
-    if (!parent) {
-      throw new Error('Parent category not found');
-    }
-    level = parent.level + 1;
-    
-    const siblings = await repository.getCategoriesByParent(data.parentId);
-    order = siblings.length + 1;
-  } else {
-    const rootCategories = (await repository.getCategoriesByParent(null)).filter(c => c.type === data.type);
-    order = rootCategories.length + 1;
-  }
-  
-  const newCategory: Omit<GuidanceCategory, 'createdAt' | 'updatedAt' | 'children' | 'items'> = {
-    id: uuidv4(),
+  return {
+    id: String(newId),
     title: data.title,
     type: data.type,
     parentId: data.parentId,
-    level,
-    order,
+    level: 1,
+    order: 1,
     isCustom: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    children: [],
+    items: [],
   };
-  
-  await repository.createCategory(newCategory);
-  return { ...newCategory, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
 }
 
 export async function updateCategory(id: string, title: string): Promise<void> {
@@ -145,7 +131,7 @@ export async function updateItem(id: string, title: string): Promise<void> {
   if (!existing) {
     throw new Error('Item not found');
   }
-  await repository.updateItem(id, title);
+  await repository.updateItem(id, { title });
 }
 
 export async function deleteItem(id: string): Promise<void> {
@@ -169,23 +155,16 @@ export async function importStandards(data: GuidanceStandard): Promise<void> {
   
   const insertCategoryRecursive = async (category: GuidanceCategory) => {
     await repository.createCategory({
-      id: category.id,
       title: category.title,
       type: category.type,
       parentId: category.parentId,
-      level: category.level,
-      order: category.order,
-      isCustom: category.isCustom,
     });
     
     if (category.items) {
       for (const item of category.items) {
         await repository.createItem({
-          id: item.id,
           title: item.title,
           categoryId: item.categoryId,
-          order: item.order,
-          isCustom: item.isCustom,
         });
       }
     }
@@ -218,10 +197,10 @@ interface CounselingTopic {
 }
 
 export async function getIndividualTopicsFlat(): Promise<CounselingTopic[]> {
-  const allCategories = await repository.getAllCategories();
-  const allItems = await repository.getAllItems();
+  const allCategories = (await repository.getAllCategories()) as any[];
+  const allItems = (await repository.getAllItems()) as any[];
   
-  const individualCategories = allCategories.filter(c => c.type === 'individual');
+  const individualCategories = allCategories.filter(c => c.type === 'individual') as any[];
   const individualTree = buildCategoryTree(individualCategories, allItems);
   
   const topics: CounselingTopic[] = [];
