@@ -1,192 +1,142 @@
-import { v4 as uuidv4 } from 'uuid';
-import type { GuidanceCategory, GuidanceItem, GuidanceStandard } from '../../../../shared/types/index.js';
 import * as repository from '../repository/guidance-standards.repository.js';
+import { getDatabase } from '../../../lib/database/connection.js';
+import { resetGuidanceStandardsToDefaults } from '../../../lib/database/schema/guidance-standards.schema.js';
 
-function buildCategoryTree(categories: GuidanceCategory[], items: GuidanceItem[]): GuidanceCategory[] {
-  const categoryMap = new Map<string, GuidanceCategory>();
-  const rootCategories: GuidanceCategory[] = [];
-  
-  for (const category of categories) {
-    categoryMap.set(category.id, { ...category, children: [], items: [] });
-  }
-  
-  for (const item of items) {
-    const category = categoryMap.get(item.categoryId);
-    if (category) {
-      category.items = category.items || [];
-      category.items.push(item);
-    }
-  }
-  
-  for (const category of categoryMap.values()) {
-    if (category.parentId === null) {
-      rootCategories.push(category);
-    } else {
-      const parent = categoryMap.get(category.parentId);
-      if (parent) {
-        parent.children = parent.children || [];
-        parent.children.push(category);
-      }
-    }
-  }
-  
-  return rootCategories.sort((a, b) => a.order - b.order);
+export function getAllStandards() {
+  return repository.getFullHierarchy();
 }
 
-export async function getAllStandards(): Promise<GuidanceStandard> {
-  const allCategories = (await repository.getAllCategories()) as any[];
-  const allItems = (await repository.getAllItems()) as any[];
-  
-  const individualCategories = allCategories.filter(c => c.type === 'individual') as any[];
-  const groupCategories = allCategories.filter(c => c.type === 'group') as any[];
-  
-  const individualTree = buildCategoryTree(individualCategories, allItems);
-  const groupTree = buildCategoryTree(groupCategories, allItems);
-  
-  return {
-    individual: individualTree,
-    group: groupTree,
-  };
+export function getStats() {
+  return repository.getStats();
 }
 
-export async function getCategoryWithChildren(categoryId: string): Promise<GuidanceCategory | null> {
-  const category = await repository.getCategoryById(categoryId);
-  if (!category) return null;
+export function getAnaKategoriler() {
+  return repository.getAnaKategoriler();
+}
+
+export function getHizmetAlanlari(anaKategoriId?: number) {
+  return repository.getHizmetAlanlari(anaKategoriId);
+}
+
+export function getDrpBirler(hizmetAlaniId?: number) {
+  return repository.getDrpBirler(hizmetAlaniId);
+}
+
+export function getDrpIkiler(drpBirId?: number) {
+  return repository.getDrpIkiler(drpBirId);
+}
+
+export function getDrpUcler(drpIkiId?: number) {
+  return repository.getDrpUcler(drpIkiId);
+}
+
+export function createAnaKategori(ad: string) {
+  const id = repository.createAnaKategori(ad);
+  return { id, ad, is_custom: 1 };
+}
+
+export function createHizmetAlani(anaKategoriId: number, ad: string) {
+  const id = repository.createHizmetAlani(anaKategoriId, ad);
+  return { id, ana_kategori_id: anaKategoriId, ad, is_custom: 1 };
+}
+
+export function createDrpBir(hizmetAlaniId: number, ad: string) {
+  const id = repository.createDrpBir(hizmetAlaniId, ad);
+  return { id, drp_hizmet_alani_id: hizmetAlaniId, ad, is_custom: 1 };
+}
+
+export function createDrpIki(drpBirId: number, ad: string) {
+  const id = repository.createDrpIki(drpBirId, ad);
+  return { id, drp_bir_id: drpBirId, ad, is_custom: 1 };
+}
+
+export function createDrpUc(drpIkiId: number, kod: string, aciklama: string) {
+  const id = repository.createDrpUc(drpIkiId, kod, aciklama);
+  return { id, drp_iki_id: drpIkiId, kod, aciklama, is_custom: 1 };
+}
+
+export function updateAnaKategori(id: number, ad: string) {
+  repository.updateAnaKategori(id, ad);
+  return { success: true };
+}
+
+export function updateHizmetAlani(id: number, ad: string) {
+  repository.updateHizmetAlani(id, ad);
+  return { success: true };
+}
+
+export function updateDrpBir(id: number, ad: string) {
+  repository.updateDrpBir(id, ad);
+  return { success: true };
+}
+
+export function updateDrpIki(id: number, ad: string) {
+  repository.updateDrpIki(id, ad);
+  return { success: true };
+}
+
+export function updateDrpUc(id: number, kod: string, aciklama: string) {
+  repository.updateDrpUc(id, kod, aciklama);
+  return { success: true };
+}
+
+export function deleteAnaKategori(id: number) {
+  repository.deleteAnaKategori(id);
+  return { success: true };
+}
+
+export function deleteHizmetAlani(id: number) {
+  repository.deleteHizmetAlani(id);
+  return { success: true };
+}
+
+export function deleteDrpBir(id: number) {
+  repository.deleteDrpBir(id);
+  return { success: true };
+}
+
+export function deleteDrpIki(id: number) {
+  repository.deleteDrpIki(id);
+  return { success: true };
+}
+
+export function deleteDrpUc(id: number) {
+  repository.deleteDrpUc(id);
+  return { success: true };
+}
+
+export function resetToDefaults() {
+  const db = getDatabase();
+  resetGuidanceStandardsToDefaults(db);
+  return { success: true, message: 'Varsayılan veriler yüklendi' };
+}
+
+export function getHierarchyByAnaKategori(anaKategoriId: number) {
+  const hizmetAlanlari = repository.getHizmetAlanlari(anaKategoriId);
   
-  const allCategories = (await repository.getAllCategories()) as any[];
-  const allItems = (await repository.getAllItems()) as any[];
-  
-  const descendantCategories = allCategories.filter(c => 
-    c.id === categoryId || c.parent_id === categoryId
-  ) as any[];
-  
-  const tree = buildCategoryTree(descendantCategories, allItems);
-  return tree.length > 0 ? tree[0] : null;
-}
-
-export async function createCategory(data: {
-  title: string;
-  type: 'individual' | 'group';
-  parentId: string | null;
-}): Promise<GuidanceCategory> {
-  const newId = await repository.createCategory(data);
-  
-  return {
-    id: String(newId),
-    title: data.title,
-    type: data.type,
-    parentId: data.parentId,
-    level: 1,
-    order: 1,
-    isCustom: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    children: [],
-    items: [],
-  };
-}
-
-export async function updateCategory(id: string, title: string): Promise<void> {
-  const existing = await repository.getCategoryById(id);
-  if (!existing) {
-    throw new Error('Category not found');
-  }
-  await repository.updateCategory(id, title);
-}
-
-export async function deleteCategory(id: string): Promise<void> {
-  const existing = await repository.getCategoryById(id);
-  if (!existing) {
-    throw new Error('Category not found');
-  }
-  await repository.deleteCategory(id);
-}
-
-export async function createItem(data: {
-  title: string;
-  categoryId: string;
-}): Promise<GuidanceItem> {
-  const category = await repository.getCategoryById(data.categoryId);
-  if (!category) {
-    throw new Error('Category not found');
-  }
-  
-  const existingItems = await repository.getItemsByCategory(data.categoryId);
-  const order = existingItems.length + 1;
-  
-  const newItem: Omit<GuidanceItem, 'createdAt' | 'updatedAt'> = {
-    id: uuidv4(),
-    title: data.title,
-    categoryId: data.categoryId,
-    order,
-    isCustom: true,
-  };
-  
-  await repository.createItem(newItem);
-  return { ...newItem, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
-}
-
-export async function updateItem(id: string, title: string): Promise<void> {
-  const existing = await repository.getItemById(id);
-  if (!existing) {
-    throw new Error('Item not found');
-  }
-  await repository.updateItem(id, { title });
-}
-
-export async function deleteItem(id: string): Promise<void> {
-  const existing = await repository.getItemById(id);
-  if (!existing) {
-    throw new Error('Item not found');
-  }
-  await repository.deleteItem(id);
-}
-
-export async function reorderItems(items: { id: string; order: number }[]): Promise<void> {
-  await repository.reorderItems(items);
-}
-
-export async function exportStandards(): Promise<GuidanceStandard> {
-  return getAllStandards();
-}
-
-export async function importStandards(data: GuidanceStandard): Promise<void> {
-  await repository.deleteAllData();
-  
-  const insertCategoryRecursive = async (category: GuidanceCategory) => {
-    await repository.createCategory({
-      title: category.title,
-      type: category.type,
-      parentId: category.parentId,
-    });
+  const result = hizmetAlanlari.map(ha => {
+    const drpBirler = repository.getDrpBirler(ha.id);
     
-    if (category.items) {
-      for (const item of category.items) {
-        await repository.createItem({
-          title: item.title,
-          categoryId: item.categoryId,
-        });
-      }
-    }
-    
-    if (category.children) {
-      for (const child of category.children) {
-        await insertCategoryRecursive(child);
-      }
-    }
-  };
+    return {
+      ...ha,
+      drp_bir: drpBirler.map(db => {
+        const drpIkiler = repository.getDrpIkiler(db.id);
+        
+        return {
+          ...db,
+          drp_iki: drpIkiler.map(di => {
+            const drpUcler = repository.getDrpUcler(di.id);
+            return {
+              ...di,
+              drp_uc: drpUcler
+            };
+          })
+        };
+      })
+    };
+  });
   
-  for (const category of data.individual) {
-    await insertCategoryRecursive(category);
-  }
-  
-  for (const category of data.group) {
-    await insertCategoryRecursive(category);
-  }
-}
-
-export async function resetToDefaults(): Promise<void> {
-  await repository.deleteAllData();
+  return result;
 }
 
 interface CounselingTopic {
@@ -196,36 +146,34 @@ interface CounselingTopic {
   fullPath: string;
 }
 
-export async function getIndividualTopicsFlat(): Promise<CounselingTopic[]> {
-  const allCategories = (await repository.getAllCategories()) as any[];
-  const allItems = (await repository.getAllItems()) as any[];
-  
-  const individualCategories = allCategories.filter(c => c.type === 'individual') as any[];
-  const individualTree = buildCategoryTree(individualCategories, allItems);
-  
+export function getIndividualTopicsFlat(): CounselingTopic[] {
   const topics: CounselingTopic[] = [];
   
-  const extractTopics = (categories: GuidanceCategory[], parentPath: string[] = []) => {
-    for (const category of categories) {
-      const currentPath = [...parentPath, category.title];
+  const bireyselKategori = repository.getAnaKategoriler().find(k => k.ad === 'Bireysel Çalışmalar');
+  if (!bireyselKategori) return topics;
+  
+  const hizmetAlanlari = repository.getHizmetAlanlari(bireyselKategori.id);
+  
+  for (const ha of hizmetAlanlari) {
+    const drpBirler = repository.getDrpBirler(ha.id);
+    
+    for (const db of drpBirler) {
+      const drpIkiler = repository.getDrpIkiler(db.id);
       
-      if (category.items && category.items.length > 0) {
-        for (const item of category.items) {
+      for (const di of drpIkiler) {
+        const drpUcler = repository.getDrpUcler(di.id);
+        
+        for (const du of drpUcler) {
           topics.push({
-            id: item.id,
-            title: item.title,
-            category: category.title,
-            fullPath: currentPath.join(' > ')
+            id: String(du.id),
+            title: du.aciklama,
+            category: di.ad,
+            fullPath: `${ha.ad} > ${db.ad} > ${di.ad}`
           });
         }
       }
-      
-      if (category.children && category.children.length > 0) {
-        extractTopics(category.children, currentPath);
-      }
     }
-  };
+  }
   
-  extractTopics(individualTree);
   return topics;
 }

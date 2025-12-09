@@ -1,282 +1,314 @@
 import { Router, type Request, type Response } from 'express';
 import { validateSchoolAccess } from '../../../middleware/school-access.middleware.js';
 import * as guidanceStandardsService from '../services/guidance-standards.service.js';
-import type {
-  CreateCategoryRequest,
-  UpdateCategoryRequest,
-  CreateItemRequest,
-  UpdateItemRequest,
-  ReorderItemsRequest,
-} from '../../../../shared/types/index.js';
 
 const router = Router();
 router.use(validateSchoolAccess);
 
 router.get('/', async (_req: Request, res: Response) => {
   try {
-    const standards = await guidanceStandardsService.getAllStandards();
+    const standards = guidanceStandardsService.getAllStandards();
     res.json({
       success: true,
-      data: { standards },
+      data: standards
     });
   } catch (error) {
     console.error('Error fetching guidance standards:', error);
     res.status(500).json({
       success: false,
-      error: 'Rehberlik standartları yüklenemedi',
+      error: 'Rehberlik standartları yüklenemedi'
     });
   }
 });
 
-router.get('/category/:id', async (req: Request, res: Response) => {
+router.get('/stats', async (_req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const category = await guidanceStandardsService.getCategoryWithChildren(id);
-    
-    if (!category) {
-      return res.status(404).json({
-        success: false,
-        error: 'Kategori bulunamadı',
-      });
-    }
-    
+    const stats = guidanceStandardsService.getStats();
     res.json({
       success: true,
-      data: { category },
+      data: stats
     });
   } catch (error) {
-    console.error('Error fetching category:', error);
+    console.error('Error fetching stats:', error);
     res.status(500).json({
       success: false,
-      error: 'Kategori yüklenemedi',
+      error: 'İstatistikler yüklenemedi'
     });
   }
 });
 
-router.post('/category', async (req: Request, res: Response) => {
+router.get('/ana-kategoriler', async (_req: Request, res: Response) => {
   try {
-    const data = req.body as CreateCategoryRequest;
-    
-    if (!data.title || !data.type) {
-      return res.status(400).json({
-        success: false,
-        error: 'Başlık ve tip gereklidir',
-      });
+    const data = guidanceStandardsService.getAnaKategoriler();
+    res.json({ success: true, data });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Veri yüklenemedi' });
+  }
+});
+
+router.get('/hizmet-alanlari', async (req: Request, res: Response) => {
+  try {
+    const anaKategoriId = req.query.ana_kategori_id ? parseInt(req.query.ana_kategori_id as string) : undefined;
+    const data = guidanceStandardsService.getHizmetAlanlari(anaKategoriId);
+    res.json({ success: true, data });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Veri yüklenemedi' });
+  }
+});
+
+router.get('/drp-bir', async (req: Request, res: Response) => {
+  try {
+    const hizmetAlaniId = req.query.hizmet_alani_id ? parseInt(req.query.hizmet_alani_id as string) : undefined;
+    const data = guidanceStandardsService.getDrpBirler(hizmetAlaniId);
+    res.json({ success: true, data });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Veri yüklenemedi' });
+  }
+});
+
+router.get('/drp-iki', async (req: Request, res: Response) => {
+  try {
+    const drpBirId = req.query.drp_bir_id ? parseInt(req.query.drp_bir_id as string) : undefined;
+    const data = guidanceStandardsService.getDrpIkiler(drpBirId);
+    res.json({ success: true, data });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Veri yüklenemedi' });
+  }
+});
+
+router.get('/drp-uc', async (req: Request, res: Response) => {
+  try {
+    const drpIkiId = req.query.drp_iki_id ? parseInt(req.query.drp_iki_id as string) : undefined;
+    const data = guidanceStandardsService.getDrpUcler(drpIkiId);
+    res.json({ success: true, data });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Veri yüklenemedi' });
+  }
+});
+
+router.get('/hierarchy/:anaKategoriId', async (req: Request, res: Response) => {
+  try {
+    const anaKategoriId = parseInt(req.params.anaKategoriId);
+    const data = guidanceStandardsService.getHierarchyByAnaKategori(anaKategoriId);
+    res.json({ success: true, data });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Veri yüklenemedi' });
+  }
+});
+
+router.post('/ana-kategoriler', async (req: Request, res: Response) => {
+  try {
+    const { ad } = req.body;
+    if (!ad) {
+      return res.status(400).json({ success: false, error: 'Ad gereklidir' });
     }
-    
-    const category = await guidanceStandardsService.createCategory(data);
-    
-    res.status(201).json({
-      success: true,
-      data: { category },
-    });
+    const data = guidanceStandardsService.createAnaKategori(ad);
+    res.status(201).json({ success: true, data });
   } catch (error) {
-    console.error('Error creating category:', error);
-    res.status(500).json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Kategori oluşturulamadı',
-    });
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Kayıt oluşturulamadı' });
   }
 });
 
-router.put('/category/:id', async (req: Request, res: Response) => {
+router.post('/hizmet-alanlari', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const data = req.body as UpdateCategoryRequest;
-    
-    if (!data.title) {
-      return res.status(400).json({
-        success: false,
-        error: 'Başlık gereklidir',
-      });
+    const { ana_kategori_id, ad } = req.body;
+    if (!ana_kategori_id || !ad) {
+      return res.status(400).json({ success: false, error: 'Tüm alanlar gereklidir' });
     }
-    
-    await guidanceStandardsService.updateCategory(id, data.title);
-    
-    res.json({
-      success: true,
-      data: { message: 'Kategori güncellendi' },
-    });
+    const data = guidanceStandardsService.createHizmetAlani(ana_kategori_id, ad);
+    res.status(201).json({ success: true, data });
   } catch (error) {
-    console.error('Error updating category:', error);
-    res.status(500).json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Kategori güncellenemedi',
-    });
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Kayıt oluşturulamadı' });
   }
 });
 
-router.delete('/category/:id', async (req: Request, res: Response) => {
+router.post('/drp-bir', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    await guidanceStandardsService.deleteCategory(id);
-    
-    res.json({
-      success: true,
-      data: { message: 'Kategori silindi' },
-    });
-  } catch (error) {
-    console.error('Error deleting category:', error);
-    res.status(500).json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Kategori silinemedi',
-    });
-  }
-});
-
-router.post('/item', async (req: Request, res: Response) => {
-  try {
-    const data = req.body as CreateItemRequest;
-    
-    if (!data.title || !data.categoryId) {
-      return res.status(400).json({
-        success: false,
-        error: 'Başlık ve kategori ID gereklidir',
-      });
+    const { drp_hizmet_alani_id, ad } = req.body;
+    if (!drp_hizmet_alani_id || !ad) {
+      return res.status(400).json({ success: false, error: 'Tüm alanlar gereklidir' });
     }
-    
-    const item = await guidanceStandardsService.createItem(data);
-    
-    res.status(201).json({
-      success: true,
-      data: { item },
-    });
+    const data = guidanceStandardsService.createDrpBir(drp_hizmet_alani_id, ad);
+    res.status(201).json({ success: true, data });
   } catch (error) {
-    console.error('Error creating item:', error);
-    res.status(500).json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Konu oluşturulamadı',
-    });
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Kayıt oluşturulamadı' });
   }
 });
 
-router.put('/item/:id', async (req: Request, res: Response) => {
+router.post('/drp-iki', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const data = req.body as UpdateItemRequest;
-    
-    if (!data.title) {
-      return res.status(400).json({
-        success: false,
-        error: 'Başlık gereklidir',
-      });
+    const { drp_bir_id, ad } = req.body;
+    if (!drp_bir_id || !ad) {
+      return res.status(400).json({ success: false, error: 'Tüm alanlar gereklidir' });
     }
-    
-    await guidanceStandardsService.updateItem(id, data.title);
-    
-    res.json({
-      success: true,
-      data: { message: 'Konu güncellendi' },
-    });
+    const data = guidanceStandardsService.createDrpIki(drp_bir_id, ad);
+    res.status(201).json({ success: true, data });
   } catch (error) {
-    console.error('Error updating item:', error);
-    res.status(500).json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Konu güncellenemedi',
-    });
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Kayıt oluşturulamadı' });
   }
 });
 
-router.delete('/item/:id', async (req: Request, res: Response) => {
+router.post('/drp-uc', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    await guidanceStandardsService.deleteItem(id);
-    
-    res.json({
-      success: true,
-      data: { message: 'Konu silindi' },
-    });
-  } catch (error) {
-    console.error('Error deleting item:', error);
-    res.status(500).json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Konu silinemedi',
-    });
-  }
-});
-
-router.put('/items/reorder', async (req: Request, res: Response) => {
-  try {
-    const data = req.body as ReorderItemsRequest;
-    
-    if (!data.items || !Array.isArray(data.items)) {
-      return res.status(400).json({
-        success: false,
-        error: 'Geçersiz sıralama verisi',
-      });
+    const { drp_iki_id, kod, aciklama } = req.body;
+    if (!drp_iki_id || !aciklama) {
+      return res.status(400).json({ success: false, error: 'Tüm alanlar gereklidir' });
     }
-    
-    await guidanceStandardsService.reorderItems(data.items);
-    
-    res.json({
-      success: true,
-      data: { message: 'Sıralama güncellendi' },
-    });
+    const data = guidanceStandardsService.createDrpUc(drp_iki_id, kod || '', aciklama);
+    res.status(201).json({ success: true, data });
   } catch (error) {
-    console.error('Error reordering items:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Sıralama güncellenemedi',
-    });
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Kayıt oluşturulamadı' });
   }
 });
 
-router.get('/export', async (_req: Request, res: Response) => {
+router.put('/ana-kategoriler/:id', async (req: Request, res: Response) => {
   try {
-    const standards = await guidanceStandardsService.exportStandards();
-    
-    res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Content-Disposition', 'attachment; filename=rehberlik-standartlari.json');
-    res.json(standards);
-  } catch (error) {
-    console.error('Error exporting standards:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Standartlar dışa aktarılamadı',
-    });
-  }
-});
-
-router.post('/import', async (req: Request, res: Response) => {
-  try {
-    const data = req.body;
-    
-    if (!data || !data.individual || !data.group) {
-      return res.status(400).json({
-        success: false,
-        error: 'Geçersiz veri formatı',
-      });
+    const id = parseInt(req.params.id);
+    const { ad } = req.body;
+    if (!ad) {
+      return res.status(400).json({ success: false, error: 'Ad gereklidir' });
     }
-    
-    await guidanceStandardsService.importStandards(data);
-    
-    res.json({
-      success: true,
-      data: { message: 'Standartlar içe aktarıldı' },
-    });
+    guidanceStandardsService.updateAnaKategori(id, ad);
+    res.json({ success: true, message: 'Güncellendi' });
   } catch (error) {
-    console.error('Error importing standards:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Standartlar içe aktarılamadı',
-    });
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Güncellenemedi' });
+  }
+});
+
+router.put('/hizmet-alanlari/:id', async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { ad } = req.body;
+    if (!ad) {
+      return res.status(400).json({ success: false, error: 'Ad gereklidir' });
+    }
+    guidanceStandardsService.updateHizmetAlani(id, ad);
+    res.json({ success: true, message: 'Güncellendi' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Güncellenemedi' });
+  }
+});
+
+router.put('/drp-bir/:id', async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { ad } = req.body;
+    if (!ad) {
+      return res.status(400).json({ success: false, error: 'Ad gereklidir' });
+    }
+    guidanceStandardsService.updateDrpBir(id, ad);
+    res.json({ success: true, message: 'Güncellendi' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Güncellenemedi' });
+  }
+});
+
+router.put('/drp-iki/:id', async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { ad } = req.body;
+    if (!ad) {
+      return res.status(400).json({ success: false, error: 'Ad gereklidir' });
+    }
+    guidanceStandardsService.updateDrpIki(id, ad);
+    res.json({ success: true, message: 'Güncellendi' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Güncellenemedi' });
+  }
+});
+
+router.put('/drp-uc/:id', async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { kod, aciklama } = req.body;
+    if (!aciklama) {
+      return res.status(400).json({ success: false, error: 'Açıklama gereklidir' });
+    }
+    guidanceStandardsService.updateDrpUc(id, kod || '', aciklama);
+    res.json({ success: true, message: 'Güncellendi' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Güncellenemedi' });
+  }
+});
+
+router.delete('/ana-kategoriler/:id', async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    guidanceStandardsService.deleteAnaKategori(id);
+    res.json({ success: true, message: 'Silindi' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Silinemedi' });
+  }
+});
+
+router.delete('/hizmet-alanlari/:id', async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    guidanceStandardsService.deleteHizmetAlani(id);
+    res.json({ success: true, message: 'Silindi' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Silinemedi' });
+  }
+});
+
+router.delete('/drp-bir/:id', async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    guidanceStandardsService.deleteDrpBir(id);
+    res.json({ success: true, message: 'Silindi' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Silinemedi' });
+  }
+});
+
+router.delete('/drp-iki/:id', async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    guidanceStandardsService.deleteDrpIki(id);
+    res.json({ success: true, message: 'Silindi' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Silinemedi' });
+  }
+});
+
+router.delete('/drp-uc/:id', async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    guidanceStandardsService.deleteDrpUc(id);
+    res.json({ success: true, message: 'Silindi' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, error: 'Silinemedi' });
   }
 });
 
 router.post('/reset', async (_req: Request, res: Response) => {
   try {
-    await guidanceStandardsService.resetToDefaults();
-    
-    res.json({
-      success: true,
-      data: { message: 'Standartlar varsayılana sıfırlandı' },
-    });
+    const result = guidanceStandardsService.resetToDefaults();
+    res.json({ success: true, data: result });
   } catch (error) {
-    console.error('Error resetting standards:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Standartlar sıfırlanamadı',
-    });
+    console.error('Error resetting:', error);
+    res.status(500).json({ success: false, error: 'Varsayılana döndürülemedi' });
   }
 });
 
