@@ -37,11 +37,11 @@ interface EnhancedSessionsTableProps {
   onSelectSession: (session: CounselingSession) => void;
 }
 
-export default function EnhancedSessionsTable({ 
+export default function EnhancedSessionsTable({
   sessions,
   topics,
   onExport,
-  onSelectSession 
+  onSelectSession
 }: EnhancedSessionsTableProps) {
   const { toast } = useToast();
   const { data: settings } = useSettings();
@@ -308,7 +308,7 @@ export default function EnhancedSessionsTable({
                     const topicFullPath = topic?.fullPath;
                     const topicTitle = topic?.title;
                     const schoolName = selectedSchool?.name;
-                    
+
                     const studentData = session.student ? {
                       gender: (session.student as any)?.gender || '-',
                       idNumber: (session.student as any)?.tcIdentityNo,
@@ -320,7 +320,7 @@ export default function EnhancedSessionsTable({
                       healthInfo: undefined,
                       specialEducationInfo: undefined,
                     } : undefined;
-                    
+
                     const formData = {
                       topic: session.topic || '',
                       exitTime: session.exitTime || '',
@@ -338,7 +338,7 @@ export default function EnhancedSessionsTable({
                       followUpPlan: undefined,
                       actionItems: [],
                     } as unknown as CompleteSessionFormValues;
-                    
+
                     const counselorName = settings?.account?.displayName || user?.name;
                     await generateSessionCompletionPDF(session, formData, topicFullPath, schoolName, topicTitle, studentData, counselorName);
                     toast({
@@ -366,8 +366,8 @@ export default function EnhancedSessionsTable({
                   >
                     {columns.find(c => c.key === 'sessionNumber')?.visible && (
                       <td className="px-3 py-3 text-center">
-                        <Badge 
-                          variant="secondary" 
+                        <Badge
+                          variant="secondary"
                           className="text-xs font-semibold px-2 min-w-[2rem]"
                         >
                           {sessionNumber}
@@ -438,7 +438,14 @@ export default function EnhancedSessionsTable({
                     {columns.find(c => c.key === 'topic')?.visible && (
                       <td className="px-4 py-3 text-sm">
                         <span className="truncate block max-w-xs">
-                          {topicsMap.get(session.topic || '')?.title || session.topic || 'Konu belirtilmedi'}
+                          {(() => {
+                            const topic = topicsMap.get(session.topic || '');
+                            if (!topic) return session.topic || 'Konu belirtilmedi';
+                            if (topic.kod) {
+                              return `${topic.kod} - ${topic.title}`;
+                            }
+                            return topic.title;
+                          })()}
                         </span>
                       </td>
                     )}
@@ -465,8 +472,8 @@ export default function EnhancedSessionsTable({
                       </td>
                     )}
                     {columns.find(c => c.key === 'actions')?.visible && (
-                      <td 
-                        className="px-4 py-3 text-center" 
+                      <td
+                        className="px-4 py-3 text-center"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button

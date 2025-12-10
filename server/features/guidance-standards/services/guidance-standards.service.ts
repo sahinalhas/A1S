@@ -179,6 +179,7 @@ export function getIndividualTopicsFlat(): CounselingTopic[] {
             title: du.aciklama,
             category: di.ad,
             fullPath: `${ha.ad} > ${db.ad} > ${di.ad}`,
+            kod: du.kod,
             drpHizmetAlaniId: ha.id,
             drpBirId: db.id,
             drpIkiId: di.id,
