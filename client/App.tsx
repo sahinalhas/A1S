@@ -13,7 +13,6 @@ import { Loader2 } from "lucide-react";
 import Layout from "./layout/Rehber360Layout";
 import Index from "./pages/Index";
 import Students from "./pages/Students";
-import AddStudent from "./pages/AddStudent";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -72,7 +71,6 @@ const App = () => {
                     <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
                       <Route path="/" element={<Index />} />
                       <Route path="/ogrenci" element={<Students />} />
-                      <Route path="/ogrenci/ekle" element={<AddStudent />} />
                       <Route path="/ogrenci/:id" element={<Suspense fallback={<LoadingFallback />}><StudentProfile /></Suspense>} />
                       <Route
                         path="/gorusmeler"
