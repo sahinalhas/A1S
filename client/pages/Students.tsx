@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/atoms/Button';
 import { Input } from '@/components/atoms/Input';
 import { Badge } from '@/components/atoms/Badge';
@@ -52,11 +53,10 @@ import {
   TrendingUp,
   UserCheck,
 } from 'lucide-react';
-import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as XLSX from 'xlsx';
 
-import { Student, upsertStudent } from '@/lib/storage';
+import { Student } from '@/lib/storage';
 import { apiClient } from '@/lib/api/core/client';
 import { STUDENT_ENDPOINTS } from '@/lib/constants/api-endpoints';
 import type { ApiResponse } from '@/lib/types/api-types';
@@ -79,13 +79,11 @@ import { TableSkeleton } from '@/components/features/students/TableSkeleton';
 import { parseImportedRows, mergeStudents, sortStudents } from '@/lib/utils/student-helpers';
 
 export default function Students() {
+  const navigate = useNavigate();
   const { students, isLoading, invalidate } = useStudents();
   const [isMobileView, setIsMobileView] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('table');
 
-  const [open, setOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
-  const [studentToEdit, setStudentToEdit] = useState<Student | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [studentToDelete, setStudentToDelete] = useState<Student | null>(null);
   const [confirmationName, setConfirmationName] = useState('');
@@ -131,16 +129,6 @@ export default function Students() {
 
   const pagination = usePagination(sortedStudents, 25);
 
-  const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<Student>({
-    defaultValues: {
-      id: '',
-      name: '',
-      surname: '',
-      class: '9/A',
-      gender: 'K',
-      enrollmentDate: new Date().toISOString(),
-    },
-  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -154,75 +142,8 @@ export default function Students() {
     };
   }, []);
 
-  const onCreate = async (data: Student) => {
-    const id = (data.id || '').trim();
-    if (!id) {
-      toast.error('Öğrenci numarası zorunludur.');
-      return;
-    }
-    if (!/^\d+$/.test(id)) {
-      toast.error('Öğrenci numarası sadece rakamlardan oluşmalıdır.');
-      return;
-    }
-    if (students.some((s) => s.id === id)) {
-      toast.error('Bu öğrenci numarası zaten kayıtlı.');
-      return;
-    }
-
-    const newStudent = { ...data, id, enrollmentDate: new Date().toISOString() };
-
-    try {
-      await upsertStudent(newStudent);
-      invalidate();
-      reset();
-      setOpen(false);
-      toast.success('Öğrenci başarıyla eklendi.');
-    } catch (error) {
-      toast.error('Öğrenci kaydedilemedi. Lütfen tekrar deneyin.');
-      console.error('Failed to save student:', error);
-    }
-  };
-
   const onEditClick = (student: Student) => {
-    setStudentToEdit(student);
-    setValue('id', student.id);
-    setValue('name', student.name);
-    setValue('surname', student.surname);
-    setValue('class', student.class);
-    setValue('gender', student.gender);
-    setEditOpen(true);
-  };
-
-  const onUpdate = async (data: Student) => {
-    if (!studentToEdit) return;
-
-    const id = (data.id || '').trim();
-    if (!id) {
-      toast.error('Öğrenci numarası zorunludur.');
-      return;
-    }
-    if (!/^\d+$/.test(id)) {
-      toast.error('Öğrenci numarası sadece rakamlardan oluşmalıdır.');
-      return;
-    }
-    if (id !== studentToEdit.id && students.some((s) => s.id === id)) {
-      toast.error('Bu öğrenci numarası zaten kayıtlı.');
-      return;
-    }
-
-    const updatedStudent = { ...studentToEdit, ...data, id };
-
-    try {
-      await upsertStudent(updatedStudent);
-      invalidate();
-      reset();
-      setEditOpen(false);
-      setStudentToEdit(null);
-      toast.success('Öğrenci başarıyla güncellendi.');
-    } catch (error) {
-      toast.error('Öğrenci güncellenemedi. Lütfen tekrar deneyin.');
-      console.error('Failed to update student:', error);
-    }
+    navigate(`/ogrenci/${student.id}`);
   };
 
   const onDeleteClick = (student: Student) => {
@@ -472,23 +393,14 @@ export default function Students() {
               Tüm öğrenci kayıtlarını görüntüleyin, yönetin ve analiz edin.
             </p>
             <div className="flex flex-wrap gap-3">
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild>
-                <Button size="default" className="bg-white text-blue-600 hover:bg-white/90 shadow-lg">
-                  <UserPlus className="mr-2 h-4 w-4" />
-                  Yeni Öğrenci Ekle
-                </Button>
-              </DialogTrigger>
-              <StudentFormDialog
-                onSubmit={handleSubmit(onCreate)}
-                register={register}
-                setValue={setValue}
-                watch={watch}
-                errors={errors}
-                title="Yeni Öğrenci Ekle"
-                submitText="Kaydet"
-              />
-            </Dialog>
+            <Button 
+              size="default" 
+              className="bg-white text-blue-600 hover:bg-white/90 shadow-lg"
+              onClick={() => navigate('/ogrenci/ekle')}
+            >
+              <UserPlus className="mr-2 h-4 w-4" />
+              Yeni Öğrenci Ekle
+            </Button>
 
             <label className="inline-flex items-center">
               <input
@@ -676,7 +588,7 @@ export default function Students() {
         {isLoading ? (
           <TableSkeleton />
         ) : students.length === 0 ? (
-          <EmptyState variant="no-students" onAddStudent={() => setOpen(true)} />
+          <EmptyState variant="no-students" onAddStudent={() => navigate('/ogrenci/ekle')} />
         ) : filters.filteredStudents.length === 0 ? (
           <EmptyState variant="no-results" onClearFilters={filters.resetFilters} />
         ) : (
@@ -800,23 +712,6 @@ export default function Students() {
         )}
       </motion.div>
 
-      <Dialog open={editOpen} onOpenChange={setEditOpen}>
-        <StudentFormDialog
-          onSubmit={handleSubmit(onUpdate)}
-          register={register}
-          setValue={setValue}
-          watch={watch}
-          errors={errors}
-          title="Öğrenci Düzenle"
-          submitText="Değişiklikleri Kaydet"
-          onCancel={() => {
-            setEditOpen(false);
-            setStudentToEdit(null);
-            reset();
-          }}
-        />
-      </Dialog>
-
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent className="w-[95vw] sm:max-w-[500px]">
           <DialogHeader>
@@ -881,102 +776,5 @@ export default function Students() {
         onEdit={onEditClick}
       />
     </div>
-  );
-}
-
-function StudentFormDialog({
-  onSubmit,
-  register,
-  setValue,
-  watch,
-  errors,
-  title,
-  submitText,
-  onCancel,
-}: {
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
-  register: any;
-  setValue: any;
-  watch: any;
-  errors: any;
-  title: string;
-  submitText: string;
-  onCancel?: () => void;
-}) {
-  return (
-    <DialogContent className="w-[95vw] sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
-      <DialogHeader>
-        <DialogTitle className="text-2xl">{title}</DialogTitle>
-        <DialogDescription className="sr-only">{title} formu</DialogDescription>
-      </DialogHeader>
-      <form
-        id="student-form"
-        onSubmit={onSubmit}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4"
-      >
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Öğrenci No</label>
-          <Input
-            placeholder="12345"
-            inputMode="numeric"
-            type="text"
-            {...register('id', {
-              required: 'Öğrenci numarası zorunludur',
-              pattern: {
-                value: /^\d+$/,
-                message: 'Öğrenci numarası sadece rakamlardan oluşmalıdır',
-              },
-            })}
-          />
-          {errors.id && <p className="text-xs text-red-600">{errors.id.message}</p>}
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Ad</label>
-          <Input
-            placeholder="Ahmet"
-            {...register('name', { required: 'Ad zorunludur' })}
-          />
-          {errors.name && <p className="text-xs text-red-600">{errors.name.message}</p>}
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Soyad</label>
-          <Input
-            placeholder="Yılmaz"
-            {...register('surname', { required: 'Soyad zorunludur' })}
-          />
-          {errors.surname && <p className="text-xs text-red-600">{errors.surname.message}</p>}
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Sınıf</label>
-          <Input placeholder="9/A" {...register('class')} />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Cinsiyet</label>
-          <Select
-            onValueChange={(v) => setValue('gender', v as 'K' | 'E')}
-            value={watch('gender')}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Seçiniz" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="K">Kız</SelectItem>
-              <SelectItem value="E">Erkek</SelectItem>
-            </SelectContent>
-          </Select>
-          <input type="hidden" {...register('gender')} />
-        </div>
-      </form>
-      <DialogFooter className="flex-col sm:flex-row gap-2">
-        {onCancel && (
-          <Button variant="outline" onClick={onCancel} className="w-full sm:w-auto">
-            İptal
-          </Button>
-        )}
-        <Button form="student-form" type="submit" className="w-full sm:w-auto">
-          {submitText}
-        </Button>
-      </DialogFooter>
-    </DialogContent>
   );
 }
