@@ -790,12 +790,26 @@ export class MEBBISAutomationService {
         await this.wait(800);
       }, 2, 1000, 'Workplace selection');
 
+      await this.page.evaluate((time) => {
+        const input = document.getElementById('txtgorusmebitissaati') as HTMLInputElement;
+        if (input) input.value = time;
+      }, data.gorusmeBitisSaati);
+
+      // Kaydetmeden önce kısa bir bekle, DOM iyice otursun
+      await this.wait(500);
+
       await this.retry(async () => {
-        await this.page!.waitForSelector('#txtOturumSayisi', { timeout: 5000 });
+        await this.page!.waitForSelector('#txtOturumSayisi', { timeout: 5000, visible: true });
+        // Önce temizle sonra yaz
         await this.page!.click('#txtOturumSayisi', { clickCount: 3 });
-        await this.page!.type('#txtOturumSayisi', String(data.oturumSayisi), { delay: 50 });
-        await this.wait(800);
+        await this.page!.keyboard.press('Backspace');
+        await this.wait(100);
+        await this.page!.type('#txtOturumSayisi', String(data.oturumSayisi), { delay: 100 });
+        await this.wait(500);
       }, 2, 1000, 'Session count entry');
+
+      // Kaydet butonuna basmadan önce son kontrol
+      await this.wait(500);
 
       await this.page.click('#ramToolBar1_imgButtonKaydet');
       await this.wait(1500);

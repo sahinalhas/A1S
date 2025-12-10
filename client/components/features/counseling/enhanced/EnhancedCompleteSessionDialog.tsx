@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { 
-  Loader2, 
-  MessageSquare, 
-  Target, 
-  FileText, 
-  ClipboardCheck, 
+import {
+  Loader2,
+  MessageSquare,
+  Target,
+  FileText,
+  ClipboardCheck,
   CheckCircle2,
   Calendar as CalendarIcon,
   Clock,
@@ -91,13 +91,13 @@ export default function EnhancedCompleteSessionDialog({
 
   const normalizeTopicValue = (topicValue: string | undefined): string => {
     if (!topicValue) return "";
-    
+
     const topicById = topics.find(t => t.id === topicValue);
     if (topicById) return topicValue;
-    
+
     const topicByTitle = topics.find(t => t.title === topicValue);
     if (topicByTitle) return topicByTitle.id;
-    
+
     return topicValue;
   };
 
@@ -134,14 +134,14 @@ export default function EnhancedCompleteSessionDialog({
 
   const handleDownloadPDF = async () => {
     if (!session) return;
-    
+
     try {
       setIsDownloadingPDF(true);
       const formValues = form.getValues();
       const topic = topics.find(t => t.id === formValues.topic);
       const topicFullPath = topic?.fullPath;
       const schoolName = selectedSchool?.name;
-      
+
       const studentData = fullStudentData ? {
         gender: fullStudentData.gender === 'K' ? 'Kız' : fullStudentData.gender === 'E' ? 'Erkek' : undefined,
         idNumber: fullStudentData.tcIdentityNo,
@@ -151,7 +151,7 @@ export default function EnhancedCompleteSessionDialog({
         healthInfo: fullStudentData.healthNote || 'Sürekli hastalığı yok',
         specialEducationInfo: fullStudentData.tags?.includes('specialEducation') ? 'Evet' : 'Yok',
       } : undefined;
-      
+
       const counselorName = settings?.account?.displayName || user?.name;
       await generateSessionCompletionPDF(session, formValues, topicFullPath, schoolName, undefined, studentData, counselorName);
       toast({
@@ -171,7 +171,21 @@ export default function EnhancedCompleteSessionDialog({
 
   const handleFormSubmit = () => {
     const errors = form.formState.errors;
-    
+    const values = form.getValues();
+
+    // Time validation: Exit time must be after entry time
+    if (session?.entryTime && values.exitTime) {
+      if (values.exitTime <= session.entryTime) {
+        toast({
+          title: 'Hatalı Saat',
+          description: `Çıkış saati (${values.exitTime}), başlangıç saatinden (${session.entryTime}) sonra olmalıdır.`,
+          variant: 'destructive',
+        });
+        setActiveTab('summary');
+        return;
+      }
+    }
+
     if (Object.keys(errors).length > 0) {
       if (errors.topic) {
         toast({
@@ -182,7 +196,7 @@ export default function EnhancedCompleteSessionDialog({
         setActiveTab('summary');
         return;
       }
-      
+
       if (errors.followUpDate || errors.followUpTime) {
         toast({
           title: 'Eksik bilgi',
@@ -203,7 +217,7 @@ export default function EnhancedCompleteSessionDialog({
 
   const handleTopicChange = (topicId: string) => {
     form.setValue('topic', topicId);
-    
+
     const selectedTopic = topics.find(t => t.id === topicId);
     if (selectedTopic) {
       form.setValue('drpHizmetAlaniId', selectedTopic.drpHizmetAlaniId);
@@ -253,16 +267,16 @@ export default function EnhancedCompleteSessionDialog({
     }
 
     try {
-      const studentId = session.sessionType === 'group' 
-        ? session.students?.[0]?.id 
+      const studentId = session.sessionType === 'group'
+        ? session.students?.[0]?.id
         : session.student?.id;
-      
+
       if (!studentId) {
         throw new Error('Öğrenci ID bulunamadı');
       }
 
       const sessionDateTime = `${session.sessionDate}T${session.entryTime}:00`;
-      
+
       const selectedTopicObj = topics.find(t => t.id === selectedTopic);
       const topicTitle = selectedTopicObj?.title || selectedTopic;
       const requestData = {
@@ -274,7 +288,7 @@ export default function EnhancedCompleteSessionDialog({
         entryTime: session.entryTime,
         sessionTopic: topicTitle
       };
-      
+
       await analyzeSession(requestData);
       setPreviewOpen(true);
 
@@ -330,8 +344,8 @@ export default function EnhancedCompleteSessionDialog({
           description: item.description,
           assignedTo: item.assignedTo,
           priority: item.priority,
-          dueDate: item.dueDate instanceof Date 
-            ? item.dueDate.toISOString().split('T')[0] 
+          dueDate: item.dueDate instanceof Date
+            ? item.dueDate.toISOString().split('T')[0]
             : item.dueDate
         }));
       form.setValue('actionItems', selectedItems);
@@ -399,17 +413,17 @@ export default function EnhancedCompleteSessionDialog({
                             Çıkış Saati <span className="text-rose-500">*</span>
                           </FormLabel>
                           <FormControl>
-                            <Input 
-                              type="time" 
-                              {...field} 
-                              className="h-8 text-sm rounded-lg" 
+                            <Input
+                              type="time"
+                              {...field}
+                              className="h-8 text-sm rounded-lg"
                             />
                           </FormControl>
                           <FormMessage className="text-[10px]" />
                         </FormItem>
                       )}
                     />
-                    
+
                     <FormField
                       control={form.control}
                       name="topic"
@@ -459,8 +473,8 @@ export default function EnhancedCompleteSessionDialog({
                           </Button>
                         </div>
                         <FormControl>
-                          <Textarea 
-                            {...field} 
+                          <Textarea
+                            {...field}
                             placeholder="Görüşme detayları..."
                             rows={3}
                             className="rounded-lg resize-none text-sm"
@@ -556,10 +570,10 @@ export default function EnhancedCompleteSessionDialog({
                               Saat <span className="text-rose-500">*</span>
                             </FormLabel>
                             <FormControl>
-                              <Input 
-                                type="time" 
-                                {...field} 
-                                className="h-8 text-xs" 
+                              <Input
+                                type="time"
+                                {...field}
+                                className="h-8 text-xs"
                               />
                             </FormControl>
                             <FormMessage className="text-[10px]" />
@@ -784,16 +798,16 @@ export default function EnhancedCompleteSessionDialog({
               </Tabs>
 
               <DialogFooter className="gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
-                <Button 
-                  type="button" 
-                  variant="outline" 
+                <Button
+                  type="button"
+                  variant="outline"
                   onClick={() => onOpenChange(false)}
                   disabled={isPending}
                   className="h-9 px-4 text-sm"
                 >
                   İptal
                 </Button>
-                <Button 
+                <Button
                   type="button"
                   variant="outline"
                   onClick={handleDownloadPDF}
@@ -807,8 +821,8 @@ export default function EnhancedCompleteSessionDialog({
                   )}
                   PDF
                 </Button>
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={isPending || isDownloadingPDF}
                   className="h-9 px-5 text-sm bg-violet-600 hover:bg-violet-700"
                 >

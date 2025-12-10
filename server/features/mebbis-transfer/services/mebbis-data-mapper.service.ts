@@ -94,7 +94,21 @@ export class MEBBISDataMapper {
 
       const gorusmeTarihi = this.formatDate(session.sessionDate);
       const gorusmeSaati = this.formatTime(session.entryTime);
-      const gorusmeBitisSaati = this.formatTime(session.exitTime || this.calculateEndTime(session.entryTime));
+      let gorusmeBitisSaati = this.formatTime(session.exitTime || this.calculateEndTime(session.entryTime));
+
+      // Validate times: Start time must be before End time
+      if (gorusmeBitisSaati <= gorusmeSaati) {
+        logger.warn(
+          `Invalid session duration for session ${session.id}: Start (${gorusmeSaati}) >= End (${gorusmeBitisSaati}). Defaulting to +40 mins.`,
+          'MEBBISDataMapper'
+        );
+        // Calculate new end time: start + 40 mins
+        const [hours, minutes] = gorusmeSaati.split(':').map(Number);
+        const date = new Date();
+        date.setHours(hours);
+        date.setMinutes(minutes + 40);
+        gorusmeBitisSaati = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+      }
 
       const mappedData = {
         studentNo: session.studentNo,
