@@ -153,7 +153,13 @@ interface CounselingTopic {
 export function getIndividualTopicsFlat(): CounselingTopic[] {
   const topics: CounselingTopic[] = [];
 
-  const bireyselKategori = repository.getAnaKategoriler().find(k => k.ad === 'Bireysel Çalışmalar');
+  // Try exact match first, then fallback to case-insensitive search
+  let bireyselKategori = repository.getAnaKategoriler().find(k => k.ad === 'BİREYSEL ÇALIŞMALAR');
+  if (!bireyselKategori) {
+    bireyselKategori = repository.getAnaKategoriler().find(k =>
+      k.ad.toLowerCase().includes('bireysel') && k.ad.toLowerCase().includes('çalışma')
+    );
+  }
   if (!bireyselKategori) return topics;
 
   const hizmetAlanlari = repository.getHizmetAlanlari(bireyselKategori.id);
