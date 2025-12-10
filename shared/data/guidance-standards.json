@@ -55,7 +55,7 @@
                 "drp_uc": [
                   {
                     "kod": "ÖSL9",
-                    "aciklama": "Zorbalıkla baş etme yollarını kullanır"
+                    "aciklama": "Kimden, nereden, ne zaman ve nasıl yardım isteyebileceğini bilir."
                   },
                   {
                     "kod": "ÖSL9",
@@ -239,7 +239,7 @@
                 "drp_uc": [
                   {
                     "kod": "ÖOVKg",
-                    "aciklama": "Akran Arabuluculuğu"
+                    "aciklama": "Bilinçli Teknoloji Kullanımı"
                   },
                   {
                     "kod": "ÖOVKg",
@@ -279,7 +279,131 @@
                   },
                   {
                     "kod": "ÖOVKg (TBM)",
-                    "aciklama": "Alkol Bağımlılığı"
+                    "aciklama": "Tütün Bağımlılığı"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Gelişim Dönemi Özellikleri"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Hak ve Sorumluluklarını Bilme"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "İhmal İstismardan Korunma"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "İletişim Becerileri"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "İş Birliği Geliştirme"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Karar Verme Becerisi"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Olumlu Davranış Geliştirme"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Otokontrol"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Öfke Kontrolü"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Öz Bakım Becerileri"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Öz Güven Geliştirme"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Özsaygı"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Problem Çözme Becerileri"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Sosyal Beceriler"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Stresle Baş Etme Becerileri"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Şiddeti Önleme"
+                  },
+                  {
+                    "kod": "ÖOVKg (TBM)",
+                    "aciklama": "Madde Bağımlılığı"
+                  },
+                  {
+                    "kod": "ÖOVKg (TBM)",
+                    "aciklama": "Sağlıklı Yaşam"
+                  },
+                  {
+                    "kod": "ÖOVKg (TBM)",
+                    "aciklama": "Teknoloji Bağımlılığı"
+                  },
+                  {
+                    "kod": "ÖOVKg (TBM)",
+                    "aciklama": "Tütün Bağımlılığı"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Yaratıcı Düşünme Becerisi"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici -GÖÇ)"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-GİNSEL İSTİSMAR)"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-İNTHAR)"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-TERÖR)"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-DOĞAL AFET)"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-ÖLÜM YAS)"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-SALGIN HASTALIK)"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "PSD Programı(Önleyici Program)"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Psikolojik Sağlamlık"
+                  },
+                  {
+                    "kod": "ÖOVKg",
+                    "aciklama": "Bilinçli Teknoloji Kullanımı"
                   }
                 ]
               },
@@ -289,7 +413,119 @@
                 "drp_uc": [
                   {
                     "kod": "ÖOVEg",
-                    "aciklama": "Çalışma Programı Hazırlama"
+                    "aciklama": "Zekâ Türleri ve Özellikleri"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Ders Seçimi"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Devamsızlığı Önleme"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Dikkat Geliştirme Çalışmaları"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Hedef Belirleme"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Motivasyon"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Okul Kuralları"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Okula ve Çevreye Uyum"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Okulun Fiziksel İmkânları"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Okulda Seçilebilecek Alan/Dallar"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Okuldaki ve Okul Çevresindeki Eğitim Olanakları"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Okullara/Sınavlara Başvuru Kılavuzları"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Okulun Sosyokültürel İmkânları"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Öğrenciyi İlgilendiren Yönetmelikler"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Öğrenme Stilleri"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Öz Disiplin Geliştirme"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Rehberlik ve Psikolojik Danışma Servisinin Tanıtılması"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Serbest Zamanı Değerlendirme"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Sınav Kaygısı"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Sınavda Başarılı Olma Stratejileri"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Sınavlarda Başarılı Olma Ve Çalışma Yolları"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Üst Öğrenim Kurumlarında Tercih Edilebilecek Alan/Dallar"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Üst Öğrenim Kurumlarının Tanıtılması"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Üst Öğrenimde Yararlanılacak Burslar ve Barınma Olanakları"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Üst Öğrenime Geçiş Sınavları"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Verimli Ders Çalışma Teknikleri"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Yurt Dışı Eğitim Olanakları"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Zaman Yönetimi"
+                  },
+                  {
+                    "kod": "ÖOVEg",
+                    "aciklama": "Zekâ Türleri ve Özellikleri"
                   }
                 ]
               },
@@ -299,7 +535,63 @@
                 "drp_uc": [
                   {
                     "kod": "ÖOVMg",
-                    "aciklama": "Bir Meslek Elemanını Sınıfa/Okula Davet Etme"
+                    "aciklama": "Staj"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "Çalışan/işveren Hak ve Sorumlulukları"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "Çevredeki İş Olanakları ve Çalışma Koşulları"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "İş Görüşmesi Becerileri"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "İş ve Mesleğe Hazırlayan Kurum ve Kursların Tanıtımı"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "İş ve Meslek Etiği"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "İş Yaşamına Yönelik Beceriler"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "Kariyer Planlama"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "Meslek Sahibi Olmanın Önemi"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "Meslek Seçerken Dikkat Edilmesi Gereken Hususlar"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "Meslek Tanıtımı"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "Meslek ile İlgi, Değer, Yetenek ve Kişisel Özellik İlişkisi"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "Mesleki Hedef Belirleme"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "Özgeçmiş Hazırlama"
+                  },
+                  {
+                    "kod": "ÖOVMg",
+                    "aciklama": "Staj"
                   }
                 ]
               }
@@ -315,7 +607,7 @@
                 "drp_uc": [
                   {
                     "kod": "ÖOY",
-                    "aciklama": "Alan/Dal Tercihleri"
+                    "aciklama": "Sosyal ve Kültürel Faaliyetler"
                   },
                   {
                     "kod": "ÖOY",
@@ -400,7 +692,299 @@
                 "drp_uc": [
                   {
                     "kod": "DMVE",
-                    "aciklama": "Aile İçi İletişim"
+                    "aciklama": "Bilinçli Teknoloji Kullanımı"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Akran Arabuluculuğu"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Akran Zorbalığı"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Alan/Dal Tanıtımı ve Seçimi"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Anne Baba Tutumları"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Atılganlık"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Baba Destek Programı"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "BİLSEM Tanıtımı"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Bireysel Farklılıklara Saygı"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Çatışma Çözme Becerileri"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Çevredeki İş Olanakları ve Çalışma Koşulları"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Çocuk ve Ergenlerin Gelişim Özellikleri"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Çocuklar ve Oyun"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Çocuklarda Cinsel Eğitim"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Çocuklarda Öz Disiplin Geliştirme"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Davranış Sorunları"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Ders Seçimi"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Devamsızlığı Önleme"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Dikkat Geliştirme Çalışmaları"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Ebeveynlik Becerileri"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Engel Türleri ve Tamlama Süreçleri"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Geleceği Planlama"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Hak ve Sorumluluklarını Bilme"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Hedef Belirleme"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "İhmal istismardan Korunma"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "İletişim Becerileri"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "İş Yaşamına Yönelik Beceriler"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "İşbirliği Geliştirme"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Karar Verme Becerisi"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Kariyer Planlama"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Kuşaklararası İletişim"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Meslek ve Değer İlişkisi"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Meslek ve İlgi İlişkisi"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Meslek ve Kişisel Özellik İlişkisi"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Meslek ve Yetenek İlişkisi"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Motivasyon"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Okul Başarısında Ailenin Rolü"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Okul Olgunluğu"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Okula Uyum Çalışmaları"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Olumlu Davranış Geliştirme"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Ofke Yönetimi"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Öğrenciyi İlgilendiren Yönetmelikler"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Öğrenme Stilleri"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Özel Eğitim Gereksinimli Öğrencilerin Eğitim Olanakları"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Özel Eğitim Gereksinimli Öğrencilerin Gelişim Özellikleri"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Özgüven Geliştirme"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Özsaygı Geliştirme"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Problem Çözme Becerileri"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-GÖÇ)"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-CİNSEL İSTİSMAR)"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-İNTHAR)"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-TERÖR)"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-DOĞAL AFET)"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-ÖLÜM YAS)"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-SALGIN HASTALIK)"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "PSD Programı (Önleyici Programlar)"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Rehberlik ve Psikolojik Danışma Servisinin Tanıtılması"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Sağlıklı Yaşam"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Serbest Zamanı Değerlendirme"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Sınav Kaygısı"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Stres Yönetimi"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Şiddetin Önlenmesi"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "TBM Alkol Bağımlılığı"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "TBM Madde Bağımlılığı"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "TBM Sağlıklı Yaşam"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "TBM Teknoloji Bağımlılığı"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "TBM Tütün Bağımlılığı"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Tek Ebeveynlik"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Üst Öğrenim Kurumları"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Üst Öğrenime Geçiş Sınavları"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Verimli Ders Çalışma Teknikleri"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Zaman Yönetimi"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Psikolojik Sağlamlık"
+                  },
+                  {
+                    "kod": "DMVE",
+                    "aciklama": "Bilinçli Teknoloji Kullanımı"
                   }
                 ]
               },
@@ -410,7 +994,263 @@
                 "drp_uc": [
                   {
                     "kod": "DMÖE",
-                    "aciklama": "Akran Arabuluculuğu"
+                    "aciklama": "Bilinçli Teknoloji Kullanımı"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Akran Zorbalığı"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Anne Baba Tutumları"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Atılganlık"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "BEP Hazırlama"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "BİLSEM Tanıtımı"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Bireyi Tanıma Teknikleri"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Bireysel Farklılıklara Saygı"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Çatışma Çözme Becerileri"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Çocuk Hak ve Sorumlulukları"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Çocuk ve Ergenlerin Gelişim Özellikleri"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Çocuklar ve Oyun"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Çocuklarda Cinsel Eğitim"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Davranış Değiştirme Teknikleri"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Destek Eğitim Odası Hizmetleri"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Devamsızlığı Önleme"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Dikkat Geliştirme Çalışmaları"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Engel Türleri ve Tanılama Süreçleri"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Geleceği Planlama"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Hak ve Sorumluluklarını Bilme"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Hedef Belirleme"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "İhmal İstismardan Korunma"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "İletişim Becerileri"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "İş Yaşamına Yönelik Beceriler"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "İşbirliği Geliştirme"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Karar Verme Becerisi"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Kuşaklararası İletişim"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Motivasyon"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Olumlu Davranış Geliştirme"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Öfke Yönetimi"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Öğrenme Stilleri"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Öğretmen Grubuyla Vaka Paylaşımı"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Özel Eğitim Gereksinimli Öğrencilerin Eğitim Olanakları"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Özel Eğitim Gereksinimli Öğrencilerin Gelişim Özellikleri"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Özgüven Geliştirme"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Özsaygı Geliştirme"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Problem Çözme Becerileri"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici GÖÇ)"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-CİNSEL İSTİSMAR)"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-İNTHAR)"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-TERÖR)"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-DOĞAL AFET)"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-ÖLÜM YAS)"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-SALGIN HASTALIK)"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "PSD Programı (Önleyici Programlar)"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Rehberlik ve Psikolojik Danışma Servisinin Tanıtılması"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Serbest Zamanı Değerlendirme"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Sınav Kaygısı"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Sınıf Rehberlik Programı"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Sınıf Yönetimi"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Stres Yönetimi"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "TBM Alkol Bağımlılığı"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "TBM Madde Bağımlılığı"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "TBM Sağlıklı Yaşam"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "TBM Teknoloji Bağımlılığı"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "TBM Tütün Bağımlılı"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Üst Öğrenim Kurumları"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Üst Öğrenime Geçiş Sınavları"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Verimli Ders Çalışma Teknikleri"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Yetenek, İlgi ve Değerler"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Zaman Yönetimi"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Şiddetin Önlenmesi"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Tek Ebeveynlik"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Psikolojik Sağlamlık"
+                  },
+                  {
+                    "kod": "DMÖE",
+                    "aciklama": "Bilinçli Teknoloji Kullanımı"
                   }
                 ]
               },
@@ -420,7 +1260,75 @@
                 "drp_uc": [
                   {
                     "kod": "DMDE",
-                    "aciklama": "Bağımlılıkla Mücadele"
+                    "aciklama": "Bilinçli Teknoloji Kullanımı"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Çocuk ve Ergenlerin Gelişim Özellikleri"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "İhmal, İstismar"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "İletişim Becerileri"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Okula Uyum Çalışmaları"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Öfke Yönetimi"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Özel Eğitim Gereksinimli Öğrencilerin Gelişim Özellikleri"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Stres Yönetimi"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Psikososyal Destek Programı (GÖÇ)"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Psikososyal Destek Programı (CİNSEL İSTİSMAR)"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Psikososyal Destek Programı (İNTİHAR)"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Psikososyal Destek Programı (TERÖR)"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Psikososyal Destek Programı (DOĞAL AFET)"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Psikososyal Destek Programı (ÖLÜM YAS)"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Psikososyal Destek Programı (SALGIN HASTALIK)"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Eğitim kurumunun tanıtımı"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Psikolojik Sağlamlık"
+                  },
+                  {
+                    "kod": "DMDE",
+                    "aciklama": "Bilinçli Teknoloji Kullanımı"
                   }
                 ]
               }
@@ -436,7 +1344,47 @@
                 "drp_uc": [
                   {
                     "kod": "DP",
-                    "aciklama": "Araştırma Çalışmaları"
+                    "aciklama": "Rehberlik ve Psikolojik Danışma Servisinin İhtiyaçlarının Belirlenmesi"
+                  },
+                  {
+                    "kod": "DP",
+                    "aciklama": "BEP Dosyalarının Düzenlenmesi ve Güncellenmesi"
+                  },
+                  {
+                    "kod": "DP",
+                    "aciklama": "BİLSEM Danışman Öğretmen Belirlenmesi"
+                  },
+                  {
+                    "kod": "DP",
+                    "aciklama": "Okul Risk Haritasının Oluşturulması"
+                  },
+                  {
+                    "kod": "DP",
+                    "aciklama": "Okul/Kurum RPD Programının Hazırlanması"
+                  },
+                  {
+                    "kod": "DP",
+                    "aciklama": "Proje Çalışmaları"
+                  },
+                  {
+                    "kod": "DP",
+                    "aciklama": "RPD Hizmetleri Yürütme Komisyonu Tarafından RPD İhtiyaç Analizi Çalışmalarının Yapılması"
+                  },
+                  {
+                    "kod": "DP",
+                    "aciklama": "RPD Hizmetleri Yürütme Komisyonu Toplantısının Yapılması"
+                  },
+                  {
+                    "kod": "DP",
+                    "aciklama": "RPD Hizmetleri Yürütme Komisyonunun Oluşturulması"
+                  },
+                  {
+                    "kod": "DP",
+                    "aciklama": "Rehberlik ve Psikolojik Danışma Servisi Desimali Oluşturulması"
+                  },
+                  {
+                    "kod": "DP",
+                    "aciklama": "Rehberlik ve Psikolojik Danışma Servisinin İhtiyaçlarının Belirlenmesi"
                   }
                 ]
               }
@@ -452,7 +1400,47 @@
                 "drp_uc": [
                   {
                     "kod": "DİT",
-                    "aciklama": "BEP Geliştirme Birimi Toplantıları"
+                    "aciklama": "Veli Toplantıları"
+                  },
+                  {
+                    "kod": "DİT",
+                    "aciklama": "Değerler Eğitimi Komisyonu Toplantısı"
+                  },
+                  {
+                    "kod": "DİT",
+                    "aciklama": "Destek Eğitim Odası Toplantısı"
+                  },
+                  {
+                    "kod": "DİT",
+                    "aciklama": "Okul Aile Birliği Toplantıları"
+                  },
+                  {
+                    "kod": "DİT",
+                    "aciklama": "Okul Psikososyal Destek Hizmetleri Toplantıları"
+                  },
+                  {
+                    "kod": "DİT",
+                    "aciklama": "RAM Mesleki Paylaşım Toplantıları"
+                  },
+                  {
+                    "kod": "DİT",
+                    "aciklama": "RAM Psikososyal Destek Hizmetleri Toplantıları"
+                  },
+                  {
+                    "kod": "DİT",
+                    "aciklama": "RAM Sene Başı/Sonu Toplantıları"
+                  },
+                  {
+                    "kod": "DİT",
+                    "aciklama": "Sınıf Başarı Değerlendirme Toplantısı"
+                  },
+                  {
+                    "kod": "DİT",
+                    "aciklama": "Şube Öğretmenler Kurulu Toplantıları"
+                  },
+                  {
+                    "kod": "DİT",
+                    "aciklama": "Veli Toplantıları"
                   }
                 ]
               },
@@ -462,7 +1450,27 @@
                 "drp_uc": [
                   {
                     "kod": "DİF",
-                    "aciklama": "Aile Katılımı Çalışmaları"
+                    "aciklama": "Sağlık Tarama Çalışmaları"
+                  },
+                  {
+                    "kod": "DİF",
+                    "aciklama": "Belirli Gün ve Haftalar ile İlgili Çalışmalar"
+                  },
+                  {
+                    "kod": "DİF",
+                    "aciklama": "Değerler Eğitimi Çalışmaları"
+                  },
+                  {
+                    "kod": "DİF",
+                    "aciklama": "Mezuniyet"
+                  },
+                  {
+                    "kod": "DİF",
+                    "aciklama": "Öğrenci Meclisi Çalışmaları"
+                  },
+                  {
+                    "kod": "DİF",
+                    "aciklama": "Sağlık Tarama Çalışmaları"
                   }
                 ]
               }
@@ -478,7 +1486,27 @@
                 "drp_uc": [
                   {
                     "kod": "DG",
-                    "aciklama": "Bilimsel Kongreye Katılma"
+                    "aciklama": "Yüksek Lisans Doktora Dersine Katılma"
+                  },
+                  {
+                    "kod": "DG",
+                    "aciklama": "Bilimsel Seminer, Konferansa Katılma"
+                  },
+                  {
+                    "kod": "DG",
+                    "aciklama": "Hizmet İçi Eğitim Verme"
+                  },
+                  {
+                    "kod": "DG",
+                    "aciklama": "Hizmet İçi Eğitime Katılma"
+                  },
+                  {
+                    "kod": "DG",
+                    "aciklama": "Danışman Öğretmenlik (Staj Uygulamaları)"
+                  },
+                  {
+                    "kod": "DG",
+                    "aciklama": "Yüksek Lisans Doktora Dersine Katılma"
                   }
                 ]
               }
@@ -570,7 +1598,7 @@
                   },
                   {
                     "kod": "B.G.G.2.c",
-                    "aciklama": "Çocuğumu Tanıyorum Formu"
+                    "aciklama": "Çocuğumu Tamyorum Formu"
                   },
                   {
                     "kod": "B.G.G.1.c",
@@ -603,6 +1631,10 @@
                   {
                     "kod": "ÖOB99",
                     "aciklama": "Diğer"
+                  },
+                  {
+                    "kod": "B.G.G.2.c",
+                    "aciklama": "Çocuğumu Tamyorum Formu"
                   }
                 ]
               }
@@ -618,7 +1650,7 @@
                 "drp_uc": [
                   {
                     "kod": "ÖOVKb",
-                    "aciklama": "Aile"
+                    "aciklama": "Sosyo-ekonomik Konular"
                   },
                   {
                     "kod": "ÖOVKb",
@@ -652,7 +1684,7 @@
                 "drp_uc": [
                   {
                     "kod": "ÖOVEb",
-                    "aciklama": "Başarısızlık Nedenleri"
+                    "aciklama": "Zamanı Yönetimi"
                   },
                   {
                     "kod": "ÖOVEb",
@@ -689,6 +1721,74 @@
                   {
                     "kod": "ÖOVEb",
                     "aciklama": "Okul ve Çevresindeki Eğitim Olanakları"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Okula ve Çevreye Uyum"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Okulda Seçilebilecek Alan/Dallar"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Okulun Fiziksel İmkânları"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Okulun Sosyo-kültürel İmkânları"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Öğrenciyi İlgilendiren Yönetmelikler"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Öğrenme Stilleri"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Öz Disiplin Geliştirme"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Rehberlik ve Psikolojik Danışma Servisinin Tanıtılması"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Serbest Zamanı Değerlendirme"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Sınav Kaygısı"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Sınavda Başarılı Olma Stratejileri"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Sosyal Kulüpler"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Üst Öğrenimde Yararlanılacak Burslar ve Barınma Olanakları"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Üst Öğrenime Geçiş Sınavları"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Verimli Ders Çalışma"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Yurt Dışı Eğitim Olanakları"
+                  },
+                  {
+                    "kod": "ÖOVEb",
+                    "aciklama": "Zamanı Yönetimi"
                   }
                 ]
               },
@@ -698,7 +1798,75 @@
                 "drp_uc": [
                   {
                     "kod": "ÖOVMb",
-                    "aciklama": "Çalışan/İşveren Hak ve Sorumlulukları"
+                    "aciklama": "Staj"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Çevredeki İş Olanakları ve Çalışma Koşulları"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "İş Görüşmesi Becerileri"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "İş ve Mesleğe Hazırlayan Kurum ve Kursların Tanıtımı"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "İş ve Meslek Etiği"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "İş Yaşamına Yönelik Beceriler"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Kariyer Planlama"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Meslek Sahibi Olmanın Önemi"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Meslek Seçerken Dikkat Edilmesi Gereken Hususlar"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Meslek Tanıtımı"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Meslek ve Değer İlişkisi"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Meslek ve İlgili İlişkisi"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Meslek ve Kişisel Özellik İlişkisi"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Meslek ve Yetenek İlişkisi"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Mesleki Hedef Belirleme"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Mesleklerin İncelenmesi"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Öz Geçmiş Hazırlama"
+                  },
+                  {
+                    "kod": "ÖOVMb",
+                    "aciklama": "Staj"
                   }
                 ]
               }
@@ -714,7 +1882,19 @@
                 "drp_uc": [
                   {
                     "kod": "ÖOY",
-                    "aciklama": "Alan/Dal Tercihleri"
+                    "aciklama": "Üst Öğrenim Kurumuna Geçen Öğrencilerin İzlenmesi"
+                  },
+                  {
+                    "kod": "ÖOY",
+                    "aciklama": "Seçmeli Ders"
+                  },
+                  {
+                    "kod": "ÖOY",
+                    "aciklama": "Sosyal Kulüpler"
+                  },
+                  {
+                    "kod": "ÖOY",
+                    "aciklama": "Üst Öğrenim Kurumuna Geçen Öğrencilerin İzlenmesi"
                   }
                 ]
               }
@@ -872,19 +2052,19 @@
                 "drp_uc": [
                   {
                     "kod": "İS",
-                    "aciklama": "RAM"
+                    "aciklama": "RAM RPD Hizmetleri Bölümüne Yönlendirme"
                   },
                   {
                     "kod": "İS",
-                    "aciklama": "Sağlık"
+                    "aciklama": "Sağlık Kuruluşuna Yönlendirme"
                   },
                   {
                     "kod": "İS",
-                    "aciklama": "Sosyal Hizmet"
+                    "aciklama": "ASHÇB ’ye Bağlı Kuruluşlara Yönlendirme"
                   },
                   {
                     "kod": "İS",
-                    "aciklama": "Diğer Kurumlar"
+                    "aciklama": "Diğer"
                   }
                 ]
               }
@@ -906,7 +2086,7 @@
                 "drp_uc": [
                   {
                     "kod": "DMVG",
-                    "aciklama": "Aile"
+                    "aciklama": "Yönetime Yerleştirme"
                   },
                   {
                     "kod": "DMVG",
@@ -948,7 +2128,7 @@
                 "drp_uc": [
                   {
                     "kod": "DMÖG",
-                    "aciklama": "Aile"
+                    "aciklama": "Yönetime Yerleştirme"
                   },
                   {
                     "kod": "DMÖG",
