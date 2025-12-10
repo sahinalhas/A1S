@@ -154,7 +154,7 @@ export default function ParticipantStep({
                                   </div>
                                   <span className="text-sm text-slate-800 dark:text-slate-200 truncate">
                                     <span className="font-medium">{student.name} {student.surname}</span>
-                                    <span className="text-slate-500 dark:text-slate-400 ml-1.5">({student.class})</span>
+                                    <span className="text-slate-500 dark:text-slate-400 ml-1.5">• {student.class} • No: {student.id}</span>
                                   </span>
                                 </CommandItem>
                               ))}
@@ -243,7 +243,7 @@ export default function ParticipantStep({
                                     </div>
                                     <span className="text-sm text-slate-800 dark:text-slate-200 truncate">
                                       <span className="font-medium">{student.name} {student.surname}</span>
-                                      <span className="text-slate-500 dark:text-slate-400 ml-1.5">({student.class})</span>
+                                      <span className="text-slate-500 dark:text-slate-400 ml-1.5">• {student.class} • No: {student.id}</span>
                                     </span>
                                   </CommandItem>
                                 );

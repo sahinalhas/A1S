@@ -250,7 +250,7 @@ export default function NewSessionDialog({
                                     </div>
                                     <span className="text-sm text-slate-800 dark:text-white truncate">
                                       <span className="font-medium">{student.name} {student.surname}</span>
-                                      <span className="text-slate-500 ml-1.5">({student.class})</span>
+                                      <span className="text-slate-500 ml-1.5">• {student.class} • No: {student.id}</span>
                                     </span>
                                   </CommandItem>
                                 ))}
@@ -347,7 +347,7 @@ export default function NewSessionDialog({
                                       </div>
                                       <span className="text-sm text-slate-800 dark:text-white truncate">
                                         <span className="font-medium">{student.name} {student.surname}</span>
-                                        <span className="text-slate-500 ml-1.5">({student.class})</span>
+                                        <span className="text-slate-500 ml-1.5">• {student.class} • No: {student.id}</span>
                                       </span>
                                     </CommandItem>
                                   );
