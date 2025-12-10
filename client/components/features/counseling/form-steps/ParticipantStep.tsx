@@ -92,41 +92,45 @@ export default function ParticipantStep({
                     <Popover open={studentSearchOpen} onOpenChange={setStudentSearchOpen}>
                       <PopoverTrigger asChild>
                         <FormControl>
-                          <Button
+                          <button
                             type="button"
-                            variant="outline"
-                            role="combobox"
                             className={cn(
-                              "w-full justify-between h-9 text-left font-normal text-sm rounded-lg border bg-white dark:bg-slate-900",
-                              !field.value && "text-slate-400"
+                              "w-full h-9 flex items-center justify-between px-3 rounded-lg border bg-white dark:bg-slate-900 transition-all text-left",
+                              field.value 
+                                ? "border-purple-300 dark:border-purple-700 ring-1 ring-purple-100 dark:ring-purple-900/30" 
+                                : "border-slate-200 dark:border-slate-700 hover:border-slate-300"
                             )}
                           >
-                            <div className="flex items-center gap-1.5 truncate">
-                              <Search className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-                              <span className="truncate">
-                                {field.value
-                                  ? (() => {
-                                      const student = students.find((s) => s.id === field.value);
-                                      return student ? `${student.name} ${student.surname}` : "Öğrenci ara...";
-                                    })()
-                                  : "Öğrenci ara..."}
-                              </span>
-                            </div>
-                            <ChevronDown className="h-3.5 w-3.5 shrink-0 text-slate-400" />
-                          </Button>
+                            <span className="text-[13px] text-slate-600 dark:text-slate-300 truncate">
+                              {field.value
+                                ? (() => {
+                                    const student = students.find((s) => s.id === field.value);
+                                    return student 
+                                      ? <>{student.name} {student.surname} <span className="text-slate-400">•</span> {student.class} <span className="text-slate-400">•</span> {student.id}</>
+                                      : "Öğrenci seçin...";
+                                  })()
+                                : <span className="text-slate-400">Öğrenci seçin...</span>}
+                            </span>
+                            <ChevronDown className={cn(
+                              "h-4 w-4 text-slate-400 shrink-0 transition-transform",
+                              studentSearchOpen && "rotate-180"
+                            )} />
+                          </button>
                         </FormControl>
                       </PopoverTrigger>
                       <PopoverContent 
-                        className="p-0 rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg bg-white dark:bg-slate-900"
+                        className="p-0 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden"
                         align="start"
                         sideOffset={4}
                         style={{ width: 'var(--radix-popover-trigger-width)' }}
                       >
-                        <Command className="rounded-xl">
-                          <CommandInput placeholder="Öğrenci ara..." className="h-10 text-sm border-b border-slate-100 dark:border-slate-800" />
-                          <CommandList className="max-h-[240px] overflow-y-auto">
-                            <CommandEmpty className="py-6 text-sm text-center text-slate-500">Öğrenci bulunamadı.</CommandEmpty>
-                            <CommandGroup className="p-1">
+                        <div className="p-2 border-b border-slate-100 dark:border-slate-800">
+                          <CommandInput placeholder="Ara..." className="h-8 text-[13px] px-2 border-0 bg-slate-50 dark:bg-slate-800 rounded-md focus:ring-0" />
+                        </div>
+                        <Command className="border-0">
+                          <CommandList className="max-h-[180px] overflow-y-auto p-1">
+                            <CommandEmpty className="py-6 text-center text-[13px] text-slate-400">Sonuç bulunamadı</CommandEmpty>
+                            <CommandGroup>
                               {students.map((student) => (
                                 <CommandItem
                                   key={student.id}
@@ -136,26 +140,18 @@ export default function ParticipantStep({
                                     setStudentSearchOpen(false);
                                   }}
                                   className={cn(
-                                    "py-1.5 px-2 rounded-md cursor-pointer transition-colors flex items-center",
+                                    "py-2 px-2 rounded-md cursor-pointer flex items-center gap-2 text-[13px] transition-colors",
                                     field.value === student.id 
-                                      ? "bg-purple-50 dark:bg-purple-900/20" 
-                                      : "hover:bg-slate-50 dark:hover:bg-slate-800"
+                                      ? "bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300" 
+                                      : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
                                   )}
                                 >
-                                  <div className={cn(
-                                    "flex items-center justify-center w-4 h-4 mr-2 rounded-full border-[1.5px] shrink-0",
-                                    field.value === student.id 
-                                      ? "border-purple-500 bg-purple-500" 
-                                      : "border-slate-300 dark:border-slate-600"
-                                  )}>
-                                    {field.value === student.id && (
-                                      <Check className="h-2.5 w-2.5 text-white" />
-                                    )}
-                                  </div>
-                                  <span className="text-sm text-slate-800 dark:text-slate-200 truncate">
-                                    <span className="font-medium">{student.name} {student.surname}</span>
-                                    <span className="text-slate-500 dark:text-slate-400 ml-1.5">• {student.class} • No: {student.id}</span>
+                                  <span className="truncate flex-1">
+                                    {student.name} {student.surname} <span className="text-slate-400 dark:text-slate-500">•</span> {student.class} <span className="text-slate-400 dark:text-slate-500">•</span> {student.id}
                                   </span>
+                                  {field.value === student.id && (
+                                    <Check className="h-3.5 w-3.5 text-purple-500 shrink-0" />
+                                  )}
                                 </CommandItem>
                               ))}
                             </CommandGroup>
@@ -181,33 +177,44 @@ export default function ParticipantStep({
                     <Popover open={studentSearchOpen} onOpenChange={setStudentSearchOpen}>
                       <PopoverTrigger asChild>
                         <FormControl>
-                          <Button
+                          <button
                             type="button"
-                            variant="outline"
-                            role="combobox"
-                            className="w-full justify-between h-9 text-left font-normal text-sm rounded-lg border bg-white dark:bg-slate-900"
+                            className={cn(
+                              "w-full h-9 flex items-center justify-between px-3 rounded-lg border bg-white dark:bg-slate-900 transition-all text-left",
+                              selectedStudents.length > 0 
+                                ? "border-purple-300 dark:border-purple-700 ring-1 ring-purple-100 dark:ring-purple-900/30" 
+                                : "border-slate-200 dark:border-slate-700 hover:border-slate-300"
+                            )}
                           >
-                            <div className="flex items-center gap-1.5">
-                              <Search className="h-3.5 w-3.5 text-slate-400" />
-                              {selectedStudents.length > 0
-                                ? `${selectedStudents.length} öğrenci seçildi`
-                                : "Öğrenci seçin..."}
-                            </div>
-                            <ChevronDown className="h-3.5 w-3.5 shrink-0 text-slate-400" />
-                          </Button>
+                            <span className="text-[13px] truncate">
+                              {selectedStudents.length > 0 ? (
+                                <span className="text-slate-600 dark:text-slate-300">
+                                  {selectedStudents.length} öğrenci <span className="text-slate-400">•</span> {selectedStudents.slice(0, 2).map(s => s.name).join(", ")}{selectedStudents.length > 2 && "..."}
+                                </span>
+                              ) : (
+                                <span className="text-slate-400">Öğrenci seçin...</span>
+                              )}
+                            </span>
+                            <ChevronDown className={cn(
+                              "h-4 w-4 text-slate-400 shrink-0 transition-transform",
+                              studentSearchOpen && "rotate-180"
+                            )} />
+                          </button>
                         </FormControl>
                       </PopoverTrigger>
                       <PopoverContent 
-                        className="p-0 rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg bg-white dark:bg-slate-900"
+                        className="p-0 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden"
                         align="start"
                         sideOffset={4}
                         style={{ width: 'var(--radix-popover-trigger-width)' }}
                       >
-                        <Command className="rounded-xl">
-                          <CommandInput placeholder="Öğrenci ara..." className="h-10 text-sm border-b border-slate-100 dark:border-slate-800" />
-                          <CommandList className="max-h-[240px] overflow-y-auto">
-                            <CommandEmpty className="py-6 text-sm text-center text-slate-500">Öğrenci bulunamadı.</CommandEmpty>
-                            <CommandGroup className="p-1">
+                        <div className="p-2 border-b border-slate-100 dark:border-slate-800">
+                          <CommandInput placeholder="Ara..." className="h-8 text-[13px] px-2 border-0 bg-slate-50 dark:bg-slate-800 rounded-md focus:ring-0" />
+                        </div>
+                        <Command className="border-0">
+                          <CommandList className="max-h-[180px] overflow-y-auto p-1">
+                            <CommandEmpty className="py-6 text-center text-[13px] text-slate-400">Sonuç bulunamadı</CommandEmpty>
+                            <CommandGroup>
                               {students.map((student) => {
                                 const isSelected = selectedStudents.some(s => s.id === student.id);
                                 return (
@@ -225,14 +232,14 @@ export default function ParticipantStep({
                                       field.onChange(newStudents.map(s => s.id));
                                     }}
                                     className={cn(
-                                      "py-1.5 px-2 rounded-md cursor-pointer transition-colors flex items-center",
+                                      "py-2 px-2 rounded-md cursor-pointer flex items-center gap-2 text-[13px] transition-colors",
                                       isSelected 
-                                        ? "bg-purple-50 dark:bg-purple-900/20" 
-                                        : "hover:bg-slate-50 dark:hover:bg-slate-800"
+                                        ? "bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300" 
+                                        : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
                                     )}
                                   >
                                     <div className={cn(
-                                      "flex items-center justify-center w-4 h-4 mr-2 rounded shrink-0 border-[1.5px]",
+                                      "w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-colors",
                                       isSelected 
                                         ? "border-purple-500 bg-purple-500" 
                                         : "border-slate-300 dark:border-slate-600"
@@ -241,9 +248,8 @@ export default function ParticipantStep({
                                         <Check className="h-2.5 w-2.5 text-white" />
                                       )}
                                     </div>
-                                    <span className="text-sm text-slate-800 dark:text-slate-200 truncate">
-                                      <span className="font-medium">{student.name} {student.surname}</span>
-                                      <span className="text-slate-500 dark:text-slate-400 ml-1.5">• {student.class} • No: {student.id}</span>
+                                    <span className="truncate flex-1">
+                                      {student.name} {student.surname} <span className="text-slate-400 dark:text-slate-500">•</span> {student.class} <span className="text-slate-400 dark:text-slate-500">•</span> {student.id}
                                     </span>
                                   </CommandItem>
                                 );

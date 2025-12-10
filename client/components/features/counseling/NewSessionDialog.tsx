@@ -185,37 +185,41 @@ export default function NewSessionDialog({
                             <button
                               type="button"
                               className={cn(
-                                "w-full flex items-center justify-between px-4 py-3 rounded-xl border-2 transition-all text-left",
+                                "w-full h-11 flex items-center justify-between px-3 rounded-lg border bg-white dark:bg-slate-900 transition-all text-left group",
                                 field.value 
-                                  ? "border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-950/20" 
+                                  ? "border-indigo-300 dark:border-indigo-700 ring-2 ring-indigo-100 dark:ring-indigo-900/30" 
                                   : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                               )}
                             >
                               {field.value ? (
-                                <span className="text-sm text-slate-800 dark:text-white truncate">
-                                  <span className="font-medium">{selectedStudent?.name} {selectedStudent?.surname}</span>
-                                  <span className="text-slate-500 ml-1.5">• {selectedStudent?.class} • No: {selectedStudent?.id}</span>
+                                <span className="text-[13px] text-slate-700 dark:text-slate-200 truncate">
+                                  {selectedStudent?.name} {selectedStudent?.surname} <span className="text-slate-400">•</span> {selectedStudent?.class} <span className="text-slate-400">•</span> {selectedStudent?.id}
                                 </span>
                               ) : (
-                                <span className="text-slate-400">Öğrenci seçin...</span>
+                                <span className="text-[13px] text-slate-400">Öğrenci seçin...</span>
                               )}
-                              <ChevronDown className="h-4 w-4 text-slate-400 shrink-0 ml-2" />
+                              <ChevronDown className={cn(
+                                "h-4 w-4 text-slate-400 shrink-0 transition-transform",
+                                studentSearchOpen && "rotate-180"
+                              )} />
                             </button>
                           </FormControl>
                         </PopoverTrigger>
                         <PopoverContent 
-                          className="p-0 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700" 
+                          className="p-0 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden" 
                           align="start"
                           sideOffset={4}
                           style={{ width: 'var(--radix-popover-trigger-width)' }}
                         >
-                          <Command>
-                            <CommandInput placeholder="Öğrenci ara..." className="h-10 text-sm border-b border-slate-100 dark:border-slate-800" />
-                            <CommandList className="max-h-[200px] overflow-y-auto">
-                              <CommandEmpty className="py-4 text-center text-sm text-slate-500">
-                                Öğrenci bulunamadı
+                          <div className="p-2 border-b border-slate-100 dark:border-slate-800">
+                            <CommandInput placeholder="Ara..." className="h-8 text-[13px] px-2 border-0 bg-slate-50 dark:bg-slate-800 rounded-md focus:ring-0" />
+                          </div>
+                          <Command className="border-0">
+                            <CommandList className="max-h-[180px] overflow-y-auto p-1">
+                              <CommandEmpty className="py-6 text-center text-[13px] text-slate-400">
+                                Sonuç bulunamadı
                               </CommandEmpty>
-                              <CommandGroup className="p-1">
+                              <CommandGroup>
                                 {students.map((student) => (
                                   <CommandItem
                                     key={student.id}
@@ -225,26 +229,18 @@ export default function NewSessionDialog({
                                       setStudentSearchOpen(false);
                                     }}
                                     className={cn(
-                                      "py-2 px-2.5 rounded-lg cursor-pointer flex items-center gap-2",
+                                      "py-2 px-2 rounded-md cursor-pointer flex items-center gap-2 text-[13px] transition-colors",
                                       field.value === student.id 
-                                        ? "bg-indigo-50 dark:bg-indigo-900/20" 
-                                        : "hover:bg-slate-50 dark:hover:bg-slate-800"
+                                        ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300" 
+                                        : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
                                     )}
                                   >
-                                    <div className={cn(
-                                      "w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0",
-                                      field.value === student.id 
-                                        ? "border-indigo-500 bg-indigo-500" 
-                                        : "border-slate-300 dark:border-slate-600"
-                                    )}>
-                                      {field.value === student.id && (
-                                        <Check className="h-2.5 w-2.5 text-white" />
-                                      )}
-                                    </div>
-                                    <span className="text-sm text-slate-800 dark:text-white truncate">
-                                      <span className="font-medium">{student.name} {student.surname}</span>
-                                      <span className="text-slate-500 ml-1.5">• {student.class} • No: {student.id}</span>
+                                    <span className="truncate flex-1">
+                                      {student.name} {student.surname} <span className="text-slate-400 dark:text-slate-500">•</span> {student.class} <span className="text-slate-400 dark:text-slate-500">•</span> {student.id}
                                     </span>
+                                    {field.value === student.id && (
+                                      <Check className="h-3.5 w-3.5 text-indigo-500 shrink-0" />
+                                    )}
                                   </CommandItem>
                                 ))}
                               </CommandGroup>
@@ -268,37 +264,41 @@ export default function NewSessionDialog({
                             <button
                               type="button"
                               className={cn(
-                                "w-full flex items-center justify-between px-4 py-3 rounded-xl border-2 transition-all text-left",
+                                "w-full h-11 flex items-center justify-between px-3 rounded-lg border bg-white dark:bg-slate-900 transition-all text-left group",
                                 selectedStudents.length > 0 
-                                  ? "border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-950/20" 
+                                  ? "border-indigo-300 dark:border-indigo-700 ring-2 ring-indigo-100 dark:ring-indigo-900/30" 
                                   : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                               )}
                             >
                               {selectedStudents.length > 0 ? (
-                                <span className="text-sm text-slate-800 dark:text-white truncate">
-                                  <span className="font-medium">{selectedStudents.length} öğrenci seçildi</span>
-                                  <span className="text-slate-500 ml-1.5">• {selectedStudents.slice(0, 2).map(s => s.name).join(", ")}{selectedStudents.length > 2 && "..."}</span>
+                                <span className="text-[13px] text-slate-700 dark:text-slate-200 truncate">
+                                  {selectedStudents.length} öğrenci <span className="text-slate-400">•</span> {selectedStudents.slice(0, 2).map(s => s.name).join(", ")}{selectedStudents.length > 2 && "..."}
                                 </span>
                               ) : (
-                                <span className="text-slate-400">Öğrencileri seçin...</span>
+                                <span className="text-[13px] text-slate-400">Öğrenci seçin...</span>
                               )}
-                              <ChevronDown className="h-4 w-4 text-slate-400 shrink-0 ml-2" />
+                              <ChevronDown className={cn(
+                                "h-4 w-4 text-slate-400 shrink-0 transition-transform",
+                                studentSearchOpen && "rotate-180"
+                              )} />
                             </button>
                           </FormControl>
                         </PopoverTrigger>
                         <PopoverContent 
-                          className="p-0 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700" 
+                          className="p-0 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden" 
                           align="start"
                           sideOffset={4}
                           style={{ width: 'var(--radix-popover-trigger-width)' }}
                         >
-                          <Command>
-                            <CommandInput placeholder="Öğrenci ara..." className="h-10 text-sm border-b border-slate-100 dark:border-slate-800" />
-                            <CommandList className="max-h-[200px] overflow-y-auto">
-                              <CommandEmpty className="py-4 text-center text-sm text-slate-500">
-                                Öğrenci bulunamadı
+                          <div className="p-2 border-b border-slate-100 dark:border-slate-800">
+                            <CommandInput placeholder="Ara..." className="h-8 text-[13px] px-2 border-0 bg-slate-50 dark:bg-slate-800 rounded-md focus:ring-0" />
+                          </div>
+                          <Command className="border-0">
+                            <CommandList className="max-h-[180px] overflow-y-auto p-1">
+                              <CommandEmpty className="py-6 text-center text-[13px] text-slate-400">
+                                Sonuç bulunamadı
                               </CommandEmpty>
-                              <CommandGroup className="p-1">
+                              <CommandGroup>
                                 {students.map((student) => {
                                   const isSelected = selectedStudents.some(s => s.id === student.id);
                                   return (
@@ -313,14 +313,14 @@ export default function NewSessionDialog({
                                         field.onChange(newStudents.map(s => s.id));
                                       }}
                                       className={cn(
-                                        "py-2 px-2.5 rounded-lg cursor-pointer flex items-center gap-2",
+                                        "py-2 px-2 rounded-md cursor-pointer flex items-center gap-2 text-[13px] transition-colors",
                                         isSelected 
-                                          ? "bg-indigo-50 dark:bg-indigo-900/20" 
-                                          : "hover:bg-slate-50 dark:hover:bg-slate-800"
+                                          ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300" 
+                                          : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
                                       )}
                                     >
                                       <div className={cn(
-                                        "w-4 h-4 rounded border-2 flex items-center justify-center shrink-0",
+                                        "w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-colors",
                                         isSelected 
                                           ? "border-indigo-500 bg-indigo-500" 
                                           : "border-slate-300 dark:border-slate-600"
@@ -329,9 +329,8 @@ export default function NewSessionDialog({
                                           <Check className="h-2.5 w-2.5 text-white" />
                                         )}
                                       </div>
-                                      <span className="text-sm text-slate-800 dark:text-white truncate">
-                                        <span className="font-medium">{student.name} {student.surname}</span>
-                                        <span className="text-slate-500 ml-1.5">• {student.class} • No: {student.id}</span>
+                                      <span className="truncate flex-1">
+                                        {student.name} {student.surname} <span className="text-slate-400 dark:text-slate-500">•</span> {student.class} <span className="text-slate-400 dark:text-slate-500">•</span> {student.id}
                                       </span>
                                     </CommandItem>
                                   );
