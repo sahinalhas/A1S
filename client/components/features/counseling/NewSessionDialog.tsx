@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User, Users, X, Calendar, Clock, MapPin, ArrowRight, Check } from "lucide-react";
+import { User, Users, X, Calendar, Clock, MapPin, ArrowRight, Check, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
 import { format } from "date-fns";
@@ -192,21 +192,14 @@ export default function NewSessionDialog({
                               )}
                             >
                               {field.value ? (
-                                <div className="flex items-center gap-3">
-                                  <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center">
-                                    <User className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-                                  </div>
-                                  <div>
-                                    <p className="font-medium text-slate-900 dark:text-white">
-                                      {selectedStudent?.name} {selectedStudent?.surname}
-                                    </p>
-                                    <p className="text-sm text-slate-500">{selectedStudent?.class}</p>
-                                  </div>
-                                  <Check className="h-5 w-5 text-indigo-600 dark:text-indigo-400 ml-auto" />
-                                </div>
+                                <span className="text-sm text-slate-800 dark:text-white truncate">
+                                  <span className="font-medium">{selectedStudent?.name} {selectedStudent?.surname}</span>
+                                  <span className="text-slate-500 ml-1.5">• {selectedStudent?.class} • No: {selectedStudent?.id}</span>
+                                </span>
                               ) : (
                                 <span className="text-slate-400">Öğrenci seçin...</span>
                               )}
+                              <ChevronDown className="h-4 w-4 text-slate-400 shrink-0 ml-2" />
                             </button>
                           </FormControl>
                         </PopoverTrigger>
@@ -282,23 +275,14 @@ export default function NewSessionDialog({
                               )}
                             >
                               {selectedStudents.length > 0 ? (
-                                <div className="flex items-center gap-3">
-                                  <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center">
-                                    <Users className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-                                  </div>
-                                  <div>
-                                    <p className="font-medium text-slate-900 dark:text-white">
-                                      {selectedStudents.length} öğrenci seçildi
-                                    </p>
-                                    <p className="text-sm text-slate-500 truncate max-w-[200px]">
-                                      {selectedStudents.slice(0, 2).map(s => s.name).join(", ")}
-                                      {selectedStudents.length > 2 && "..."}
-                                    </p>
-                                  </div>
-                                </div>
+                                <span className="text-sm text-slate-800 dark:text-white truncate">
+                                  <span className="font-medium">{selectedStudents.length} öğrenci seçildi</span>
+                                  <span className="text-slate-500 ml-1.5">• {selectedStudents.slice(0, 2).map(s => s.name).join(", ")}{selectedStudents.length > 2 && "..."}</span>
+                                </span>
                               ) : (
                                 <span className="text-slate-400">Öğrencileri seçin...</span>
                               )}
+                              <ChevronDown className="h-4 w-4 text-slate-400 shrink-0 ml-2" />
                             </button>
                           </FormControl>
                         </PopoverTrigger>
