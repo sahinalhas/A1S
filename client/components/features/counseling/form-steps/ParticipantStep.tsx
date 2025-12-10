@@ -136,26 +136,24 @@ export default function ParticipantStep({
                                     setStudentSearchOpen(false);
                                   }}
                                   className={cn(
-                                    "py-2.5 px-3 rounded-lg cursor-pointer transition-colors",
+                                    "py-1.5 px-2 rounded-md cursor-pointer transition-colors flex items-center",
                                     field.value === student.id 
                                       ? "bg-purple-50 dark:bg-purple-900/20" 
                                       : "hover:bg-slate-50 dark:hover:bg-slate-800"
                                   )}
                                 >
                                   <div className={cn(
-                                    "flex items-center justify-center w-5 h-5 mr-2.5 rounded-full border-2 transition-colors",
+                                    "flex items-center justify-center w-4 h-4 mr-2 rounded-full border-[1.5px] shrink-0",
                                     field.value === student.id 
                                       ? "border-purple-500 bg-purple-500" 
                                       : "border-slate-300 dark:border-slate-600"
                                   )}>
                                     {field.value === student.id && (
-                                      <Check className="h-3 w-3 text-white" />
+                                      <Check className="h-2.5 w-2.5 text-white" />
                                     )}
                                   </div>
-                                  <div className="flex-1 min-w-0">
-                                    <p className="font-medium text-sm text-slate-800 dark:text-slate-200 truncate">{student.name} {student.surname}</p>
-                                    <p className="text-[11px] text-slate-500 dark:text-slate-400">{student.class}</p>
-                                  </div>
+                                  <span className="font-medium text-sm text-slate-800 dark:text-slate-200 truncate">{student.name} {student.surname}</span>
+                                  <span className="ml-auto text-[11px] text-slate-500 dark:text-slate-400 shrink-0">{student.class}</span>
                                 </CommandItem>
                               ))}
                             </CommandGroup>
@@ -225,26 +223,24 @@ export default function ParticipantStep({
                                       field.onChange(newStudents.map(s => s.id));
                                     }}
                                     className={cn(
-                                      "py-2.5 px-3 rounded-lg cursor-pointer transition-colors",
+                                      "py-1.5 px-2 rounded-md cursor-pointer transition-colors flex items-center",
                                       isSelected 
                                         ? "bg-purple-50 dark:bg-purple-900/20" 
                                         : "hover:bg-slate-50 dark:hover:bg-slate-800"
                                     )}
                                   >
                                     <div className={cn(
-                                      "flex items-center justify-center w-5 h-5 mr-2.5 rounded-md border-2 transition-colors",
+                                      "flex items-center justify-center w-4 h-4 mr-2 rounded shrink-0 border-[1.5px]",
                                       isSelected 
                                         ? "border-purple-500 bg-purple-500" 
                                         : "border-slate-300 dark:border-slate-600"
                                     )}>
                                       {isSelected && (
-                                        <Check className="h-3 w-3 text-white" />
+                                        <Check className="h-2.5 w-2.5 text-white" />
                                       )}
                                     </div>
-                                    <div className="flex-1 min-w-0">
-                                      <p className="font-medium text-sm text-slate-800 dark:text-slate-200 truncate">{student.name} {student.surname}</p>
-                                      <p className="text-[11px] text-slate-500 dark:text-slate-400">{student.class}</p>
-                                    </div>
+                                    <span className="font-medium text-sm text-slate-800 dark:text-slate-200 truncate">{student.name} {student.surname}</span>
+                                    <span className="ml-auto text-[11px] text-slate-500 dark:text-slate-400 shrink-0">{student.class}</span>
                                   </CommandItem>
                                 );
                               })}
