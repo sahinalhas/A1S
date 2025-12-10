@@ -8,6 +8,24 @@ I prefer simple language and clear explanations. I want iterative development, w
 
 ## Recent Changes (December 2024)
 
+### Session Dialogs Redesign (2024-12-10)
+Completely redesigned counseling session dialogs for cleaner, more user-friendly experience:
+
+**NewSessionDialog (Görüşme Başlatma):**
+- Modern gradient header (indigo/violet theme)
+- Clean session type toggle (Individual/Group)
+- Numbered section indicators (1-Katılımcı, 2-Tarih ve Saat, 3-Görüşme Şekli)
+- Rounded form elements with consistent styling
+- Animated conditional fields for parent/teacher info
+
+**EnhancedCompleteSessionDialog (Görüşme Tamamlama):**
+- Modern gradient header (emerald/teal theme)
+- Removed tabs in favor of single-scroll layout
+- Three main numbered sections (Temel Bilgiler, Görüşme Notları, Takip)
+- Collapsible optional sections for Action Items and Assessment
+- AI Analysis button integrated into notes section
+- Follow-up date/time fields with amber accent when enabled
+
 ### Sidebar Redesign Complete (2024-12-08)
 Complete sidebar redesign with new components:
 - **CollapsibleMenuItem**: Expandable menu items with sub-menu support and mouse wheel scroll effect
