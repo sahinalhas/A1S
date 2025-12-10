@@ -86,7 +86,7 @@ export default function NewSessionDialog({
     },
   });
 
-  const form = sessionType === 'individual' ? individualForm : groupForm;
+  const activeForm = sessionType === 'individual' ? individualForm : groupForm;
   const selectedStudentId = sessionType === 'individual' ? individualForm.watch("studentId") : null;
   const selectedStudent = selectedStudentId ? students.find(s => s.id === selectedStudentId) : null;
 
@@ -101,8 +101,12 @@ export default function NewSessionDialog({
     onSubmit(data);
   };
 
-  const sessionModeValue = form.watch("sessionMode");
-  const participantType = form.watch("participantType");
+  const sessionModeValue = sessionType === 'individual' 
+    ? individualForm.watch("sessionMode") 
+    : groupForm.watch("sessionMode");
+  const participantType = sessionType === 'individual' 
+    ? individualForm.watch("participantType") 
+    : groupForm.watch("participantType");
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -157,8 +161,8 @@ export default function NewSessionDialog({
         </div>
 
         {/* Form Content */}
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="px-6 py-5 space-y-5 max-h-[60vh] overflow-y-auto">
+        <Form {...(activeForm as any)}>
+          <form onSubmit={activeForm.handleSubmit(handleSubmit as any)} className="px-6 py-5 space-y-5 max-h-[60vh] overflow-y-auto">
             
             {/* Student Selection */}
             <div className="space-y-4">
@@ -343,7 +347,7 @@ export default function NewSessionDialog({
 
               {/* Participant Type - Compact */}
               <FormField
-                control={form.control}
+                control={activeForm.control as any}
                 name="participantType"
                 render={({ field }) => (
                   <FormItem>
@@ -375,7 +379,7 @@ export default function NewSessionDialog({
                     className="grid grid-cols-2 gap-3"
                   >
                     <FormField
-                      control={form.control}
+                      control={activeForm.control as any}
                       name="parentName"
                       render={({ field }) => (
                         <FormItem>
@@ -391,7 +395,7 @@ export default function NewSessionDialog({
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      control={activeForm.control as any}
                       name="parentRelationship"
                       render={({ field }) => (
                         <FormItem>
@@ -423,7 +427,7 @@ export default function NewSessionDialog({
                     className="grid grid-cols-2 gap-3"
                   >
                     <FormField
-                      control={form.control}
+                      control={activeForm.control as any}
                       name="teacherName"
                       render={({ field }) => (
                         <FormItem>
@@ -439,7 +443,7 @@ export default function NewSessionDialog({
                       )}
                     />
                     <FormField
-                      control={form.control}
+                      control={activeForm.control as any}
                       name="teacherBranch"
                       render={({ field }) => (
                         <FormItem>
@@ -470,7 +474,7 @@ export default function NewSessionDialog({
 
               <div className="grid grid-cols-2 gap-3">
                 <FormField
-                  control={form.control}
+                  control={activeForm.control as any}
                   name="sessionDate"
                   render={({ field }) => (
                     <FormItem>
@@ -510,7 +514,7 @@ export default function NewSessionDialog({
                 />
 
                 <FormField
-                  control={form.control}
+                  control={activeForm.control as any}
                   name="sessionTime"
                   render={({ field }) => (
                     <FormItem>
@@ -541,7 +545,7 @@ export default function NewSessionDialog({
               </div>
 
               <FormField
-                control={form.control}
+                control={activeForm.control as any}
                 name="sessionMode"
                 render={({ field }) => (
                   <FormItem>
@@ -585,7 +589,7 @@ export default function NewSessionDialog({
 
               {/* Location */}
               <FormField
-                control={form.control}
+                control={activeForm.control as any}
                 name="sessionLocation"
                 render={({ field }) => (
                   <FormItem>
@@ -627,7 +631,7 @@ export default function NewSessionDialog({
 
             <Button 
               type="button"
-              onClick={() => form.handleSubmit(handleSubmit)()}
+              onClick={() => activeForm.handleSubmit(handleSubmit as any)()}
               disabled={isPending}
               className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white px-6 rounded-xl"
             >

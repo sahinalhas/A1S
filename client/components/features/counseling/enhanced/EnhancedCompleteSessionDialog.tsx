@@ -14,23 +14,26 @@ import {
   Sparkles,
   ChevronDown,
   ChevronUp,
-  Download as DownloadIcon
+  Download as DownloadIcon,
+  X,
+  User,
+  Activity,
+  Heart
 } from "lucide-react";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale/tr";
+import { motion, AnimatePresence } from "framer-motion";
 
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/organisms/Dialog";
+import { Dialog, DialogContent } from "@/components/organisms/Dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/organisms/Form";
 import { Input } from "@/components/atoms/Input";
 import { EnhancedTextarea as Textarea } from "@/components/molecules/EnhancedTextarea";
 import { Button } from "@/components/atoms/Button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/atoms/Select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/organisms/Tabs";
 import { Switch } from "@/components/atoms/Switch";
 import { Slider } from "@/components/atoms/Slider";
 import { Calendar } from "@/components/organisms/Calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/organisms/Popover";
-import { Badge } from "@/components/atoms/Badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/organisms/Collapsible";
 import { useToast } from "@/hooks/utils/toast.utils";
 
@@ -63,10 +66,10 @@ export default function EnhancedCompleteSessionDialog({
   onSubmit,
   isPending,
 }: EnhancedCompleteSessionDialogProps) {
-  const [activeTab, setActiveTab] = useState("summary");
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [actionItemsOpen, setActionItemsOpen] = useState(false);
+  const [assessmentOpen, setAssessmentOpen] = useState(false);
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const { toast } = useToast();
   const { data: settings } = useSettings();
@@ -116,6 +119,12 @@ export default function EnhancedCompleteSessionDialog({
       communicationQuality: "açık",
       followUpDate: undefined,
       followUpTime: undefined,
+      sessionFlow: undefined,
+      studentParticipationLevel: undefined,
+      drpHizmetAlaniId: undefined,
+      drpBirId: undefined,
+      drpIkiId: undefined,
+      drpUcId: undefined,
     },
   });
 
@@ -126,6 +135,27 @@ export default function EnhancedCompleteSessionDialog({
       setDatePickerOpen(true);
     }
   }, [followUpNeeded]);
+
+  useEffect(() => {
+    if (open && session?.topic) {
+      const normalizedTopic = normalizeTopicValue(session.topic);
+      if (normalizedTopic) {
+        const selectedTopic = topics.find(t => t.id === normalizedTopic);
+        if (selectedTopic) {
+          form.setValue('drpHizmetAlaniId', selectedTopic.drpHizmetAlaniId);
+          form.setValue('drpBirId', selectedTopic.drpBirId);
+          form.setValue('drpIkiId', selectedTopic.drpIkiId);
+          form.setValue('drpUcId', selectedTopic.drpUcId);
+        }
+      }
+    }
+  }, [open, session?.topic, topics]);
+
+  const handleClose = () => {
+    onOpenChange(false);
+    form.reset();
+    clearAnalysis();
+  };
 
   const handleSubmit = (data: CompleteSessionFormValues) => {
     onSubmit(data);
@@ -173,7 +203,6 @@ export default function EnhancedCompleteSessionDialog({
     const errors = form.formState.errors;
     const values = form.getValues();
 
-    // Time validation: Exit time must be after entry time
     if (session?.entryTime && values.exitTime) {
       if (values.exitTime <= session.entryTime) {
         toast({
@@ -181,7 +210,6 @@ export default function EnhancedCompleteSessionDialog({
           description: `Çıkış saati (${values.exitTime}), başlangıç saatinden (${session.entryTime}) sonra olmalıdır.`,
           variant: 'destructive',
         });
-        setActiveTab('summary');
         return;
       }
     }
@@ -193,7 +221,6 @@ export default function EnhancedCompleteSessionDialog({
           description: 'Görüşme konusu seçmelisiniz.',
           variant: 'destructive'
         });
-        setActiveTab('summary');
         return;
       }
 
@@ -203,7 +230,6 @@ export default function EnhancedCompleteSessionDialog({
           description: 'Takip görüşmesi için tarih ve saat seçmelisiniz.',
           variant: 'destructive'
         });
-        setActiveTab('summary');
         return;
       }
 
@@ -244,7 +270,6 @@ export default function EnhancedCompleteSessionDialog({
         description: 'Lütfen önce görüşme konusunu seçin',
         variant: 'destructive'
       });
-      setActiveTab('summary');
       return;
     }
 
@@ -368,424 +393,233 @@ export default function EnhancedCompleteSessionDialog({
     });
   };
 
+  const studentName = session?.sessionType === 'group' 
+    ? `${session?.students?.length || 0} öğrenci` 
+    : `${session?.student?.name || ''} ${session?.student?.surname || ''}`;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[85vh] overflow-hidden flex flex-col rounded-xl">
-        <DialogHeader className="pb-3 border-b border-slate-100 dark:border-slate-800">
+      <DialogContent 
+        hideCloseButton 
+        className="max-w-lg p-0 gap-0 border-0 bg-white dark:bg-slate-950 overflow-hidden rounded-2xl shadow-2xl"
+      >
+        {/* Header */}
+        <div className="relative px-6 py-5 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700">
+          <button
+            onClick={handleClose}
+            className="absolute right-4 top-4 rounded-full p-2 bg-white/10 hover:bg-white/20 text-white/80 hover:text-white transition-all"
+            aria-label="Kapat"
+          >
+            <X className="h-4 w-4" />
+          </button>
+          
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-violet-100/60 dark:bg-violet-900/30">
-              <MessageSquare className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+              <CheckCircle2 className="h-5 w-5 text-white" />
             </div>
-            <div className="flex-1">
-              <DialogTitle className="font-semibold text-lg text-slate-800 dark:text-slate-100">
-                Görüşmeyi Tamamla
-              </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500 dark:text-slate-400">
-                Görüşme detaylarını kaydedin
-              </DialogDescription>
+            <div>
+              <h2 className="text-lg font-semibold text-white">Görüşmeyi Tamamla</h2>
+              <p className="text-white/70 text-sm">{studentName}</p>
             </div>
           </div>
-        </DialogHeader>
+        </div>
 
-        <div className="flex-1 overflow-y-auto py-3">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit, handleFormSubmit)} className="space-y-4">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="grid w-full grid-cols-2 h-9">
-                  <TabsTrigger value="summary" className="text-xs gap-1.5">
-                    <FileText className="h-3.5 w-3.5" />
-                    Özet
-                  </TabsTrigger>
-                  <TabsTrigger value="assessment" className="text-xs gap-1.5">
-                    <ClipboardCheck className="h-3.5 w-3.5" />
-                    Değerlendirme
-                  </TabsTrigger>
-                </TabsList>
+        {/* Form Content */}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit, handleFormSubmit)} className="px-6 py-5 space-y-5 max-h-[60vh] overflow-y-auto">
+            
+            {/* Section 1: Time & Topic */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <div className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">1</span>
+                </div>
+                Temel Bilgiler
+              </div>
 
-                <TabsContent value="summary" className="space-y-3 mt-3">
-                  <div className="flex flex-row gap-2 items-end">
-                    <FormField
-                      control={form.control}
-                      name="exitTime"
-                      render={({ field }) => (
-                        <FormItem className="w-28 flex-shrink-0 space-y-1">
-                          <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                            Çıkış Saati <span className="text-rose-500">*</span>
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              type="time"
-                              {...field}
-                              className="h-8 text-sm rounded-lg"
-                            />
-                          </FormControl>
-                          <FormMessage className="text-[10px]" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="topic"
-                      render={({ field }) => (
-                        <FormItem className="flex-1 min-w-0 space-y-1">
-                          <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                            Görüşme Konusu <span className="text-rose-500">*</span>
-                          </FormLabel>
-                          <FormControl>
-                            <CounselingTopicSelector
-                              topics={topics}
-                              value={field.value}
-                              onValueChange={handleTopicChange}
-                              placeholder="Konu seç..."
-                            />
-                          </FormControl>
-                          <FormMessage className="text-[10px]" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <FormField
-                    control={form.control}
-                    name="detailedNotes"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center justify-between">
-                          <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1">
-                            <FileText className="h-3 w-3 text-violet-500" />
-                            Notlar <span className="text-[10px] text-slate-400 ml-1">(İsteğe bağlı)</span>
-                          </FormLabel>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={handleAIAnalyze}
-                            disabled={isAnalyzing}
-                            className="gap-1 h-6 text-[10px] px-2"
-                          >
-                            {isAnalyzing ? (
-                              <Loader2 className="h-3 w-3 animate-spin" />
-                            ) : (
-                              <Sparkles className="h-3 w-3" />
-                            )}
-                            AI Analiz
-                          </Button>
-                        </div>
-                        <FormControl>
-                          <Textarea
+              <div className="grid grid-cols-3 gap-3">
+                <FormField
+                  control={form.control}
+                  name="exitTime"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs text-slate-500">Çıkış Saati</FormLabel>
+                      <FormControl>
+                        <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl border-2 border-slate-200 dark:border-slate-700">
+                          <Clock className="h-4 w-4 text-slate-400" />
+                          <input
+                            type="time"
                             {...field}
-                            placeholder="Görüşme detayları..."
-                            rows={3}
-                            className="rounded-lg resize-none text-sm"
-                            enableVoice={true}
-                            voiceLanguage="tr-TR"
-                          />
-                        </FormControl>
-                        <FormMessage className="text-[10px]" />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="followUpNeeded"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center justify-between rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 px-3 py-2">
-                          <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300 cursor-pointer m-0 flex items-center gap-1.5">
-                            <Target className="h-3.5 w-3.5 text-amber-500" />
-                            Takip Görüşmesi Planla
-                          </FormLabel>
-                          <Switch
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
+                            className="flex-1 bg-transparent border-0 focus:outline-none text-sm text-slate-900 dark:text-white"
                           />
                         </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      </FormControl>
+                      <FormMessage className="text-[10px]" />
+                    </FormItem>
+                  )}
+                />
 
-                  {followUpNeeded && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 rounded-lg border border-amber-200/60 dark:border-amber-700/40 bg-amber-50/40 dark:bg-amber-950/20 p-2.5">
-                      <FormField
-                        control={form.control}
-                        name="followUpDate"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-[10px] text-slate-700 dark:text-slate-300">
-                              Tarih <span className="text-rose-500">*</span>
-                            </FormLabel>
-                            <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant="outline"
-                                    className={cn(
-                                      "w-full justify-start text-left font-normal h-8 text-xs",
-                                      !field.value && "text-slate-400"
-                                    )}
-                                  >
-                                    <CalendarIcon className="mr-1.5 h-3 w-3" />
-                                    {field.value ? (
-                                      format(field.value, "d MMM yyyy", { locale: tr })
-                                    ) : (
-                                      <span>Tarih seç</span>
-                                    )}
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-auto p-0 z-[100]" align="start" side="bottom" sideOffset={4}>
-                                <Calendar
-                                  mode="single"
-                                  selected={field.value}
-                                  onSelect={(date) => {
-                                    if (date) {
-                                      field.onChange(date);
-                                      setDatePickerOpen(false);
-                                    }
-                                  }}
-                                  disabled={(date) => {
-                                    const today = new Date();
-                                    today.setHours(0, 0, 0, 0);
-                                    return date < today;
-                                  }}
-                                  initialFocus
-                                  className="rounded-lg"
-                                />
-                              </PopoverContent>
-                            </Popover>
-                            <FormMessage className="text-[10px]" />
-                          </FormItem>
-                        )}
+                <FormField
+                  control={form.control}
+                  name="topic"
+                  render={({ field }) => (
+                    <FormItem className="col-span-2">
+                      <FormLabel className="text-xs text-slate-500">Görüşme Konusu</FormLabel>
+                      <FormControl>
+                        <CounselingTopicSelector
+                          topics={topics}
+                          value={field.value}
+                          onValueChange={handleTopicChange}
+                          placeholder="Konu seç..."
+                        />
+                      </FormControl>
+                      <FormMessage className="text-[10px]" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            {/* Section 2: Notes */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                  <div className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                    <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">2</span>
+                  </div>
+                  Görüşme Notları
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleAIAnalyze}
+                  disabled={isAnalyzing}
+                  className="gap-1.5 h-7 text-xs px-3 rounded-lg"
+                >
+                  {isAnalyzing ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Sparkles className="h-3.5 w-3.5" />
+                  )}
+                  AI Analiz
+                </Button>
+              </div>
+
+              <FormField
+                control={form.control}
+                name="detailedNotes"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        placeholder="Görüşme detaylarını buraya yazın..."
+                        rows={4}
+                        className="rounded-xl resize-none text-sm border-2"
+                        enableVoice={true}
+                        voiceLanguage="tr-TR"
                       />
+                    </FormControl>
+                    <FormMessage className="text-[10px]" />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-                      <FormField
-                        control={form.control}
-                        name="followUpTime"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-[10px] text-slate-700 dark:text-slate-300">
-                              Saat <span className="text-rose-500">*</span>
-                            </FormLabel>
-                            <FormControl>
-                              <Input
+            {/* Section 3: Follow-up */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <div className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">3</span>
+                </div>
+                Takip
+              </div>
+
+              <FormField
+                control={form.control}
+                name="followUpNeeded"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center justify-between rounded-xl border-2 border-slate-200 dark:border-slate-700 px-4 py-3">
+                      <FormLabel className="text-sm font-medium text-slate-700 dark:text-slate-300 cursor-pointer m-0 flex items-center gap-2">
+                        <Target className="h-4 w-4 text-amber-500" />
+                        Takip görüşmesi planla
+                      </FormLabel>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              <AnimatePresence>
+                {followUpNeeded && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="grid grid-cols-2 gap-3"
+                  >
+                    <FormField
+                      control={form.control}
+                      name="followUpDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <button
+                                  type="button"
+                                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20 text-left"
+                                >
+                                  <CalendarIcon className="h-4 w-4 text-amber-500" />
+                                  <span className={field.value ? "text-slate-900 dark:text-white text-sm" : "text-slate-400 text-sm"}>
+                                    {field.value 
+                                      ? format(field.value, "d MMM yyyy", { locale: tr })
+                                      : "Tarih seç"}
+                                  </span>
+                                </button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0 rounded-xl z-[100]" align="start">
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={(date) => {
+                                  if (date) {
+                                    field.onChange(date);
+                                    setDatePickerOpen(false);
+                                  }
+                                }}
+                                disabled={(date) => {
+                                  const today = new Date();
+                                  today.setHours(0, 0, 0, 0);
+                                  return date < today;
+                                }}
+                                initialFocus
+                              />
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage className="text-[10px]" />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="followUpTime"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <div className="flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20">
+                              <Clock className="h-4 w-4 text-amber-500" />
+                              <input
                                 type="time"
                                 {...field}
-                                className="h-8 text-xs"
-                              />
-                            </FormControl>
-                            <FormMessage className="text-[10px]" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  )}
-
-                  <Collapsible open={actionItemsOpen} onOpenChange={setActionItemsOpen}>
-                    <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50/30 dark:bg-slate-900/20">
-                      <CollapsibleTrigger asChild>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          className="w-full flex items-center justify-between px-3 py-2 h-auto"
-                        >
-                          <div className="flex items-center gap-1.5 text-xs font-medium text-slate-700 dark:text-slate-300">
-                            <Target className="h-3.5 w-3.5 text-slate-500" />
-                            Aksiyon Maddeleri
-                            <span className="text-[10px] text-slate-400 font-normal">(İsteğe bağlı)</span>
-                          </div>
-                          {actionItemsOpen ? (
-                            <ChevronUp className="h-3.5 w-3.5 text-slate-500" />
-                          ) : (
-                            <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
-                          )}
-                        </Button>
-                      </CollapsibleTrigger>
-                      <CollapsibleContent className="px-3 pb-3">
-                        <FormField
-                          control={form.control}
-                          name="actionItems"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <ActionItemsManager
-                                  items={field.value || []}
-                                  onItemsChange={field.onChange}
-                                />
-                              </FormControl>
-                              <FormMessage className="text-[10px] mt-1" />
-                            </FormItem>
-                          )}
-                        />
-                      </CollapsibleContent>
-                    </div>
-                  </Collapsible>
-                </TabsContent>
-
-                <TabsContent value="assessment" className="space-y-3 mt-3">
-                  <div className="flex items-center gap-2 pb-2 border-b border-slate-200 dark:border-slate-700">
-                    <ClipboardCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                    <h3 className="font-medium text-sm text-slate-800 dark:text-slate-100">
-                      Değerlendirme
-                    </h3>
-                    <Badge variant="outline" className="text-[10px] ml-auto">İsteğe bağlı</Badge>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <FormField
-                      control={form.control}
-                      name="sessionFlow"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                            Görüşme Seyri
-                          </FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="h-8 rounded-lg text-xs">
-                                <SelectValue placeholder="Seçiniz" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent className="rounded-lg">
-                              <SelectItem value="çok_olumlu">Çok Olumlu</SelectItem>
-                              <SelectItem value="olumlu">Olumlu</SelectItem>
-                              <SelectItem value="nötr">Nötr</SelectItem>
-                              <SelectItem value="sorunlu">Sorunlu</SelectItem>
-                              <SelectItem value="kriz">Kriz</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage className="text-[10px]" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="studentParticipationLevel"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                            Katılım Düzeyi
-                          </FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="h-8 rounded-lg text-xs">
-                                <SelectValue placeholder="Seçiniz" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent className="rounded-lg">
-                              <SelectItem value="çok_aktif">Çok Aktif</SelectItem>
-                              <SelectItem value="aktif">Aktif</SelectItem>
-                              <SelectItem value="pasif">Pasif</SelectItem>
-                              <SelectItem value="dirençli">Dirençli</SelectItem>
-                              <SelectItem value="kapalı">Kapalı</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage className="text-[10px]" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="emotionalState"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                            Duygu Durumu
-                          </FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="h-8 rounded-lg text-xs">
-                                <SelectValue />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent className="rounded-lg">
-                              <SelectItem value="sakin">Sakin</SelectItem>
-                              <SelectItem value="kaygılı">Kaygılı</SelectItem>
-                              <SelectItem value="üzgün">Üzgün</SelectItem>
-                              <SelectItem value="sinirli">Sinirli</SelectItem>
-                              <SelectItem value="mutlu">Mutlu</SelectItem>
-                              <SelectItem value="karışık">Karışık</SelectItem>
-                              <SelectItem value="diğer">Diğer</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage className="text-[10px]" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="physicalState"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                            Fiziksel Durum
-                          </FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="h-8 rounded-lg text-xs">
-                                <SelectValue />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent className="rounded-lg">
-                              <SelectItem value="normal">Normal</SelectItem>
-                              <SelectItem value="yorgun">Yorgun</SelectItem>
-                              <SelectItem value="enerjik">Enerjik</SelectItem>
-                              <SelectItem value="huzursuz">Huzursuz</SelectItem>
-                              <SelectItem value="hasta">Hasta</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage className="text-[10px]" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="communicationQuality"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                            İletişim Kalitesi
-                          </FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="h-8 rounded-lg text-xs">
-                                <SelectValue />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent className="rounded-lg">
-                              <SelectItem value="açık">Açık</SelectItem>
-                              <SelectItem value="çekingen">Çekingen</SelectItem>
-                              <SelectItem value="dirençli">Dirençli</SelectItem>
-                              <SelectItem value="sınırlı">Sınırlı</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage className="text-[10px]" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="cooperationLevel"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                            İşbirliği: {field.value}/5
-                          </FormLabel>
-                          <FormControl>
-                            <div className="pt-2 px-1">
-                              <Slider
-                                min={1}
-                                max={5}
-                                step={1}
-                                value={[field.value || 3]}
-                                onValueChange={(value) => field.onChange(value[0])}
+                                className="flex-1 bg-transparent border-0 focus:outline-none text-sm text-slate-900 dark:text-white"
                               />
                             </div>
                           </FormControl>
@@ -793,54 +627,264 @@ export default function EnhancedCompleteSessionDialog({
                         </FormItem>
                       )}
                     />
-                  </div>
-                </TabsContent>
-              </Tabs>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
-              <DialogFooter className="gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
-                <Button
+            {/* Collapsible: Action Items */}
+            <Collapsible open={actionItemsOpen} onOpenChange={setActionItemsOpen}>
+              <CollapsibleTrigger asChild>
+                <button
                   type="button"
-                  variant="outline"
-                  onClick={() => onOpenChange(false)}
-                  disabled={isPending}
-                  className="h-9 px-4 text-sm"
+                  className="w-full flex items-center justify-between px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 transition-all"
                 >
-                  İptal
-                </Button>
-                <Button
+                  <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                    <Target className="h-4 w-4 text-slate-500" />
+                    Aksiyon Maddeleri
+                    <span className="text-xs text-slate-400 font-normal">(opsiyonel)</span>
+                  </div>
+                  {actionItemsOpen ? (
+                    <ChevronUp className="h-4 w-4 text-slate-400" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-slate-400" />
+                  )}
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="pt-3">
+                <FormField
+                  control={form.control}
+                  name="actionItems"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <ActionItemsManager
+                          items={field.value || []}
+                          onItemsChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-[10px]" />
+                    </FormItem>
+                  )}
+                />
+              </CollapsibleContent>
+            </Collapsible>
+
+            {/* Collapsible: Assessment */}
+            <Collapsible open={assessmentOpen} onOpenChange={setAssessmentOpen}>
+              <CollapsibleTrigger asChild>
+                <button
                   type="button"
-                  variant="outline"
-                  onClick={handleDownloadPDF}
-                  disabled={isPending || isDownloadingPDF}
-                  className="h-9 px-3 text-sm gap-1.5"
+                  className="w-full flex items-center justify-between px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 transition-all"
                 >
-                  {isDownloadingPDF ? (
-                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                    <ClipboardCheck className="h-4 w-4 text-slate-500" />
+                    Değerlendirme
+                    <span className="text-xs text-slate-400 font-normal">(opsiyonel)</span>
+                  </div>
+                  {assessmentOpen ? (
+                    <ChevronUp className="h-4 w-4 text-slate-400" />
                   ) : (
-                    <DownloadIcon className="h-3.5 w-3.5" />
+                    <ChevronDown className="h-4 w-4 text-slate-400" />
                   )}
-                  PDF
-                </Button>
-                <Button
-                  type="submit"
-                  disabled={isPending || isDownloadingPDF}
-                  className="h-9 px-5 text-sm bg-violet-600 hover:bg-violet-700"
-                >
-                  {isPending ? (
-                    <>
-                      <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
-                      Kaydediliyor...
-                    </>
-                  ) : (
-                    <>
-                      <CheckCircle2 className="mr-1.5 h-3.5 w-3.5" />
-                      {getSubmitButtonText()}
-                    </>
-                  )}
-                </Button>
-              </DialogFooter>
-            </form>
-          </Form>
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="pt-3 space-y-3">
+                <div className="grid grid-cols-2 gap-3">
+                  <FormField
+                    control={form.control}
+                    name="sessionFlow"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-xs text-slate-500">Görüşme Seyri</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="h-10 rounded-xl border-2 text-sm">
+                              <SelectValue placeholder="Seçiniz" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="rounded-xl">
+                            <SelectItem value="çok_olumlu">Çok Olumlu</SelectItem>
+                            <SelectItem value="olumlu">Olumlu</SelectItem>
+                            <SelectItem value="nötr">Nötr</SelectItem>
+                            <SelectItem value="sorunlu">Sorunlu</SelectItem>
+                            <SelectItem value="kriz">Kriz</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="studentParticipationLevel"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-xs text-slate-500">Katılım Düzeyi</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="h-10 rounded-xl border-2 text-sm">
+                              <SelectValue placeholder="Seçiniz" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="rounded-xl">
+                            <SelectItem value="çok_aktif">Çok Aktif</SelectItem>
+                            <SelectItem value="aktif">Aktif</SelectItem>
+                            <SelectItem value="pasif">Pasif</SelectItem>
+                            <SelectItem value="dirençli">Dirençli</SelectItem>
+                            <SelectItem value="kapalı">Kapalı</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="emotionalState"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-xs text-slate-500">Duygu Durumu</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="h-10 rounded-xl border-2 text-sm">
+                              <SelectValue />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="rounded-xl">
+                            <SelectItem value="sakin">Sakin</SelectItem>
+                            <SelectItem value="kaygılı">Kaygılı</SelectItem>
+                            <SelectItem value="üzgün">Üzgün</SelectItem>
+                            <SelectItem value="sinirli">Sinirli</SelectItem>
+                            <SelectItem value="mutlu">Mutlu</SelectItem>
+                            <SelectItem value="karışık">Karışık</SelectItem>
+                            <SelectItem value="diğer">Diğer</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="physicalState"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-xs text-slate-500">Fiziksel Durum</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="h-10 rounded-xl border-2 text-sm">
+                              <SelectValue />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="rounded-xl">
+                            <SelectItem value="normal">Normal</SelectItem>
+                            <SelectItem value="yorgun">Yorgun</SelectItem>
+                            <SelectItem value="enerjik">Enerjik</SelectItem>
+                            <SelectItem value="huzursuz">Huzursuz</SelectItem>
+                            <SelectItem value="hasta">Hasta</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="communicationQuality"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-xs text-slate-500">İletişim Kalitesi</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="h-10 rounded-xl border-2 text-sm">
+                              <SelectValue />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="rounded-xl">
+                            <SelectItem value="açık">Açık</SelectItem>
+                            <SelectItem value="çekingen">Çekingen</SelectItem>
+                            <SelectItem value="dirençli">Dirençli</SelectItem>
+                            <SelectItem value="sınırlı">Sınırlı</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="cooperationLevel"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-xs text-slate-500">İşbirliği: {field.value}/5</FormLabel>
+                        <FormControl>
+                          <div className="pt-3 px-1">
+                            <Slider
+                              min={1}
+                              max={5}
+                              step={1}
+                              value={[field.value || 3]}
+                              onValueChange={(value) => field.onChange(value[0])}
+                            />
+                          </div>
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </form>
+        </Form>
+
+        {/* Footer */}
+        <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Button 
+                type="button" 
+                variant="ghost" 
+                onClick={handleClose}
+                className="text-slate-500 hover:text-slate-700"
+              >
+                İptal
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleDownloadPDF}
+                disabled={isPending || isDownloadingPDF}
+                className="gap-1.5"
+              >
+                {isDownloadingPDF ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <DownloadIcon className="h-4 w-4" />
+                )}
+                PDF
+              </Button>
+            </div>
+
+            <Button 
+              type="button"
+              onClick={() => form.handleSubmit(handleSubmit, handleFormSubmit)()}
+              disabled={isPending || isDownloadingPDF}
+              className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-6 rounded-xl"
+            >
+              {isPending ? (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Kaydediliyor...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4" />
+                  {getSubmitButtonText()}
+                </span>
+              )}
+            </Button>
+          </div>
         </div>
       </DialogContent>
 
