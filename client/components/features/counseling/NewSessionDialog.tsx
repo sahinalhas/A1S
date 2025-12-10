@@ -210,14 +210,19 @@ export default function NewSessionDialog({
                             </button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[400px] p-0 rounded-xl shadow-xl" align="start">
+                        <PopoverContent 
+                          className="p-0 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700" 
+                          align="start"
+                          sideOffset={4}
+                          style={{ width: 'var(--radix-popover-trigger-width)' }}
+                        >
                           <Command>
-                            <CommandInput placeholder="Öğrenci ara..." className="h-11" />
-                            <CommandList className="max-h-[280px]">
-                              <CommandEmpty className="py-6 text-center text-slate-500">
+                            <CommandInput placeholder="Öğrenci ara..." className="h-10 text-sm border-b border-slate-100 dark:border-slate-800" />
+                            <CommandList className="max-h-[200px] overflow-y-auto">
+                              <CommandEmpty className="py-4 text-center text-sm text-slate-500">
                                 Öğrenci bulunamadı
                               </CommandEmpty>
-                              <CommandGroup>
+                              <CommandGroup className="p-1">
                                 {students.map((student) => (
                                   <CommandItem
                                     key={student.id}
@@ -226,20 +231,25 @@ export default function NewSessionDialog({
                                       field.onChange(student.id);
                                       setStudentSearchOpen(false);
                                     }}
-                                    className="py-3 px-3 cursor-pointer"
+                                    className={cn(
+                                      "py-2 px-2.5 rounded-lg cursor-pointer flex items-center gap-2",
+                                      field.value === student.id 
+                                        ? "bg-indigo-50 dark:bg-indigo-900/20" 
+                                        : "hover:bg-slate-50 dark:hover:bg-slate-800"
+                                    )}
                                   >
-                                    <div className="flex items-center gap-3 w-full">
-                                      <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                                        <User className="h-4 w-4 text-slate-500" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <p className="font-medium text-slate-900 dark:text-white">{student.name} {student.surname}</p>
-                                        <p className="text-sm text-slate-500">{student.class}</p>
-                                      </div>
+                                    <div className={cn(
+                                      "w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0",
+                                      field.value === student.id 
+                                        ? "border-indigo-500 bg-indigo-500" 
+                                        : "border-slate-300 dark:border-slate-600"
+                                    )}>
                                       {field.value === student.id && (
-                                        <Check className="h-5 w-5 text-indigo-600" />
+                                        <Check className="h-2.5 w-2.5 text-white" />
                                       )}
                                     </div>
+                                    <span className="font-medium text-sm text-slate-800 dark:text-white truncate">{student.name} {student.surname}</span>
+                                    <span className="ml-auto text-xs text-slate-500 shrink-0">{student.class}</span>
                                   </CommandItem>
                                 ))}
                               </CommandGroup>
@@ -290,14 +300,19 @@ export default function NewSessionDialog({
                             </button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[400px] p-0 rounded-xl shadow-xl" align="start">
+                        <PopoverContent 
+                          className="p-0 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700" 
+                          align="start"
+                          sideOffset={4}
+                          style={{ width: 'var(--radix-popover-trigger-width)' }}
+                        >
                           <Command>
-                            <CommandInput placeholder="Öğrenci ara..." className="h-11" />
-                            <CommandList className="max-h-[280px]">
-                              <CommandEmpty className="py-6 text-center text-slate-500">
+                            <CommandInput placeholder="Öğrenci ara..." className="h-10 text-sm border-b border-slate-100 dark:border-slate-800" />
+                            <CommandList className="max-h-[200px] overflow-y-auto">
+                              <CommandEmpty className="py-4 text-center text-sm text-slate-500">
                                 Öğrenci bulunamadı
                               </CommandEmpty>
-                              <CommandGroup>
+                              <CommandGroup className="p-1">
                                 {students.map((student) => {
                                   const isSelected = selectedStudents.some(s => s.id === student.id);
                                   return (
@@ -311,26 +326,25 @@ export default function NewSessionDialog({
                                         onSelectedStudentsChange(newStudents);
                                         field.onChange(newStudents.map(s => s.id));
                                       }}
-                                      className="py-3 px-3 cursor-pointer"
+                                      className={cn(
+                                        "py-2 px-2.5 rounded-lg cursor-pointer flex items-center gap-2",
+                                        isSelected 
+                                          ? "bg-indigo-50 dark:bg-indigo-900/20" 
+                                          : "hover:bg-slate-50 dark:hover:bg-slate-800"
+                                      )}
                                     >
-                                      <div className="flex items-center gap-3 w-full">
-                                        <div className={cn(
-                                          "w-9 h-9 rounded-full flex items-center justify-center transition-colors",
-                                          isSelected 
-                                            ? "bg-indigo-100 dark:bg-indigo-900/50" 
-                                            : "bg-slate-100 dark:bg-slate-800"
-                                        )}>
-                                          {isSelected ? (
-                                            <Check className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
-                                          ) : (
-                                            <User className="h-4 w-4 text-slate-500" />
-                                          )}
-                                        </div>
-                                        <div className="flex-1">
-                                          <p className="font-medium text-slate-900 dark:text-white">{student.name} {student.surname}</p>
-                                          <p className="text-sm text-slate-500">{student.class}</p>
-                                        </div>
+                                      <div className={cn(
+                                        "w-4 h-4 rounded border-2 flex items-center justify-center shrink-0",
+                                        isSelected 
+                                          ? "border-indigo-500 bg-indigo-500" 
+                                          : "border-slate-300 dark:border-slate-600"
+                                      )}>
+                                        {isSelected && (
+                                          <Check className="h-2.5 w-2.5 text-white" />
+                                        )}
                                       </div>
+                                      <span className="font-medium text-sm text-slate-800 dark:text-white truncate">{student.name} {student.surname}</span>
+                                      <span className="ml-auto text-xs text-slate-500 shrink-0">{student.class}</span>
                                     </CommandItem>
                                   );
                                 })}
