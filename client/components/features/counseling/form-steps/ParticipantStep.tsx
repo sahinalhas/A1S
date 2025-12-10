@@ -124,10 +124,8 @@ export default function ParticipantStep({
                         sideOffset={4}
                         style={{ width: 'var(--radix-popover-trigger-width)' }}
                       >
-                        <div className="p-2 border-b border-slate-100 dark:border-slate-800">
-                          <CommandInput placeholder="Ara..." className="h-8 text-[13px] px-2 border-0 bg-slate-50 dark:bg-slate-800 rounded-md focus:ring-0" />
-                        </div>
                         <Command className="border-0">
+                          <CommandInput placeholder="Ara..." className="h-9 text-[13px] border-0 border-b border-slate-100 dark:border-slate-800" />
                           <CommandList className="max-h-[180px] overflow-y-auto p-1">
                             <CommandEmpty className="py-6 text-center text-[13px] text-slate-400">Sonuç bulunamadı</CommandEmpty>
                             <CommandGroup>
@@ -208,10 +206,8 @@ export default function ParticipantStep({
                         sideOffset={4}
                         style={{ width: 'var(--radix-popover-trigger-width)' }}
                       >
-                        <div className="p-2 border-b border-slate-100 dark:border-slate-800">
-                          <CommandInput placeholder="Ara..." className="h-8 text-[13px] px-2 border-0 bg-slate-50 dark:bg-slate-800 rounded-md focus:ring-0" />
-                        </div>
                         <Command className="border-0">
+                          <CommandInput placeholder="Ara..." className="h-9 text-[13px] border-0 border-b border-slate-100 dark:border-slate-800" />
                           <CommandList className="max-h-[180px] overflow-y-auto p-1">
                             <CommandEmpty className="py-6 text-center text-[13px] text-slate-400">Sonuç bulunamadı</CommandEmpty>
                             <CommandGroup>
