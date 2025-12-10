@@ -1,0 +1,170 @@
+[
+    {
+        "id": "tyt",
+        "name": "TYT",
+        "description": "Temel Yeterlilik Testi",
+        "penalty_divisor": 4,
+        "is_active": 1,
+        "subjects": [
+            {
+                "id": "tyt_turk",
+                "name": "Türkçe",
+                "question_count": 40,
+                "order_index": 1
+            },
+            {
+                "id": "tyt_mat",
+                "name": "Matematik",
+                "question_count": 40,
+                "order_index": 2
+            },
+            {
+                "id": "tyt_sos",
+                "name": "Sosyal Bilimler",
+                "question_count": 20,
+                "order_index": 3
+            },
+            {
+                "id": "tyt_fen",
+                "name": "Fen Bilimleri",
+                "question_count": 20,
+                "order_index": 4
+            }
+        ]
+    },
+    {
+        "id": "ayt",
+        "name": "AYT",
+        "description": "Alan Yeterlilik Testi",
+        "penalty_divisor": 4,
+        "is_active": 1,
+        "subjects": [
+            {
+                "id": "ayt_mat",
+                "name": "Matematik",
+                "question_count": 40,
+                "order_index": 1
+            },
+            {
+                "id": "ayt_fiz",
+                "name": "Fizik",
+                "question_count": 14,
+                "order_index": 2
+            },
+            {
+                "id": "ayt_kim",
+                "name": "Kimya",
+                "question_count": 13,
+                "order_index": 3
+            },
+            {
+                "id": "ayt_bio",
+                "name": "Biyoloji",
+                "question_count": 13,
+                "order_index": 4
+            },
+            {
+                "id": "ayt_edb",
+                "name": "Edebiyat",
+                "question_count": 24,
+                "order_index": 5
+            },
+            {
+                "id": "ayt_tar1",
+                "name": "Tarih-1",
+                "question_count": 10,
+                "order_index": 6
+            },
+            {
+                "id": "ayt_cog",
+                "name": "Coğrafya-1",
+                "question_count": 6,
+                "order_index": 7
+            },
+            {
+                "id": "ayt_tar2",
+                "name": "Tarih-2",
+                "question_count": 11,
+                "order_index": 8
+            },
+            {
+                "id": "ayt_cog2",
+                "name": "Coğrafya-2",
+                "question_count": 11,
+                "order_index": 9
+            },
+            {
+                "id": "ayt_fel",
+                "name": "Felsefe",
+                "question_count": 12,
+                "order_index": 10
+            },
+            {
+                "id": "ayt_din",
+                "name": "Din Kültürü",
+                "question_count": 6,
+                "order_index": 11
+            }
+        ]
+    },
+    {
+        "id": "lgs",
+        "name": "LGS",
+        "description": "Liselere Geçiş Sınavı",
+        "penalty_divisor": 3,
+        "is_active": 1,
+        "subjects": [
+            {
+                "id": "lgs_turk",
+                "name": "Türkçe",
+                "question_count": 20,
+                "order_index": 1
+            },
+            {
+                "id": "lgs_ink",
+                "name": "T.C. İnkılap Tarihi ve Atatürkçülük",
+                "question_count": 10,
+                "order_index": 2
+            },
+            {
+                "id": "lgs_din",
+                "name": "Din Kültürü ve Ahlak Bilgisi",
+                "question_count": 10,
+                "order_index": 3
+            },
+            {
+                "id": "lgs_ing",
+                "name": "Yabancı Dil (İngilizce)",
+                "question_count": 10,
+                "order_index": 4
+            },
+            {
+                "id": "lgs_mat",
+                "name": "Matematik",
+                "question_count": 20,
+                "order_index": 5
+            },
+            {
+                "id": "lgs_fen",
+                "name": "Fen Bilimleri",
+                "question_count": 20,
+                "order_index": 6
+            }
+        ]
+    },
+    {
+        "id": "ydt",
+        "name": "YDT",
+        "description": "Yabancı Dil Testi",
+        "penalty_divisor": 4,
+        "is_active": 1,
+        "subjects": [
+            {
+                "id": "ydt_ing",
+                "name": "İngilizce",
+                "question_count": 80,
+                "order_index": 1
+            }
+        ]
+    }
+]

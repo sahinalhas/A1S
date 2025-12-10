@@ -186,6 +186,9 @@ export function createExamManagementTables(db: Database.Database): void {
  * Seed data for exam types and subjects
  * Sınav türleri ve dersler için başlangıç verisi
  */
+// Import JSON data
+import EXAM_TYPES from '../../../../shared/data/exam-types.json';
+
 export function seedExamData(db: Database.Database): void {
   const checkData = db.prepare('SELECT COUNT(*) as count FROM exam_types').get() as { count: number };
 
@@ -194,93 +197,28 @@ export function seedExamData(db: Database.Database): void {
     return;
   }
 
-  // TYT (Temel Yeterlilik Testi)
-  db.prepare(`
+  const insertExam = db.prepare(`
     INSERT INTO exam_types (id, name, description, penalty_divisor, is_active)
     VALUES (?, ?, ?, ?, ?)
-  `).run('tyt', 'TYT', 'Temel Yeterlilik Testi', 4, 1);
+  `);
 
-  const tytSubjects = [
-    { id: 'tyt_turk', name: 'Türkçe', count: 40, order: 1 },
-    { id: 'tyt_mat', name: 'Matematik', count: 40, order: 2 },
-    { id: 'tyt_sos', name: 'Sosyal Bilimler', count: 20, order: 3 },
-    { id: 'tyt_fen', name: 'Fen Bilimleri', count: 20, order: 4 }
-  ];
-
-  for (const subject of tytSubjects) {
-    db.prepare(`
-      INSERT INTO exam_subjects (id, exam_type_id, subject_name, question_count, order_index)
-      VALUES (?, ?, ?, ?, ?)
-    `).run(subject.id, 'tyt', subject.name, subject.count, subject.order);
-  }
-
-  // AYT (Alan Yeterlilik Testi)
-  db.prepare(`
-    INSERT INTO exam_types (id, name, description, penalty_divisor, is_active)
+  const insertSubject = db.prepare(`
+    INSERT INTO exam_subjects (id, exam_type_id, subject_name, question_count, order_index)
     VALUES (?, ?, ?, ?, ?)
-  `).run('ayt', 'AYT', 'Alan Yeterlilik Testi', 4, 1);
+  `);
 
-  const aytSubjects = [
-    { id: 'ayt_mat', name: 'Matematik', count: 40, order: 1 },
-    { id: 'ayt_fiz', name: 'Fizik', count: 14, order: 2 },
-    { id: 'ayt_kim', name: 'Kimya', count: 13, order: 3 },
-    { id: 'ayt_bio', name: 'Biyoloji', count: 13, order: 4 },
-    { id: 'ayt_edb', name: 'Edebiyat', count: 24, order: 5 },
-    { id: 'ayt_tar1', name: 'Tarih-1', count: 10, order: 6 },
-    { id: 'ayt_cog', name: 'Coğrafya-1', count: 6, order: 7 },
-    { id: 'ayt_tar2', name: 'Tarih-2', count: 11, order: 8 },
-    { id: 'ayt_cog2', name: 'Coğrafya-2', count: 11, order: 9 },
-    { id: 'ayt_fel', name: 'Felsefe', count: 12, order: 10 },
-    { id: 'ayt_din', name: 'Din Kültürü', count: 6, order: 11 }
-  ];
+  const insertMany = db.transaction((exams: typeof EXAM_TYPES) => {
+    for (const exam of exams) {
+      insertExam.run(exam.id, exam.name, exam.description, exam.penalty_divisor, exam.is_active);
 
-  for (const subject of aytSubjects) {
-    db.prepare(`
-      INSERT INTO exam_subjects (id, exam_type_id, subject_name, question_count, order_index)
-      VALUES (?, ?, ?, ?, ?)
-    `).run(subject.id, 'ayt', subject.name, subject.count, subject.order);
-  }
+      for (const subject of exam.subjects) {
+        insertSubject.run(subject.id, exam.id, subject.name, subject.question_count, subject.order_index);
+      }
+    }
+  });
 
-  // LGS (Liselere Geçiş Sınavı)
-  db.prepare(`
-    INSERT INTO exam_types (id, name, description, penalty_divisor, is_active)
-    VALUES (?, ?, ?, ?, ?)
-  `).run('lgs', 'LGS', 'Liselere Geçiş Sınavı', 3, 1);
-
-  const lgsSubjects = [
-    { id: 'lgs_turk', name: 'Türkçe', count: 20, order: 1 },
-    { id: 'lgs_ink', name: 'T.C. İnkılap Tarihi ve Atatürkçülük', count: 10, order: 2 },
-    { id: 'lgs_din', name: 'Din Kültürü ve Ahlak Bilgisi', count: 10, order: 3 },
-    { id: 'lgs_ing', name: 'Yabancı Dil (İngilizce)', count: 10, order: 4 },
-    { id: 'lgs_mat', name: 'Matematik', count: 20, order: 5 },
-    { id: 'lgs_fen', name: 'Fen Bilimleri', count: 20, order: 6 }
-  ];
-
-  for (const subject of lgsSubjects) {
-    db.prepare(`
-      INSERT INTO exam_subjects (id, exam_type_id, subject_name, question_count, order_index)
-      VALUES (?, ?, ?, ?, ?)
-    `).run(subject.id, 'lgs', subject.name, subject.count, subject.order);
-  }
-
-  // YDT (Yabancı Dil Testi)
-  db.prepare(`
-    INSERT INTO exam_types (id, name, description, penalty_divisor, is_active)
-    VALUES (?, ?, ?, ?, ?)
-  `).run('ydt', 'YDT', 'Yabancı Dil Testi', 4, 1);
-
-  const ydtSubjects = [
-    { id: 'ydt_ing', name: 'İngilizce', count: 80, order: 1 }
-  ];
-
-  for (const subject of ydtSubjects) {
-    db.prepare(`
-      INSERT INTO exam_subjects (id, exam_type_id, subject_name, question_count, order_index)
-      VALUES (?, ?, ?, ?, ?)
-    `).run(subject.id, 'ydt', subject.name, subject.count, subject.order);
-  }
-
-  console.log('✅ Exam types and subjects seeded successfully');
+  insertMany(EXAM_TYPES);
+  console.log(`✅ Seeded ${EXAM_TYPES.length} exam types and subjects from JSON`);
 }
 
 /**

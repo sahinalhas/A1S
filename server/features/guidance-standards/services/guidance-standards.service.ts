@@ -113,15 +113,15 @@ export function resetToDefaults() {
 
 export function getHierarchyByAnaKategori(anaKategoriId: number) {
   const hizmetAlanlari = repository.getHizmetAlanlari(anaKategoriId);
-  
+
   const result = hizmetAlanlari.map(ha => {
     const drpBirler = repository.getDrpBirler(ha.id);
-    
+
     return {
       ...ha,
       drp_bir: drpBirler.map(db => {
         const drpIkiler = repository.getDrpIkiler(db.id);
-        
+
         return {
           ...db,
           drp_iki: drpIkiler.map(di => {
@@ -135,7 +135,7 @@ export function getHierarchyByAnaKategori(anaKategoriId: number) {
       })
     };
   });
-  
+
   return result;
 }
 
@@ -152,21 +152,21 @@ interface CounselingTopic {
 
 export function getIndividualTopicsFlat(): CounselingTopic[] {
   const topics: CounselingTopic[] = [];
-  
+
   const bireyselKategori = repository.getAnaKategoriler().find(k => k.ad === 'Bireysel Çalışmalar');
   if (!bireyselKategori) return topics;
-  
+
   const hizmetAlanlari = repository.getHizmetAlanlari(bireyselKategori.id);
-  
+
   for (const ha of hizmetAlanlari) {
     const drpBirler = repository.getDrpBirler(ha.id);
-    
+
     for (const db of drpBirler) {
       const drpIkiler = repository.getDrpIkiler(db.id);
-      
+
       for (const di of drpIkiler) {
         const drpUcler = repository.getDrpUcler(di.id);
-        
+
         for (const du of drpUcler) {
           topics.push({
             id: String(du.id),
@@ -182,6 +182,6 @@ export function getIndividualTopicsFlat(): CounselingTopic[] {
       }
     }
   }
-  
+
   return topics;
 }

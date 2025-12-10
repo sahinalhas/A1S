@@ -110,31 +110,49 @@ export function seedGuidanceStandards(db: Database.Database): void {
   try {
     db.exec('BEGIN TRANSACTION');
 
-    const insertAna = db.prepare('INSERT INTO ana_kategoriler (id, ad) VALUES (?, ?)');
-    const insertHA = db.prepare('INSERT INTO drp_hizmet_alani (id, ana_kategori_id, ad) VALUES (?, ?, ?)');
-    const insertBir = db.prepare('INSERT INTO drp_bir (id, drp_hizmet_alani_id, ad) VALUES (?, ?, ?)');
-    const insertIki = db.prepare('INSERT INTO drp_iki (id, drp_bir_id, ad) VALUES (?, ?, ?)');
+    // Insert without specifying IDs to leverage AUTOINCREMENT and avoid conflicts
+    const insertAna = db.prepare('INSERT INTO ana_kategoriler (ad) VALUES (?)');
+    const insertHA = db.prepare('INSERT INTO drp_hizmet_alani (ana_kategori_id, ad) VALUES (?, ?)');
+    const insertBir = db.prepare('INSERT INTO drp_bir (drp_hizmet_alani_id, ad) VALUES (?, ?)');
+    const insertIki = db.prepare('INSERT INTO drp_iki (drp_bir_id, ad) VALUES (?, ?)');
     const insertUc = db.prepare('INSERT INTO drp_uc (drp_iki_id, kod, aciklama) VALUES (?, ?, ?)');
 
     for (const ana of data) {
-      insertAna.run(ana.id, ana.ad);
+      const anaResult = insertAna.run(ana.ad);
+      const anaId = anaResult.lastInsertRowid;
 
       if (ana.hizmet_alanlari) {
         for (const ha of ana.hizmet_alanlari) {
-          insertHA.run(ha.id, ana.id, ha.ad);
+          const haResult = insertHA.run(anaId, ha.ad);
+          const haId = haResult.lastInsertRowid;
 
           if (ha.drp_bir) {
             for (const bir of ha.drp_bir) {
-              insertBir.run(bir.id, ha.id, bir.ad);
+              const birResult = insertBir.run(haId, bir.ad);
+              const birId = birResult.lastInsertRowid;
 
-              if (bir.drp_iki) {
-                for (const iki of bir.drp_iki) {
-                  insertIki.run(iki.id, bir.id, iki.ad);
+              if (bir.drp_iki && bir.drp_iki.length > 0) {
+                const subCategories = bir.drp_iki.filter((i: any) => i.ad);
+                const directItems = bir.drp_iki.filter((i: any) => !i.ad && (i.kod || i.aciklama));
+
+                for (const iki of subCategories) {
+                  const ikiResult = insertIki.run(birId, iki.ad);
+                  const ikiId = ikiResult.lastInsertRowid;
 
                   if (iki.drp_uc) {
                     for (const uc of iki.drp_uc) {
-                      insertUc.run(iki.id, uc.kod, uc.aciklama);
+                      insertUc.run(ikiId, uc.kod, uc.aciklama);
                     }
+                  }
+                }
+
+                if (directItems.length > 0) {
+                  // Create surrogate category for direct items
+                  const ikiResult = insertIki.run(birId, bir.ad);
+                  const ikiId = ikiResult.lastInsertRowid;
+
+                  for (const item of directItems) {
+                    insertUc.run(ikiId, item.kod, item.aciklama);
                   }
                 }
               }

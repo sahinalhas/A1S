@@ -164,13 +164,13 @@ export function deleteDrpUc(id: number): void {
 
 export function getFullHierarchy() {
   const db = getDatabase();
-  
+
   const anaKategoriler = getAnaKategoriler();
   const hizmetAlanlari = getHizmetAlanlari();
   const drpBirler = getDrpBirler();
   const drpIkiler = getDrpIkiler();
   const drpUcler = getDrpUcler();
-  
+
   return {
     ana_kategoriler: anaKategoriler,
     drp_hizmet_alani: hizmetAlanlari,
@@ -182,13 +182,13 @@ export function getFullHierarchy() {
 
 export function getStats() {
   const db = getDatabase();
-  
+
   const anaCount = (db.prepare('SELECT COUNT(*) as count FROM ana_kategoriler').get() as any).count;
   const hizmetCount = (db.prepare('SELECT COUNT(*) as count FROM drp_hizmet_alani').get() as any).count;
   const birCount = (db.prepare('SELECT COUNT(*) as count FROM drp_bir').get() as any).count;
   const ikiCount = (db.prepare('SELECT COUNT(*) as count FROM drp_iki').get() as any).count;
   const ucCount = (db.prepare('SELECT COUNT(*) as count FROM drp_uc').get() as any).count;
-  
+
   return {
     ana_kategoriler: anaCount,
     drp_hizmet_alani: hizmetCount,
