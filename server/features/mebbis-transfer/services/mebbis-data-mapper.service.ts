@@ -11,15 +11,86 @@ interface CounselingSessionData {
   detailedNotes: string | null;
   studentNo: string;
   studentName: string;
+  drpHizmetAlaniId: number | null;
+  drpBirId: number | null;
+  drpIkiId: number | null;
+  drpUcId: number | null;
 }
 
 export class MEBBISDataMapper {
   mapSessionToMEBBIS(session: CounselingSessionData): MEBBISSessionData {
     try {
-      const hizmetAlani = this.getHizmetAlani(session.topic);
-      const birinci = this.getHizmetAlani(session.topic); // Use same topic for first category as requested
-      const ikinci = this.getIkinci(session.sessionDetails);
-      const ucuncu = this.getUcuncu(session.detailedNotes);
+      // If we have DRP IDs, use them to get the actual MEBBİS values
+      let hizmetAlani = '';
+      let birinci = '';
+      let ikinci = '';
+      let ucuncu: string | undefined = undefined;
+
+      if (session.drpHizmetAlaniId || session.drpBirId || session.drpIkiId) {
+        // We have DRP IDs, query the database to get MEBBİS values
+        const db = require('../../../lib/database.js').default();
+
+        // Get Hizmet Alanı value (from drp_hizmet_alani table)
+        if (session.drpHizmetAlaniId) {
+          const haRow = db.prepare('SELECT ad FROM drp_hizmet_alani WHERE id = ?').get(session.drpHizmetAlaniId) as { ad: string } | undefined;
+          hizmetAlani = haRow?.ad || '';
+
+          logger.debug(
+            `Mapped drpHizmetAlaniId ${session.drpHizmetAlaniId} to MEBBİS value: "${hizmetAlani}"`,
+            'MEBBISDataMapper'
+          );
+        }
+
+        // Get Birinci (drp_bir) value
+        if (session.drpBirId) {
+          const birRow = db.prepare('SELECT ad FROM drp_bir WHERE id = ?').get(session.drpBirId) as { ad: string } | undefined;
+          birinci = birRow?.ad || '';
+
+          logger.debug(
+            `Mapped drpBirId ${session.drpBirId} to MEBBİS value: "${birinci}"`,
+            'MEBBISDataMapper'
+          );
+        }
+
+        // Get İkinci (drp_iki) value
+        if (session.drpIkiId) {
+          const ikiRow = db.prepare('SELECT ad FROM drp_iki WHERE id = ?').get(session.drpIkiId) as { ad: string } | undefined;
+          ikinci = ikiRow?.ad || '';
+
+          logger.debug(
+            `Mapped drpIkiId ${session.drpIkiId} to MEBBİS value: "${ikinci}"`,
+            'MEBBISDataMapper'
+          );
+        }
+
+        // Get Üçüncü (drp_uc) value - this is kod + aciklama combined
+        if (session.drpUcId) {
+          const ucRow = db.prepare('SELECT kod, aciklama FROM drp_uc WHERE id = ?').get(session.drpUcId) as { kod: string; aciklama: string } | undefined;
+          if (ucRow) {
+            // Combine kod and aciklama for MEBBİS: "KOD - AÇIKLAMA"
+            if (ucRow.kod && ucRow.aciklama) {
+              ucuncu = `${ucRow.kod} - ${ucRow.aciklama}`;
+            } else {
+              ucuncu = ucRow.aciklama || ucRow.kod || undefined;
+            }
+          }
+
+          logger.debug(
+            `Mapped drpUcId ${session.drpUcId} to MEBBİS value: "${ucuncu}"`,
+            'MEBBISDataMapper'
+          );
+        }
+      } else {
+        // Fallback: Use topic for old sessions without DRP IDs
+        logger.warn(
+          `Session ${session.id} has no DRP IDs, falling back to topic-based mapping`,
+          'MEBBISDataMapper'
+        );
+        hizmetAlani = this.getHizmetAlani(session.topic);
+        birinci = this.getHizmetAlani(session.topic);
+        ikinci = this.getIkinci(session.sessionDetails);
+        ucuncu = this.getUcuncu(session.detailedNotes);
+      }
 
       const gorusmeTarihi = this.formatDate(session.sessionDate);
       const gorusmeSaati = this.formatTime(session.entryTime);
@@ -45,8 +116,12 @@ export class MEBBISDataMapper {
           sessionId: session.id,
           studentNo: session.studentNo,
           topic: session.topic,
-          mappedArea: hizmetAlani,
-          mappedPrimary: birinci
+          drpHizmetAlaniId: session.drpHizmetAlaniId,
+          drpBirId: session.drpBirId,
+          drpIkiId: session.drpIkiId,
+          mappedHizmetAlani: hizmetAlani,
+          mappedBirinci: birinci,
+          mappedIkinci: ikinci
         }
       );
 

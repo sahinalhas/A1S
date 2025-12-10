@@ -2,10 +2,10 @@ import { MEBBISAutomationService } from './mebbis-automation.service.js';
 import { MEBBISDataMapper } from './mebbis-data-mapper.service.js';
 import { getSessionsBySchool } from '../../counseling-sessions/repository/counseling-sessions.repository.js';
 import getDatabase from '../../../lib/database.js';
-import type { 
-  MEBBISTransferProgress, 
+import type {
+  MEBBISTransferProgress,
   MEBBISTransferError,
-  StartTransferRequest 
+  StartTransferRequest
 } from '@shared/types/mebbis-transfer.types';
 import { logger } from '../../../utils/logger.js';
 import type { Server as SocketIOServer } from 'socket.io';
@@ -37,7 +37,7 @@ export class MEBBISTransferManager {
 
   async startTransfer(transferId: string, request: StartTransferRequest): Promise<void> {
     const sessions = this.getSessionsToTransfer(request);
-    
+
     if (sessions.length === 0) {
       throw new Error('Aktarılacak görüşme bulunamadı');
     }
@@ -87,29 +87,29 @@ export class MEBBISTransferManager {
       const school = db.prepare('SELECT code, name FROM schools WHERE id = ?').get(transferState.schoolId) as { code: string | null; name: string } | undefined;
       const schoolCode = school?.code || null;
       const schoolName = school?.name || null;
-      
+
       if (!schoolCode) {
         logger.warn(`School ${transferState.schoolId} has no kurum kodu set, will try to match by school name: ${schoolName}`, 'MEBBISTransferManager');
       } else {
         logger.info(`Using kurum kodu ${schoolCode} for MEBBIS school selection`, 'MEBBISTransferManager');
       }
-      
+
       // Set school code and name on automation service for school selection during QR login
       this.automation.setSchoolCode(schoolCode, schoolName);
 
       logger.info('Initializing browser...', 'MEBBISTransferManager');
       await this.automation.initialize();
-      
+
       this.emitStatus(transferId, 'waiting_qr', 'QR kod girişi bekleniyor...');
       logger.info('Waiting for QR code login...', 'MEBBISTransferManager');
       await this.automation.waitForLogin();
-      
+
       this.emitStatus(transferId, 'running', 'Veri giriş sayfasına yönlendiriliyor...');
       logger.info('Navigating to data entry page...', 'MEBBISTransferManager');
       await this.automation.navigateToDataEntry();
 
       logger.info(`Starting to process ${sessions.length} sessions...`, 'MEBBISTransferManager');
-      
+
       for (let i = 0; i < sessions.length; i++) {
         if (transferState.cancelled) {
           logger.info(
@@ -128,9 +128,9 @@ export class MEBBISTransferManager {
             `[${i + 1}/${sessions.length}] Processing session ${session.id} for student ${session.studentNo}`,
             'MEBBISTransferManager'
           );
-          
+
           const mebbisData = this.mapper.mapSessionToMEBBIS(session);
-          
+
           this.emitSessionStart(transferId, {
             sessionId: session.id,
             studentNo: session.studentNo,
@@ -143,12 +143,12 @@ export class MEBBISTransferManager {
           if (result.success) {
             await this.markAsTransferred(session.id, transferState.schoolId);
             transferState.progress.completed++;
-            
+
             logger.info(
               `[${i + 1}/${sessions.length}] Session ${session.id} completed successfully in ${sessionDuration}ms`,
               'MEBBISTransferManager'
             );
-            
+
             this.emitSessionCompleted(transferId, {
               sessionId: session.id,
               studentNo: session.studentNo,
@@ -157,12 +157,12 @@ export class MEBBISTransferManager {
           } else {
             transferState.progress.failed++;
             await this.logError(session.id, result.error || 'Bilinmeyen hata', transferState.schoolId);
-            
+
             logger.warn(
               `[${i + 1}/${sessions.length}] Session ${session.id} failed: ${result.error}`,
               'MEBBISTransferManager'
             );
-            
+
             const error: MEBBISTransferError = {
               sessionId: session.id,
               studentNo: session.studentNo,
@@ -170,22 +170,22 @@ export class MEBBISTransferManager {
               timestamp: new Date().toISOString()
             };
             transferState.errors.push(error);
-            
+
             this.emitSessionFailed(transferId, error);
           }
         } catch (error) {
           const err = error as Error;
           const sessionDuration = Date.now() - sessionStartTime;
-          
+
           logger.error(
             `[${i + 1}/${sessions.length}] Session ${session.id} transfer failed after ${sessionDuration}ms`,
             'MEBBISTransferManager',
             error
           );
-          
+
           transferState.progress.failed++;
           await this.logError(session.id, err.message, transferState.schoolId);
-          
+
           const errorObj: MEBBISTransferError = {
             sessionId: session.id,
             studentNo: session.studentNo,
@@ -193,7 +193,7 @@ export class MEBBISTransferManager {
             timestamp: new Date().toISOString()
           };
           transferState.errors.push(errorObj);
-          
+
           this.emitSessionFailed(transferId, errorObj);
         }
 
@@ -203,7 +203,7 @@ export class MEBBISTransferManager {
       transferState.status = transferState.cancelled ? 'cancelled' : 'completed';
       const totalDuration = Date.now() - startTime;
       const avgTimePerSession = sessions.length > 0 ? totalDuration / sessions.length : 0;
-      
+
       const summary = {
         total: transferState.progress.total,
         successful: transferState.progress.completed,
@@ -211,11 +211,11 @@ export class MEBBISTransferManager {
         errors: transferState.errors,
         duration: totalDuration
       };
-      
+
       this.emitTransferCompleted(transferId, summary);
 
       await this.automation.close();
-      
+
       logger.info(
         `Transfer ${transferId} completed: ${transferState.progress.completed} successful, ${transferState.progress.failed} failed, ` +
         `total duration: ${(totalDuration / 1000).toFixed(2)}s, avg per session: ${(avgTimePerSession / 1000).toFixed(2)}s`,
@@ -235,9 +235,9 @@ export class MEBBISTransferManager {
     if (!request.schoolId) {
       throw new Error('schoolId is required for MEBBIS transfer - security violation');
     }
-    
+
     const db = getDatabase();
-    
+
     let query = `
       SELECT 
         cs.id,
@@ -248,6 +248,10 @@ export class MEBBISTransferManager {
         cs.sessionDetails,
         cs.detailedNotes,
         cs.mebbis_transferred,
+        cs.drpHizmetAlaniId,
+        cs.drpBirId,
+        cs.drpIkiId,
+        cs.drpUcId,
         s.id as studentNo,
         (s.name || ' ' || s.surname) as studentName
       FROM counseling_sessions cs

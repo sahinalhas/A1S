@@ -48,13 +48,87 @@ export class MEBBISAutomationService {
     throw new Error(`${context} failed after ${retries} attempts: ${lastError?.message}`);
   }
 
+  private async waitForLoadingOverlay(): Promise<void> {
+    if (!this.page) return;
+
+    try {
+      // 1. "İşlem yapılıyor" veya "Lütfen bekleyiniz" metni içeren ve görünür olan elementleri bekle
+      // Bu elementler varsa, işlem devam ediyor demektir.
+      const isLoadingVisible = await this.page.evaluate(() => {
+        const loadingTexts = ['İşlem yapılıyor', 'Lütfen bekleyiniz', 'Yükleniyor'];
+
+        // Tüm div, span ve p elementlerini kontrol et
+        const elements = document.querySelectorAll('div, span, p, td');
+
+        for (const el of elements) {
+          const text = el.textContent || '';
+          const isVisible = (el as HTMLElement).offsetParent !== null; // Görünürlük kontrolü
+
+          if (isVisible && loadingTexts.some(t => text.includes(t))) {
+            return true;
+          }
+        }
+
+        // Ayrıca genel spinner ID'lerini kontrol et
+        const updateProgress = document.getElementById('UpdateProgress1');
+        if (updateProgress && updateProgress.style.display !== 'none' && updateProgress.offsetParent !== null) {
+          return true;
+        }
+
+        return false;
+      });
+
+      if (isLoadingVisible) {
+        logger.info('Loading overlay detected, waiting for it to disappear...', 'MEBBISAutomation');
+
+        // Spinner kaybolana kadar bekle (maksimum 15 saniye)
+        await this.page.waitForFunction(() => {
+          const loadingTexts = ['İşlem yapılıyor', 'Lütfen bekleyiniz', 'Yükleniyor'];
+          const allElements = document.querySelectorAll('div, span, p, td');
+          let found = false;
+
+          for (const el of allElements) {
+            const text = el.textContent || '';
+            const isVisible = (el as HTMLElement).offsetParent !== null;
+            if (isVisible && loadingTexts.some(t => text.includes(t))) {
+              found = true;
+              break;
+            }
+          }
+
+          const updateProgress = document.getElementById('UpdateProgress1');
+          if (updateProgress && updateProgress.style.display !== 'none' && updateProgress.offsetParent !== null) {
+            found = true;
+          }
+
+          return !found;
+        }, { timeout: 15000, polling: 500 }).catch(() => {
+          logger.warn('Loading overlay wait timed out, proceeding anyway...', 'MEBBISAutomation');
+        });
+
+        // Spinner kaybolduktan sonra (veya timeout) DOM'un stabil olması için biraz daha bekle
+        await this.wait(1000);
+      }
+    } catch (error) {
+      // Hata olsa bile akışı kesme, sadece logla
+      logger.debug('Error in waitForLoadingOverlay', 'MEBBISAutomation');
+    }
+  }
+
   private async clickByXPath(xpath: string, timeout = 15000): Promise<void> {
     if (!this.page) throw new Error('Page not initialized');
     try {
+      // Tıklamadan önce loading varsa bekle
+      await this.waitForLoadingOverlay();
+
       const locator = this.page.locator(`::-p-xpath(${xpath})`);
       await locator.setTimeout(timeout);
       await locator.click();
       logger.debug(`Successfully clicked element: ${xpath}`, 'MEBBISAutomation');
+
+      // Tıkladıktan sonra loading çıkabilir, kısa bekle ve kontrol et
+      await this.wait(500);
+      await this.waitForLoadingOverlay();
     } catch (error) {
       const err = error as Error;
       logger.error(`Failed to click XPath: ${xpath}`, 'MEBBISAutomation', error);
@@ -76,25 +150,30 @@ export class MEBBISAutomationService {
     }
   }
 
-  private async waitForDropdownPopulated(selector: string, timeout = 10000): Promise<void> {
+  private async waitForDropdownPopulated(selector: string, timeout = 15000): Promise<void> {
     if (!this.page) throw new Error('Page not initialized');
 
     logger.debug(`Waiting for dropdown ${selector} to propagate...`, 'MEBBISAutomation');
 
     try {
+      // Polling ile bekle: Seçenek sayısı 1'den fazla olana kadar (Varsayılan 'Seçiniz' dışında)
       await this.page.waitForFunction(
         (sel) => {
           const el = document.querySelector(sel) as HTMLSelectElement;
-          // Wait until there is more than 1 option OR the only option is not a placeholder value like "-1" or "Seçiniz"
-          return el && el.options.length > 0 &&
-            (el.options.length > 1 || (el.value !== '-1' && el.value !== ''));
+          if (!el) return false;
+          // Seçenek sayısı 1'den büyükse DOLU kabul et
+          // Veya tek seçenek varsa ama o seçenek "Seçiniz" (-1) değilse DOLU kabul et
+          return el.options.length > 1 || (el.options.length === 1 && el.value !== '-1' && el.value !== '');
         },
-        { timeout },
+        { timeout, polling: 500 }, // Her 500ms'de bir kontrol et
         selector
       );
 
       const optionCount = await this.page.$eval(selector, (el) => (el as HTMLSelectElement).options.length);
       logger.debug(`Dropdown ${selector} populated with ${optionCount} options.`, 'MEBBISAutomation');
+
+      // Garanti olsun diye çok kısa bekle
+      await this.wait(200);
 
     } catch (error) {
       logger.warn(`Dropdown ${selector} population wait timed out or failed. Proceeding anyway...`, 'MEBBISAutomation');
@@ -184,6 +263,24 @@ export class MEBBISAutomationService {
       );
 
       logger.info('Navigating to MEBBIS...', 'MEBBISAutomation');
+
+      // Inject script to suppress alerts immediately (prevents visual flash)
+      await this.page.evaluateOnNewDocument(() => {
+        window.alert = (msg) => { console.log(`Supressed alert: ${msg}`); };
+        window.confirm = (msg) => { console.log(`Supressed confirm: ${msg}`); return true; };
+        window.prompt = (msg) => { console.log(`Supressed prompt: ${msg}`); return null; };
+      });
+
+      // Handle alerts/dialogs automatically (DataTables warnings, etc.)
+      this.page.on('dialog', async (dialog) => {
+        logger.warn(`Browser Dialog blocked: [${dialog.type()}] ${dialog.message()}`, 'MEBBISAutomation');
+        try {
+          await dialog.accept();
+        } catch (e) {
+          logger.debug('Failed to dismiss dialog', 'MEBBISAutomation');
+        }
+      });
+
       await this.page.goto('https://mebbis.meb.gov.tr/', {
         waitUntil: 'domcontentloaded',
         timeout: 60000
@@ -511,24 +608,97 @@ export class MEBBISAutomationService {
         }));
       }, selector);
 
-      // 1. Tam eşleşen değer var mı?
+      let finalValue = valueOrText;
+
+      // 1. Tam eşleşme (Value)
       const valueMatch = options.find(opt => opt.value === valueOrText);
       if (valueMatch) {
-        await this.page.select(selector, valueOrText);
-        return;
+        finalValue = valueOrText;
+        logger.debug(`Found exact value match: ${valueOrText}`, 'MEBBISAutomation');
+      } else {
+        // Normalizasyon fonksiyonu
+        const normalize = (text: string) => text.toLowerCase().replace(/\s+/g, ' ').trim();
+        const searchNormalized = normalize(valueOrText);
+
+        // 2. Metin eşleşmeleri (Sırasıyla dene)
+        let textMatch = options.find(opt => opt.text === valueOrText);
+
+        // 3. Normalize edilmiş tam eşleşme
+        if (!textMatch) {
+          textMatch = options.find(opt => normalize(opt.text) === searchNormalized);
+        }
+
+        // 4. İçerme (Contains) - Normalize edilmiş
+        if (!textMatch) {
+          textMatch = options.find(opt => normalize(opt.text).includes(searchNormalized));
+        }
+
+        // 5. Kod bazlı eşleşme (Örn: "ÖOV" ile başlıyorsa)
+        // Eğer aranan metin bir kod ile başlıyorsa (örn: "ÖOV - ...")
+        if (!textMatch && valueOrText.includes(' - ')) {
+          const codePart = valueOrText.split(' - ')[0].trim();
+          if (codePart.length > 1) {
+            textMatch = options.find(opt => opt.text.trim().startsWith(codePart));
+            if (textMatch) {
+              logger.info(`Matched via code prefix "${codePart}": "${textMatch.text}"`, 'MEBBISAutomation');
+            }
+          }
+        }
+
+        if (textMatch) {
+          logger.info(`Mapping text "${valueOrText}" to value "${textMatch.value}" (Found text: "${textMatch.text}") for ${selector}`, 'MEBBISAutomation');
+          finalValue = textMatch.value;
+        } else {
+          logger.warn(`No matching option found for "${valueOrText}" in ${selector}`, 'MEBBISAutomation');
+          logger.warn(`Available options: ${JSON.stringify(options.map(o => o.text))}`, 'MEBBISAutomation');
+        }
       }
 
-      // 2. Metin olarak eşleşen var mı?
-      const textMatch = options.find(opt => opt.text === valueOrText || opt.text.includes(valueOrText));
-      if (textMatch) {
-        logger.info(`Mapping text "${valueOrText}" to value "${textMatch.value}" for ${selector}`, 'MEBBISAutomation');
-        await this.page.select(selector, textMatch.value);
-        return;
-      }
+      // Seçimi yap: Puppeteer select yerine JS ile doğrudan değer ata ve eventleri tetikle
+      // Bu yöntem daha hızlıdır ve dropdown'ı görsel olarak açmadan işlemi yapar.
+      await this.page.evaluate((sel, val) => {
+        const el = document.querySelector(sel) as HTMLSelectElement;
+        if (el) {
+          el.value = val;
+          // MEBBIS (ASP.NET) altyapısı için change eventi kritiktir
+          el.dispatchEvent(new Event('change', { bubbles: true }));
+          // Ek güvenlik için click ve blur da tetikleyelim
+          el.dispatchEvent(new Event('click', { bubbles: true }));
+          el.dispatchEvent(new Event('blur', { bubbles: true }));
+        }
+      }, selector, finalValue);
 
-      logger.warn(`No matching option found for "${valueOrText}" in ${selector}`, 'MEBBISAutomation');
-      // Son çare direkt select dene, belki hata vermez
-      await this.page.select(selector, valueOrText);
+      // Kullanıcı talebi: Dropdown açılmasın diye FOCUS ve ENTER kaldırıldı.
+      // Bunun yerine yukarıdaki JS kodu ve aşağıdaki postback mantığı tetikleyecek.
+
+      // ASP.NET AutoPostBack Tetikleyici
+      // Eğer elementin onchange attribute'u varsa (örn: __doPostBack), onu manuel çalıştır
+      await this.page.evaluate((sel) => {
+        const el = document.querySelector(sel) as HTMLSelectElement;
+        if (el) {
+          if (el.onchange) {
+            el.onchange(new Event('change') as any);
+          } else {
+            // Fallback: onchange attribute string'ini bul ve çalıştır
+            const script = el.getAttribute('onchange');
+            if (script) {
+              // Güvenli olmayan eval yerine yeni fonksiyon
+              try { new Function(script)(); } catch (e) { }
+            }
+          }
+        }
+      }, selector);
+
+      // Loading overlay beklemesi
+      try {
+        // Önce kısa bir bekle, overlay'in belirmesi veya postback'in başlaması için
+        await this.wait(200);
+
+        // Şimdi akıllı bekleme: Loading overlay varsa kaybolana kadar bekle
+        await this.waitForLoadingOverlay();
+      } catch (e) {
+        logger.debug(`Error waiting for overlay on ${selector}`, 'MEBBISAutomation');
+      }
 
     } catch (error) {
       const err = error as Error;
@@ -587,7 +757,8 @@ export class MEBBISAutomationService {
 
       await this.retry(async () => {
         await this.selectDropdownOption('#drp_iki', data.ikinci);
-        await this.wait(500); // No next dependent dropdown known, safe short wait
+        // Wait for next dropdown (drp_uc) to populate if it exists
+        await this.waitForDropdownPopulated('#drp_uc');
       }, 2, 1000, 'Secondary category selection');
 
       if (data.ucuncu) {
