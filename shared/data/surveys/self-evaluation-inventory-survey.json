@@ -1,0 +1,1321 @@
+[
+  {
+    "template": {
+      "id": "kendini-degerlendirme-2025",
+      "title": "Kendini Değerlendirme Envanteri",
+      "description": "Yetenek, ilgi ve değerlerinizi tanımanız için hazırlanmış kapsamlı envanter. Matematiksel yetenekler, dilsel beceriler, mekansal algı, sanatsal yetenekler, sosyal beceriler ve mesleki ilgiler dahil olmak üzere 100 soru ile çok boyutlu benlik değerlendirmesi sağlayan. MEB rehberlik hizmetlerine uygun yetenek ve ilgi değerlendirme aracı.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Kendini Değerlendirme",
+        "Yetenek İlgi Değer",
+        "Mesleki Rehberlik",
+        "MEB",
+        "İlgi Envanteri"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "kendini-degerlendirme-2025-q-1",
+        "questionText": "Bir açının kaç derece olduğunu doğru bir biçimde tahmin edebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematiksel ve Nicel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-2",
+        "questionText": "Sıfır, eşitlik, sonsuz gibi matematik kavramları kolay öğrenebildiniz mi?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematiksel ve Nicel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-3",
+        "questionText": "Bir problemin çözüm yolunu öğrendikten sonra benzer problemleri çözebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematiksel ve Nicel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-4",
+        "questionText": "Sizin düzeyinizde bir matematik kitabından bir problemin çözüm yolunu kolaylıkla bulabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematiksel ve Nicel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-5",
+        "questionText": "Bir problemin çözümünü veren denklemi hemen kurabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematiksel ve Nicel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-6",
+        "questionText": "Öğrendiğiniz matematik kural ve ilkeleri fizik ve kimya dersinde karşılaştığınız problemlere uygulayabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematiksel ve Nicel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-7",
+        "questionText": "Matematik dersinde öğrendiğiniz ilkeleri ilk karşılaştığınız bir probleme uygulayıp çözümünü bulabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematiksel ve Nicel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-8",
+        "questionText": "Matematik bulmacaları çözer misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematiksel ve Nicel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-9",
+        "questionText": "Bir problemin, size öğretilen çözüm yolundan farklı çözüm yollarını bulabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematiksel ve Nicel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-10",
+        "questionText": "Fizik, kimya ya da matematik alanında bir sorunla ilgili inceleme ya da proje yapar mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematiksel ve Nicel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-11",
+        "questionText": "Fizik ve kimya problemleri çözmekten zevk alır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematiksel ve Nicel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-12",
+        "questionText": "Bir yazıyı hızlı ve doğru okuyabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Dilsel ve Sözel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-13",
+        "questionText": "Kelimeleri düzgün bir biçimde söyleyebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Dilsel ve Sözel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-14",
+        "questionText": "Bir parçayı bir kere okuduktan sonra hemen özetleyebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Dilsel ve Sözel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-15",
+        "questionText": "Kelime bilginiz, sözcük dağarcığınız zengin midir?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Dilsel ve Sözel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-16",
+        "questionText": "Okuduğunuz bir parçada belirtilen fikirler arasında ilişki kurabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Dilsel ve Sözel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-17",
+        "questionText": "Logaritma, sinüs gibi sembollerle yazılmış yazıları kolaylıkla okuyabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Dilsel ve Sözel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-18",
+        "questionText": "Bir konuda edindiğiniz bilgileri, kendi sözcüklerinizle başkalarına aktarabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Dilsel ve Sözel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-19",
+        "questionText": "Bir konuyu söz ve yazı ile anlatırken fikirleri doğru bir sıra ile verebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Dilsel ve Sözel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-20",
+        "questionText": "Bir yazıdaki fikir ve ifade hatalarını kolaylıkla görebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Dilsel ve Sözel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-21",
+        "questionText": "Akıcı bir üslûpla güzel yazı yazabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Dilsel ve Sözel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-22",
+        "questionText": "Bir yazının ana ve yardımcı fikirlerini kolaylıkla bulabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Dilsel ve Sözel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-23",
+        "questionText": "Daktilo edilmiş bir yazının hatalarını düzeltmekten hoşlanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Dilsel ve Sözel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-24",
+        "questionText": "Birbirine çok benzeyen karmaşık iki şekil arasındaki küçük farkı görebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekansal ve Görsel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-25",
+        "questionText": "Karmaşık bir geometrik şeklin sağa, sola, yukarıya ve aşağıya kaydırılması ile alacağı durumu göz önünde canlandırabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekansal ve Görsel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-26",
+        "questionText": "Açınımı verilmiş bir geometrik cismin kapalı halini göz ününde canlandırabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekansal ve Görsel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-27",
+        "questionText": "Sık rastlanmayan türden bir geometrik şeklin açınımını çizebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekansal ve Görsel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-28",
+        "questionText": "Karmaşık bir geometrik şeklin küçük bir parçasını bütünden soyutlayarak algılayabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekansal ve Görsel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-29",
+        "questionText": "Bir evin planına baktığınızda, evin yapılmış halini göz önünde canlandırabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekansal ve Görsel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-30",
+        "questionText": "Yabancısı olduğunuz kapalı bir mekanda yönünüzü kolaylıkla bulabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekansal ve Görsel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-31",
+        "questionText": "Gelişigüzel parçalara ayrılmış bir şekli yeniden ve çabucak oluşturabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekansal ve Görsel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-32",
+        "questionText": "Bir makinenin şemasına bakarak makineyi kurabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekansal ve Görsel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-33",
+        "questionText": "Bir evi veya salonu süslemekten hoşlanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekansal ve Görsel Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-34",
+        "questionText": "Gelecekte kendinizi bir laboratuvarda araştırmacı olarak düşlediğiniz olur mu?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Bilimsel İlgi ve Keşif Arzusu"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-35",
+        "questionText": "Evcil hayvanların hangi koşul ve ortamlarda daha iyi geliştiklerini inceler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Bilimsel İlgi ve Keşif Arzusu"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-36",
+        "questionText": "Deniz dibindeki hayatı gösteren bir filmi ilgi ve dikkatle dinler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Bilimsel İlgi ve Keşif Arzusu"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-37",
+        "questionText": "Bir çiftliğin yöneticisi olmayı düşünür müsünüz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Bilimsel İlgi ve Keşif Arzusu"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-38",
+        "questionText": "Çeşitli hayvan ve bitkilerin yaşayışını inceler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Bilimsel İlgi ve Keşif Arzusu"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-39",
+        "questionText": "Bir kamp veya pikniğe gittiğinizde, çevredeki hayvan ve bitkileri inceler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Bilimsel İlgi ve Keşif Arzusu"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-40",
+        "questionText": "Yeni çiçek türleri yetiştirmeyi dener misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Bilimsel İlgi ve Keşif Arzusu"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-41",
+        "questionText": "Bir makinenin (Örneğin, elektrik motoru) evrimini gösteren bir sergiyi gezmek ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Bilimsel İlgi ve Keşif Arzusu"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-42",
+        "questionText": "El sanatları ya da resim kursuna gitmek ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-43",
+        "questionText": "Ünlü sanatçıların, ressamların hayatını inceler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-44",
+        "questionText": "Ufak tefek besteler yapar mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-45",
+        "questionText": "Şiir yazmayı hiç denediniz mi?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-46",
+        "questionText": "Tahta ve metalden ev eşyaları yapar mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-47",
+        "questionText": "Bir müzik alet çalar mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-48",
+        "questionText": "Başkalarına dinletecek düzeyde bir müzik aleti çalabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-49",
+        "questionText": "Resim ya da elişleri yarışmalarına katılır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-50",
+        "questionText": "Müzik yarışmalarına katılır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-51",
+        "questionText": "Mimarlık ya da genel olarak sanat tarihi ile ilgili bir kitabı zevk duyarak okur musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-52",
+        "questionText": "Konserleri, müzik programlarını izler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-53",
+        "questionText": "Çeşitli ülkelerin halk şarkılarını tanıtan bir programı izler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-54",
+        "questionText": "Sanat sohbetlerine katılır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sanatsal ve Yaratıcı Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-55",
+        "questionText": "Başkalarına, kişisel sorunlarının çözümünde yardımcı olabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve İletişim Becerileri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-56",
+        "questionText": "İnanç ve düşüncelerinizi başkalarına kolaylıkla aktarabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve İletişim Becerileri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-57",
+        "questionText": "Söz ve davranışlarınızın başkaları üzerindeki etkisini öğrenmeye çalışır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve İletişim Becerileri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-58",
+        "questionText": "Tartışmalarda güçlü kanıtlar bularak görüşünüzü karşınızdakilere kabul ettirebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve İletişim Becerileri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-59",
+        "questionText": "Konuşurken çevrenizdeki insanların ilgisini çekebilir ve görüşlerinizi onlara kabul ettirebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve İletişim Becerileri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-60",
+        "questionText": "Okulda münazaralara katılır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve İletişim Becerileri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-61",
+        "questionText": "Sizin gibi düşünmeyen insanları ikna etmek için uzun tartışmalara girer misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve İletişim Becerileri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-62",
+        "questionText": "Mekanik bulmacalar çözer misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekanik ve Teknik Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-63",
+        "questionText": "Elektrikli oyuncakların nasıl işlediğini inceler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekanik ve Teknik Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-64",
+        "questionText": "Her türlü araç ve gereç sağlansa bir radyo yapmayı dener misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekanik ve Teknik Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-65",
+        "questionText": "Evde bozulan aletleri onarır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekanik ve Teknik Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-66",
+        "questionText": "Model uçak yapmaya çalışır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mekanik ve Teknik Yetenekler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-67",
+        "questionText": "Pazarlama ve satış yöntemlerini öğreten bir kursa devam etmek ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "İşletme ve Girişimcilik Yetkillikleri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-68",
+        "questionText": "Evleri dolaşıp, bir ürünün tanıtımını yapmaktan hoşlanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "İşletme ve Girişimcilik Yetkillikleri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-69",
+        "questionText": "Yaz aylarında bir dükkan ya da ticarethanede kendi isteğinizle çalıştınız mı?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "İşletme ve Girişimcilik Yetkillikleri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-70",
+        "questionText": "Çocukluğunuzda arkadaşlarınıza sakız, çikolata, bilye gibi şeyler sattınız mı?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "İşletme ve Girişimcilik Yetkillikleri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-71",
+        "questionText": "Okul kantini ya da kooperatifini yönetmek ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "İşletme ve Girişimcilik Yetkillikleri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-72",
+        "questionText": "Ünlü yazarların hayatını inceler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yazı ve Edebiyat İlgisi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-73",
+        "questionText": "Edebiyat ödüllerini izler, ödül alan eserleri okur musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yazı ve Edebiyat İlgisi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-74",
+        "questionText": "Hikaye, deneme, anı yazmayı denediniz mi?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yazı ve Edebiyat İlgisi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-75",
+        "questionText": "Gazeteler için ilginç haberler derlemek ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yazı ve Edebiyat İlgisi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-76",
+        "questionText": "Okul gazetesine yazı yazar mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yazı ve Edebiyat İlgisi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-77",
+        "questionText": "Çeşitli yazarların üslup özelliklerini inceler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yazı ve Edebiyat İlgisi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-78",
+        "questionText": "Gazetelerde edebiyat ve tiyatro eleştirilerini okur musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yazı ve Edebiyat İlgisi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-79",
+        "questionText": "İnsan hakları konulu bir kompozisyon yazmak ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yazı ve Edebiyat İlgisi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-80",
+        "questionText": "Çeşitli kültürlerde çocuk yetiştirme yöntemleri konulu bir konferansı dinlemek ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve Toplum Hizmetleri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-81",
+        "questionText": "Yaşlılar yurdunda eğlence günleri düzenlemek ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve Toplum Hizmetleri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-82",
+        "questionText": "Felakete uğrayan insanlar için yardım kampanyalarına katılır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve Toplum Hizmetleri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-83",
+        "questionText": "Bir hastanede gönüllü olarak çalışmak ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve Toplum Hizmetleri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-84",
+        "questionText": "Yetersizliği olan bireylere beceri kazandırma kursunda gönüllü olarak çalışmak ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve Toplum Hizmetleri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-85",
+        "questionText": "Boş vakitlerinizde yoksul çocuklara parasız ders verir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal ve Toplum Hizmetleri"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-86",
+        "questionText": "Daktilo edilmiş bir yazının hatalarını düzeltmekten hoşlanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Organize Etme ve Sistem Yönetimi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-87",
+        "questionText": "Bir işin ince ayrıntıları ile uğraşır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Organize Etme ve Sistem Yönetimi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-88",
+        "questionText": "Yaptığınız herhangi bir işin temiz ve düzenli olması için özen gösterir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Organize Etme ve Sistem Yönetimi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-89",
+        "questionText": "Ödevlerinizi zamanında, düzgün ve temiz bir biçimde yapar mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Organize Etme ve Sistem Yönetimi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-90",
+        "questionText": "Mektupları zamanında cevaplandırır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Organize Etme ve Sistem Yönetimi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-91",
+        "questionText": "Her işinizi günü gününe yapar mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Organize Etme ve Sistem Yönetimi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-92",
+        "questionText": "İşçilerin verimini artırıcı yöntemler konulu bir makaleyi okur musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Organize Etme ve Sistem Yönetimi"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-93",
+        "questionText": "Gittiğiniz bir kentte insanların adetlerini inceler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Araştırma ve Sosyal Bilimler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-94",
+        "questionText": "Ailenin tarih boyunca değişimi konulu bir makaleyi okumaktan hoşlanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Araştırma ve Sosyal Bilimler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-95",
+        "questionText": "Tropikal çiçeklerin evlerde nasıl yetiştirileceği konulu bir konferansı dinlemeye gider misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Araştırma ve Sosyal Bilimler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-96",
+        "questionText": "Türkiye'nin nüfus özelliklerini inceleyen bir araştırma ekibinde çalışmak ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Araştırma ve Sosyal Bilimler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-97",
+        "questionText": "Pazarlama ve satış yöntemlerini öğreten bir kursa devam etmek ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Araştırma ve Sosyal Bilimler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-98",
+        "questionText": "Televizyondaki reklamları eleştirir, daha iyi nasıl yapılabileceğini düşünür müsünüz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Araştırma ve Sosyal Bilimler"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-99",
+        "questionText": "Satranç oynar mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Satranç ve Strateji Oyunları"
+      },
+      {
+        "id": "kendini-degerlendirme-2025-q-100",
+        "questionText": "Belleğiniz kuvvetli midir?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Satranç ve Strateji Oyunları"
+      }
+    ]
+  }
+]

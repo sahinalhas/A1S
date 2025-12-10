@@ -1,0 +1,2133 @@
+[
+  {
+    "template": {
+      "id": "mesleki-egilim-2025",
+      "title": "Mesleki Eğilim Belirleme Testi",
+      "description": "Öğrencilerin çeşitli meslek ve sosyal-kültürel etkinliklere karşı ilgilerini ölçmek amacıyla hazırlanan ilgi envanteri. Öğrencilerin iş, meslek ve kariyer yolu seçiminde rehberlik amaçlı kapsamlı bir anketi. MEB Özel Eğitim ve Rehberlik Hizmetleri Genel Müdürlüğü formatına uygun.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Kariyer Planlaması",
+        "Mesleki İlgi",
+        "Rehberlik",
+        "MEB",
+        "Kariyer Seçimi"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "mesleki-egilim-2025-q-1",
+        "questionText": "Bir tarlanın yanından geçerken özellikle ürününe dikkat etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-2",
+        "questionText": "Çiftlik hayvanlarına ilgi duymak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-3",
+        "questionText": "Sebze ve meyve yetiştirmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-4",
+        "questionText": "Modern çiftçilik yöntemleri hakkında yazılar okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-5",
+        "questionText": "Ormanda tatil yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-6",
+        "questionText": "Başka ülkelerin iklim yapılarıyla ilgilenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-7",
+        "questionText": "Değişik çiçek cinslerine ilgi duymak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-8",
+        "questionText": "Yağmurun ne zaman yağacağını önceden tahmin etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-9",
+        "questionText": "Türkiye'nin yer altı zenginliklerini araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-10",
+        "questionText": "Madenlerin ve petrolün nasıl oluştuğunu merak etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-11",
+        "questionText": "Deniz sahilinden geçecek bir geziye katılmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-12",
+        "questionText": "Yüksek dağlara ve tepelere tırmanmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-13",
+        "questionText": "Kır gezilerinde şifalı bitkileri toplamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-14",
+        "questionText": "Nükleer santrallerin yapılmasına karşı çıkmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-15",
+        "questionText": "Denizin dibini ve suları araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-16",
+        "questionText": "Hasta ve yaralı hayvanlara yardımcı olmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Üretim ve Tarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-17",
+        "questionText": "Bozulan elektronik aletleri tamir etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-18",
+        "questionText": "Evdeki eski mobilyaları onarmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-19",
+        "questionText": "Bilgisayarda özel programlar geliştirmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-20",
+        "questionText": "Sayısal bilgi gerektiren bilmeceler çözmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-21",
+        "questionText": "Bir binanın mimari özelliğini incelemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-22",
+        "questionText": "Ev, apartman ve benzeri yapıların projelerini çizmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-23",
+        "questionText": "Radyo veya TV'den günlük haberleri takip etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-24",
+        "questionText": "Radyo, TV devrelerinin nasıl çalıştığını araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-25",
+        "questionText": "Mobilya fuarını gezmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-26",
+        "questionText": "Araba modelleriyle ilgilenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-27",
+        "questionText": "Teknolojik yeniliklerle ilgilenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-28",
+        "questionText": "Kullandığı cihazların fonksiyonlarını geliştirmek ve çoğaltmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-29",
+        "questionText": "Farklı bir yakıtla çalışabilecek otomobil geliştirmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-30",
+        "questionText": "Keşif ve icatlarla ilgilenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-31",
+        "questionText": "Bilim-teknik dergilerini okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-32",
+        "questionText": "El becerisi gerektiren işleri titizlikle yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknik ve Mekanik"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-33",
+        "questionText": "Akıl danışılabilecek bir kişi olmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-34",
+        "questionText": "İnsan davranışlarının nedenini araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-35",
+        "questionText": "İnsanlardaki psikolojik sorunların sebeplerini incelemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-36",
+        "questionText": "Okul tercihi yaparken arkadaşlarına yol göstermek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-37",
+        "questionText": "Dernek, vakıf gibi hayır kurumlarında çalışmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-38",
+        "questionText": "Bir başkasına yapılan haksızlığa karşı koymak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-39",
+        "questionText": "İnsanları suça iten nedenler üzerine yazı yazmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-40",
+        "questionText": "Cezaevinde bir arkadaşını ziyaret etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-41",
+        "questionText": "Hastanede yatan yakınlarını sık sık ziyaret etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-42",
+        "questionText": "İnsanları etkilemenin yollarını öğrenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-43",
+        "questionText": "Münazaralara katılmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-44",
+        "questionText": "Çeşitli toplulukların sosyal yapılarını incelemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-45",
+        "questionText": "Bir kurumun personel müdürü olmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-46",
+        "questionText": "Bir kurumu temsilen görüşmelerde bulunmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-47",
+        "questionText": "İnsanlara yardım etmeyi sevmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-48",
+        "questionText": "İnsan ilişkilerinde nazik olmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal Hizmetler ve İnsan İlişkileri"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-49",
+        "questionText": "Müzeleri gezmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-50",
+        "questionText": "El sanatları sergilerini gezmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-51",
+        "questionText": "Antika eşyalara ilgi duymak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-52",
+        "questionText": "Türk Sanat Müziği ve Klasik müzikten hoşlanmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-53",
+        "questionText": "Saz, gitar, org, piyano, flüt vb. müzik aletlerinden birini kullanabilmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-54",
+        "questionText": "Güzel resim yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-55",
+        "questionText": "Sanat galerilerini gezmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-56",
+        "questionText": "El becerisi kermeslerini gezmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-57",
+        "questionText": "Halı ve kilim mağazalarının vitrinlerine bakmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-58",
+        "questionText": "Evdeki eşyaların yerleştirilmesinde fikir beyan etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-59",
+        "questionText": "Mobilya fuarını gezmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-60",
+        "questionText": "Kumaşlara desen ve renk vermek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-61",
+        "questionText": "Çamurdan figürler yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-62",
+        "questionText": "Sulu boyayla tabiat resimleri yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-63",
+        "questionText": "Modayı izlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-64",
+        "questionText": "Sinemaya ve tiyatroya gitmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sanat ve Tasarım"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-65",
+        "questionText": "Kitap okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-66",
+        "questionText": "Gazetelerde köşe yazılarını okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-67",
+        "questionText": "Yabancı dilden kitap tercüme etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-68",
+        "questionText": "Ünlü şairlerin en az birinin tüm eserlerini okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-69",
+        "questionText": "Yeni duyduğum yabancı bir kelime için sözlüğe bakmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-70",
+        "questionText": "Dil öğrenmenin pratik yollarını araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-71",
+        "questionText": "Gazete bayiinin önünden geçerken gazete manşetlerine bakmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-72",
+        "questionText": "Farklı dillerdeki ortak kelimeleri bulmaya çalışmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-73",
+        "questionText": "Türkçe dersinde dilbilgisinde başarılı olmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-74",
+        "questionText": "Düşüncelerini söz ve yazı ile aktarabilmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-75",
+        "questionText": "Yabancı dildeki eşya isimlerini hafızada tutabilmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-76",
+        "questionText": "Genel kültür ansiklopedilerini karıştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-77",
+        "questionText": "Gazete ve dergilerdeki dış politika yazılarını okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-78",
+        "questionText": "Mizah dergilerini okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-79",
+        "questionText": "Büyük bir yazar veya şair olmayı düşünmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-80",
+        "questionText": "Çocuklara masal anlatmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Edebiyat ve Dil"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-81",
+        "questionText": "Modern yaşamın problemlerini araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-82",
+        "questionText": "Uluslararası konferanslara katılmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-83",
+        "questionText": "İnsan vücudunun işleyişini incelemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-84",
+        "questionText": "Matematiksel hesaplara ilgi duymak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-85",
+        "questionText": "Pul veya benzeri koleksiyonlar yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-86",
+        "questionText": "TV'de açık oturum yönetmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-87",
+        "questionText": "Liderlerin hayat hikayelerini okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-88",
+        "questionText": "Turistlerle konuşmaya çalışmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-89",
+        "questionText": "Enflasyonun nedenlerini araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-90",
+        "questionText": "Yabani hayvan resimlerini biriktirmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-91",
+        "questionText": "Halkın gelenek ve inançlarının nedenlerini incelemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-92",
+        "questionText": "Olayların neden ve sonuçlarını merak etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-93",
+        "questionText": "Zarar eden bir şirketi kara geçirmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-94",
+        "questionText": "Bilim-kurgu filmlerini izlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-95",
+        "questionText": "Uzun süre masa başında çalışmaya sabretmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-96",
+        "questionText": "Bir derste veya oturumda muhatabına konunun incelikleri hakkında soru sormak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Araştırma ve Bilim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-97",
+        "questionText": "Hasta insanlara yardım etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-98",
+        "questionText": "Alınan ilaçların prospektüsünü okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-99",
+        "questionText": "Laboratuarda deney yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-100",
+        "questionText": "İnsan ve hayvan hücrelerini incelemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-101",
+        "questionText": "Bir hastanın ameliyatını izlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-102",
+        "questionText": "Sağlık kuruluşlarında çalışmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-103",
+        "questionText": "Sağlık alanındaki buluşları izlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-104",
+        "questionText": "Ölmek üzere olan bir hastaya yardım etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-105",
+        "questionText": "Kanserin tedavisini merak etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-106",
+        "questionText": "Şifalı suların ve kaplıcaların faydalarını araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-107",
+        "questionText": "Bilim müzesini gezmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-108",
+        "questionText": "Farklı ırkların, neden farklı renklerde tenleri olduğunu araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-109",
+        "questionText": "Bilimsel formüllerin nasıl geliştirildiğini merak etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-110",
+        "questionText": "Göz hastalıkları ve tedavisiyle ilgilenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-111",
+        "questionText": "İnsanların beslenme alışkanlıklarını araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-112",
+        "questionText": "Sporla ilgili yaralanmaların tedavisini merak etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Tıp ve Sağlık"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-113",
+        "questionText": "\"Milyarder Olma Sanatı\" adlı kitabı okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-114",
+        "questionText": "Parayı dövize çevirmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-115",
+        "questionText": "Borsayla ilgilenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-116",
+        "questionText": "Bir işletmenin muhasebesini tutmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-117",
+        "questionText": "Döviz kurlarını takip etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-118",
+        "questionText": "Reklamları izlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-119",
+        "questionText": "Güçlü bir hafızaya sahip olmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-120",
+        "questionText": "Söz söyleme ve ikna kabiliyetine sahip olmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-121",
+        "questionText": "Satın alacağı bir malın toptan fiyatını öğrenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-122",
+        "questionText": "Bir firmanın kar-zarar hesaplarıyla ilgilenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-123",
+        "questionText": "Alışveriş yaparken pazarlık etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-124",
+        "questionText": "Fiyatının yüksekliğine rağmen lüks bir lokantada yemek yemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-125",
+        "questionText": "Ekonomi dergilerini izlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-126",
+        "questionText": "Serbest piyasa ekonomisini savunmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-127",
+        "questionText": "İçişleri ve dış ticaretle ilgilenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-128",
+        "questionText": "Kurumsal yönetim konularıyla ilgilenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşletme ve Ekonomi"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-129",
+        "questionText": "Seyrettiği polisiye filmlerin sonucunu tahmin etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-130",
+        "questionText": "TV'lerde siyasi tartışma programlarını izlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-131",
+        "questionText": "Liderlerin hayat hikayelerini okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-132",
+        "questionText": "Oyunlarda kaptan olmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-133",
+        "questionText": "Olumsuz biteceği tahmin edilen bir işte bile sonuna kadar sabretmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-134",
+        "questionText": "Miting ve kitle gösterilerine katılmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-135",
+        "questionText": "Yeni anayasayı veren gazeteyi almak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-136",
+        "questionText": "Meclis TV'yi izlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-137",
+        "questionText": "Yakın tarihe ait belgeleri çözmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-138",
+        "questionText": "Toplum önünde etkili ve güzel konuşmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-139",
+        "questionText": "Dini konularda bilgili olmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-140",
+        "questionText": "Farklı ırkların ve dillerin nasıl oluştuğunu araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-141",
+        "questionText": "Tarihi olay ve kişileri incelemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-142",
+        "questionText": "Güne programlı başlamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-143",
+        "questionText": "Bir işe başlamadan önce o işin genel planını ve programını yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-144",
+        "questionText": "Randevularına zamanında gitmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Siyaset ve Yönetim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-145",
+        "questionText": "Bir para birimi ile ilgilenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-146",
+        "questionText": "Yabancı ülkeleri merak etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-147",
+        "questionText": "Taklit yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-148",
+        "questionText": "TV'lerdeki kültür-sanat programlarını izlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-149",
+        "questionText": "TV'lerdeki açık oturum programlarını izlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-150",
+        "questionText": "Gazetelerdeki \"sorunlarınıza çözümler\" türündeki yazıları okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-151",
+        "questionText": "Fotoğraf makinesi taşımak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-152",
+        "questionText": "Gezilerde fotoğraf makinesi taşımak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-153",
+        "questionText": "Bir hayır kurumu için para toplamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-154",
+        "questionText": "Turistlere rehberlik etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-155",
+        "questionText": "Eşya ve olayların ayrıntılarına dikkat etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-156",
+        "questionText": "Kitaplarını kullanmadan önce ciltlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-157",
+        "questionText": "Oturduğu evin dekoruna ve düzenine önem vermek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-158",
+        "questionText": "Duygularını düşüncelerini abartılı bir şekilde aktarmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-159",
+        "questionText": "Giyimine özen göstermek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-160",
+        "questionText": "Sanat tarihimizde özel bir yeri olan camileri gezmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Uluslararası ve Kültür"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-161",
+        "questionText": "Pul veya benzeri koleksiyonlar yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-162",
+        "questionText": "Yabani hayvan resimlerini biriktirmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-163",
+        "questionText": "Astronomisi ile ilgili kitaplar okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-164",
+        "questionText": "Bilim-kurgu filmlerini izlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-165",
+        "questionText": "Denizin dibini ve suları araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-166",
+        "questionText": "Yüksek dağlara ve tepelere tırmanmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-167",
+        "questionText": "Deniz sahilinden geçecek bir geziye katılmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-168",
+        "questionText": "Yağmurun ne zaman yağacağını önceden tahmin etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-169",
+        "questionText": "Başka ülkelerin iklim yapılarıyla ilgilenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-170",
+        "questionText": "Değişik çiçek cinslerine ilgi duymak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-171",
+        "questionText": "Kır gezilerinde şifalı bitkileri toplamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-172",
+        "questionText": "Ormanda tatil yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-173",
+        "questionText": "Çiftlik hayvanlarına ilgi duymak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-174",
+        "questionText": "Sebze ve meyve yetiştirmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-175",
+        "questionText": "Madenlerin ve petrolün nasıl oluştuğunu merak etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-176",
+        "questionText": "İnsan ve evrenin niçin yaratıldığını düşünmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Astronomi ve Doğa"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-177",
+        "questionText": "Güzel resim yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-178",
+        "questionText": "Evdeki eski mobilyaları onarmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-179",
+        "questionText": "El sanatları sergilerini gezmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-180",
+        "questionText": "Halı ve kilim mağazalarının vitrinlerine bakmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-181",
+        "questionText": "Çocuklara pratik oyuncaklar yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-182",
+        "questionText": "Kumaşlara desen ve renk vermek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-183",
+        "questionText": "Çamurdan figürler yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-184",
+        "questionText": "Sulu boyayla tabiat resimleri yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-185",
+        "questionText": "Dokuma tezgahında çalışmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-186",
+        "questionText": "El becerisi kermeslerini gezmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-187",
+        "questionText": "El becerisi gerektiren işleri titizlikle yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-188",
+        "questionText": "Evdeki eşyaların yerleştirilmesinde fikir beyan etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-189",
+        "questionText": "Saz, gitar, org, piyano, flüt vb. müzik aletlerinden birini kullanabilmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-190",
+        "questionText": "Taklit yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-191",
+        "questionText": "Modayı izlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      },
+      {
+        "id": "mesleki-egilim-2025-q-192",
+        "questionText": "Çocuklara masal anlatmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "El Sanatları ve Üretim"
+      }
+    ]
+  }
+]

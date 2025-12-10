@@ -1,0 +1,1101 @@
+[
+  {
+    "template": {
+      "id": "holland-inventory-2025",
+      "title": "Holland Mesleki Tercih Envanteri",
+      "description": "Öğrencilerin mesleki ilgilerini ve kişilik özelliklerini Holland's mesleki tercih teorisine göre değerlendiren anketi. Gerçekçi, araştırıcı, sanatsal, sosyal, girişimci ve geleneksel kariyer tiplerini belirlemeyi amaçlayan. MEB Özel Eğitim ve Rehberlik Hizmetleri Genel Müdürlüğü formatına uygun.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Holland Teorisi",
+        "Kariyer Seçimi",
+        "Mesleki Tercih",
+        "Rehberlik",
+        "MEB"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "holland-inventory-2025-q-1",
+        "questionText": "Fırtınadan sonra zarar görmüş bir ağacı onarmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-2",
+        "questionText": "Bir daktilonun nasıl tamir edileceğini öğrenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-3",
+        "questionText": "Tam doğru zaman tutmak için bir saati ayarlamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-4",
+        "questionText": "Elektronik alet çalıştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-5",
+        "questionText": "Bir ustayı televizyon tamir ederken seyretmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-6",
+        "questionText": "Bir slayt veya film projektörünü çalıştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-7",
+        "questionText": "Mobilya yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-8",
+        "questionText": "Değerli taşları kesmeyi ve parlatmayı öğrenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-9",
+        "questionText": "Bir resim çerçevesi yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-10",
+        "questionText": "Gözlük için mercekleri parlatmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-11",
+        "questionText": "Kusurlarını bulmak için üretilen mamulleri incelemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-12",
+        "questionText": "Maddeleri ayırmak, biriktirmek ve saklamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-13",
+        "questionText": "Kuşların nasıl göç ettiğini öğrenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-14",
+        "questionText": "Hava durumu tahmini için kişisel gözlemleri kullanmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-15",
+        "questionText": "Bitki hastalıklarını incelemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Gerçekçi (Realistic) - Teknik ve Mekanik"
+      },
+      {
+        "id": "holland-inventory-2025-q-16",
+        "questionText": "Bir bilim müzesini incelemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-17",
+        "questionText": "Mikroskop gibi laboratuar aletlerini kullanmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-18",
+        "questionText": "Vitaminlerin hayvanlar üzerindeki etkisini araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-19",
+        "questionText": "Biyoloji çalışmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-20",
+        "questionText": "Beynin nasıl çalıştığını öğrenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-21",
+        "questionText": "Depremin nedenlerini araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-22",
+        "questionText": "Ünlü bir bilim adamının dersine katılmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-23",
+        "questionText": "Dünyanın merkezi, güneş ve yıldızlar hakkında kitaplar okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-24",
+        "questionText": "Yıldızların oluşumunu öğrenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-25",
+        "questionText": "Kelebekleri gözlemlemek ve sınıflandırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-26",
+        "questionText": "Bir havuz veya gölde yabani hayatı araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-27",
+        "questionText": "Orman yangınları için gözetleme yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-28",
+        "questionText": "Yeni yöntemler veya politikalar geliştirmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-29",
+        "questionText": "Modern yazarların yazı stillerini araştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-30",
+        "questionText": "Diğer insanların bir problemin nasıl çözülebileceğine ilişkin kanılarını öğrenmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Araştırıcı (Investigative) - Bilim ve Araştırma"
+      },
+      {
+        "id": "holland-inventory-2025-q-31",
+        "questionText": "Resimler tasarlamak ve çizmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-32",
+        "questionText": "Bir kuş yemliği tasarlamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-33",
+        "questionText": "Planlar veya grafikler yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-34",
+        "questionText": "Müzik eseri bestelemek veya düzenlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-35",
+        "questionText": "Filmler için konu müziği bestelemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-36",
+        "questionText": "Yaratıcı fotoğraflar çekmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-37",
+        "questionText": "Bir müzik aleti çalmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-38",
+        "questionText": "Bir orkestrada caz müziği çalmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-39",
+        "questionText": "Bir sinema filmi senaryosu yazmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-40",
+        "questionText": "Bir magazin hikayesini anlatan çizimler yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-41",
+        "questionText": "Metal bir heykel tasarlamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-42",
+        "questionText": "Kısa hikayeler yazmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-43",
+        "questionText": "Tiyatro oyunu, müzikaller gibi sanatsal etkinliklerin eleştirilerini yazmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-44",
+        "questionText": "Bir tiyatro oyununda rol almak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-45",
+        "questionText": "Yerel bir radyo istasyonunda çalınması için müzik parçaları seçmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sanatsal (Artistic) - Yaratıcılık ve Sanat"
+      },
+      {
+        "id": "holland-inventory-2025-q-46",
+        "questionText": "İnsanlara yeni bir hobi öğretmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-47",
+        "questionText": "Küçük grup tartışmalarına katılmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-48",
+        "questionText": "Acil durumlarda insanlara yardım etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-49",
+        "questionText": "Bir toplum geliştirme projesinde çalışmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-50",
+        "questionText": "Çocuklara nasıl oyun oynanacağını veya spor yapılacağını göstermek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-51",
+        "questionText": "Ziyaretçilere yol göstermek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-52",
+        "questionText": "Bağımlılık yapıcı madde kullanan insanlara danışmanlık yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-53",
+        "questionText": "İnsanlara yasal doğruları açıklamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-54",
+        "questionText": "İnsanların mali kararlar vermelerine yardımcı olmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-55",
+        "questionText": "Arkadaşlar arasındaki bir tartışmayı yatıştırmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-56",
+        "questionText": "Birine önemli bir karar vermesinde yardım etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-57",
+        "questionText": "Yaralı bir insana ilkyardım yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-58",
+        "questionText": "Tehlikedeki bir insana yardım etmeye çalışmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-59",
+        "questionText": "Fıkralar ve hikayeler anlatarak insanları eğlendirmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-60",
+        "questionText": "Bir proje üzerinde başkaları ile beraber çalışmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Sosyal (Social) - İnsan İlişkileri ve Hizmet"
+      },
+      {
+        "id": "holland-inventory-2025-q-61",
+        "questionText": "Bir iş yaptırmak için parayla eleman tutmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-62",
+        "questionText": "Bir oyun için takım oluşturma",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-63",
+        "questionText": "Yeni bir satış kampanyası düzenlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-64",
+        "questionText": "Bir toplantıyı yönetmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-65",
+        "questionText": "Küçük bir işletmeyi idare etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-66",
+        "questionText": "Diğer insanların işlerini planlamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-67",
+        "questionText": "Telefonla iş idare etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-68",
+        "questionText": "Bir politik kurum için kampanyaya katılmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-69",
+        "questionText": "İl genel meclisinde çalışmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-70",
+        "questionText": "Şirket hakkındaki şikayetleri konusunda işçilerle röportaj yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-71",
+        "questionText": "Bir sergiye gezi düzenlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-72",
+        "questionText": "İş gezilerine çıkmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-73",
+        "questionText": "Yeni alışveriş merkezinin tanıtımını yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-74",
+        "questionText": "Fıkralar ve hikayeler anlatarak insanları eğlendirmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-75",
+        "questionText": "Kısa hikayeler yazmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Girişimci (Enterprising) - Liderlik ve Yönetim"
+      },
+      {
+        "id": "holland-inventory-2025-q-76",
+        "questionText": "Bankaya yatırılan paranın faizini hesaplamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-77",
+        "questionText": "Bir dükkanda envanter (kayıt) tutmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-78",
+        "questionText": "Mali bir hesaptaki hataları bulmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-79",
+        "questionText": "Bir rapor taslağındaki hataları bulmak için incelemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-80",
+        "questionText": "Bir kuruluşun parayla ilgili bütün işlerini yönetmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-81",
+        "questionText": "Masraflara ait hesap kayıtları tutmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-82",
+        "questionText": "Bir grup veya klüp için bütçe hazırlamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-83",
+        "questionText": "Mali raporları hazırlamak ve yorumlamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-84",
+        "questionText": "Taksit ödemelerini tahsil etmek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-85",
+        "questionText": "Gelir vergisi kazancını düzenlemek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-86",
+        "questionText": "Aylık bütçe planı yapmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-87",
+        "questionText": "Bir muhasebecilik sistemi kurmak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-88",
+        "questionText": "Taşıma için nakil maliyetlerini hesaplamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-89",
+        "questionText": "Sertifika, plaket veya taktı belgesi hazırlamak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      },
+      {
+        "id": "holland-inventory-2025-q-90",
+        "questionText": "İş gazeteleri veya dergileri okumak",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hoşlanmam",
+          "Farketmez",
+          "Hoşlanırım"
+        ],
+        "category": "Geleneksel (Conventional) - Düzen ve Sistemler"
+      }
+    ]
+  }
+]

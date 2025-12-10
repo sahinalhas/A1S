@@ -1,0 +1,606 @@
+[
+  {
+    "template": {
+      "id": "kime-gore-ben-neyim-2025",
+      "title": "Kime Göre Ben Neyim? Formu",
+      "description": "Öğrencilerin kendilerine yönelik farklı perspektiflerden bakılarak benlik algısını ve sosyal anlamlandırmalarını değerlendiren form. Öğretmenler, ailesi (anne, baba, kardeşler) ve arkadaşları tarafından nasıl görüldüklerini ve kendi algılarını karşılaştıran. Benlik konsepti gelişimi ve kişisel farkındalık için MEB rehberlik hizmetlerine uygun araç.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Benlik Algısı",
+        "Sosyal Perspektif",
+        "Kişisel Farkındalık",
+        "MEB",
+        "Öz Tanıma"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "kime-gore-ben-neyim-2025-q-1",
+        "questionText": "Hareketliyim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Davranış Özellikleri"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-2",
+        "questionText": "Kavgacıyım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Davranış Özellikleri"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-3",
+        "questionText": "Plansızım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Davranış Özellikleri"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-4",
+        "questionText": "Uysalım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Davranış Özellikleri"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-5",
+        "questionText": "Somurtkanım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Davranış Özellikleri"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-6",
+        "questionText": "Pasaklıyım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Davranış Özellikleri"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-7",
+        "questionText": "Çok konuşuyorum",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Davranış Özellikleri"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-8",
+        "questionText": "Yeterince akıllı değilim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Zeka ve Akademik Yetenek"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-9",
+        "questionText": "Zekiyim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Zeka ve Akademik Yetenek"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-10",
+        "questionText": "Ezberciyim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Zeka ve Akademik Yetenek"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-11",
+        "questionText": "Beceriksizim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Zeka ve Akademik Yetenek"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-12",
+        "questionText": "Yetenekliyim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Zeka ve Akademik Yetenek"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-13",
+        "questionText": "Başarılıyım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Zeka ve Akademik Yetenek"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-14",
+        "questionText": "Cesaretsizim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Kişilik ve Duygusal Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-15",
+        "questionText": "Ciddiyim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Kişilik ve Duygusal Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-16",
+        "questionText": "Neşeliyim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Kişilik ve Duygusal Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-17",
+        "questionText": "Cana yakınım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Kişilik ve Duygusal Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-18",
+        "questionText": "Haylazım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Kişilik ve Duygusal Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-19",
+        "questionText": "Güçlüyüm",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Kişilik ve Duygusal Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-20",
+        "questionText": "Hayalperestim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Kişilik ve Duygusal Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-21",
+        "questionText": "Kıskancım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Kişilik ve Duygusal Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-22",
+        "questionText": "Kötümserim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Kişilik ve Duygusal Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-23",
+        "questionText": "Tembelim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Kişilik ve Duygusal Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-24",
+        "questionText": "Yakışıklıyım/Güzelim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sosyal ve İlişkisel Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-25",
+        "questionText": "İlgisizim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sosyal ve İlişkisel Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-26",
+        "questionText": "Saygısızım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sosyal ve İlişkisel Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-27",
+        "questionText": "Şımarığım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sosyal ve İlişkisel Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-28",
+        "questionText": "Uyumsuzum",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sosyal ve İlişkisel Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-29",
+        "questionText": "Mutlu değilim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sosyal ve İlişkisel Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-30",
+        "questionText": "Sevilen biriyim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sosyal ve İlişkisel Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-31",
+        "questionText": "Sakarım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sosyal ve İlişkisel Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-32",
+        "questionText": "Dürüstüm",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sosyal ve İlişkisel Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-33",
+        "questionText": "Paylaşımcıyım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sosyal ve İlişkisel Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-34",
+        "questionText": "Popülerim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sosyal ve İlişkisel Özellikler"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-35",
+        "questionText": "Her zaman hastayım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sağlık ve Spor"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-36",
+        "questionText": "Sportmenim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Sağlık ve Spor"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-37",
+        "questionText": "Talihsizim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Olumsuz Benlik Algısı"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-38",
+        "questionText": "Zavallının biriyim",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Olumsuz Benlik Algısı"
+      },
+      {
+        "id": "kime-gore-ben-neyim-2025-q-39",
+        "questionText": "Kararlıyım",
+        "questionType": "CHECKBOX",
+        "required": false,
+        "options": [
+          "Öğretmenlerime Göre",
+          "Anneme Göre",
+          "Babama Göre",
+          "Kardeşlerime Göre",
+          "Arkadaşlarıma Göre",
+          "Bana Göre"
+        ],
+        "category": "Pozitif Kişilik Özellikleri"
+      }
+    ]
+  }
+]

@@ -1,0 +1,1141 @@
+[
+  {
+    "template": {
+      "id": "coklu-zeka-2025",
+      "title": "Çoklu Zeka Envanteri",
+      "description": "Howard Gardner'ın Çoklu Zeka Kuramına dayanan, öğrencilerin ilgi ve yetenek alanlarını tespit etmek amacıyla hazırlanan kapsamlı envanter. Dilsel, matematiksel, mekansal, müzik, doğacı, kişilerarası, bedensel-kinestetik ve kişisel zeka olmak üzere 8 zeka türünü ölçen. MEB rehberlik hizmetlerine uygun yetenek belirleme aracı.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Çoklu Zeka",
+        "Gardner",
+        "Zeka Türleri",
+        "MEB",
+        "Potansiyel Keşfetme"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "coklu-zeka-2025-q-1",
+        "questionText": "Resimlerden çok yazılar dikkatimi çeker.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Dilsel Zeka (Linguistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-2",
+        "questionText": "İsimler, yerler, tarihler konusunda belleğim iyidir.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Dilsel Zeka (Linguistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-3",
+        "questionText": "Kitap okumayı severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Dilsel Zeka (Linguistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-4",
+        "questionText": "Düşüncelerimi kelimeleri doğru bir şekilde telaffuz ederek kolaylıkla ifade edebilirim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Dilsel Zeka (Linguistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-5",
+        "questionText": "Bilmecelerden, kelime oyunlarından hoşlanırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Dilsel Zeka (Linguistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-6",
+        "questionText": "Duyduğum ya da okuduklarımı kolaylıkla hatırlar ve dinleyerek daha iyi öğrenirim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Dilsel Zeka (Linguistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-7",
+        "questionText": "Yaşıma göre kelime hazinem iyidir.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Dilsel Zeka (Linguistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-8",
+        "questionText": "Yazı yazmaktan hoşlanırım ve yazı yazarken sözcükleri yerli yerinde kullanırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Dilsel Zeka (Linguistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-9",
+        "questionText": "Öğrendiğim yeni kelimeleri kullanmayı severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Dilsel Zeka (Linguistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-10",
+        "questionText": "Sözel tartışmalarda karşımdaki kişileri konuşmamla etkilerim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Dilsel Zeka (Linguistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-11",
+        "questionText": "Matematik ve fen derslerinden hoşlanırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mantıksal-Matematiksel Zeka (Logical-Mathematical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-12",
+        "questionText": "Matematik oyunlarından hoşlanırım ve aritmetik problemleri kafadan hesaplarım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mantıksal-Matematiksel Zeka (Logical-Mathematical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-13",
+        "questionText": "Bir sorunun çözümü için farklı alternatifler üretebilirim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mantıksal-Matematiksel Zeka (Logical-Mathematical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-14",
+        "questionText": "Satranç ve benzeri strateji oyunlarını severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mantıksal-Matematiksel Zeka (Logical-Mathematical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-15",
+        "questionText": "Mantık bulmacalarını, beyin jimnastiğini severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mantıksal-Matematiksel Zeka (Logical-Mathematical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-16",
+        "questionText": "Matematiğe dayalı bilgisayar oyunlarını severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mantıksal-Matematiksel Zeka (Logical-Mathematical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-17",
+        "questionText": "Deneylerden, yeni denemeler yapmaktan hoşlanırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mantıksal-Matematiksel Zeka (Logical-Mathematical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-18",
+        "questionText": "Arkadaşlarıma oranla daha soyut düşünebilirim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mantıksal-Matematiksel Zeka (Logical-Mathematical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-19",
+        "questionText": "Bir aracın, bir makinenin çalışma sistemini kolaylıkla kavrarım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mantıksal-Matematiksel Zeka (Logical-Mathematical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-20",
+        "questionText": "Sebep - sonuç ilişkilerini kurmaktan zevk alırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mantıksal-Matematiksel Zeka (Logical-Mathematical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-21",
+        "questionText": "Renklere karşı çok duyarlıyımdır.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mekansal Zeka (Spatial Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-22",
+        "questionText": "Çizelge, tablo ya da harita türü materyalleri daha kolay algılarım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mekansal Zeka (Spatial Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-23",
+        "questionText": "Arkadaşlarıma oranla daha fazla hayal kurarım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mekansal Zeka (Spatial Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-24",
+        "questionText": "Resim yapmayı ve boyamayı çok severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mekansal Zeka (Spatial Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-25",
+        "questionText": "Yap-boz, lego gibi oyunlardan hoşlanırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mekansal Zeka (Spatial Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-26",
+        "questionText": "Daha önce gittiğim yerleri kolayca hatırlarım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mekansal Zeka (Spatial Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-27",
+        "questionText": "Bulmaca çözmekten hoşlanırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mekansal Zeka (Spatial Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-28",
+        "questionText": "Rüyalarımı çok net ve ayrıntılarıyla hatırlarım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mekansal Zeka (Spatial Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-29",
+        "questionText": "Resimli kitapları daha çok severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mekansal Zeka (Spatial Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-30",
+        "questionText": "Çalışırken karalamalar yapar, kitaplarıma, defterlerime çizgiler çizer, notlar alırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Mekansal Zeka (Spatial Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-31",
+        "questionText": "Şarkıların melodilerini rahatlıkla hatırlarım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Müzik Zekası (Musical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-32",
+        "questionText": "Güzel şarkı söyler, kendimce basit besteler oluştururum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Müzik Zekası (Musical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-33",
+        "questionText": "Müzik aleti çalar ya da çalmayı çok isterim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Müzik Zekası (Musical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-34",
+        "questionText": "Müzik dersini çok severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Müzik Zekası (Musical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-35",
+        "questionText": "Ritmik konuşur ya da hareket ederim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Müzik Zekası (Musical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-36",
+        "questionText": "Farkında olmadan mırıldanırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Müzik Zekası (Musical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-37",
+        "questionText": "Çalışırken veya bir konu üzerinde düşünürken elimle ya da ayağımla ritim tutarım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Müzik Zekası (Musical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-38",
+        "questionText": "Çevredeki sesler çok dikkatimi çeker ve bu sesleri kolaylıkla taklit edebilirim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Müzik Zekası (Musical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-39",
+        "questionText": "Çalışırken veya yorgun olduğumda müzik dinlemek çok hoşuma gider.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Müzik Zekası (Musical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-40",
+        "questionText": "Müzikle uğraşmayı ve öğrendiğim şarkıları paylaşmayı severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Müzik Zekası (Musical Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-41",
+        "questionText": "Hayvanlara karşı çok meraklıyımdır.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Doğacı Zeka (Naturalistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-42",
+        "questionText": "Doğa konusunda çevremdekileri bilinçlendirmeye çalışırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Doğacı Zeka (Naturalistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-43",
+        "questionText": "Evde hayvan besler ya da beslemeyi çok severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Doğacı Zeka (Naturalistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-44",
+        "questionText": "Bahçede toprakla, bitkilerle oynamayı çok severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Doğacı Zeka (Naturalistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-45",
+        "questionText": "Farklı bitkileri incelemeyi ve yetiştirmeyi severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Doğacı Zeka (Naturalistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-46",
+        "questionText": "Çevre kirliliğine karşı duyarlı davranırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Doğacı Zeka (Naturalistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-47",
+        "questionText": "Doğayla, bitkilerle ya da hayvanlarla ilgili belgesellere ilgi duyarım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Doğacı Zeka (Naturalistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-48",
+        "questionText": "Mevsimlerle ve iklim olaylarıyla çok ilgilenirim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Doğacı Zeka (Naturalistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-49",
+        "questionText": "Değişik meyve ve sebzelere karşı ilgiliyimdir.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Doğacı Zeka (Naturalistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-50",
+        "questionText": "Doğa olaylarıyla ilgilenir ve doğal yaşamı korumak için elimden geleni yaparım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Doğacı Zeka (Naturalistic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-51",
+        "questionText": "Arkadaşlarımla oyun oynamaktan, grupla yapılan farklı organizasyonlarda yer almaktan hoşlanırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişilerarası Zeka (Interpersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-52",
+        "questionText": "Çevremde bir lider olarak görülürüm.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişilerarası Zeka (Interpersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-53",
+        "questionText": "Problemi olan arkadaşlarıma öğütler veririm.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişilerarası Zeka (Interpersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-54",
+        "questionText": "Arkadaşlarım fikirlerime değer verir.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişilerarası Zeka (Interpersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-55",
+        "questionText": "Organizasyonların vazgeçilmez elamanıyımdır.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişilerarası Zeka (Interpersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-56",
+        "questionText": "Yeni insanlarla tanışmak için girişimlerde bulunmaktan, onlara bir şeyler anlatmaktan çok hoşlanırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişilerarası Zeka (Interpersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-57",
+        "questionText": "Arkadaşlarımla yakın ilişkiler kurar ve onları sık sık ararım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişilerarası Zeka (Interpersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-58",
+        "questionText": "Arkadaşlarımın sorunlarına yardımcı olmaktan hoşlanırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişilerarası Zeka (Interpersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-59",
+        "questionText": "Çevremdekiler benimle arkadaşlık kurmak ister.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişilerarası Zeka (Interpersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-60",
+        "questionText": "İnsanlara selam verir, hatırlarını sorarım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişilerarası Zeka (Interpersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-61",
+        "questionText": "Spor yaptığımda zihinsel olarak rahatladığımı hissederim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Bedensel-Kinestetik Zeka (Bodily-Kinesthetic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-62",
+        "questionText": "Oturduğum yerde duramam, kımıldanırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Bedensel-Kinestetik Zeka (Bodily-Kinesthetic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-63",
+        "questionText": "Düşüncelerimi mimik-davranışlarla rahat ifade ederim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Bedensel-Kinestetik Zeka (Bodily-Kinesthetic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-64",
+        "questionText": "Bir şeyi okumak, oturup düşünmek yerine, hareket ederek, yaparak öğrenmeyi severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Bedensel-Kinestetik Zeka (Bodily-Kinesthetic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-65",
+        "questionText": "Merak ettiğim şeyleri elime alarak incelemek isterim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Bedensel-Kinestetik Zeka (Bodily-Kinesthetic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-66",
+        "questionText": "Boş vakitlerimi dışarıda geçirmek isterim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Bedensel-Kinestetik Zeka (Bodily-Kinesthetic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-67",
+        "questionText": "Arkadaşlarımla fiziksel oyunlar oynamayı severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Bedensel-Kinestetik Zeka (Bodily-Kinesthetic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-68",
+        "questionText": "El becerilerim gelişmiştir.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Bedensel-Kinestetik Zeka (Bodily-Kinesthetic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-69",
+        "questionText": "Sorunlarımı ya da bir sözcüğü anlatırken vücut hareketlerini ve beden dilini rahatlıkla kullanabilirim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Bedensel-Kinestetik Zeka (Bodily-Kinesthetic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-70",
+        "questionText": "Dokunduğumu, etkileşimde bulunduğumu ve incelediğimi daha kolay öğrenirim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Bedensel-Kinestetik Zeka (Bodily-Kinesthetic Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-71",
+        "questionText": "Bağımsızca düşünmeyi ve bağımsız davranmayı severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişisel Zeka (Intrapersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-72",
+        "questionText": "Güçlü ve zayıf yanlarımı bilirim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişisel Zeka (Intrapersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-73",
+        "questionText": "Tek başıma zaman geçirmekten keyif alır, bu nedenle de yalnız çalışmayı daha çok severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişisel Zeka (Intrapersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-74",
+        "questionText": "Çoğunlukla yalnız olmayı severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişisel Zeka (Intrapersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-75",
+        "questionText": "Yaptığım işleri arkadaşlarımla paylaşmayı severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişisel Zeka (Intrapersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-76",
+        "questionText": "Yaptığım işlerin bilincindeyimdir.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişisel Zeka (Intrapersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-77",
+        "questionText": "Pek kimseye akıl danışmam, fikirlerimi ve olayları kendim analiz ederim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişisel Zeka (Intrapersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-78",
+        "questionText": "Kendime saygım yüksektir.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişisel Zeka (Intrapersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-79",
+        "questionText": "Yoğun olarak uğraştığım bir ilgi alanım ve hobim vardır.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişisel Zeka (Intrapersonal Intelligence)"
+      },
+      {
+        "id": "coklu-zeka-2025-q-80",
+        "questionText": "Yardım istemeden kendi başıma problemleri çözmeyi, ürünler ortaya koymayı severim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiç Uygun Değil",
+          "Çok Az Uygun",
+          "Kısmen Uygun",
+          "Oldukça Uygun",
+          "Tamamen Uygun"
+        ],
+        "category": "Kişisel Zeka (Intrapersonal Intelligence)"
+      }
+    ]
+  }
+]

@@ -1,0 +1,406 @@
+[
+  {
+    "template": {
+      "id": "sinif-risk-haritasi-2025",
+      "title": "Sınıf Risk Haritası",
+      "description": "Öğrencilerin risk faktörlerini değerlendirmek için kullanılan kapsamlı risk haritası anketi. MEB Özel Eğitim ve Rehberlik Hizmetleri Genel Müdürlüğü formatına uygun.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Risk Değerlendirme",
+        "Rehberlik",
+        "MEB",
+        "Öğrenci Takip",
+        "Koruma"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "sinif-risk-haritasi-2025-q-1",
+        "questionText": "Anne en fazla ilkokul mezunu",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Eğitim Durumu"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-2",
+        "questionText": "Baba en fazla ilkokul mezunu",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Eğitim Durumu"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-3",
+        "questionText": "Tek çocuk olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kardeş Durumu"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-4",
+        "questionText": "5 ve üstü kardeşi olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kardeş Durumu"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-5",
+        "questionText": "Anne ve babası ayrı yaşayan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-6",
+        "questionText": "Anne ve babası boşanmış olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-7",
+        "questionText": "Yalnızca annesi ile yaşayan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-8",
+        "questionText": "Yalnızca babası ile yaşayan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-9",
+        "questionText": "Annesi hayatta olmayan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-10",
+        "questionText": "Babası hayatta olmayan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-11",
+        "questionText": "Anne ve babası hayatta olmayan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-12",
+        "questionText": "Şehit Çocuğu",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-13",
+        "questionText": "Yalnızca büyükanne/büyükbabasıyla yaşayan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Bakım ve Yerleşim"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-14",
+        "questionText": "Yalnızca diğer akrabalarıyla yaşayan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Bakım ve Yerleşim"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-15",
+        "questionText": "Koruyucu aile gözetiminde olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Bakım ve Yerleşim"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-16",
+        "questionText": "Sevgi Evlerinde kalan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Bakım ve Yerleşim"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-17",
+        "questionText": "Sosyal Hizmetler Çocuk Esirgeme Kurumunda kalan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Bakım ve Yerleşim"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-18",
+        "questionText": "Ailesinde süreğen hastalığı olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Ailede Sağlık Sorunları"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-19",
+        "questionText": "Ailesinde ruhsal hastalığı olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Ailede Sağlık Sorunları"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-20",
+        "questionText": "Ailesinde bağımlı bireyler bulunan (alkol/madde)",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Ailede Sağlık Sorunları"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-21",
+        "questionText": "Ailesinde cezai hükmü bulunan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Hukuki ve Sosyal Durumu"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-22",
+        "questionText": "Ailesi mevsimlik işçi olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Hukuki ve Sosyal Durumu"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-23",
+        "questionText": "Aile içi şiddete maruz kalan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Hukuki ve Sosyal Durumu"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-24",
+        "questionText": "Özel yetenekli tanısı olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğrenci Özel Durumları"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-25",
+        "questionText": "Yetersizlik alanında özel eğitim raporu olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğrenci Özel Durumları"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-26",
+        "questionText": "Süreğen hastalığı olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğrenci Sağlık Durumu"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-27",
+        "questionText": "Ruhsal hastalığı olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğrenci Sağlık Durumu"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-28",
+        "questionText": "Danışmanlık tedbir kararı olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Yasal Tedbirler"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-29",
+        "questionText": "Eğitim tedbir kararı olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Yasal Tedbirler"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-30",
+        "questionText": "Maddi sıkıntı yaşayan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyo-Ekonomik ve Akademik Durum"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-31",
+        "questionText": "Sürekli devamsız olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyo-Ekonomik ve Akademik Durum"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-32",
+        "questionText": "Bir işte çalışan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyo-Ekonomik ve Akademik Durum"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-33",
+        "questionText": "Akademik başarısı düşük",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyo-Ekonomik ve Akademik Durum"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-34",
+        "questionText": "Riskli akran grubuna dahil olan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyo-Ekonomik ve Akademik Durum"
+      },
+      {
+        "id": "sinif-risk-haritasi-2025-q-35",
+        "questionText": "Diğer (açıklama gerektirir)",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Diğer"
+      }
+    ]
+  }
+]

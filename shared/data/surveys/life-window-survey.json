@@ -1,0 +1,549 @@
+[
+  {
+    "template": {
+      "id": "yasam-pencerem-2025",
+      "title": "Yaşam Pencerem",
+      "description": "Öğrencilerin kişisel, ailesel, sosyal ve eğitimsel yaşamlarına ilişkin zorlukları ve destekleme alanlarını belirlemek için kullanılan kapsamlı rehberlik anketi. MEB Özel Eğitim ve Rehberlik Hizmetleri Genel Müdürlüğü formatına uygun.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Rehberlik",
+        "MEB",
+        "Yaşam Zorlukları",
+        "Öğrenci Takip",
+        "Destekleme"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "yasam-pencerem-2025-q-1",
+        "questionText": "Sürekli devam eden bir hastalığım var",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sağlık Sorunları"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-2",
+        "questionText": "Ailem benim bir üst öğrenime devam etmemi istemiyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile ve Eğitim"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-3",
+        "questionText": "Ailemin benden beklentisi çok yüksek",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile ve Eğitim"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-4",
+        "questionText": "Aile ortamımızda sık sık tartışma olur",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile ve Eğitim"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-5",
+        "questionText": "Ailemden ayrı yaşıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile ve Eğitim"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-6",
+        "questionText": "Ailemi bana ve ihtiyaçlarıma (maddi, manevi) karşı ilgisiz buluyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile ve Eğitim"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-7",
+        "questionText": "Ailemiz içerisinde belli kurallar yoktur",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile ve Eğitim"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-8",
+        "questionText": "Ailemde zararlı alışkanlıkları olan birey/bireyler var",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile ve Eğitim"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-9",
+        "questionText": "Deprem/yangın/sel/savaş/trafik kazası vb. durumlarından en az birini yaşadım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Travma ve Kriz Yaşantıları"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-10",
+        "questionText": "Sevdiğim bir yakınımı kaybettiğim için çok üzgünüm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Travma ve Kriz Yaşantıları"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-11",
+        "questionText": "Ailemden biri/birileri şehit/gazi oldu",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Travma ve Kriz Yaşantıları"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-12",
+        "questionText": "Değerlerimi/inançlarımı yaşayabileceğim ortam sağlanmıyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İnanç ve Değerler"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-13",
+        "questionText": "Daha önce yaşamadığım bazı korkularım var",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Duygusal Zorluklar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-14",
+        "questionText": "Öfkemi kontrol edemiyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Duygusal Zorluklar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-15",
+        "questionText": "Çoğu zaman kimseyle konuşmak/görüşmek istemiyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Duygusal Zorluklar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-16",
+        "questionText": "Hayatı yaşamaya değer bulmuyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Duygusal Zorluklar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-17",
+        "questionText": "Kendime hiç güvenim yok",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Duygusal Zorluklar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-18",
+        "questionText": "Yaşamım üzerinde hiç kontrolüm yok",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Duygusal Zorluklar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-19",
+        "questionText": "Fazla heyecanlanıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Duygusal Zorluklar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-20",
+        "questionText": "Arkadaşlarımdan bazıları bağımlılık yapıcı madde kullanıyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal İlişkiler ve Akran Grupları"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-21",
+        "questionText": "Arkadaşlık kurmakta zorlanıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal İlişkiler ve Akran Grupları"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-22",
+        "questionText": "Fiziksel güce ihtiyacım olduğunda beni destekleyecek bir grubun üyesiyim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal İlişkiler ve Akran Grupları"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-23",
+        "questionText": "Farklı tercihlerimden dolayı çevrim tarafından dışlanıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal İlişkiler ve Akran Grupları"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-24",
+        "questionText": "Teknoloji ile (cep telefonu, tablet, internet vs.) çok vakit geçiriyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknoloji Kullanımı"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-25",
+        "questionText": "Ailem teknoloji ile (cep telefonu, tablet, internet vs.) çok vakit geçiriyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Teknoloji Kullanımı"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-26",
+        "questionText": "Temel ihtiyaçlarımızı karşılayacak maddi olanaklardan yoksunum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Maddi Sıkıntılar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-27",
+        "questionText": "Ailemin geçimini sağlamak için bir işte çalışıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Maddi Sıkıntılar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-28",
+        "questionText": "Çevremdeki insanlar tarafından istemediğim söz ve hareketlere maruz kalıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Şiddet ve Taciz"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-29",
+        "questionText": "Hoşlanmadığım davranışlara zorlanıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Şiddet ve Taciz"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-30",
+        "questionText": "Fiziksel görünüşümden rahatsızım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öz Imaj ve Kabul"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-31",
+        "questionText": "Kendimi belirli bir alanda çok yetenekli buluyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öz Imaj ve Kabul"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-32",
+        "questionText": "Kendimi herhangi bir alanda yetenekli bulmuyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öz Imaj ve Kabul"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-33",
+        "questionText": "İstesem de derslerimde başarılı olamıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Akademik Durumlar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-34",
+        "questionText": "Annem/babam okuma yazma bilmiyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Akademik Durumlar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-35",
+        "questionText": "Başkaları ile kıyaslanıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Akademik Durumlar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-36",
+        "questionText": "Dersler ilgi çekici hale getirilmiyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Akademik Durumlar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-37",
+        "questionText": "Okulu bitirdikten sonra ne yapmak istediğimi bilmiyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Akademik Durumlar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-38",
+        "questionText": "Okulu sevmiyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Akademik Durumlar"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-39",
+        "questionText": "Okulda problemlerimizle fazla ilgilenilmiyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve İlişkiler"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-40",
+        "questionText": "Okulda kendimi güvende hissetmiyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve İlişkiler"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-41",
+        "questionText": "Okuldaki disiplin anlayışından rahatsızım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve İlişkiler"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-42",
+        "questionText": "Okulda yeteri kadar sosyal etkinlik düzenlenmiyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve İlişkiler"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-43",
+        "questionText": "Okulda alınan kararlarda öğrencilerin görüşü alınmıyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve İlişkiler"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-44",
+        "questionText": "Öğrenci sorunları öğrencilerle çözülmek yerine önce ailelere aktarılıyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve İlişkiler"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-45",
+        "questionText": "Öğrenciler arasında ayrım yapılıyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve İlişkiler"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-46",
+        "questionText": "Okula uyum sağlayamadım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve İlişkiler"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-47",
+        "questionText": "Okul yeterince temiz değil",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve İlişkiler"
+      },
+      {
+        "id": "yasam-pencerem-2025-q-48",
+        "questionText": "Okul dışında kaliteli vakit geçireceğim aktiviteler yapacak fırsatım yok",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Dışı Fırsatlar"
+      }
+    ]
+  }
+]

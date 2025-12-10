@@ -1,0 +1,585 @@
+[
+  {
+    "template": {
+      "id": "verimli-ders-calisma-2025",
+      "title": "Verimli Ders Çalışma Kontrol Listesi",
+      "description": "Öğrencilerin verimli ders çalışma yöntem ve tekniklerini değerlendirmek ve özgün bir çalışma yöntemi geliştirebilmeleri amacıyla hazırlanan anketi. Zaman yönetimi, planlama, çalışma teknikleri, çalışma ortamı ve derste katılım gibi faktörleri kapsamlı şekilde değerlendiren. MEB Özel Eğitim ve Rehberlik Hizmetleri Genel Müdürlüğü formatına uygun.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Ders Çalışma",
+        "Zaman Yönetimi",
+        "Rehberlik",
+        "MEB",
+        "Akademik Beceriler"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "verimli-ders-calisma-2025-q-1",
+        "questionText": "Zamanı verimli kullanmak için kısa, orta ve uzun dönemli hedefler belirlerim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Hedef Belirleme ve Zaman Yönetimi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-2",
+        "questionText": "Belirlediğim hedeflerimi her zaman göreceğim bir yere koyarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Hedef Belirleme ve Zaman Yönetimi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-3",
+        "questionText": "Hedeflerim arasında öncelik sırası belirlerim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Hedef Belirleme ve Zaman Yönetimi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-4",
+        "questionText": "Hedeflerimi gerçekleştirmek üzere her gün belirli bir zaman ayırır ve ayırdığım bu zamana uyarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Hedef Belirleme ve Zaman Yönetimi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-5",
+        "questionText": "Başarılı olmak için enerjimi okul ile ilgili hedeflerim doğrultusunda kullanırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Hedef Belirleme ve Zaman Yönetimi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-6",
+        "questionText": "Çalışma planı yaparken nasıl, ne zaman ve nerede çalışacağıma karar veririm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Planlaması"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-7",
+        "questionText": "Çalışma planımda her ders ya da konuya ayrılacak süreyi kendi öğrenme hızıma göre planlarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Planlaması"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-8",
+        "questionText": "Aynı anda birden fazla iş yapmak yerine bunlardan birini seçer ve ona odaklanırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Planlaması"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-9",
+        "questionText": "Ders çalışırken belirli aralıklarla mola veririm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Planlaması"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-10",
+        "questionText": "Çalışma planımda derslerimi aksatmayacak şekilde sosyal ve kültürel faaliyetlere yer veririm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Planlaması"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-11",
+        "questionText": "Çalışma planımda okula, dinlenmeye, ev ile ilgili sorumluluklarıma ve uykuya ayırdığım süreyi belirtirim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Planlaması"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-12",
+        "questionText": "Çalışma saatlerimi kendimi dinlenmiş hissettiğim zamanlara göre planlarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Enerji ve Motivasyon Yönetimi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-13",
+        "questionText": "Verimsiz geçirdiğim zamanların farkına varırım ve gerekli önlemleri alırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Enerji ve Motivasyon Yönetimi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-14",
+        "questionText": "Teknolojik aletlere (TV, bilgisayar, telefon vb.) ayırdığım zamanı kısıtlarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Enerji ve Motivasyon Yönetimi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-15",
+        "questionText": "Uzun konuları küçük parçalara bölerek çalışırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Ders Çalışma Teknikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-16",
+        "questionText": "Hatırlamayı kolaylaştırmak için şekil (şema, grafik, tablo) çizerek çalışırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Ders Çalışma Teknikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-17",
+        "questionText": "Çalışmayı bitirmeden önce notlarımı hızlıca gözden geçiririm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Ders Çalışma Teknikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-18",
+        "questionText": "Öğrendiklerimi, uyumadan önce ve sabah kalkınca hızlı bir şekilde gözden geçiririm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Ders Çalışma Teknikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-19",
+        "questionText": "Öğrendiklerimi ihtiyaç duyduğumda günlük hayatta kullanırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Ders Çalışma Teknikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-20",
+        "questionText": "Çalışma masamın yüksekliği boyuma uygundur",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Düzenlemesi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-21",
+        "questionText": "Çalışma masamı yalnızca ders çalışmak için kullanırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Düzenlemesi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-22",
+        "questionText": "Çalışmaya başlamadan önce gerekli araç gereçleri hazır bulundururum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Düzenlemesi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-23",
+        "questionText": "Sürekli aynı yerde ders çalışırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Düzenlemesi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-24",
+        "questionText": "Her zaman masa veya sehpada ve oturarak çalışırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Düzenlemesi"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-25",
+        "questionText": "Çalışma ortamımın sessiz sakin olmasına dikkat ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Özellikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-26",
+        "questionText": "Çalışma ortamımın düzenli ve sade olmasına dikkat ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Özellikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-27",
+        "questionText": "Çalışma masamda, öğreneceğim konu dışındaki materyalleri kaldırırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Özellikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-28",
+        "questionText": "Ders çalışırken aynı zamanda başka bir işle (TV izlemek, müzik dinlemek, telefonla konuşmak vb.) uğraşmamaya dikkat ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Özellikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-29",
+        "questionText": "Çalışma ortamıma dersle ilgili hatırlatıcı notlar asarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Özellikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-30",
+        "questionText": "Çalışma ortamımda dikkatimi dağıtan afiş, poster vb. bulundurmam",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Özellikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-31",
+        "questionText": "Çalışma ortamım ne çok sıcak ne çok soğuktur",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Özellikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-32",
+        "questionText": "Çalışma ortamımı düzenli olarak havalandırırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Çalışma Ortamı Özellikleri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-33",
+        "questionText": "Hayal kurduğumu fark ettiğimde ders çalışmaya ara veririm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Dikkat ve Odaklanma"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-34",
+        "questionText": "Hayal kurmayı dinlenme aralarında kendime ödül olarak veririm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Dikkat ve Odaklanma"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-35",
+        "questionText": "Ders çalışmaya başlamadan önce çalışacağım konunun ana ve alt başlıklarını, ilk ve son paragraflarını gözden geçiririm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Okuma ve Anlama Stratejileri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-36",
+        "questionText": "Çalışacağım konu ile ilgili olarak ayrıntılı sorular hazırlarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Okuma ve Anlama Stratejileri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-37",
+        "questionText": "Hazırladığım soruların cevabını bulmak için tekrar tekrar okurum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Okuma ve Anlama Stratejileri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-38",
+        "questionText": "Hazırladığım soruları kendi kendime anlatarak cevaplarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Okuma ve Anlama Stratejileri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-39",
+        "questionText": "Öğrendiklerimi unutmamak için günlük, haftalık, aylık tekrar yaparım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Okuma ve Anlama Stratejileri"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-40",
+        "questionText": "Dinlerken hangi konunun önemli olduğunu ayırt ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Derste Dikkat ve Katılım"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-41",
+        "questionText": "Her konuya ait ana fikirleri anlamaya çalışırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Derste Dikkat ve Katılım"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-42",
+        "questionText": "Öğretmenin özellikle üzerinde durduğu noktalara dikkat ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Derste Dikkat ve Katılım"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-43",
+        "questionText": "Anlamadığım konularda soru sorarak, eksik bulduğum yerleri tamamlayarak derse katılırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Derste Dikkat ve Katılım"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-44",
+        "questionText": "Dinlediğim konuyu ayrıntılı öğrenmek için başka kaynaklardan (kitap, internet vb.) yararlanırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Derste Dikkat ve Katılım"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-45",
+        "questionText": "Derste not tutarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Ders Hazırlığı ve Not Tutma"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-46",
+        "questionText": "O gün işlenecek konuları okuyarak derse gelirim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Ders Hazırlığı ve Not Tutma"
+      },
+      {
+        "id": "verimli-ders-calisma-2025-q-47",
+        "questionText": "İşlenecek konular ile ilgili anlamadığım noktaları derste öğretmene sorarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Kısmen",
+          "Evet"
+        ],
+        "category": "Ders Hazırlığı ve Not Tutma"
+      }
+    ]
+  }
+]

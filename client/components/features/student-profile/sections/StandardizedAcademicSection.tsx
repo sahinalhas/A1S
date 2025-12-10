@@ -8,22 +8,24 @@ import { Slider } from "@/components/atoms/Slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/atoms/Select";
 import { Textarea } from "@/components/atoms/Textarea";
 import { Button } from "@/components/atoms/Button";
-import { 
-  GraduationCap, 
-  TrendingUp, 
-  Target, 
-  BookOpen, 
-  Brain, 
+import {
+  GraduationCap,
+  TrendingUp,
+  Target,
+  BookOpen,
+  Brain,
   Sparkles,
   Check,
   Save,
   Loader2
 } from "lucide-react";
-import { 
-  ACADEMIC_SUBJECTS, 
+import TAXONOMY from "@shared/data/student-profile-taxonomy.json";
+
+const {
+  ACADEMIC_SUBJECTS,
   ACADEMIC_SKILLS,
-  LEARNING_STYLES 
-} from "@shared/constants/student-profile-taxonomy";
+  LEARNING_STYLES
+} = TAXONOMY;
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useFormDirty } from "@/pages/StudentProfile/StudentProfile";
@@ -87,14 +89,14 @@ interface ChipSelectorProps<T extends { value: string; label: string; category: 
   type: 'strong' | 'weak';
 }
 
-function ChipSelector<T extends { value: string; label: string; category: string }>({ 
-  items, 
-  selectedValues, 
+function ChipSelector<T extends { value: string; label: string; category: string }>({
+  items,
+  selectedValues,
   onChange,
-  type 
+  type
 }: ChipSelectorProps<T>) {
   const grouped = groupByCategory(items);
-  
+
   const toggleItem = (value: string) => {
     if (selectedValues.includes(value)) {
       onChange(selectedValues.filter(v => v !== value));
@@ -127,7 +129,7 @@ function ChipSelector<T extends { value: string; label: string; category: string
                   )}
                 >
                   {isSelected && (
-                    type === 'strong' 
+                    type === 'strong'
                       ? <Check className="h-3.5 w-3.5" />
                       : <Target className="h-3.5 w-3.5" />
                   )}
@@ -142,9 +144,9 @@ function ChipSelector<T extends { value: string; label: string; category: string
   );
 }
 
-export default function StandardizedAcademicSection({ 
-  studentId, 
-  onUpdate 
+export default function StandardizedAcademicSection({
+  studentId,
+  onUpdate
 }: StandardizedAcademicSectionProps) {
   const { setIsDirty, registerFormSubmit, unregisterFormSubmit } = useFormDirty();
   const componentId = useMemo(() => crypto.randomUUID(), []);
@@ -183,7 +185,7 @@ export default function StandardizedAcademicSection({
         }
       });
       console.log("Load response status:", response.status);
-      
+
       if (response.ok) {
         const data = await response.json();
         console.log("Loaded data:", data);
@@ -262,7 +264,7 @@ export default function StandardizedAcademicSection({
 
       const response = await fetch(`/api/standardized-profile/standardized/${studentId}/academic`, {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'X-School-Id': schoolId || ''
         },
@@ -723,7 +725,7 @@ export default function StandardizedAcademicSection({
           <div className="sticky bottom-4 z-10">
             <Card className="shadow-xl border-2 border-primary/20 bg-background/95 backdrop-blur">
               <CardContent className="py-4">
-                <Button 
+                <Button
                   type="submit"
                   disabled={isSubmitting}
                   className="w-full h-12 text-lg font-semibold bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700"

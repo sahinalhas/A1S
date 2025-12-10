@@ -1,0 +1,626 @@
+[
+  {
+    "template": {
+      "id": "basarisizlik-nedenleri-2025",
+      "title": "Başarısızlık Nedenleri Anketi",
+      "description": "Öğrencilerin bazı derslerden neden başarısız olduğunu, akademik performans engelleri ve destek ihtiyaçlarını tespit etmek için kullanılan anketi. MEB Özel Eğitim ve Rehberlik Hizmetleri Genel Müdürlüğü formatına uygun.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Başarısızlık Analizi",
+        "Rehberlik",
+        "MEB",
+        "Akademik Destek",
+        "Sorun Tanımlama"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "basarisizlik-nedenleri-2025-q-1",
+        "questionText": "Bazı öğretmenlerimizin anlattıklarını anlayamıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğretmen ve Ders İlişkisi"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-2",
+        "questionText": "Öğretmenlerin anlattıkları kitaptakinin aynısı olduğundan dersi dinlemiyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğretmen ve Ders İlişkisi"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-3",
+        "questionText": "Öğretmenlerimle anlaşamadığım için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğretmen ve Ders İlişkisi"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-4",
+        "questionText": "Öğretmenler konuları yeterli şekilde öğretemediklerinden dolayı başarısızım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğretmen ve Ders İlişkisi"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-5",
+        "questionText": "Bazı öğretmenlerin tavırları beni dersten soğutuyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğretmen ve Ders İlişkisi"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-6",
+        "questionText": "Okul idaresi öğrenci problemleri ile ilgilenmediği için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve Sınıf Yapısı"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-7",
+        "questionText": "Okul ortamından dolayı",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve Sınıf Yapısı"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-8",
+        "questionText": "Sınıfımız çok kalabalık, öğretmenler bizimle fazla ilgilenemiyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve Sınıf Yapısı"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-9",
+        "questionText": "Tahtayı iyi göremiyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve Sınıf Yapısı"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-10",
+        "questionText": "Bazı arkadaşlar sınıfın huzurunu bozuyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve Sınıf Yapısı"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-11",
+        "questionText": "Okulu sevmiyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Okul Ortamı ve Sınıf Yapısı"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-12",
+        "questionText": "Derslerimizin fazlalığından dolayı başarısız oluyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Ders Yönetimi ve Ödev"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-13",
+        "questionText": "Ağır öğrenilen dersler hep aynı günlerde, zihinsel olarak yoruluyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Ders Yönetimi ve Ödev"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-14",
+        "questionText": "Yazılılarda çok konudan sorumlu tutuluyoruz",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Ders Yönetimi ve Ödev"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-15",
+        "questionText": "Derslerimizde uygulama yapamadığımız için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Ders Yönetimi ve Ödev"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-16",
+        "questionText": "Ödev çok veriliyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Ders Yönetimi ve Ödev"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-17",
+        "questionText": "Evde ders çalışma ortamım yok",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Evde Ders Çalışma Ortamı"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-18",
+        "questionText": "Derslerde not tutmuyorum, çalışırken özet çıkarmıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Evde Ders Çalışma Ortamı"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-19",
+        "questionText": "Ailemin benden üstün başarı beklemesi beni korkutuyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Baskısı ve Beklentileri"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-20",
+        "questionText": "Ailem bana her gün okulla ilgili sıkıcı sorular soruyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Baskısı ve Beklentileri"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-21",
+        "questionText": "Ailem başarısız olduğumda beni cezalandırıyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Baskısı ve Beklentileri"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-22",
+        "questionText": "Ailemin ilgisini çekmek için bilerek başarısız oluyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Baskısı ve Beklentileri"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-23",
+        "questionText": "Ailem beni dinlemiyor, fikirlerime önem vermiyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Baskısı ve Beklentileri"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-24",
+        "questionText": "Ailemdeki ekonomik problemlerden dolayı",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Ekonomik Problemler"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-25",
+        "questionText": "Okul dışındaki saatlerde çalıştığımdan dolayı",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Ekonomik Problemler"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-26",
+        "questionText": "Yeterince uyuyamadığım için, derslerde uyukladığımı hissediyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sağlık Sorunları"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-27",
+        "questionText": "Yeterli beslenemediğim için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sağlık Sorunları"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-28",
+        "questionText": "Gözlerimde bozukluk var",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sağlık Sorunları"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-29",
+        "questionText": "Kulaklarımdan rahatsızım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sağlık Sorunları"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-30",
+        "questionText": "Annem-babam olmadığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı Sorunları"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-31",
+        "questionText": "Ailemden ayrı olduğum için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı Sorunları"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-32",
+        "questionText": "Ailemde kardeşler arasında ayrım yapıldığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı Sorunları"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-33",
+        "questionText": "Ailemde öz-üvey ayrımı yapıldığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı Sorunları"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-34",
+        "questionText": "Ailemden yeterli ilgi ve desteği göremediğim için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile Yapısı Sorunları"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-35",
+        "questionText": "Ailemdeki huzursuzluktan dolayı",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile İçi Huzursuzluk"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-36",
+        "questionText": "Babamın kötü alışkanlıklarından dolayı yaşadığı problemleri bana yansıttığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile İçi Huzursuzluk"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-37",
+        "questionText": "Ailemdeki uzun süreli hastalıklardan dolayı",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Aile İçi Huzursuzluk"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-38",
+        "questionText": "Yazılı sınavlarda unuttuğumdan dolayı",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Akademik Kaygı ve Özgüven"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-39",
+        "questionText": "Yazılı sınavlarda heyecanlandığımdan dolayı",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Akademik Kaygı ve Özgüven"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-40",
+        "questionText": "Sözlü anlatımlarda heyecanlandığımdan dolayı",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Akademik Kaygı ve Özgüven"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-41",
+        "questionText": "Bazı dersleri başaramayacağım kaygısı içindeyim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Akademik Kaygı ve Özgüven"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-42",
+        "questionText": "Sınıfta doğru cevabı bilsem bile sorulara cevap vermekten çekiniyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Akademik Kaygı ve Özgüven"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-43",
+        "questionText": "Okulun sonunda bir meslek sahibi olabileceğimi düşünmüyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Akademik Kaygı ve Özgüven"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-44",
+        "questionText": "Çok çabuk dikkatim dağıldığından",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Dikkat ve Hafıza Sorunları"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-45",
+        "questionText": "Okuduklarımı çabuk unutuyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Dikkat ve Hafıza Sorunları"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-46",
+        "questionText": "Ders sırasında sık sık hayal kuruyor ve derslerden uzaklaşıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Dikkat ve Hafıza Sorunları"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-47",
+        "questionText": "Okuduklarımı anlayamadığımdan",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğrenme Yöntem ve Motivasyonu"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-48",
+        "questionText": "Bize öğretilenlerin gereksiz olduğuna inandığım için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğrenme Yöntem ve Motivasyonu"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-49",
+        "questionText": "Ders dışı faaliyetleri (Spor, TV, vs.) derse tercih ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğrenme Yöntem ve Motivasyonu"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-50",
+        "questionText": "Derslerime günü gününe çalışmadığım için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğrenme Yöntem ve Motivasyonu"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-51",
+        "questionText": "Çalışma programına uyamıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğrenme Yöntem ve Motivasyonu"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-52",
+        "questionText": "Öğrenme isteksizliğimden dolayı",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğrenme Yöntem ve Motivasyonu"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-53",
+        "questionText": "Verimli ders çalışma yöntemlerini bilmediğimden",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Öğrenme Yöntem ve Motivasyonu"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-54",
+        "questionText": "Beraber olduğum arkadaş grubumdan dolayı",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal İlişkiler"
+      },
+      {
+        "id": "basarisizlik-nedenleri-2025-q-55",
+        "questionText": "Kardeşlerim ders çalışmamı engelledikleri için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Sosyal İlişkiler"
+      }
+    ]
+  }
+]

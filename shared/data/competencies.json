@@ -1,0 +1,164 @@
+[
+  {
+    "id": "MATH_SKILLS",
+    "name": "Matematik Becerileri",
+    "category": "ACADEMIC",
+    "description": "Problem çözme, sayısal analiz ve matematiksel düşünme"
+  },
+  {
+    "id": "SCIENCE_SKILLS",
+    "name": "Fen Bilimleri Becerileri",
+    "category": "ACADEMIC",
+    "description": "Bilimsel düşünme, deney tasarımı ve analiz"
+  },
+  {
+    "id": "LANGUAGE_SKILLS",
+    "name": "Dil Becerileri",
+    "category": "ACADEMIC",
+    "description": "Okuma, yazma ve dil kullanımı"
+  },
+  {
+    "id": "RESEARCH_SKILLS",
+    "name": "Araştırma Becerileri",
+    "category": "ACADEMIC",
+    "description": "Bilgi toplama, analiz ve sentez yapma"
+  },
+  {
+    "id": "CRITICAL_THINKING",
+    "name": "Eleştirel Düşünme",
+    "category": "ACADEMIC",
+    "description": "Analitik ve mantıksal düşünme yeteneği"
+  },
+  {
+    "id": "EMPATHY",
+    "name": "Empati",
+    "category": "SOCIAL_EMOTIONAL",
+    "description": "Başkalarının duygularını anlama ve paylaşma"
+  },
+  {
+    "id": "TEAMWORK",
+    "name": "Takım Çalışması",
+    "category": "SOCIAL_EMOTIONAL",
+    "description": "Grup içinde etkili çalışabilme"
+  },
+  {
+    "id": "EMOTIONAL_REGULATION",
+    "name": "Duygu Düzenleme",
+    "category": "SOCIAL_EMOTIONAL",
+    "description": "Duygularını kontrol ve yönetme"
+  },
+  {
+    "id": "CONFLICT_RESOLUTION",
+    "name": "Çatışma Yönetimi",
+    "category": "SOCIAL_EMOTIONAL",
+    "description": "Çatışmaları çözme ve arabuluculuk"
+  },
+  {
+    "id": "VERBAL_COMMUNICATION",
+    "name": "Sözlü İletişim",
+    "category": "COMMUNICATION",
+    "description": "Etkili konuşma ve sunum yapma"
+  },
+  {
+    "id": "WRITTEN_COMMUNICATION",
+    "name": "Yazılı İletişim",
+    "category": "COMMUNICATION",
+    "description": "Etkili yazma ve raporlama"
+  },
+  {
+    "id": "ACTIVE_LISTENING",
+    "name": "Aktif Dinleme",
+    "category": "COMMUNICATION",
+    "description": "Dikkatli dinleme ve anlama"
+  },
+  {
+    "id": "PERSUASION",
+    "name": "İkna Kabiliyeti",
+    "category": "COMMUNICATION",
+    "description": "Başkalarını etkileme ve ikna etme"
+  },
+  {
+    "id": "LEADERSHIP",
+    "name": "Liderlik",
+    "category": "LEADERSHIP",
+    "description": "Grup yönetme ve yönlendirme"
+  },
+  {
+    "id": "DECISION_MAKING",
+    "name": "Karar Verme",
+    "category": "LEADERSHIP",
+    "description": "Etkili ve zamanında karar alma"
+  },
+  {
+    "id": "STRATEGIC_THINKING",
+    "name": "Stratejik Düşünme",
+    "category": "LEADERSHIP",
+    "description": "Uzun vadeli planlama ve vizyon geliştirme"
+  },
+  {
+    "id": "PROGRAMMING",
+    "name": "Programlama",
+    "category": "TECHNICAL",
+    "description": "Kod yazma ve yazılım geliştirme"
+  },
+  {
+    "id": "DATA_ANALYSIS",
+    "name": "Veri Analizi",
+    "category": "TECHNICAL",
+    "description": "Veri işleme ve analiz etme"
+  },
+  {
+    "id": "TECHNICAL_DRAWING",
+    "name": "Teknik Çizim",
+    "category": "TECHNICAL",
+    "description": "Teknik ve mühendislik çizimleri"
+  },
+  {
+    "id": "LABORATORY_SKILLS",
+    "name": "Laboratuvar Becerileri",
+    "category": "TECHNICAL",
+    "description": "Laboratuvar ekipmanları kullanımı"
+  },
+  {
+    "id": "CREATIVITY",
+    "name": "Yaratıcılık",
+    "category": "CREATIVE",
+    "description": "Yenilikçi ve özgün fikirler üretme"
+  },
+  {
+    "id": "ARTISTIC_ABILITY",
+    "name": "Sanatsal Yetenek",
+    "category": "CREATIVE",
+    "description": "Görsel ve sanatsal ifade"
+  },
+  {
+    "id": "DESIGN_THINKING",
+    "name": "Tasarım Düşüncesi",
+    "category": "CREATIVE",
+    "description": "Kullanıcı odaklı tasarım yapma"
+  },
+  {
+    "id": "INNOVATION",
+    "name": "Yenilikçilik",
+    "category": "CREATIVE",
+    "description": "Yeni çözümler ve yaklaşımlar geliştirme"
+  },
+  {
+    "id": "PHYSICAL_COORDINATION",
+    "name": "Fiziksel Koordinasyon",
+    "category": "PHYSICAL",
+    "description": "El-göz koordinasyonu ve motor beceriler"
+  },
+  {
+    "id": "STAMINA",
+    "name": "Dayanıklılık",
+    "category": "PHYSICAL",
+    "description": "Fiziksel dayanıklılık ve kondisyon"
+  },
+  {
+    "id": "MANUAL_DEXTERITY",
+    "name": "El Becerisi",
+    "category": "PHYSICAL",
+    "description": "Hassas el işleri ve uygulama"
+  }
+]

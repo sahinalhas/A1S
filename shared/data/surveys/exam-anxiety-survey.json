@@ -1,0 +1,621 @@
+[
+  {
+    "template": {
+      "id": "sinav-kaygisi-2025",
+      "title": "Sınav Kaygısı Ölçeği",
+      "description": "Öğrencilerin sınav kaygısı düzeyini, stres tepkilerini ve sınav performansını etkileyen faktörleri değerlendirmek için kullanılan kapsamlı ölçek. MEB Özel Eğitim ve Rehberlik Hizmetleri Genel Müdürlüğü formatına uygun.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Kaygı Değerlendirmesi",
+        "Rehberlik",
+        "MEB",
+        "Sınav Hazırlığı",
+        "Psikolojik Destek"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "sinav-kaygisi-2025-q-1",
+        "questionText": "Sınava girmeden de sınıf geçmenin ve başarılı olmanın bir yolu olmasını isterdim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Hazırlığı ve Çalışma Alışkanlıkları"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-2",
+        "questionText": "Eğer sınavlar olmasaydı dersleri daha iyi öğreneceğimden eminim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Hazırlığı ve Çalışma Alışkanlıkları"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-3",
+        "questionText": "Hiçbir zaman sınavlara tam olarak hazırlandığım duygusunu yaşayamam",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Hazırlığı ve Çalışma Alışkanlıkları"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-4",
+        "questionText": "Önemli bir sınava hazırlanırken çok kere olumsuz düşüncelerle peşin bir yenilgiyi yaşarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Hazırlığı ve Çalışma Alışkanlıkları"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-5",
+        "questionText": "Bir sınava ne kadar çok çalışırsam, o kadar çok karıştırıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Hazırlığı ve Çalışma Alışkanlıkları"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-6",
+        "questionText": "Önemli problemlerimden biri, bir sınava tam olarak hazırlanıp hazırlanmadığımı bilememektir",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Hazırlığı ve Çalışma Alışkanlıkları"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-7",
+        "questionText": "Bir sınavda başarılı olmak, diğer sınavlarda kendime güvenimin artmasına sebep olmaz",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Güven ve Öz Değerlendirme"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-8",
+        "questionText": "Çevremdekiler (ailem, arkadaşlarım) başaracağım konusunda bana güveniyorlar",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Güven ve Öz Değerlendirme"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-9",
+        "questionText": "Kendimi bir toplayabilsem, bir çok kişiden daha iyi notlar alacağımı biliyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Güven ve Öz Değerlendirme"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-10",
+        "questionText": "Bir sınavdan önce ne kendime tam olarak güvenebilirim, ne de zihinsel olarak gevşeyebilirim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Güven ve Öz Değerlendirme"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-11",
+        "questionText": "Eğer düşük not alırsam, annem ve babam hayal kırıklığına uğrar",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Güven ve Öz Değerlendirme"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-12",
+        "questionText": "Bir sınav sırasında, bazen zihnimin sınavla ilgili olmayan konulara kaydığını hissederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Sırasında Dikkat Dağılması"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-13",
+        "questionText": "Sınav sırasında çevremdeki insanların gezinmesi ve bana bakmalarından sıkıntı duyarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Sırasında Dikkat Dağılması"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-14",
+        "questionText": "Bir sınav sırasında dışarıdan gelen gürültüler, çevremdeki sesler, ışık, oda sıcaklığı, vb. beni rahatsız eder",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Sırasında Dikkat Dağılması"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-15",
+        "questionText": "Bir sınav sırasında duygularım dikkatimin dağılmasına neden olur",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Sırasında Dikkat Dağılması"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-16",
+        "questionText": "Sınav sırasında bazen gerçekten bildiklerimi unutacak kadar heyecanlanıyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Sırasında Dikkat Dağılması"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-17",
+        "questionText": "Önemli bir sınavdan önce veya sınav sırasında bazı arkadaşlarımın çalışırken daha az zorlandıklarını ve benden daha akıllı olduklarını düşünürüm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sosyal ve Aile Baskısı"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-18",
+        "questionText": "Her zaman düşünmesem de, başarısız olursam çevremdekilerin hakkımdaki düşünceleri beni rahatsız eder",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sosyal ve Aile Baskısı"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-19",
+        "questionText": "Başarısız olursam, insanlar benim yeteneğimden şüpheye düşecekler",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sosyal ve Aile Baskısı"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-20",
+        "questionText": "Başarısız olursam, kendimle ilgili görüşlerim değişir",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sosyal ve Aile Baskısı"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-21",
+        "questionText": "Başarısız olursam arkadaşlarımın gözünde değerimin düşeceğini biliyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sosyal ve Aile Baskısı"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-22",
+        "questionText": "Düşük not aldığımda hiç kimseye notumu söylemem",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sosyal ve Aile Baskısı"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-23",
+        "questionText": "Kendi notumu söylemeden önce arkadaşlarımın kaç aldığını bilmek isterim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sosyal ve Aile Baskısı"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-24",
+        "questionText": "Düşük not aldığım zaman, tanıdığım bazı insanların benimle alay edeceğini biliyorum ve bu beni rahatsız ediyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sosyal ve Aile Baskısı"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-25",
+        "questionText": "Önemli bir sınavdan önce / sonra canım bir şey yemek istemez",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Fiziksel Anksiyete Belirtileri"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-26",
+        "questionText": "Önemli bir sınava girecek olmam uykularımı bozar",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Fiziksel Anksiyete Belirtileri"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-27",
+        "questionText": "Bir türlü gevşeyemem",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Fiziksel Anksiyete Belirtileri"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-28",
+        "questionText": "Önemli sınavlardan önce midem bulanır",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Fiziksel Anksiyete Belirtileri"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-29",
+        "questionText": "Sınav sırasında, bacağımı salladığımı, parmaklarımı sıraya vurduğumu fark ediyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Fiziksel Anksiyete Belirtileri"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-30",
+        "questionText": "Bir sınav sırasında bedenimin belirli yerlerindeki kaslar kasılır",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Fiziksel Anksiyete Belirtileri"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-31",
+        "questionText": "Gerçekten önemli bir sınava girerken çoğunlukla bedensel olarak panik halinde olurum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Fiziksel Anksiyete Belirtileri"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-32",
+        "questionText": "Sınavlarla ilgili endişelerim çoğunlukla tam olarak hazırlanmamı engeller ve bu durum beni daha çok endişelendirir",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Duygusal Tepkiler"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-33",
+        "questionText": "Ne kadar başarılı olacağım konusundaki endişeler, sınava hazırlığımı ve sınav başarımı etkiler",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Duygusal Tepkiler"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-34",
+        "questionText": "Sınavdan önce daima huzursuz, gergin ve sıkıntılı olurum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Duygusal Tepkiler"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-35",
+        "questionText": "Sınav sonuçlarını almadan önce kendimi çok endişeli ve huzursuz hissederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Duygusal Tepkiler"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-36",
+        "questionText": "Bir sınavdan önce çoğunlukla içimden bağırmak gelir",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Duygusal Tepkiler"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-37",
+        "questionText": "Önemli sinavlardan önce zihnım adeta durur kalır",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Duygusal Tepkiler"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-38",
+        "questionText": "Öğretmenin sık sık küçük yazılı veya sözlü yoklamalar yaptığı derslerden nefret ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınavlarla İlgili İnançlar"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-39",
+        "questionText": "Sınavların mutlaka resmi, ciddi ve gerginlik yaratan durumlar olması gerekmez",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınavlarla İlgili İnançlar"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-40",
+        "questionText": "Sınavlarda başarılı olanlar çoğunlukla hayatta da iyi pozisyonlara gelirler",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınavlarla İlgili İnançlar"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-41",
+        "questionText": "Geleceğimin sınavlarda göstereceğim başarıya bağlı olduğunu bilmek beni üzüyor",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınavlarla İlgili İnançlar"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-42",
+        "questionText": "Sınavların insanın gelecekteki amaçlarına ulaşması konusunda ölçü olmasına hayret ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınavlarla İlgili İnançlar"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-43",
+        "questionText": "Sınavlar insanın gerçekten ne kadar bildiğini göstermez",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınavlarla İlgili İnançlar"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-44",
+        "questionText": "Başlarken bir sınav veya teste ihtiyaç duyulmayan bir işe girebilmeyi çok isterim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınavlarla İlgili İnançlar"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-45",
+        "questionText": "Sınıf geçmek için sınava girmektense, ödev hazırlamayı tercih ederdim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınavlarla İlgili İnançlar"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-46",
+        "questionText": "Eğer sınavlara yalnız başıma girsem ve zamanla sınırlanmamış olsam çok daha başarılı olacağımı düşünüyorum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınavlarla İlgili İnançlar"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-47",
+        "questionText": "Sınavdaki sonuçların hayat başarım ve geleceğimle doğrudan ilişkili olduğunu düşünürüm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınavlarla İlgili İnançlar"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-48",
+        "questionText": "Bir sınavdan sonra çoğunlukla yapmış olduğumdan daha iyi yapabileceğimi düşünürüm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Sonrası Değerlendirme"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-49",
+        "questionText": "Bir sınavdan başarılı olamazsam, zaman zaman zannettiğim kadar akıllı olamadığımı düşünürüm",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav Sonrası Değerlendirme"
+      },
+      {
+        "id": "sinav-kaygisi-2025-q-50",
+        "questionText": "Testi değerlendirenlerin, bazı öğrencilerin sınavda çok heyecanlandıklarını bilmelerini ve bunu testi değerlendirirken hesaba katmalarını isterdim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Her zaman/Genellikle",
+          "Bazen",
+          "Hiçbir zaman"
+        ],
+        "category": "Sınav İşleminin Değerlendirilmesi"
+      }
+    ]
+  }
+]

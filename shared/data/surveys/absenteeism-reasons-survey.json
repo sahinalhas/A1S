@@ -1,0 +1,621 @@
+[
+  {
+    "template": {
+      "id": "devamsizlik-nedenleri-2025",
+      "title": "Devamsızlık Nedenleri Anketi",
+      "description": "Öğrencilerin okula devamsızlık nedenlerini belirlemeyi amaçlayan ve çok boyutlu analiz sağlayan anketi. Okul yönetimi, öğretmen davranışları, aile faktörleri, sosyal ilişkiler ve kişisel faktörleri değerlendiren. MEB Özel Eğitim ve Rehberlik Hizmetleri Genel Müdürlüğü formatına uygun.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Devamsızlık",
+        "Rehberlik",
+        "MEB",
+        "Okul Uyumu",
+        "Sorun Tanımlama"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "devamsizlik-nedenleri-2025-q-1",
+        "questionText": "İhtiyaç duyduğumda okul idaresi izin vermediği için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okul Yönetimi ve Yapı"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-2",
+        "questionText": "Geç kaldığımda okul yöneticileriyle karşılaşmak istemediğim için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okul Yönetimi ve Yapı"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-3",
+        "questionText": "Boş derslerde ve öğle aralarında okulda verimli zaman geçireceğim bir alan/mekan olmadığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okul Yönetimi ve Yapı"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-4",
+        "questionText": "Giriş ve çıkış saatleri bana uygun olmadığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okul Yönetimi ve Yapı"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-5",
+        "questionText": "Kılık kıyafetim uygun olmadığında (saç, sakal, takı, makyaj vb.) okul yönetiminden çekindiğim için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okul Yönetimi ve Yapı"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-6",
+        "questionText": "Okul binası (rampa, asansör vb) fiziksel durumuma uygun olmadığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okul Yönetimi ve Yapı"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-7",
+        "questionText": "Okulda günlük ders saati çok fazla olduğu için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okul Yönetimi ve Yapı"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-8",
+        "questionText": "Okulun ilk ya da son haftalarında ders yapılmadığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okul Yönetimi ve Yapı"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-9",
+        "questionText": "Okulda yeteneklerimi gösterebileceğim fırsatlar olmadığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okul Ortamı ve İmkanları"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-10",
+        "questionText": "Öğretmenler aşırı disiplinli davrandığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okul Ortamı ve İmkanları"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-11",
+        "questionText": "Bazı dersler çok sıkıcı geçtiği için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okul Ortamı ve İmkanları"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-12",
+        "questionText": "Öğretmenler, benden derslerde yapabileceklerimden daha fazlasını yapmamı bekledikleri için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Öğretmen Davranışları"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-13",
+        "questionText": "Öğretmenler, okulda öğrencilere karşı sürekli küçük düşürücü davranışlarında bulundukları için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Öğretmen Davranışları"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-14",
+        "questionText": "Öğretmenler, öğrenciler arasında ayrımcılık yaptığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Öğretmen Davranışları"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-15",
+        "questionText": "Öğretmenlerim bana yakınlık göstermediği için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Öğretmen Davranışları"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-16",
+        "questionText": "Diğer öğrenciler dersin işlenmesine engel olduğu için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Öğretmen Davranışları"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-17",
+        "questionText": "Ailem, okula gidip gitmememi umursamadığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Aile Faktörleri"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-18",
+        "questionText": "Ders araç gerecim olmadığında",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Aile Faktörleri"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-19",
+        "questionText": "Bazı günler harçlığım olmadığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Aile Faktörleri"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-20",
+        "questionText": "Bazı günler kıyafetlerim bakımsız (kirli, ütüsüz) olduğunda",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Aile Faktörleri"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-21",
+        "questionText": "Aileme yardımcı olmam gereken günlerde",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Aile Faktörleri"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-22",
+        "questionText": "Okul dışında bir işte çalışmak zorunda olduğum için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Aile Faktörleri"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-23",
+        "questionText": "Aile içinde sorunlarımız olduğu zamanlarda",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Aile Faktörleri"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-24",
+        "questionText": "Evde misafir olduğu zaman",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Aile Faktörleri"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-25",
+        "questionText": "Bir yakınım vefat ettiğinde",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Aile Faktörleri"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-26",
+        "questionText": "Evim okula çok uzak olduğu için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Ulaşım ve Çevre"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-27",
+        "questionText": "Havanın soğuk ya da yağışlı olduğu günlerde",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Ulaşım ve Çevre"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-28",
+        "questionText": "Okul yolu güvenli olmadığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Ulaşım ve Çevre"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-29",
+        "questionText": "Özel kurs ve etütlere daha fazla zaman ayırdığım için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Ek Eğitim ve Dış Faaliyetler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-30",
+        "questionText": "Okul dışındaki etkinliklere katılmak için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Ek Eğitim ve Dış Faaliyetler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-31",
+        "questionText": "Ertesi günün sınavlarına çalışmak için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Akademik Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-32",
+        "questionText": "Ödevlerimi yapmadığım günlerde",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Akademik Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-33",
+        "questionText": "Başarısız olduğum derslere katılmak istemediğim için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Akademik Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-34",
+        "questionText": "Bir üst öğretim kurumunun sınavlarına hazırlanmamda okul dersleri yetersiz kaldığı için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Akademik Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-35",
+        "questionText": "Okulu bitirince iş bulabileceğime inanmadığım için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Akademik Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-36",
+        "questionText": "Okulumu sevmediğim için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Akademik Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-37",
+        "questionText": "Hasta olduğum zaman",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Sağlık ve Kişisel Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-38",
+        "questionText": "Sabahları zamanında uyanamadığımda",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Sağlık ve Kişisel Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-39",
+        "questionText": "Yorucu geçen bir günden sonraki günü dinlenerek geçirmek istediğim için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Sağlık ve Kişisel Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-40",
+        "questionText": "Dersin telafisi mümkün olduğunda",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Sağlık ve Kişisel Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-41",
+        "questionText": "Resmi tatillerden önceki ya da sonraki günlerde",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Sağlık ve Kişisel Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-42",
+        "questionText": "Bazı günler moralim bozuk olduğu için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Sağlık ve Kişisel Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-43",
+        "questionText": "Okuldan kaçmak eğlenceli geldiği için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okulu Kaçma Alışkanlığı"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-44",
+        "questionText": "Okula gitmesem de sınıfı geçeceğimi bildiğim için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okulu Kaçma Alışkanlığı"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-45",
+        "questionText": "Arkadaşlarıma göre yaşça daha büyük olduğum için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Okulu Kaçma Alışkanlığı"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-46",
+        "questionText": "Okul saatinde, okul dışından arkadaşlarımla görüşmek için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Sosyal Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-47",
+        "questionText": "Arkadaşlarımla okuldan kaçma kararı aldığımızda",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Sosyal Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-48",
+        "questionText": "Okulda arkadaşlarım tarafından dışlandığım için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Sosyal Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-49",
+        "questionText": "Okuldaki öğrenciler fiziksel veya duygusal olarak bana zarar verdiği için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Sosyal Faktörler"
+      },
+      {
+        "id": "devamsizlik-nedenleri-2025-q-50",
+        "questionText": "Okulda arkadaşlarımla anlaşamadığım için",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hayır",
+          "Bazen",
+          "Evet"
+        ],
+        "category": "Sosyal Faktörler"
+      }
+    ]
+  }
+]

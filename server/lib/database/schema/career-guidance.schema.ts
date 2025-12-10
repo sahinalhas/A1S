@@ -4,6 +4,9 @@
  */
 
 import type { Database } from 'better-sqlite3';
+import * as fs from 'fs';
+import * as path from 'path';
+import type { CareerProfile } from '../../../../shared/types/career-guidance.types';
 
 // Meslek Profilleri Tablosu
 export const createCareerProfilesTable = `
@@ -172,8 +175,6 @@ export function createCareerGuidanceTables(db: Database): void {
 
 // Seed data - Meslek profillerini yükle
 export async function seedCareerProfiles(db: Database): Promise<void> {
-  const { CAREER_PROFILES } = await import('../../../../shared/constants/career-profiles.js');
-
   const insert = db.prepare(`
     INSERT OR REPLACE INTO career_profiles (
       id, name, category, description, requiredEducationLevel,
@@ -181,7 +182,29 @@ export async function seedCareerProfiles(db: Database): Promise<void> {
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
 
-  const insertMany = db.transaction((profiles) => {
+  let careerProfiles: CareerProfile[] = [];
+
+  try {
+    // Try multiple paths to find the file
+    let jsonPath = path.resolve(process.cwd(), 'shared', 'data', 'career-profiles.json');
+    if (!fs.existsSync(jsonPath)) {
+      // Try relative to this file location for robustness
+      jsonPath = path.resolve(__dirname, '../../../../../shared/data/career-profiles.json');
+    }
+
+    if (fs.existsSync(jsonPath)) {
+      const fileContent = fs.readFileSync(jsonPath, 'utf8');
+      careerProfiles = JSON.parse(fileContent);
+    } else {
+      console.warn(`⚠️ Career profiles data not found at ${jsonPath}, skipping seed.`);
+      return;
+    }
+  } catch (error) {
+    console.error('❌ Error reading career profiles JSON:', error);
+    return;
+  }
+
+  const insertMany = db.transaction((profiles: CareerProfile[]) => {
     for (const profile of profiles) {
       insert.run(
         profile.id,
@@ -197,6 +220,8 @@ export async function seedCareerProfiles(db: Database): Promise<void> {
     }
   });
 
-  insertMany(CAREER_PROFILES);
-  console.log(`✅ Seeded ${CAREER_PROFILES.length} career profiles`);
+  if (careerProfiles.length > 0) {
+    insertMany(careerProfiles);
+    console.log(`✅ Seeded ${careerProfiles.length} career profiles`);
+  }
 }

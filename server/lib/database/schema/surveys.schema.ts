@@ -1,20 +1,7 @@
 import type Database from 'better-sqlite3';
-import { DEFAULT_SURVEY_TEMPLATES } from '../../../../shared/data/default-risk-map-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_LIFE_WINDOW } from '../../../../shared/data/default-life-window-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_EXAM_ANXIETY } from '../../../../shared/data/default-exam-anxiety-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_FAILURE_REASONS } from '../../../../shared/data/default-failure-reasons-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_LEARNING_STYLES } from '../../../../shared/data/default-learning-styles-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_ABSENTEEISM_REASONS } from '../../../../shared/data/default-absenteeism-reasons-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_EFFICIENT_STUDY } from '../../../../shared/data/default-efficient-study-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_CAREER_INTEREST } from '../../../../shared/data/default-career-interest-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_HOLLAND_INVENTORY } from '../../../../shared/data/default-holland-inventory-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_ACADEMIC_SELF_CONCEPT } from '../../../../shared/data/default-academic-self-concept-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_SELF_EVALUATION_INVENTORY } from '../../../../shared/data/default-self-evaluation-inventory-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_CAREER_MATURITY } from '../../../../shared/data/default-career-maturity-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_MULTIPLE_INTELLIGENCES } from '../../../../shared/data/default-multiple-intelligences-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_INTERNET_ADDICTION } from '../../../../shared/data/default-internet-addiction-survey.js';
-import { DEFAULT_SURVEY_TEMPLATES_WHO_AM_I } from '../../../../shared/data/default-who-am-i-survey.js';
-import { v4 as uuidv4 } from 'uuid';
+import * as fs from 'fs';
+import * as path from 'path';
+import { SurveyTemplateDefault } from '../../../../shared/types/survey-data.types';
 
 export function createSurveysTables(db: Database.Database): void {
   db.exec(`
@@ -188,55 +175,60 @@ export function seedSurveysDefaultTemplates(db: Database.Database): void {
 
   let seededCount = 0;
 
-  const allSurveyTemplates = [
-    ...DEFAULT_SURVEY_TEMPLATES,
-    ...DEFAULT_SURVEY_TEMPLATES_LIFE_WINDOW,
-    ...DEFAULT_SURVEY_TEMPLATES_EXAM_ANXIETY,
-    ...DEFAULT_SURVEY_TEMPLATES_FAILURE_REASONS,
-    ...DEFAULT_SURVEY_TEMPLATES_LEARNING_STYLES,
-    ...DEFAULT_SURVEY_TEMPLATES_ABSENTEEISM_REASONS,
-    ...DEFAULT_SURVEY_TEMPLATES_EFFICIENT_STUDY,
-    ...DEFAULT_SURVEY_TEMPLATES_CAREER_INTEREST,
-    ...DEFAULT_SURVEY_TEMPLATES_HOLLAND_INVENTORY,
-    ...DEFAULT_SURVEY_TEMPLATES_ACADEMIC_SELF_CONCEPT,
-    ...DEFAULT_SURVEY_TEMPLATES_SELF_EVALUATION_INVENTORY,
-    ...DEFAULT_SURVEY_TEMPLATES_CAREER_MATURITY,
-    ...DEFAULT_SURVEY_TEMPLATES_MULTIPLE_INTELLIGENCES,
-    ...DEFAULT_SURVEY_TEMPLATES_INTERNET_ADDICTION,
-    ...DEFAULT_SURVEY_TEMPLATES_WHO_AM_I
-  ];
+  // Find survey data directory
+  let surveyDataDir = path.resolve(process.cwd(), 'shared', 'data', 'surveys');
+  if (!fs.existsSync(surveyDataDir)) {
+    // Try relative path from this file
+    surveyDataDir = path.resolve(__dirname, '../../../../../shared/data/surveys');
+  }
+
+  if (!fs.existsSync(surveyDataDir)) {
+    console.warn('⚠️ Survey data directory not found, skipping seed.');
+    return;
+  }
+
+  const files = fs.readdirSync(surveyDataDir).filter(file => file.endsWith('.json'));
 
   const seedTransaction = db.transaction(() => {
-    for (const surveyTemplate of allSurveyTemplates) {
-      const templateExists = checkTemplate.get(surveyTemplate.template.id);
+    for (const file of files) {
+      try {
+        const filePath = path.join(surveyDataDir, file);
+        const templates: SurveyTemplateDefault[] = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
-      upsertTemplate.run(
-        surveyTemplate.template.id,
-        surveyTemplate.template.title,
-        surveyTemplate.template.description,
-        surveyTemplate.template.isActive ? 1 : 0,
-        surveyTemplate.template.createdBy,
-        JSON.stringify(surveyTemplate.template.tags),
-        surveyTemplate.template.targetAudience
-      );
+        for (const surveyTemplate of templates) {
+          const templateExists = checkTemplate.get(surveyTemplate.template.id);
 
-      if (!templateExists) {
-        seededCount++;
+          upsertTemplate.run(
+            surveyTemplate.template.id,
+            surveyTemplate.template.title,
+            surveyTemplate.template.description,
+            surveyTemplate.template.isActive ? 1 : 0,
+            surveyTemplate.template.createdBy,
+            JSON.stringify(surveyTemplate.template.tags),
+            surveyTemplate.template.targetAudience
+          );
+
+          if (!templateExists) {
+            seededCount++;
+          }
+
+          surveyTemplate.questions.forEach((question, index) => {
+            const questionId = question.id || `${surveyTemplate.template.id}-q-${index}`;
+
+            insertQuestion.run(
+              questionId,
+              surveyTemplate.template.id,
+              question.questionText,
+              question.questionType,
+              question.required ? 1 : 0,
+              index,
+              question.options ? JSON.stringify(question.options) : null
+            );
+          });
+        }
+      } catch (err) {
+        console.error(`❌ Error seeding survey from ${file}:`, err);
       }
-
-      surveyTemplate.questions.forEach((question, index) => {
-        const questionId = question.id || `${surveyTemplate.template.id}-q-${index}`;
-
-        insertQuestion.run(
-          questionId,
-          surveyTemplate.template.id,
-          question.questionText,
-          question.questionType,
-          question.required ? 1 : 0,
-          index,
-          question.options ? JSON.stringify(question.options) : null
-        );
-      });
     }
   });
 

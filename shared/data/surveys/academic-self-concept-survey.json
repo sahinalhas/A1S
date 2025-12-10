@@ -1,0 +1,1204 @@
+[
+  {
+    "template": {
+      "id": "akademik-benlik-2025",
+      "title": "Akademik Benlik Kavramı Ölçeği",
+      "description": "Öğrencilerin akademik yetenek ve ilgilerini değerlendirmek amacıyla hazırlanan ölçek. Türkçe dili, matematik, mekansal beceriler, fen bilimleri, tarih-coğrafya, sosyal bilgiler ve yabancı dil gibi farklı akademik alanlardaki benlik algısını kapsamlı şekilde ölçen. MEB Özel Eğitim ve Rehberlik Hizmetleri Genel Müdürlüğü formatına uygun.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Akademik Benlik",
+        "Yetenek Değerlendirmesi",
+        "Rehberlik",
+        "MEB",
+        "Akademik İlgi"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "akademik-benlik-2025-q-1",
+        "questionText": "Bir yazı yazarken, bir ödev yaparken yazım (imla) kurallarına dikkat eder misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Türkçe Dili ve Yazı Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-2",
+        "questionText": "Bir hikâye kitabını hızlı ve doğru okuyabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Türkçe Dili ve Yazı Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-3",
+        "questionText": "Kelimeleri doğru bir biçimde yazabiliyor ve söyleyebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Türkçe Dili ve Yazı Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-4",
+        "questionText": "Bir parçayı bir kere okuduktan sonra hemen özetleyebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Türkçe Dili ve Yazı Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-5",
+        "questionText": "Yeni duyduğunuz kelimelerin anlamını öğrenmeye çalışır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Türkçe Dili ve Yazı Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-6",
+        "questionText": "Okuduğunuz bir parçada belirtilen fikirler arasında ilişki kurabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Türkçe Dili ve Yazı Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-7",
+        "questionText": "Bir konuda edindiğiniz bilgileri, kendi sözcüklerinizle başkalarına aktarabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Türkçe Dili ve Yazı Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-8",
+        "questionText": "Bir konuyu söz ve yazı ile anlatırken, fikirleri doğru bir sıra ile verebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Türkçe Dili ve Yazı Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-9",
+        "questionText": "Bir yazıdaki fikir ve ifade hatalarını kolaylıkla görebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Türkçe Dili ve Yazı Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-10",
+        "questionText": "Akıcı bir üslupla güzel yazı (örneğin bir mektup) yazabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Türkçe Dili ve Yazı Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-11",
+        "questionText": "Okuduğunuz bir parçada anlatılan fikirleri bulup özetleyebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Türkçe Dili ve Yazı Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-12",
+        "questionText": "Sizin düzeyinizde, ama daha önce hiç görmediğiniz bir matematik kitabını rahatlıkla okuyabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Türkçe Dili ve Yazı Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-13",
+        "questionText": "Çarpım tablosunu, bölme işlemini kolay öğrenebildiniz mi?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematik Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-14",
+        "questionText": "Dört işlemle akıldan, hızlı problem çözebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematik Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-15",
+        "questionText": "Bir matematik probleminin çözüm yolunu öğrendikten sonra, ona benzer problemleri çözebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematik Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-16",
+        "questionText": "Sizin düzeyinizde bir matematik kitabını okuyarak bir problemin çözüm yolunu bulabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematik Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-17",
+        "questionText": "Boş zamanlarınızda, zevk için matematik problemleri çözmeye çalışır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematik Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-18",
+        "questionText": "Matematik dersinde, özel bir yardım (ders) almadan başarılı olabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematik Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-19",
+        "questionText": "Öğrendiğiniz matematik kurallarını fen bilisi derslerindeki problemlere uygulayabiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematik Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-20",
+        "questionText": "Bir problemin, size öğretilen çözüm yollarından farklı çözüm yollarını bulabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Matematik Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-21",
+        "questionText": "Birbirine çok benzeyen iki resmin arasındaki küçük farklılıkları hemen görebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-22",
+        "questionText": "Bir dairenin merkezini doğru bir biçimde tahmin ederek işaretleyebilir misin?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-23",
+        "questionText": "İki çizgi arasında çok az bir uzunluk farkı olduğunda, bunu kolaylıkla algılayabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-24",
+        "questionText": "Bir doğru parçasının kaç cm olduğunu doğru tahmin edebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-25",
+        "questionText": "İlk defa gittiğiniz bir binada yönünüzü kolaylıkla bulabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-26",
+        "questionText": "Bir defa başkaları ile birlikte gittiğiniz bir yeri, ikinci defa yalnız başına gittiğinizde, kolaylıkla bulabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-27",
+        "questionText": "Gelişigüzel parçaları ayrılmış bir şeklin veya cismin parçalarını eski yerlerine kolaylıkla yerleştirebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-28",
+        "questionText": "Bir makinenin şemasına bakarak makineyi kurabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-29",
+        "questionText": "Açılmış hali verilen geometrik bir cismin, kapandığı zaman açılacağı şekli göz önünde canlandırabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-30",
+        "questionText": "Boş bir kesme şeker kutusu kısa kenarından kesilip açılınca hangi yüzeyin nereye geleceğini göz önünde canlandırabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-31",
+        "questionText": "Bir kâğıda cetvel kullanmadan düzgün paralel çizgiler çizebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-32",
+        "questionText": "Karmaşık bir geometrik şeklin, sağa ve sola döndürülmesi ile alacağı durumu göz önünde canlandırabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-33",
+        "questionText": "Bir evin planına baktığınızda, evin yapılmış halini göz önünde canlandırabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-34",
+        "questionText": "Alet kullanmadan, düzgün geometrik şekiller çizebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-35",
+        "questionText": "Bir kâğıda çizilen yıldız biçimindeki bir şekli makasla, düzgün bir biçimde kesip çıkarabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-36",
+        "questionText": "Küçük bir deliğe, ince bir çubuğu, deliğin kenarına değdirmeden sokabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-37",
+        "questionText": "Küçük bir şeklin (örneğin bir çiçek resminin) içini, dışarı taşırmadan sulu boya ile boyayabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Görsel ve Mekansal Beceriler"
+      },
+      {
+        "id": "akademik-benlik-2025-q-38",
+        "questionText": "Attığınız bir bilyeyi veya bir taşı istediğiniz hedefe gönderebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "İnce Motor Becerisi ve El Koordinasyonu"
+      },
+      {
+        "id": "akademik-benlik-2025-q-39",
+        "questionText": "Bir pastayı veya böreği, eşit olarak ve düzgün biçimde kesebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "İnce Motor Becerisi ve El Koordinasyonu"
+      },
+      {
+        "id": "akademik-benlik-2025-q-40",
+        "questionText": "Bir bilyeyi, başka bir bilye ile vurarak, istediğiniz hedefe gönderebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "İnce Motor Becerisi ve El Koordinasyonu"
+      },
+      {
+        "id": "akademik-benlik-2025-q-41",
+        "questionText": "Bir aletin (örneğin saatin) çok küçük bir parçasını (örneğin vidasını) yerine kolayca yerleştirebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "İnce Motor Becerisi ve El Koordinasyonu"
+      },
+      {
+        "id": "akademik-benlik-2025-q-42",
+        "questionText": "Bir aleti parçalara ayırıp tekrar birleştirebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "İnce Motor Becerisi ve El Koordinasyonu"
+      },
+      {
+        "id": "akademik-benlik-2025-q-43",
+        "questionText": "Tahtadan veya metalden oyuncaklar yapabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "İnce Motor Becerisi ve El Koordinasyonu"
+      },
+      {
+        "id": "akademik-benlik-2025-q-44",
+        "questionText": "Kapı zili, kilit gibi ev aletlerini onarmaya çalışır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "İnce Motor Becerisi ve El Koordinasyonu"
+      },
+      {
+        "id": "akademik-benlik-2025-q-45",
+        "questionText": "Fen dersleri ile ilgili konuları kolay öğrenebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-46",
+        "questionText": "Fen derslerinde öğrendiğiniz ilke ve kuralları evinizdeki sorunların çözümünde kullanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-47",
+        "questionText": "Fen dersleri ile ilgili konularda öğretilenlerden daha fazla bilgi edinmek için başka kaynaklara başvurduğunuz oluyor mu?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-48",
+        "questionText": "Evcil hayvanların veya bitkilerin gelişmelerini incelemekten hoşlanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-49",
+        "questionText": "Fen bilgisi ile ilgili problemleri çözmekten hoşlanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-50",
+        "questionText": "Deniz dibindeki hayatı gösteren bir filmi ilgi ve dikkatle izler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-51",
+        "questionText": "Gelecekte kendinizi, bir laboratuvarda araştırmacı olarak düşlediğiniz olur mu?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-52",
+        "questionText": "Bir kente gittiğinizde, müzeleri, tarihi yerleri gezer misiniz? (gezmek ister misiniz?)",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-53",
+        "questionText": "Bilimsel proje sergilerini gezer misiniz? (gezmek ister misiniz?)",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-54",
+        "questionText": "Televizyonda bilimsel buluşları anlatan belgesel programları izler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-55",
+        "questionText": "Ünlü bilim adamlarının hayatını anlatan televizyon dizilerini izler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-56",
+        "questionText": "Uzay araçlarının, roketlerin evrimini gösteren bir sergiyi izlemek ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-57",
+        "questionText": "Havuzlarda balık üretme yöntemlerini gösteren bir filmi ilgi ile izler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-58",
+        "questionText": "Evcil hayvanların hangi koşullarda ve ortamlarda daha iyi geliştiklerini incelemekten hoşlanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-59",
+        "questionText": "Yeni bir alet veya makine ile karşılaştığınızda, hemen onun nasıl çalıştığını öğrenmeye çalışır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-60",
+        "questionText": "Elektrikli aletlerin nasıl işlediklerini inceler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-61",
+        "questionText": "Evcil hayvan besler, bakımını yapar mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-62",
+        "questionText": "Saksıda ve bahçede çiçek yetiştirip bakımını üstlenir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Fen Bilimleri İlgisi ve Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-63",
+        "questionText": "Tarih ve coğrafya derslerinde okutulan konuları kolay öğrenebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Tarih ve Coğrafya İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-64",
+        "questionText": "Çeşitli atasözlerinin ve özdeyişlerin nereden çıktığını araştırmak ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Tarih ve Coğrafya İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-65",
+        "questionText": "Tarih romanlarını okumaktan hoşlanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Tarih ve Coğrafya İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-66",
+        "questionText": "Büyük coğrafya keşiflerini anlatan bir televizyon programı izlemekten hoşlanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Tarih ve Coğrafya İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-67",
+        "questionText": "Orta Asya'daki eski uygarlık eserlerini gösteren bir belgesel filmi izlemekten hoşlanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Tarih ve Coğrafya İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-68",
+        "questionText": "Ünlü toplum liderlerinin hayatını anlatan eserleri okumak veya fimleri izlemek ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Tarih ve Coğrafya İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-69",
+        "questionText": "İnsanların ne düşündüklerini ve ne hissettiklerini incelemekten hoşlanır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal Bilgiler ve Toplum İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-70",
+        "questionText": "Çevrenizdeki insanların davranışlarının nedenlerini merak edip araştırır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal Bilgiler ve Toplum İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-71",
+        "questionText": "\"İnsan hakları\" konulu bir ödev hazırlayıp sınıfta sunmak ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal Bilgiler ve Toplum İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-72",
+        "questionText": "İnsanların gazetelerde hangi haberleri merakla okuduklarını araştırmak ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal Bilgiler ve Toplum İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-73",
+        "questionText": "\"Çocuklarda yaratıcılık\" başlıklı bir makaleyi okumak ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal Bilgiler ve Toplum İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-74",
+        "questionText": "\"Hayvanat bahçesine getirilen hayvanların yeni çevreye uyum sorunları\" konulu bir belgesel filmi ilgi ile izler misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal Bilgiler ve Toplum İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-75",
+        "questionText": "İnsanların daha çok hangi malları almak istediklerini öğrenmeye çalışır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal Bilgiler ve Toplum İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-76",
+        "questionText": "Arkadaşlarınız arasındaki çatışmaların çözümünde arabuluculuk yapar mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Sosyal Bilgiler ve Toplum İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-77",
+        "questionText": "Bir çiftliğin yöneticisi olmayı düşünür müsünüz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Tarım ve Üretim İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-78",
+        "questionText": "Kaliteli meyve yetiştiren bir üretici olmayı düşünür müsünüz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Tarım ve Üretim İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-79",
+        "questionText": "Evinizde ipekböceği yetiştirip bakımını üslenebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Tarım ve Üretim İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-80",
+        "questionText": "Yeni çiçek türleri yetiştirmeyi denemek ister misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Tarım ve Üretim İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-81",
+        "questionText": "Her türlü araç ve gereç sağlansa, bir kafes yapmayı dener misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Tarım ve Üretim İlgisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-82",
+        "questionText": "Yeni öğrendiğiniz yabancı dildeki sözcükleri bir cümlede kullanmaya çalışır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yabancı Dil Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-83",
+        "questionText": "Yabancı dildeki kelimeleri kolayca ezberleyebiliyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yabancı Dil Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-84",
+        "questionText": "Bir yabancı turistle, bildiğiniz yabancı dille konuşmaya çalışır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yabancı Dil Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-85",
+        "questionText": "Gelecekte yabancı dilinizi ilerletip o dilde yazılmış dergi ve kitapları okumayı düşünür müsünüz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yabancı Dil Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-86",
+        "questionText": "Yeni öğrendiğiniz yabancı dildeki sözcükleri doğru biçimde söylemeye gayret eder misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Yabancı Dil Becerisi"
+      },
+      {
+        "id": "akademik-benlik-2025-q-87",
+        "questionText": "Satranç öğrenmek için çaba sarf ediyor musunuz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mantık ve Strateji Becerileri"
+      },
+      {
+        "id": "akademik-benlik-2025-q-88",
+        "questionText": "İnanç ve düşüncelerinizi başkalarına kolaylıkla anlatabilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mantık ve Strateji Becerileri"
+      },
+      {
+        "id": "akademik-benlik-2025-q-89",
+        "questionText": "Tartışmalarda güçlü kanıtlar bularak, görüşünüzü karşınızdakilere kabul ettirebilir misiniz?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mantık ve Strateji Becerileri"
+      },
+      {
+        "id": "akademik-benlik-2025-q-90",
+        "questionText": "Belleğiniz kuvvetli midir?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mantık ve Strateji Becerileri"
+      },
+      {
+        "id": "akademik-benlik-2025-q-91",
+        "questionText": "Model uçak yapmaya çalışır mısınız?",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Hiçbir Zaman",
+          "Ara Sıra",
+          "Sık Sık",
+          "Her Zaman"
+        ],
+        "category": "Mantık ve Strateji Becerileri"
+      }
+    ]
+  }
+]

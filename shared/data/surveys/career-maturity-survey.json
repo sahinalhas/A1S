@@ -1,0 +1,581 @@
+[
+  {
+    "template": {
+      "id": "mesleki-olgunluk-2025",
+      "title": "Mesleki Olgunluk Ölçeği",
+      "description": "Meslek seçimiyle ilgili tutum ve davranışları ölçen, öğrencilerin mesleki olgunluk düzeyini değerlendiren kapsamlı ölçek. Karar vermede bağımsızlık, bilgi arayışı, öz farkındalık ve mesleki seçim kararlılığını ölçen. MEB rehberlik hizmetlerine uygun kariyer danışmanlığı aracı.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Mesleki Olgunluk",
+        "Kariyer Seçimi",
+        "Karar Verme",
+        "MEB",
+        "Rehberlik"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "mesleki-olgunluk-2025-q-1",
+        "questionText": "Hangi mesleğin bana uygun olduğunu büyüklerimin daha iyi bilecekleri düşüncesindeyim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Karar Vermede Bağımsızlık"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-2",
+        "questionText": "İnsan mesleğini tesadüfen seçer.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Karar Vermede Bağımsızlık"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-3",
+        "questionText": "İnsan hangi mesleği seçmesi gerektiği konusunda ailesinin tavsiyelerini dikkate alırsa hata yapmaz.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Karar Vermede Bağımsızlık"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-4",
+        "questionText": "Hangi mesleğe gireceğime ailemin karar vermesi iyi olacak. Böylece sonuçta bir hata olursa ben sorumlu olmam.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Karar Vermede Bağımsızlık"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-5",
+        "questionText": "Ailemin seçtiği mesleğe girersem onların daha çok yardım ve desteğini sağlayabilirim diye düşünüyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Karar Vermede Bağımsızlık"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-6",
+        "questionText": "Meslekleri daha iyi tanımak için, bu konuda yazılmış kaynak kitaplar olup olmadığını araştırırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Bilgi Arayışı ve Araştırma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-7",
+        "questionText": "Öğretmenlerime, öğrettikleri konu alanlarıyla ilgili üniversite programlarının neler olduğu hakkında sorular sorar, onlardan bu konularda beni aydınlatmalarını rica ederim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Bilgi Arayışı ve Araştırma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-8",
+        "questionText": "Televizyonda bir mesleğin özelliklerini ve ülke ekonomisindeki yerini tanıtan programları ilgi ile izlerim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Bilgi Arayışı ve Araştırma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-9",
+        "questionText": "Yeteneğime uygun olduğunu düşündüğüm meslekleri inceliyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Bilgi Arayışı ve Araştırma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-10",
+        "questionText": "Meslekleri tanıtan kaynak kitapları okurum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Bilgi Arayışı ve Araştırma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-11",
+        "questionText": "İlgilendiğim bir meslekteki insanların neler yaptıklarını, hangi koşullarda çalıştıklarını öğrenmek için işyerlerine giderim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Bilgi Arayışı ve Araştırma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-12",
+        "questionText": "Meslek tercihlerimi belirlemeden önce, sadece ilgi duyduğum meslekleri değil, mümkün olduğu kadar başka bir çok mesleği de incelemeye çalışıyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Bilgi Arayışı ve Araştırma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-13",
+        "questionText": "Yeni bir meslek adı duyduğumda hemen o mesleği incelemek için harekete geçerim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Bilgi Arayışı ve Araştırma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-14",
+        "questionText": "Benden önce liseyi bitirip yüksek öğretime devam eden arkadaşlarıma bölümleri hakkında sorular sorarım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Bilgi Arayışı ve Araştırma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-15",
+        "questionText": "Tercih ettiğim meslekleri tanıtıcı toplantılara katılırım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Bilgi Arayışı ve Araştırma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-16",
+        "questionText": "Girmek istediğim meslekler hakkında bilinmesi gereken her şeyi biliyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Öz Farkındalık ve Kendini Tanıma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-17",
+        "questionText": "Üniversitede program tercihimi belirlemeden önce, hangi alanlarda ne derece güçlü, hangi alanlarda ne derece zayıf olduğumu değerlendireceğim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Öz Farkındalık ve Kendini Tanıma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-18",
+        "questionText": "Çok erken yaşlardan beri meslek yaşamımdan neler beklediğimi, ne gibi yeteneklere ve kişilik özelliklerine sahip olduğumu düşünürüm.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Öz Farkındalık ve Kendini Tanıma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-19",
+        "questionText": "Yeteneklerimi tanımam gerekiyor, ama bunu nasıl yapacağımı bilmiyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Öz Farkındalık ve Kendini Tanıma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-20",
+        "questionText": "Benimle ilgili yönergeleri açıklamaları dikkatle okurum. (Seçmeli dersler listesi, Sınav kılavuzu gibi)",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Öz Farkındalık ve Kendini Tanıma"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-21",
+        "questionText": "Gelecekteki mesleğimi ben belirleyeceğime göre, bu konuda gerekli bilgiyi edinmek için benim harekete geçmem gerektiği düşüncesindeyim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Öğrenci Hayatında Kariyer Odağı"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-22",
+        "questionText": "Öğrencilik hayatımda daima hangi derslerin yada ders dışı faaliyetlerin bana ne yönden yararlı olabileceğini, hangi hedefe erişmek için katkısı olabileceğini düşünürüm.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Öğrenci Hayatında Kariyer Odağı"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-23",
+        "questionText": "Hiç kimsenin beni benden iyi tanımayacağını ve mesleğimi seçme sorumluluğunun bana ait olduğunu düşünürüm.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Öğrenci Hayatında Kariyer Odağı"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-24",
+        "questionText": "Herhangi bir işim için bir iş yerinde örneğin; banka, hastane, fabrika ve benzeri yerlere gitsem orada çalışanların yaptıklarını gözler,\"ben bu işleri yapabilir miyim, bunları yapmaktan zevk alabilir miyim?\" diye düşünürüm.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Öğrenci Hayatında Kariyer Odağı"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-25",
+        "questionText": "Kendimi bildim bileli hangi mesleğe girmek istediğimi düşünürüm.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Seçim Kararlılığı"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-26",
+        "questionText": "Ne olmak, hangi mesleği seçmek istediğim konusunda zaman zaman hayallere dalarım, ama aslında henüz tercihlerimi belirlemiş değilim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Seçim Kararlılığı"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-27",
+        "questionText": "Şu ana kadar hangi programları tercih edeceğimi belirleyemedim. Çünkü her gün başka bir seçenek bana çekici geliyor.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Mesleki Seçim Kararlılığı"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-28",
+        "questionText": "İstediğim mesleği seçemeyeceksem \"bu konuyu düşünmenin ne gereği var\" diyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Belirsizlik ve Kararsızlık"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-29",
+        "questionText": "Bir meslek seçiminde dikkate alınacak o kadar çok faktör var ki, en iyisi işi oluruna bırakmak diye düşünüyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Belirsizlik ve Kararsızlık"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-30",
+        "questionText": "Şimdiden meslek tercihleri üzerinde düşünmeyi gereksiz buluyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Belirsizlik ve Kararsızlık"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-31",
+        "questionText": "İstediğim mesleğe giremeyeceksem meslek seçimi üzerinde düşünmenin ne yararı var diye düşünüyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Belirsizlik ve Kararsızlık"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-32",
+        "questionText": "Ne zaman meslek seçme konusu açılsa içimi bir sıkıntı kaplar.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Belirsizlik ve Kararsızlık"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-33",
+        "questionText": "Bana uygun hiçbir meslek bulamıyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Belirsizlik ve Kararsızlık"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-34",
+        "questionText": "Bazı insanların hangi mesleği seçmek istedikleri konusunda nasıl da emin ve kararlı olabildiklerine şaşıyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Belirsizlik ve Kararsızlık"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-35",
+        "questionText": "Meslek tercihlerimde sık sık değişiklik yapıyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Meslek Tercihinde Değişkenlik"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-36",
+        "questionText": "Üniversite sınavımda hangi alanla ilgili test alacağımı belirledim, ama o alanda hangi programlara girmek istediğime karar veremedim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Meslek Tercihinde Değişkenlik"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-37",
+        "questionText": "Şu anda belirli bir meslek alanı belirlemedim ama kararımdan memnun değilim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Meslek Tercihinde Değişkenlik"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-38",
+        "questionText": "Bir çok mesleğe heves ediyorum ve ilgi duyuyorum ama hepsinin bir kusuru var. Bir türlü birine karar veremiyorum.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Meslek Tercihinde Değişkenlik"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-39",
+        "questionText": "Benim için önemli olan sınava hazırlanmaktır. Meslek tercihimi zamanı gelince belirlerim.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Erteleme ve Dış Faktörler"
+      },
+      {
+        "id": "mesleki-olgunluk-2025-q-40",
+        "questionText": "Meslek seçerken pek çok kişiden bilgi ve görüş almaya niyetlendim. Ama sonuçta kargaşaya ve kararsızlığa düşünce bu işi oluruna bıraktım.",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Bana Hiç Uygun Değil",
+          "Bana Pek Uygun Değil",
+          "Bana Biraz Uygun",
+          "Bana Uygun",
+          "Bana Çok Uygun"
+        ],
+        "category": "Erteleme ve Dış Faktörler"
+      }
+    ]
+  }
+]

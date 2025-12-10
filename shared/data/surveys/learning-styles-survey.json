@@ -1,0 +1,670 @@
+[
+  {
+    "template": {
+      "id": "ogrenme-stilleri-2025",
+      "title": "Öğrenme Stilleri Envanteri",
+      "description": "Öğrencilerin görsel, işitsel ve kinestetik öğrenme stillerini belirlemek için kullanılan envanteri. Her öğrencinin en etkili öğrenme yöntemiyle eğitim alabilmesi için rehberlik amaçlı anketi. MEB Özel Eğitim ve Rehberlik Hizmetleri Genel Müdürlüğü formatına uygun.",
+      "targetAudience": "STUDENT",
+      "tags": [
+        "Öğrenme Stilleri",
+        "Rehberlik",
+        "MEB",
+        "Uyum",
+        "Eğitim Tasarımı"
+      ],
+      "createdBy": "Sistem",
+      "isActive": true
+    },
+    "questions": [
+      {
+        "id": "ogrenme-stilleri-2025-q-1",
+        "questionText": "Temiz ve düzenli bir sıraya sahip olmak isterim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-2",
+        "questionText": "Sözel yönergeleri kullanamam, haritaya gereksinim duyarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-3",
+        "questionText": "Resimli bulmaca çözmeyi severim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-4",
+        "questionText": "Gördüklerimi iyi hatırlarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-5",
+        "questionText": "Olaylar veya konular şematize edilirse daha iyi anlarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-6",
+        "questionText": "Resimli roman okumayı severim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-7",
+        "questionText": "Okunmakta olan bir metnin kopyasını takip etmezsem anlamakta zorlanırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-8",
+        "questionText": "Derslerde not tutmayı tercih ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-9",
+        "questionText": "Boş zamanlarımda okumayı severim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-10",
+        "questionText": "Başkalarının ne yaptığını gözlerim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-11",
+        "questionText": "Telefonda konuşmayı sevmem, yüz yüze konuşmayı tercih ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-12",
+        "questionText": "Okurken parmağımla takip ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-13",
+        "questionText": "Okurken kağıda çok yaklaşırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-14",
+        "questionText": "Yazılı karükatürleri tercih ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-15",
+        "questionText": "Görsel ve sözcük hatırlama hafızam iyi değildir",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-16",
+        "questionText": "Kopyalanacak bir şey olmadan kolay çizemem",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-17",
+        "questionText": "Haritalardan çok sözel tarifleri ve yönergeleri tercih ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-18",
+        "questionText": "Boş bir kağıda sütunlar çizmem istendiğinde kağıdı katlarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-19",
+        "questionText": "Defterimin içini genellikle resimlerle, şekillerle süslerim, karalama yaparım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-20",
+        "questionText": "Genellikle grafikler, sembol ve simgeler benim öğrenmemi kolaylaştırmaz",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Görsel Öğrenme (Visual)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-21",
+        "questionText": "Biri bana ders verir gibi bir şeyler anlatırsa başka dünyalara dalarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-22",
+        "questionText": "Duyduğum ama görmediğim yönergelere dikkat etmekte zorlanırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-23",
+        "questionText": "Sessiz okumayı severim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-24",
+        "questionText": "Sözcükleri hatasız yazarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-25",
+        "questionText": "Şarkı sözlerini hatırlamakta zorlanırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-26",
+        "questionText": "Sözel tariflerin tekrarlanmasını isterim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-27",
+        "questionText": "Kendi kendime düşünüp, çalışarak öğrenmeyi severim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-28",
+        "questionText": "Radyo ve televizyonu yüksek sesle dinlerim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-29",
+        "questionText": "Kendi kendime konuşurum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-30",
+        "questionText": "Bütün yanlışlarımı öğretmenin anlatarak düzeltmesini isterim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-31",
+        "questionText": "Sınıfta arkadaşlarımla tartışarak ve sohbet ederek öğrenmeyi severim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-32",
+        "questionText": "Gözlerimi ellerime dayarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-33",
+        "questionText": "Daha iyi öğrenmek için müzik ve ritmi severim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-34",
+        "questionText": "Sınıfta çok fazla konuşurum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-35",
+        "questionText": "Boş zamanlarımda arkadaşlarımla konuşmayı ve şaka yapmayı severim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-36",
+        "questionText": "Yüksek sesle okumayı severim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-37",
+        "questionText": "Hikaye, şiir ve/ya kitap kasetleri dinlemeyi severim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-38",
+        "questionText": "Anlatmayı yazmaya tercih ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-39",
+        "questionText": "Kendi kendime çalışmaktansa öğretmeni dinleyerek öğrenmeyi tercih ederim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-40",
+        "questionText": "Bir konu bana okunursa kendi okuduğumdan daha iyi anlarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-41",
+        "questionText": "Sessizliğe dayanamam. Ya ben ya da diğerlerinin konuşmasını isterim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-42",
+        "questionText": "Genellikle ellerimi kullanarak ve hızlı konuşurum",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-43",
+        "questionText": "Başkalarının sözünü sık sık keserim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "İşitsel Öğrenme (Auditory)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-44",
+        "questionText": "Ellerimi kullanabileceğim bir şeyler yapmaktan hoşlanırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-45",
+        "questionText": "Sandalyede otururken sallanırım ya da bacağımı sallarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-46",
+        "questionText": "Kalemimi elimde döndürürüm, masada tempo tutarım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-47",
+        "questionText": "Öğretmenlerim asla çalışmadığımı düşünürler",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-48",
+        "questionText": "Öğretmenlerim sınıfta çok fazla hareket ettiğimi düşünürler",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-49",
+        "questionText": "Genellikle hiperaktif olduğum söylenir",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-50",
+        "questionText": "Çalışırken sık sık ara verir, başka şeyler yaparım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-51",
+        "questionText": "Arkadaşlarıma el şakası yapmaya bayılırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-52",
+        "questionText": "Kapının üst çerçevesine asılarak odaya atlamak isterim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-53",
+        "questionText": "Aktif olarak katıldığım etkinlikleri severim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-54",
+        "questionText": "Bir şeyi görmek ya da duymak yetmez, dokunmak isterim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-55",
+        "questionText": "Her şeye dokunmak isterim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-56",
+        "questionText": "Objeleri biriktirmeyi severim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-57",
+        "questionText": "Sınıfta tahta silmeyi, pencere yada kapı açıp kapatmayı hep ben yapmak isterim",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-58",
+        "questionText": "Kürdanları, kibritleri küçük küçük parçalara ayırırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      },
+      {
+        "id": "ogrenme-stilleri-2025-q-59",
+        "questionText": "Aletleri açar, içini söker, sonra yine bir araya getirmeye çalışırım",
+        "questionType": "YES_NO",
+        "required": false,
+        "options": [
+          "Evet",
+          "Hayır"
+        ],
+        "category": "Kinestetik Öğrenme (Kinesthetic)"
+      }
+    ]
+  }
+]
