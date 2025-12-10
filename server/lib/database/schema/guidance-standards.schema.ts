@@ -121,33 +121,39 @@ export function seedGuidanceStandards(db: Database.Database): void {
       const anaResult = insertAna.run(ana.ad);
       const anaId = anaResult.lastInsertRowid;
 
-      if (ana.hizmet_alanlari) {
-        for (const ha of ana.hizmet_alanlari) {
+      // JSON: "drp_bir" maps to DB: "drp_hizmet_alani"
+      if (ana.drp_bir) {
+        for (const ha of ana.drp_bir) {
           const haResult = insertHA.run(anaId, ha.ad);
           const haId = haResult.lastInsertRowid;
 
-          if (ha.drp_bir) {
-            for (const bir of ha.drp_bir) {
+          // JSON: "drp_iki" maps to DB: "drp_bir"
+          if (ha.drp_iki) {
+            for (const bir of ha.drp_iki) {
               const birResult = insertBir.run(haId, bir.ad);
               const birId = birResult.lastInsertRowid;
 
-              if (bir.drp_iki && bir.drp_iki.length > 0) {
-                const subCategories = bir.drp_iki.filter((i: any) => i.ad);
-                const directItems = bir.drp_iki.filter((i: any) => !i.ad && (i.kod || i.aciklama));
+              // JSON: "drp_uc" maps to DB: "drp_iki"
+              if (bir.drp_uc && bir.drp_uc.length > 0) {
+                const subCategories = bir.drp_uc.filter((i: any) => i.ad);
+                const directItems = bir.drp_uc.filter((i: any) => !i.ad && (i.kod || i.aciklama));
 
+                // Process standard nested categories
                 for (const iki of subCategories) {
                   const ikiResult = insertIki.run(birId, iki.ad);
                   const ikiId = ikiResult.lastInsertRowid;
 
-                  if (iki.drp_uc) {
-                    for (const uc of iki.drp_uc) {
+                  // JSON: "drp_dort" maps to DB: "drp_uc"
+                  if (iki.drp_dort) {
+                    for (const uc of iki.drp_dort) {
                       insertUc.run(ikiId, uc.kod, uc.aciklama);
                     }
                   }
                 }
 
+                // Process direct items (leaves at this level) by creating a surrogate category
                 if (directItems.length > 0) {
-                  // Create surrogate category for direct items
+                  // Create surrogate category in drp_iki (DB Level 4) with same name as parent (bir.ad)
                   const ikiResult = insertIki.run(birId, bir.ad);
                   const ikiId = ikiResult.lastInsertRowid;
 

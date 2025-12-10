@@ -1,38 +1,30 @@
 [
   {
     "id": 1,
-    "ad": "Grup Çalışmaları",
-    "hizmet_alanlari": [
+    "ad": "GRUP ÇALIŞMALARI",
+    "drp_bir": [
       {
-        "id": 1,
+        "id": 2,
         "ad": "Ö - GELİŞİMSEL VE ÖNLEYİCİ HİZMETLER",
-        "drp_bir": [
+        "drp_iki": [
           {
-            "id": 1,
+            "id": 3,
             "ad": "ÖS - SINIF REHBERLİK PROGRAMI",
-            "drp_iki": [
+            "drp_uc": [
               {
-                "id": 1,
+                "id": 4,
                 "ad": "ÖSO - Okul Öncesi",
-                "drp_uc": [
+                "drp_dort": [
                   {
                     "kod": "ÖSO",
                     "aciklama": "Kimden, nereden, ne zaman ve nasıl yardım isteyebileceğini bilir."
-                  },
-                  {
-                    "kod": "ÖSORS",
-                    "aciklama": "Kimden, nereden, ne zaman ve nasıl yardım isteyebileceğini bilir."
-                  },
-                  {
-                    "kod": "ÖSORB",
-                    "aciklama": "Sınavlara ilişkin duygularını açıklar."
                   }
                 ]
               },
               {
-                "id": 2,
+                "id": 5,
                 "ad": "ÖSİ - İlkokul",
-                "drp_uc": [
+                "drp_dort": [
                   {
                     "kod": "ÖSİ1",
                     "aciklama": "Kimden, nereden, ne zaman ve nasıl yardım isteyebileceğini bilir."
@@ -44,9 +36,23 @@
                 ]
               },
               {
-                "id": 3,
+                "id": 6,
+                "ad": "ÖSR - Ortaokul",
+                "drp_dort": [
+                  {
+                    "kod": "ÖSOR5",
+                    "aciklama": "Kimden, nereden, ne zaman ve nasıl yardım isteyebileceğini bilir."
+                  },
+                  {
+                    "kod": "ÖSOR8",
+                    "aciklama": "Sınavlara ilişkin duygularını açıklar."
+                  }
+                ]
+              },
+              {
+                "id": 7,
                 "ad": "ÖSL - Ortaöğretim",
-                "drp_uc": [
+                "drp_dort": [
                   {
                     "kod": "ÖSL9",
                     "aciklama": "Zorbalıkla baş etme yollarını kullanır"
@@ -72,19 +78,19 @@
             ]
           },
           {
-            "id": 2,
+            "id": 8,
             "ad": "ÖOB - BİREYİ TANIMA ÇALIŞMALARI",
-            "drp_iki": [
+            "drp_uc": [
               {
                 "kod": "B.K.P.1.c",
                 "aciklama": "Yaşam Pencerem"
               },
               {
-                "kod": "S.l.2.a",
+                "kod": "S.I.2.a",
                 "aciklama": "Okul Risk Haritası"
               },
               {
-                "kod": "S.l.4.a",
+                "kod": "S.I.4.a",
                 "aciklama": "Sınıf Risk Haritası"
               },
               {
@@ -181,7 +187,7 @@
               },
               {
                 "kod": "B.K.A.20.a",
-                "aciklama": "RİBA(Ortaokul-Öğretmen Formu)"
+                "aciklama": "RİBA (Ortaokul-Öğretmen Formu)"
               },
               {
                 "kod": "B.K.A.21.a",
@@ -222,13 +228,13 @@
             ]
           },
           {
-            "id": 3,
+            "id": 9,
             "ad": "ÖOV - BİLGİ VERME ÇALIŞMALARI",
-            "drp_iki": [
+            "drp_uc": [
               {
-                "id": 1,
+                "id": 10,
                 "ad": "ÖOVK - SOSYAL DUYGUSAL GELİŞİM",
-                "drp_uc": [
+                "drp_dort": [
                   {
                     "kod": "ÖOVKg",
                     "aciklama": "Akran Arabuluculuğu"
@@ -323,7 +329,7 @@
                   },
                   {
                     "kod": "ÖOVKg",
-                    "aciklama": "Sosyal Beceriler"
+                    "aciklama": "Sosyal Becerileri"
                   },
                   {
                     "kod": "ÖOVKg",
@@ -334,24 +340,24 @@
                     "aciklama": "Şiddeti Önleme"
                   },
                   {
-                    "kod": "ÖOVKg (TBM)",
-                    "aciklama": "Alkol Bağımlılığı"
+                    "kod": "ÖOVKg",
+                    "aciklama": "(TBM) Alkol Bağımlılığı"
                   },
                   {
-                    "kod": "ÖOVKg (TBM)",
-                    "aciklama": "Madde Bağımlılığı"
+                    "kod": "ÖOVKg",
+                    "aciklama": "(TBM) Madde Bağımlılığı"
                   },
                   {
-                    "kod": "ÖOVKg (TBM)",
-                    "aciklama": "Sağlıklı Yaşam"
+                    "kod": "ÖOVKg",
+                    "aciklama": "(TBM) Sağlıklı Yaşam"
                   },
                   {
-                    "kod": "ÖOVKg (TBM)",
-                    "aciklama": "Teknoloji Bağımlılığı"
+                    "kod": "ÖOVKg",
+                    "aciklama": "(TBM) Teknoloji Bağımlılığı"
                   },
                   {
-                    "kod": "ÖOVKg (TBM)",
-                    "aciklama": "Tütün Bağımlılığı"
+                    "kod": "ÖOVKg",
+                    "aciklama": "(TBM) Tütün Bağımlılığı"
                   },
                   {
                     "kod": "ÖOVKg",
@@ -363,7 +369,7 @@
                   },
                   {
                     "kod": "ÖOVKg",
-                    "aciklama": "PSD Programı (Güçlendirici Önleyici-GİNSEL İSTİSMAR)"
+                    "aciklama": "PSD Programı (Güçlendirici Önleyici-CİNSEL İSTİSMAR)"
                   },
                   {
                     "kod": "ÖOVKg",
@@ -387,7 +393,7 @@
                   },
                   {
                     "kod": "ÖOVKg",
-                    "aciklama": "PSD Programı(Önleyici Program)"
+                    "aciklama": "PSD Programı (Önleyici Program)"
                   },
                   {
                     "kod": "ÖOVKg",
@@ -400,9 +406,9 @@
                 ]
               },
               {
-                "id": 2,
+                "id": 11,
                 "ad": "ÖOVE - AKADEMİK GELİŞİM",
-                "drp_uc": [
+                "drp_dort": [
                   {
                     "kod": "ÖOVEg",
                     "aciklama": "Çalışma Programı Hazırlama"
@@ -522,9 +528,9 @@
                 ]
               },
               {
-                "id": 3,
+                "id": 12,
                 "ad": "ÖOVM - KARIYER GELİŞİMİ",
-                "drp_uc": [
+                "drp_dort": [
                   {
                     "kod": "ÖOVMg",
                     "aciklama": "Bir Meslek Elemanını Sınıfa/Okula Davet Etme"
@@ -590,9 +596,9 @@
             ]
           },
           {
-            "id": 4,
+            "id": 13,
             "ad": "ÖOY - YÖNELTME VE İZLEME",
-            "drp_iki": [
+            "drp_uc": [
               {
                 "kod": "ÖOY",
                 "aciklama": "Alan/Dal Tercihleri"
@@ -614,18 +620,18 @@
         ]
       },
       {
-        "id": 2,
+        "id": 14,
         "ad": "İ - İYİLEŞTİRİCİ HİZMETLER",
-        "drp_bir": [
+        "drp_iki": [
           {
-            "id": 5,
+            "id": 15,
             "ad": "İG - GRUPLA PSİKOLOJİK DANIŞMA",
-            "drp_iki": []
+            "drp_uc": []
           },
           {
-            "id": 6,
+            "id": 16,
             "ad": "İP - PSİKOSOSYAL MÜDAHALE",
-            "drp_iki": [
+            "drp_uc": [
               {
                 "kod": "İpg",
                 "aciklama": "PSD Programı (Güçlendirici-GÖÇ)"
@@ -659,53 +665,17 @@
         ]
       },
       {
-        "id": 3,
+        "id": 17,
         "ad": "D - DESTEK HİZMETLER",
-        "drp_bir": [
+        "drp_iki": [
           {
-            "id": 7,
+            "id": 18,
             "ad": "DM - MÜŞAVİRLİK",
-            "drp_iki": [
+            "drp_uc": [
               {
-                "id": 1,
+                "id": 19,
                 "ad": "DMV - VELİYE YÖNELİK",
-                "drp_uc": [
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Aile"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Akademik Konular"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Davranış Sorunları"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Okula ve Çevreye Uyum"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Psikolojik Uyum"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Sağlık"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Sosyal Uyum"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Sosyo-ekonomik Konular"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Yönetime Yerleştirme"
-                  },
+                "drp_dort": [
                   {
                     "kod": "DMVE",
                     "aciklama": "Aile İçi İletişim"
@@ -788,7 +758,7 @@
                   },
                   {
                     "kod": "DMVE",
-                    "aciklama": "Engel Türleri ve Tamlama Süreçleri"
+                    "aciklama": "Engel Türleri ve Tanılama Süreçleri"
                   },
                   {
                     "kod": "DMVE",
@@ -804,7 +774,7 @@
                   },
                   {
                     "kod": "DMVE",
-                    "aciklama": "İhmal istismardan Korunma"
+                    "aciklama": "İhmal İstismardan Korunma"
                   },
                   {
                     "kod": "DMVE",
@@ -1005,45 +975,9 @@
                 ]
               },
               {
-                "id": 2,
+                "id": 20,
                 "ad": "DMÖ - ÖĞRETMENE YÖNELİK",
-                "drp_uc": [
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Aile"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Akademik Konular"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Davranış Sorunları"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Okula ve Çevreye Uyum"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Psikolojik Uyum"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Sağlık"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Sosyal Uyum"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Sosyo-ekonomik Konular"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Yönetime Yerleştirme"
-                  },
+                "drp_dort": [
                   {
                     "kod": "DMÖE",
                     "aciklama": "Akran Arabuluculuğu"
@@ -1266,7 +1200,7 @@
                   },
                   {
                     "kod": "DMÖE",
-                    "aciklama": "TBM Tütün Bağımlılı"
+                    "aciklama": "TBM Tütün Bağımlılığı"
                   },
                   {
                     "kod": "DMÖE",
@@ -1307,9 +1241,9 @@
                 ]
               },
               {
-                "id": 3,
+                "id": 21,
                 "ad": "DMD - DİĞER KİŞİLERE YÖNELİK",
-                "drp_uc": [
+                "drp_dort": [
                   {
                     "kod": "DMDE",
                     "aciklama": "Bağımlılıkla Mücadele"
@@ -1387,9 +1321,9 @@
             ]
           },
           {
-            "id": 8,
+            "id": 22,
             "ad": "DP - PROGRAM YÖNETİMİ, ARAŞTIRMA, PROJE",
-            "drp_iki": [
+            "drp_uc": [
               {
                 "kod": "DP",
                 "aciklama": "Araştırma Çalışmaları"
@@ -1428,7 +1362,7 @@
               },
               {
                 "kod": "DP",
-                "aciklama": "Rehberlik ve Psikolojik Danışma Servisi Desimali Oluşturulması"
+                "aciklama": "Rehberlik ve Psikolojik Danışma Servisi Dosyaları Oluşturulması"
               },
               {
                 "kod": "DP",
@@ -1437,13 +1371,13 @@
             ]
           },
           {
-            "id": 9,
+            "id": 23,
             "ad": "Dİ - İŞ BİRLİĞİ",
-            "drp_iki": [
+            "drp_uc": [
               {
-                "id": 1,
+                "id": 24,
                 "ad": "DİT - TOPLANTILAR",
-                "drp_uc": [
+                "drp_dort": [
                   {
                     "kod": "DİT",
                     "aciklama": "BEP Geliştirme Birimi Toplantıları"
@@ -1491,9 +1425,9 @@
                 ]
               },
               {
-                "id": 2,
+                "id": 25,
                 "ad": "DİF - FAALİYETLER",
-                "drp_uc": [
+                "drp_dort": [
                   {
                     "kod": "DİF",
                     "aciklama": "Aile Katılımı Çalışmaları"
@@ -1523,9 +1457,9 @@
             ]
           },
           {
-            "id": 10,
+            "id": 26,
             "ad": "DG - MESLEKİ GELİŞİM",
-            "drp_iki": [
+            "drp_uc": [
               {
                 "kod": "DG",
                 "aciklama": "Bilimsel Kongreye Katılma"
@@ -1553,117 +1487,21 @@
             ]
           }
         ]
-      },
-      {
-        "id": 6,
-        "ad": "D - DESTEK HİZMETLER",
-        "drp_bir": [
-          {
-            "id": 17,
-            "ad": "DM - MÜŞAVİRLİK",
-            "drp_iki": [
-              {
-                "id": 28,
-                "ad": "DMV - VELİYE YÖNELİK",
-                "drp_uc": [
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Aile"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Akademik Konular"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Davranış Sorunları"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Okula ve Çevreye Uyum"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Psikolojik Uyum"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Sağlık"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Sosyal Uyum"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Sosyo-ekonomik Konular"
-                  },
-                  {
-                    "kod": "DMVG",
-                    "aciklama": "Yönetime Yerleştirme"
-                  }
-                ]
-              },
-              {
-                "id": 29,
-                "ad": "DMÖ - ÖĞRETMENE YÖNELİK",
-                "drp_uc": [
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Aile"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Akademik Konular"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Davranış Sorunları"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Okula ve Çevreye Uyum"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Psikolojik Uyum"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Sağlık"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Sosyal Uyum"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Sosyo-ekonomik Konular"
-                  },
-                  {
-                    "kod": "DMÖG",
-                    "aciklama": "Yönetime Yerleştirme"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
       }
     ]
   },
   {
-    "id": 2,
-    "ad": "Bireysel Çalışmalar",
-    "hizmet_alanlari": [
+    "id": 27,
+    "ad": "BİREYSEL ÇALIŞMALAR",
+    "drp_bir": [
       {
-        "id": 4,
+        "id": 28,
         "ad": "Ö - GELİŞİMSEL VE ÖNLEYİCİ HİZMETLER",
-        "drp_bir": [
+        "drp_iki": [
           {
-            "id": 11,
+            "id": 29,
             "ad": "ÖOB - BİREYİ TANIMA ÇALIŞMALARI",
-            "drp_iki": [
+            "drp_uc": [
               {
                 "kod": "B.K.P.1.c",
                 "aciklama": "Yaşam Pencerem"
@@ -1730,11 +1568,11 @@
               },
               {
                 "kod": "B.G.G.2.c",
-                "aciklama": "Çocuğumu Tamyorum Formu"
+                "aciklama": "Çocuğumu Tanıyorum Formu"
               },
               {
                 "kod": "B.G.G.1.c",
-                "aciklama": "Aile içi Gözlem Formu"
+                "aciklama": "Aile İçi Gözlem Formu"
               },
               {
                 "kod": "B.G.G.3.c",
@@ -1754,7 +1592,7 @@
               },
               {
                 "kod": "B.K.G.7.c",
-                "aciklama": "Öğrenci-Ön görüşme Formu"
+                "aciklama": "Öğrenci-Ön Görüşme Formu"
               },
               {
                 "kod": "B.K.A.2.c",
@@ -1767,13 +1605,13 @@
             ]
           },
           {
-            "id": 12,
+            "id": 30,
             "ad": "ÖOV - BİLGİ VERME ÇALIŞMALARI",
-            "drp_iki": [
+            "drp_uc": [
               {
-                "id": 1,
+                "id": 31,
                 "ad": "ÖOVK - SOSYAL DUYGUSAL GELİŞİM",
-                "drp_uc": [
+                "drp_dort": [
                   {
                     "kod": "ÖOVKb",
                     "aciklama": "Aile"
@@ -1805,9 +1643,9 @@
                 ]
               },
               {
-                "id": 2,
+                "id": 32,
                 "ad": "ÖOVE - AKADEMİK GELİŞİM",
-                "drp_uc": [
+                "drp_dort": [
                   {
                     "kod": "ÖOVEb",
                     "aciklama": "Başarısızlık Nedenleri"
@@ -1914,14 +1752,14 @@
                   },
                   {
                     "kod": "ÖOVEb",
-                    "aciklama": "Zamanı Yönetimi"
+                    "aciklama": "Zaman Yönetimi"
                   }
                 ]
               },
               {
-                "id": 3,
+                "id": 33,
                 "ad": "ÖOVM - KARIYER GELİŞİMİ",
-                "drp_uc": [
+                "drp_dort": [
                   {
                     "kod": "ÖOVMb",
                     "aciklama": "Çalışan/İşveren Hak ve Sorumlulukları"
@@ -1968,7 +1806,7 @@
                   },
                   {
                     "kod": "ÖOVMb",
-                    "aciklama": "Meslek ve İlgili İlişkisi"
+                    "aciklama": "Meslek ve İlgi İlişkisi"
                   },
                   {
                     "kod": "ÖOVMb",
@@ -1980,7 +1818,7 @@
                   },
                   {
                     "kod": "ÖOVMb",
-                    "aciklama": "Mesleki Hedef Belirleme"
+                    "aciklama": "Meslek Hedef Belirleme"
                   },
                   {
                     "kod": "ÖOVMb",
@@ -1999,9 +1837,9 @@
             ]
           },
           {
-            "id": 13,
+            "id": 34,
             "ad": "ÖOY - YÖNELTME VE İZLEME",
-            "drp_iki": [
+            "drp_uc": [
               {
                 "kod": "ÖOY",
                 "aciklama": "Alan/Dal Tercihleri"
@@ -2023,13 +1861,13 @@
         ]
       },
       {
-        "id": 5,
+        "id": 35,
         "ad": "İ - İYİLEŞTİRİCİ HİZMETLER",
-        "drp_bir": [
+        "drp_iki": [
           {
-            "id": 14,
+            "id": 36,
             "ad": "İB - BİREYSEL PSİKOLOJİK DANIŞMA",
-            "drp_iki": [
+            "drp_uc": [
               {
                 "kod": "İB",
                 "aciklama": "Aile"
@@ -2067,104 +1905,98 @@
                 "aciklama": "OBM"
               }
             ]
-          }
-        ]
-      },
-      {
-        "id": 15,
-        "ad": "İP - PSİKOSOSYAL MÜDAHALE",
-        "drp_iki": [
+          },
           {
-            "id": 24,
-            "ad": "İPbB - BİLDİRİM YÜKÜMLÜLÜĞÜ",
+            "id": 37,
+            "ad": "İP - PSİKOSOSYAL MÜDAHALE",
             "drp_uc": [
               {
-                "kod": "İPbB",
-                "aciklama": "Cinsel İstismar"
+                "id": 38,
+                "ad": "İPbB - BİLDİRİM YÜKÜMLÜLÜĞÜ",
+                "drp_dort": [
+                  {
+                    "kod": "İPbB",
+                    "aciklama": "Cinsel İstismar"
+                  },
+                  {
+                    "kod": "İPbB",
+                    "aciklama": "Duygusal İhmal"
+                  },
+                  {
+                    "kod": "İPbB",
+                    "aciklama": "Duygusal İstismar"
+                  },
+                  {
+                    "kod": "İPbB",
+                    "aciklama": "Eğitim ile İlgili İhmal"
+                  },
+                  {
+                    "kod": "İPbB",
+                    "aciklama": "Ekonomik İstismar"
+                  },
+                  {
+                    "kod": "İPbB",
+                    "aciklama": "Fiziksel İhmal"
+                  },
+                  {
+                    "kod": "İPbB",
+                    "aciklama": "Fiziksel İstismar"
+                  },
+                  {
+                    "kod": "İPbB",
+                    "aciklama": "Madde Bulundurma"
+                  },
+                  {
+                    "kod": "İPbB",
+                    "aciklama": "Madde Kullanımı"
+                  },
+                  {
+                    "kod": "İPbB",
+                    "aciklama": "Madde Satışı"
+                  },
+                  {
+                    "kod": "İPbB",
+                    "aciklama": "Sağlık İhmalı"
+                  }
+                ]
               },
               {
-                "kod": "İPbB",
-                "aciklama": "Duygusal İhmal"
+                "id": 39,
+                "ad": "İPbT - KORUYUCU VE DESTEKLEYİCİ TEDBİR",
+                "drp_dort": [
+                  {
+                    "kod": "İPbT",
+                    "aciklama": "Danışmanlık Tedbiri"
+                  },
+                  {
+                    "kod": "İPbT",
+                    "aciklama": "Danışmanlık ve Eğitim Tedbiri"
+                  },
+                  {
+                    "kod": "İPbT",
+                    "aciklama": "Eğitim Tedbiri"
+                  }
+                ]
               },
               {
-                "kod": "İPbB",
-                "aciklama": "Duygusal İstismar"
-              },
-              {
-                "kod": "İPbB",
-                "aciklama": "Eğitim ile İlgili İhmal"
-              },
-              {
-                "kod": "İPbB",
-                "aciklama": "Ekonomik İstismar"
-              },
-              {
-                "kod": "İPbB",
-                "aciklama": "Fiziksel İhmal"
-              },
-              {
-                "kod": "İPbB",
-                "aciklama": "Fiziksel İstismar"
-              },
-              {
-                "kod": "İPbB",
-                "aciklama": "Madde Bulundurma"
-              },
-              {
-                "kod": "İPbB",
-                "aciklama": "Madde Kullanımı"
-              },
-              {
-                "kod": "İPbB",
-                "aciklama": "Madde Satışı"
-              },
-              {
-                "kod": "İPbB",
-                "aciklama": "Sağlık İhmalı"
+                "id": 40,
+                "ad": "İPbİ - İNTHAR",
+                "drp_dort": [
+                  {
+                    "kod": "İPbİ",
+                    "aciklama": "Tamamlanmamış İntihar"
+                  },
+                  {
+                    "kod": "İPbİ",
+                    "aciklama": "Tamamlanmış İntihar"
+                  }
+                ]
               }
             ]
           },
           {
-            "id": 25,
-            "ad": "İPbT - KORUYUCU VE DESTEKLEYİCİ TEDBİR",
-            "drp_uc": [
-              {
-                "kod": "İPbT",
-                "aciklama": "Danışmanlık Tedbiri"
-              },
-              {
-                "kod": "İPbT",
-                "aciklama": "Danışmanlık ve Eğitim Tedbiri"
-              },
-              {
-                "kod": "İPbT",
-                "aciklama": "Eğitim Tedbiri"
-              }
-            ]
-          },
-          {
-            "id": 26,
-            "ad": "İPbİ - İNTHAR",
-            "drp_uc": [
-              {
-                "kod": "İPbİ",
-                "aciklama": "Tamamlanmamış İntihar"
-              },
-              {
-                "kod": "İPbİ",
-                "aciklama": "Tamamlanmış İntihar"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": 16,
-        "ad": "İS - SEVK (YÖNLENDİRME)",
-        "drp_iki": [
-          {
-            "id": 27,
-            "ad": "BİREYSEL SEVK",
+            "id": 41,
+            "ad": "İS - SEVK (YÖNLENDİRME)",
             "drp_uc": [
               {
                 "kod": "İS",
@@ -2176,11 +2008,107 @@
               },
               {
                 "kod": "İS",
-                "aciklama": "ASHÇB 'ye Bağlı Kuruluşlara Yönlendirme"
+                "aciklama": "ASHÇB ’ye Bağlı Kuruluşlara Yönlendirme"
               },
               {
                 "kod": "İS",
                 "aciklama": "Diğer"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 42,
+        "ad": "D - DESTEK HİZMETLER",
+        "drp_iki": [
+          {
+            "id": 43,
+            "ad": "DM - MÜŞAVİRLİK",
+            "drp_uc": [
+              {
+                "id": 44,
+                "ad": "DMV - VELİYE YÖNELİK",
+                "drp_dort": [
+                  {
+                    "kod": "DMVG",
+                    "aciklama": "Aile"
+                  },
+                  {
+                    "kod": "DMVG",
+                    "aciklama": "Akademik Konular"
+                  },
+                  {
+                    "kod": "DMVG",
+                    "aciklama": "Davranış Sorunları"
+                  },
+                  {
+                    "kod": "DMVG",
+                    "aciklama": "Okula ve Çevreye Uyum"
+                  },
+                  {
+                    "kod": "DMVG",
+                    "aciklama": "Psikolojik Uyum"
+                  },
+                  {
+                    "kod": "DMVG",
+                    "aciklama": "Sağlık"
+                  },
+                  {
+                    "kod": "DMVG",
+                    "aciklama": "Sosyal Uyum"
+                  },
+                  {
+                    "kod": "DMVG",
+                    "aciklama": "Sosyo-ekonomik Konular"
+                  },
+                  {
+                    "kod": "DMVG",
+                    "aciklama": "Yöneltme Yerleştirme"
+                  }
+                ]
+              },
+              {
+                "id": 45,
+                "ad": "DMÖ - ÖĞRETMENE YÖNELİK",
+                "drp_dort": [
+                  {
+                    "kod": "DMÖG",
+                    "aciklama": "Aile"
+                  },
+                  {
+                    "kod": "DMÖG",
+                    "aciklama": "Akademik Konular"
+                  },
+                  {
+                    "kod": "DMÖG",
+                    "aciklama": "Davranış Sorunları"
+                  },
+                  {
+                    "kod": "DMÖG",
+                    "aciklama": "Okula ve Çevreye Uyum"
+                  },
+                  {
+                    "kod": "DMÖG",
+                    "aciklama": "Psikolojik Uyum"
+                  },
+                  {
+                    "kod": "DMÖG",
+                    "aciklama": "Sağlık"
+                  },
+                  {
+                    "kod": "DMÖG",
+                    "aciklama": "Sosyal Uyum"
+                  },
+                  {
+                    "kod": "DMÖG",
+                    "aciklama": "Sosyo-ekonomik Konular"
+                  },
+                  {
+                    "kod": "DMÖG",
+                    "aciklama": "Yöneltme Yerleştirme"
+                  }
+                ]
               }
             ]
           }
