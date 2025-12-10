@@ -152,8 +152,10 @@ export default function ParticipantStep({
                                       <Check className="h-2.5 w-2.5 text-white" />
                                     )}
                                   </div>
-                                  <span className="font-medium text-sm text-slate-800 dark:text-slate-200 truncate">{student.name} {student.surname}</span>
-                                  <span className="ml-auto text-[11px] text-slate-500 dark:text-slate-400 shrink-0">{student.class}</span>
+                                  <span className="text-sm text-slate-800 dark:text-slate-200 truncate">
+                                    <span className="font-medium">{student.name} {student.surname}</span>
+                                    <span className="text-slate-500 dark:text-slate-400 ml-1.5">({student.class})</span>
+                                  </span>
                                 </CommandItem>
                               ))}
                             </CommandGroup>
@@ -239,8 +241,10 @@ export default function ParticipantStep({
                                         <Check className="h-2.5 w-2.5 text-white" />
                                       )}
                                     </div>
-                                    <span className="font-medium text-sm text-slate-800 dark:text-slate-200 truncate">{student.name} {student.surname}</span>
-                                    <span className="ml-auto text-[11px] text-slate-500 dark:text-slate-400 shrink-0">{student.class}</span>
+                                    <span className="text-sm text-slate-800 dark:text-slate-200 truncate">
+                                      <span className="font-medium">{student.name} {student.surname}</span>
+                                      <span className="text-slate-500 dark:text-slate-400 ml-1.5">({student.class})</span>
+                                    </span>
                                   </CommandItem>
                                 );
                               })}

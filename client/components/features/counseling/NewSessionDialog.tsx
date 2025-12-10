@@ -248,8 +248,10 @@ export default function NewSessionDialog({
                                         <Check className="h-2.5 w-2.5 text-white" />
                                       )}
                                     </div>
-                                    <span className="font-medium text-sm text-slate-800 dark:text-white truncate">{student.name} {student.surname}</span>
-                                    <span className="ml-auto text-xs text-slate-500 shrink-0">{student.class}</span>
+                                    <span className="text-sm text-slate-800 dark:text-white truncate">
+                                      <span className="font-medium">{student.name} {student.surname}</span>
+                                      <span className="text-slate-500 ml-1.5">({student.class})</span>
+                                    </span>
                                   </CommandItem>
                                 ))}
                               </CommandGroup>
@@ -343,8 +345,10 @@ export default function NewSessionDialog({
                                           <Check className="h-2.5 w-2.5 text-white" />
                                         )}
                                       </div>
-                                      <span className="font-medium text-sm text-slate-800 dark:text-white truncate">{student.name} {student.surname}</span>
-                                      <span className="ml-auto text-xs text-slate-500 shrink-0">{student.class}</span>
+                                      <span className="text-sm text-slate-800 dark:text-white truncate">
+                                        <span className="font-medium">{student.name} {student.surname}</span>
+                                        <span className="text-slate-500 ml-1.5">({student.class})</span>
+                                      </span>
                                     </CommandItem>
                                   );
                                 })}
