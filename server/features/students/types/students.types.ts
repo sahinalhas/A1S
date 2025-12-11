@@ -5,7 +5,10 @@ export interface Student {
   surname: string;
 
   // Education Information
-  class?: string;
+  grade?: string;       // Sınıf (1-12, Anasınıfı, Hazırlık)
+  section?: string;     // Şube (A, B, C, D, E, F)
+  isSpecialEducation?: boolean; // Özel Eğitim Sınıfı
+  class?: string;       // Computed: grade + section - backward compatible
   studentNumber?: string;
   gender?: 'K' | 'E';
   birthDate?: string;

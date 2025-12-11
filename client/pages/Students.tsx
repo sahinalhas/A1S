@@ -136,7 +136,8 @@ export default function Students() {
       id: '',
       name: '',
       surname: '',
-      class: '9/A',
+      grade: '9',
+      section: 'A',
       gender: 'K',
       enrollmentDate: new Date().toISOString(),
     },
@@ -188,7 +189,9 @@ export default function Students() {
     setValue('id', student.id);
     setValue('name', student.name);
     setValue('surname', student.surname);
-    setValue('class', student.class);
+    setValue('grade', student.grade || '');
+    setValue('section', student.section || '');
+    setValue('isSpecialEducation', student.isSpecialEducation || false);
     setValue('gender', student.gender);
     setEditOpen(true);
   };
@@ -472,87 +475,87 @@ export default function Students() {
               Tüm öğrenci kayıtlarını görüntüleyin, yönetin ve analiz edin.
             </p>
             <div className="flex flex-wrap gap-3">
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild>
-                <Button size="default" className="bg-white text-blue-600 hover:bg-white/90 shadow-lg">
-                  <UserPlus className="mr-2 h-4 w-4" />
-                  Yeni Öğrenci Ekle
-                </Button>
-              </DialogTrigger>
-              <StudentFormDialog
-                onSubmit={handleSubmit(onCreate)}
-                register={register}
-                setValue={setValue}
-                watch={watch}
-                errors={errors}
-                title="Yeni Öğrenci Ekle"
-                submitText="Kaydet"
-              />
-            </Dialog>
+              <Dialog open={open} onOpenChange={setOpen}>
+                <DialogTrigger asChild>
+                  <Button size="default" className="bg-white text-blue-600 hover:bg-white/90 shadow-lg">
+                    <UserPlus className="mr-2 h-4 w-4" />
+                    Yeni Öğrenci Ekle
+                  </Button>
+                </DialogTrigger>
+                <StudentFormDialog
+                  onSubmit={handleSubmit(onCreate)}
+                  register={register}
+                  setValue={setValue}
+                  watch={watch}
+                  errors={errors}
+                  title="Yeni Öğrenci Ekle"
+                  submitText="Kaydet"
+                />
+              </Dialog>
 
-            <label className="inline-flex items-center">
-              <input
-                type="file"
-                accept=".xlsx,.xls,.csv"
-                className="hidden"
-                onChange={(e) => e.target.files && importSheet(e.target.files[0])}
-              />
-              <Button variant="outline" size="default" className="border-white/50 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm" asChild>
-                <span>
-                  <Upload className="mr-2 h-4 w-4" />
-                  İçe Aktar
-                </span>
-              </Button>
-            </label>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="default" className="border-white/50 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm">
-                  <Download className="mr-2 h-4 w-4" />
-                  Dışa Aktar
+              <label className="inline-flex items-center">
+                <input
+                  type="file"
+                  accept=".xlsx,.xls,.csv"
+                  className="hidden"
+                  onChange={(e) => e.target.files && importSheet(e.target.files[0])}
+                />
+                <Button variant="outline" size="default" className="border-white/50 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm" asChild>
+                  <span>
+                    <Upload className="mr-2 h-4 w-4" />
+                    İçe Aktar
+                  </span>
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Dışa Aktarma Formatı</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={() =>
-                    exportToCSV(
-                      selectedStudentIds.size > 0
-                        ? students.filter((s) => selectedStudentIds.has(s.id))
-                        : filters.filteredStudents
-                    )
-                  }
-                >
-                  <FileText className="mr-2 h-4 w-4" />
-                  CSV Dosyası
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() =>
-                    exportToExcel(
-                      selectedStudentIds.size > 0
-                        ? students.filter((s) => selectedStudentIds.has(s.id))
-                        : filters.filteredStudents
-                    )
-                  }
-                >
-                  <FileSpreadsheet className="mr-2 h-4 w-4" />
-                  Excel Dosyası
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() =>
-                    exportToPDF(
-                      selectedStudentIds.size > 0
-                        ? students.filter((s) => selectedStudentIds.has(s.id))
-                        : filters.filteredStudents
-                    )
-                  }
-                >
-                  <FileText className="mr-2 h-4 w-4" />
-                  PDF Dosyası
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </label>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="default" className="border-white/50 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm">
+                    <Download className="mr-2 h-4 w-4" />
+                    Dışa Aktar
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>Dışa Aktarma Formatı</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() =>
+                      exportToCSV(
+                        selectedStudentIds.size > 0
+                          ? students.filter((s) => selectedStudentIds.has(s.id))
+                          : filters.filteredStudents
+                      )
+                    }
+                  >
+                    <FileText className="mr-2 h-4 w-4" />
+                    CSV Dosyası
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      exportToExcel(
+                        selectedStudentIds.size > 0
+                          ? students.filter((s) => selectedStudentIds.has(s.id))
+                          : filters.filteredStudents
+                      )
+                    }
+                  >
+                    <FileSpreadsheet className="mr-2 h-4 w-4" />
+                    Excel Dosyası
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      exportToPDF(
+                        selectedStudentIds.size > 0
+                          ? students.filter((s) => selectedStudentIds.has(s.id))
+                          : filters.filteredStudents
+                      )
+                    }
+                  >
+                    <FileText className="mr-2 h-4 w-4" />
+                    PDF Dosyası
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
@@ -693,7 +696,7 @@ export default function Students() {
                     key={student.id}
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ 
+                    transition={{
                       delay: index * 0.03,
                       duration: 0.3,
                       ease: "easeOut"
@@ -729,7 +732,7 @@ export default function Students() {
             )}
 
             {pagination.totalPages > 1 && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
@@ -771,11 +774,10 @@ export default function Students() {
                           <PaginationLink
                             onClick={() => pagination.setPage(pageNum)}
                             isActive={pageNum === pagination.currentPage}
-                            className={`cursor-pointer transition-all ${
-                              pageNum === pagination.currentPage 
-                                ? 'bg-primary text-primary-foreground shadow-lg scale-110' 
-                                : 'hover:bg-primary/10'
-                            }`}
+                            className={`cursor-pointer transition-all ${pageNum === pagination.currentPage
+                              ? 'bg-primary text-primary-foreground shadow-lg scale-110'
+                              : 'hover:bg-primary/10'
+                              }`}
                           >
                             {pageNum}
                           </PaginationLink>
@@ -948,7 +950,51 @@ function StudentFormDialog({
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium">Sınıf</label>
-          <Input placeholder="9/A" {...register('class')} />
+          <Select
+            onValueChange={(v) => setValue('grade', v)}
+            value={watch('grade') || ''}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Sınıf Seçin" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Anasınıfı">Anasınıfı</SelectItem>
+              <SelectItem value="1">1</SelectItem>
+              <SelectItem value="2">2</SelectItem>
+              <SelectItem value="3">3</SelectItem>
+              <SelectItem value="4">4</SelectItem>
+              <SelectItem value="5">5</SelectItem>
+              <SelectItem value="6">6</SelectItem>
+              <SelectItem value="7">7</SelectItem>
+              <SelectItem value="8">8</SelectItem>
+              <SelectItem value="9">9</SelectItem>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="11">11</SelectItem>
+              <SelectItem value="12">12</SelectItem>
+              <SelectItem value="Hazırlık">Hazırlık</SelectItem>
+            </SelectContent>
+          </Select>
+          <input type="hidden" {...register('grade')} />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Şube</label>
+          <Select
+            onValueChange={(v) => setValue('section', v)}
+            value={watch('section') || ''}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Şube Seçin" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="A">A</SelectItem>
+              <SelectItem value="B">B</SelectItem>
+              <SelectItem value="C">C</SelectItem>
+              <SelectItem value="D">D</SelectItem>
+              <SelectItem value="E">E</SelectItem>
+              <SelectItem value="F">F</SelectItem>
+            </SelectContent>
+          </Select>
+          <input type="hidden" {...register('section')} />
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium">Cinsiyet</label>
@@ -965,6 +1011,17 @@ function StudentFormDialog({
             </SelectContent>
           </Select>
           <input type="hidden" {...register('gender')} />
+        </div>
+        <div className="col-span-1 md:col-span-2 flex items-center space-x-2">
+          <input
+            type="checkbox"
+            id="isSpecialEducation"
+            className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+            {...register('isSpecialEducation')}
+          />
+          <label htmlFor="isSpecialEducation" className="text-sm font-medium cursor-pointer">
+            Özel Eğitim Sınıfı
+          </label>
         </div>
       </form>
       <DialogFooter className="flex-col sm:flex-row gap-2">

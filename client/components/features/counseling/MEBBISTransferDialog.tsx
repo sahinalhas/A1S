@@ -11,6 +11,8 @@ import { Alert, AlertDescription } from '@/components/atoms/Alert';
 import { ScrollArea } from '@/components/organisms/ScrollArea';
 import { Loader2, CheckCircle2, XCircle, AlertCircle, Upload } from 'lucide-react';
 import { useMEBBISTransfer } from '@/hooks/features/useMEBBISTransfer';
+import { useToast } from '@/hooks/use-toast';
+import { useEffect, useRef } from 'react';
 import type { StartTransferRequest } from '@shared/types/mebbis-transfer.types';
 
 interface MEBBISTransferDialogProps {
@@ -29,6 +31,56 @@ export function MEBBISTransferDialog({
   schoolId
 }: MEBBISTransferDialogProps) {
   const { transferState, startTransfer, cancelTransfer, resetTransfer } = useMEBBISTransfer();
+  const { toast } = useToast();
+  const hasShownToast = useRef(false);
+
+  // Auto-close dialog and show toast when transfer completes
+  useEffect(() => {
+    if ((transferState.status === 'completed' || transferState.status === 'error' || transferState.status === 'cancelled') && !hasShownToast.current) {
+      hasShownToast.current = true;
+
+      const { completed, failed, total } = transferState.progress;
+
+      if (transferState.status === 'completed') {
+        toast({
+          title: "✅ MEBBIS Aktarımı Tamamlandı",
+          description: failed > 0
+            ? `${completed} görüşme aktarıldı, ${failed} başarısız.`
+            : `${completed} görüşme başarıyla MEBBIS'e aktarıldı.`,
+          variant: failed > 0 ? "default" : "default",
+          duration: 5000,
+        });
+      } else if (transferState.status === 'error') {
+        toast({
+          title: "❌ MEBBIS Aktarımı Hata",
+          description: "Aktarım sırasında bir hata oluştu.",
+          variant: "destructive",
+          duration: 5000,
+        });
+      } else if (transferState.status === 'cancelled') {
+        toast({
+          title: "⚠️ MEBBIS Aktarımı İptal Edildi",
+          description: `${completed} görüşme aktarıldı, ${total - completed} iptal edildi.`,
+          variant: "default",
+          duration: 5000,
+        });
+      }
+
+      // Auto-close after 2 seconds
+      setTimeout(() => {
+        resetTransfer();
+        onOpenChange(false);
+        hasShownToast.current = false;
+      }, 2000);
+    }
+  }, [transferState.status, transferState.progress, toast, resetTransfer, onOpenChange]);
+
+  // Reset toast flag when dialog opens
+  useEffect(() => {
+    if (open) {
+      hasShownToast.current = false;
+    }
+  }, [open]);
 
   const handleStart = async () => {
     const request: StartTransferRequest = {
@@ -118,9 +170,9 @@ export function MEBBISTransferDialog({
                   <p className="font-medium text-blue-900">📱 Telefonunuzla QR Kodu Okutun</p>
                   <p className="text-blue-700">MEBBIS giriş sayfası açıldı. Aşağıdaki QR kodu telefonunuzla okutarak giriş yapın.</p>
                   <div className="bg-white p-3 rounded-lg border-2 border-blue-300">
-                    <img 
-                      src="/mebbis-qr-code.png" 
-                      alt="MEBBIS QR Code" 
+                    <img
+                      src="/mebbis-qr-code.png"
+                      alt="MEBBIS QR Code"
                       className="w-full max-w-sm mx-auto"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';

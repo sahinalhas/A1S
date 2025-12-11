@@ -865,9 +865,20 @@ export class MEBBISAutomationService {
 
   /**
    * Converts flexible class format to MEBBIS dropdown format.
+   * If grade and section are provided separately, uses them directly.
+   * Otherwise parses from combined className.
    * Examples: "7A" -> "7. Sınıf / A Şubesi", "7-B" -> "7. Sınıf / B Şubesi"
    */
-  private parseClassToMEBBISFormat(className: string): { grade: string; section: string; searchPattern: string } {
+  private parseClassToMEBBISFormat(className: string, separateGrade?: string, separateSection?: string): { grade: string; section: string; searchPattern: string } {
+    // If grade and section are provided separately, use them directly
+    if (separateGrade && separateSection) {
+      return {
+        grade: separateGrade,
+        section: separateSection.toUpperCase(),
+        searchPattern: `${separateGrade}. Sınıf / ${separateSection.toUpperCase()} Şubesi`
+      };
+    }
+
     // Normalize: remove extra spaces, convert to uppercase
     const normalized = className.trim().toUpperCase();
 

@@ -1,5 +1,49 @@
 import type Database from 'better-sqlite3';
 
+/**
+ * Parse combined class string to separate grade and section
+ * Handles formats: "7A", "7-A", "7/A", "7. Sınıf A", "10B", "Hazırlık", etc.
+ */
+function parseClassToGradeSection(classStr: string): { grade: string; section: string } {
+  if (!classStr) return { grade: '', section: '' };
+
+  const trimmed = classStr.trim();
+
+  // Handle special cases like "Hazırlık"
+  if (trimmed.toLowerCase().includes('hazırlık')) {
+    return { grade: 'Hazırlık', section: '' };
+  }
+
+  // Try to match patterns like "7A", "7-A", "7/A", "7 A", "10B"
+  // Pattern: one or two digit number followed by optional separator and letter
+  const match = trimmed.match(/^(\d{1,2})[\s\-\/\.]?\s*(?:sınıf)?\s*[\s\-\/\.]?\s*([A-Za-zÇŞĞÜÖİçşğüöı])?$/i);
+
+  if (match) {
+    return {
+      grade: match[1],
+      section: match[2]?.toUpperCase() || ''
+    };
+  }
+
+  // Try pattern "X. Sınıf Y Şubesi" or "X. Sınıf / Y Şubesi"
+  const longMatch = trimmed.match(/(\d{1,2})\.\s*sınıf\s*[\/\-]?\s*([A-Za-zÇŞĞÜÖİçşğüöı])\s*(?:şube)?/i);
+  if (longMatch) {
+    return {
+      grade: longMatch[1],
+      section: longMatch[2].toUpperCase()
+    };
+  }
+
+  // Fallback: try to extract any number as grade
+  const numMatch = trimmed.match(/(\d{1,2})/);
+  const letterMatch = trimmed.match(/([A-Za-zÇŞĞÜÖİçşğüöı])$/);
+
+  return {
+    grade: numMatch ? numMatch[1] : trimmed,
+    section: letterMatch ? letterMatch[1].toUpperCase() : ''
+  };
+}
+
 export function createStudentsTables(db: Database.Database): void {
   db.exec(`
     CREATE TABLE IF NOT EXISTS students (
@@ -58,6 +102,59 @@ export function createStudentsTables(db: Database.Database): void {
     db.exec(`CREATE INDEX IF NOT EXISTS idx_students_schoolId ON students(schoolId);`);
   } catch (err: any) {
     console.warn('Warning creating schoolId index:', err.message);
+  }
+
+  // Migration: Add grade and section columns for class/section separation
+  try {
+    db.exec(`ALTER TABLE students ADD COLUMN grade TEXT;`);
+    console.log('✅ Added grade column to students table');
+  } catch (err: any) {
+    if (!err.message?.includes('duplicate column')) {
+      console.warn('Warning adding grade column:', err.message);
+    }
+  }
+
+  try {
+    db.exec(`ALTER TABLE students ADD COLUMN section TEXT;`);
+    console.log('✅ Added section column to students table');
+  } catch (err: any) {
+    if (!err.message?.includes('duplicate column')) {
+      console.warn('Warning adding section column:', err.message);
+    }
+  }
+
+  // Migration: Add isSpecialEducation column
+  try {
+    db.exec(`ALTER TABLE students ADD COLUMN isSpecialEducation INTEGER DEFAULT 0;`);
+    console.log('✅ Added isSpecialEducation column to students table');
+  } catch (err: any) {
+    if (!err.message?.includes('duplicate column')) {
+      console.warn('Warning adding isSpecialEducation column:', err.message);
+    }
+  }
+
+  // Migrate existing class data to grade/section
+  // Parse formats like "7A", "7-A", "7/A", "7. Sınıf A", "10B" etc.
+  try {
+    const studentsWithClass = db.prepare(`
+      SELECT id, class FROM students 
+      WHERE class IS NOT NULL AND class != '' 
+      AND (grade IS NULL OR grade = '')
+    `).all() as Array<{ id: string; class: string }>;
+
+    if (studentsWithClass.length > 0) {
+      const updateStmt = db.prepare(`UPDATE students SET grade = ?, section = ? WHERE id = ?`);
+
+      for (const student of studentsWithClass) {
+        const { grade, section } = parseClassToGradeSection(student.class);
+        if (grade) {
+          updateStmt.run(grade, section || '', student.id);
+        }
+      }
+      console.log(`✅ Migrated ${studentsWithClass.length} students' class data to grade/section`);
+    }
+  } catch (err: any) {
+    console.warn('Warning migrating class data:', err.message);
   }
 
   // Migration: Add extended student profile columns

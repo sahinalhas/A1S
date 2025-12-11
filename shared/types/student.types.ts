@@ -9,22 +9,25 @@ export interface Student {
   id: string;
   name: string;
   surname: string;
-  
+
   // Education Information
-  class?: string;
+  grade?: string;       // Sınıf (1-12, Anasınıfı, Hazırlık)
+  section?: string;     // Şube (A, B, C, D, E, F)
+  isSpecialEducation?: boolean; // Özel Eğitim Sınıfı
+  class?: string;       // Computed: grade + section (e.g., "7A") - backward compatible
   studentNumber?: string;
   gender?: 'K' | 'E';
   birthDate?: string;
   birthPlace?: string;
   tcIdentityNo?: string;
-  
+
   // Contact Information
   phone?: string;
   email?: string;
   address?: string;
   province?: string;
   district?: string;
-  
+
   // Mother Information (Anne Bilgileri)
   motherName?: string;
   motherEducation?: string;
@@ -33,7 +36,7 @@ export interface Student {
   motherPhone?: string;
   motherVitalStatus?: 'Sağ' | 'Vefat Etmiş';
   motherLivingStatus?: 'Birlikte' | 'Ayrı';
-  
+
   // Father Information (Baba Bilgileri)
   fatherName?: string;
   fatherEducation?: string;
@@ -42,47 +45,47 @@ export interface Student {
   fatherPhone?: string;
   fatherVitalStatus?: 'Sağ' | 'Vefat Etmiş';
   fatherLivingStatus?: 'Birlikte' | 'Ayrı';
-  
+
   // Guardian Information (Vasi/Acil İletişim)
   guardianName?: string;
   guardianRelation?: string;
   guardianPhone?: string;
   guardianEmail?: string;
-  
+
   // Family Structure (Aile Yapısı)
   numberOfSiblings?: number;
-  
+
   // Living Situation (Yaşam Durumu)
   livingWith?: string; // Kiminle oturuyor
   homeRentalStatus?: string; // Ev durumu (Kendi Evi, Kiracı, Lojman)
   homeHeatingType?: string; // Isınma türü
   transportationToSchool?: string; // Okula ulaşım
   studentWorkStatus?: string; // Çalışma durumu
-  
+
   // System Information
   enrollmentDate: string;
   status?: 'active' | 'inactive' | 'graduated';
   avatar?: string;
   notes?: string;
   schoolId?: string;
-  
+
   // Assessment Information
   risk?: 'Düşük' | 'Orta' | 'Yüksek';
   counselor?: string;
   tags?: string[];
-  
+
   // General Information
   interests?: string[];
   healthNote?: string;
   bloodType?: string;
-  
+
   // Additional Profile Information (2025 SIS Standards)
   languageSkills?: string;
   hobbiesDetailed?: string;
   extracurricularActivities?: string;
   studentExpectations?: string;
   familyExpectations?: string;
-  
+
   // Health Information (Sağlık Bilgileri)
   chronicDiseases?: string[];
   allergies?: string[];
@@ -97,7 +100,7 @@ export interface Student {
   emergencyContact2Phone?: string;
   emergencyContact2Relation?: string;
   healthAdditionalNotes?: string;
-  
+
   // Talents & Interests (Yetenek & İlgi Alanları)
   creativeTalents?: string[];
   physicalTalents?: string[];
@@ -132,7 +135,7 @@ export interface ProfileCompleteness {
   akademikProfil: number;
   sosyalDuygusalProfil: number;
   davranisalProfil: number;
-  
+
   eksikAlanlar: {
     kategori: string;
     alanlar: string[];
@@ -145,28 +148,28 @@ export interface ProfileCompleteness {
 export interface UnifiedStudentScores {
   studentId: string;
   lastUpdated: string;
-  
+
   // Main Scores (0-100)
   akademikSkor: number;
   sosyalDuygusalSkor: number;
   davranissalSkor: number;
   motivasyonSkor: number;
   riskSkoru: number;
-  
+
   // Detailed Scores
   akademikDetay: {
     notOrtalamasi?: number;
     devamDurumu?: number;
     odeklikSeviyesi?: number;
   };
-  
+
   sosyalDuygusalDetay: {
     empati?: number;
     ozFarkinalik?: number;
     duyguDuzenlemesi?: number;
     iliski?: number;
   };
-  
+
   davranissalDetay: {
     olumluDavranis?: number;
     olumsuzDavranis?: number;
