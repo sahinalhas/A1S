@@ -108,98 +108,53 @@ export class MEBBISTransferManager {
       logger.info('Navigating to data entry page...', 'MEBBISTransferManager');
       await this.automation.navigateToDataEntry();
 
-      logger.info(`Starting to process ${sessions.length} sessions...`, 'MEBBISTransferManager');
+      // Separate individual and group sessions
+      const individualSessions = sessions.filter(s => s.sessionType === 'individual');
+      const groupSessionsRaw = sessions.filter(s => s.sessionType === 'group');
 
-      for (let i = 0; i < sessions.length; i++) {
+      // Group the group sessions by session ID (multiple students per group session)
+      const groupSessionsMap = new Map<string, any[]>();
+      for (const session of groupSessionsRaw) {
+        if (!groupSessionsMap.has(session.id)) {
+          groupSessionsMap.set(session.id, []);
+        }
+        groupSessionsMap.get(session.id)!.push(session);
+      }
+
+      const totalOperations = individualSessions.length + groupSessionsMap.size;
+      logger.info(`Processing ${individualSessions.length} individual sessions and ${groupSessionsMap.size} group sessions...`, 'MEBBISTransferManager');
+
+      let operationIndex = 0;
+
+      // Process individual sessions first
+      for (const session of individualSessions) {
         if (transferState.cancelled) {
-          logger.info(
-            `Transfer ${transferId} cancelled by user at session ${i + 1}/${sessions.length}`,
-            'MEBBISTransferManager'
-          );
+          logger.info(`Transfer ${transferId} cancelled by user`, 'MEBBISTransferManager');
           break;
         }
 
-        const session = sessions[i];
-        transferState.progress.current = i + 1;
-        this.emitProgress(transferId); // Emit progress immediately to update "Processing: X" in UI
-        const sessionStartTime = Date.now();
+        operationIndex++;
+        transferState.progress.current = operationIndex;
+        this.emitProgress(transferId);
 
-        try {
-          logger.info(
-            `[${i + 1}/${sessions.length}] Processing session ${session.id} for student ${session.studentNo}`,
-            'MEBBISTransferManager'
-          );
+        await this.processIndividualSession(transferId, session, operationIndex, totalOperations, transferState);
+      }
 
-          const mebbisData = this.mapper.mapSessionToMEBBIS(session);
-
-          this.emitSessionStart(transferId, {
-            sessionId: session.id,
-            studentNo: session.studentNo,
-            studentName: session.studentName
-          });
-
-          const result = await this.automation.fillSessionData(mebbisData);
-          const sessionDuration = Date.now() - sessionStartTime;
-
-          if (result.success) {
-            await this.markAsTransferred(session.id, transferState.schoolId);
-            transferState.progress.completed++;
-
-            logger.info(
-              `[${i + 1}/${sessions.length}] Session ${session.id} completed successfully in ${sessionDuration}ms`,
-              'MEBBISTransferManager'
-            );
-
-            this.emitSessionCompleted(transferId, {
-              sessionId: session.id,
-              studentNo: session.studentNo,
-              success: true
-            });
-          } else {
-            transferState.progress.failed++;
-            await this.logError(session.id, result.error || 'Bilinmeyen hata', transferState.schoolId);
-
-            logger.warn(
-              `[${i + 1}/${sessions.length}] Session ${session.id} failed: ${result.error}`,
-              'MEBBISTransferManager'
-            );
-
-            const error: MEBBISTransferError = {
-              sessionId: session.id,
-              studentNo: session.studentNo,
-              error: result.error || 'Bilinmeyen hata',
-              timestamp: new Date().toISOString()
-            };
-            transferState.errors.push(error);
-
-            this.emitSessionFailed(transferId, error);
-          }
-        } catch (error) {
-          const err = error as Error;
-          const sessionDuration = Date.now() - sessionStartTime;
-
-          logger.error(
-            `[${i + 1}/${sessions.length}] Session ${session.id} transfer failed after ${sessionDuration}ms`,
-            'MEBBISTransferManager',
-            error
-          );
-
-          transferState.progress.failed++;
-          await this.logError(session.id, err.message, transferState.schoolId);
-
-          const errorObj: MEBBISTransferError = {
-            sessionId: session.id,
-            studentNo: session.studentNo,
-            error: err.message,
-            timestamp: new Date().toISOString()
-          };
-          transferState.errors.push(errorObj);
-
-          this.emitSessionFailed(transferId, errorObj);
+      // Process group sessions
+      for (const [sessionId, studentsInGroup] of groupSessionsMap) {
+        if (transferState.cancelled) {
+          logger.info(`Transfer ${transferId} cancelled by user`, 'MEBBISTransferManager');
+          break;
         }
 
+        operationIndex++;
+        transferState.progress.current = operationIndex;
         this.emitProgress(transferId);
+
+        await this.processGroupSession(transferId, sessionId, studentsInGroup, operationIndex, totalOperations, transferState);
       }
+
+      // Old loop removed - individual and group sessions are now processed above
 
       transferState.status = transferState.cancelled ? 'cancelled' : 'completed';
       const totalDuration = Date.now() - startTime;
@@ -232,6 +187,188 @@ export class MEBBISTransferManager {
     }
   }
 
+  /**
+   * Processes a single individual session transfer.
+   */
+  private async processIndividualSession(
+    transferId: string,
+    session: any,
+    index: number,
+    total: number,
+    transferState: TransferState
+  ): Promise<void> {
+    const sessionStartTime = Date.now();
+
+    try {
+      logger.info(
+        `[${index}/${total}] Processing individual session ${session.id} for student ${session.studentNo}`,
+        'MEBBISTransferManager'
+      );
+
+      const mebbisData = this.mapper.mapSessionToMEBBIS(session);
+
+      this.emitSessionStart(transferId, {
+        sessionId: session.id,
+        studentNo: session.studentNo,
+        studentName: session.studentName
+      });
+
+      const result = await this.automation.fillSessionData(mebbisData);
+      const sessionDuration = Date.now() - sessionStartTime;
+
+      if (result.success) {
+        await this.markAsTransferred(session.id, transferState.schoolId);
+        transferState.progress.completed++;
+
+        logger.info(
+          `[${index}/${total}] Individual session ${session.id} completed in ${sessionDuration}ms`,
+          'MEBBISTransferManager'
+        );
+
+        this.emitSessionCompleted(transferId, {
+          sessionId: session.id,
+          studentNo: session.studentNo,
+          success: true
+        });
+      } else {
+        transferState.progress.failed++;
+        await this.logError(session.id, result.error || 'Bilinmeyen hata', transferState.schoolId);
+
+        const error: MEBBISTransferError = {
+          sessionId: session.id,
+          studentNo: session.studentNo,
+          error: result.error || 'Bilinmeyen hata',
+          timestamp: new Date().toISOString()
+        };
+        transferState.errors.push(error);
+        this.emitSessionFailed(transferId, error);
+      }
+    } catch (error) {
+      const err = error as Error;
+      transferState.progress.failed++;
+      await this.logError(session.id, err.message, transferState.schoolId);
+
+      const errorObj: MEBBISTransferError = {
+        sessionId: session.id,
+        studentNo: session.studentNo,
+        error: err.message,
+        timestamp: new Date().toISOString()
+      };
+      transferState.errors.push(errorObj);
+      this.emitSessionFailed(transferId, errorObj);
+    }
+
+    this.emitProgress(transferId);
+  }
+
+  /**
+   * Processes a group session transfer (multiple students in one session).
+   */
+  private async processGroupSession(
+    transferId: string,
+    sessionId: string,
+    studentsInGroup: any[],
+    index: number,
+    total: number,
+    transferState: TransferState
+  ): Promise<void> {
+    const sessionStartTime = Date.now();
+    const firstStudent = studentsInGroup[0]; // Use first student's data for session info
+
+    try {
+      logger.info(
+        `[${index}/${total}] Processing group session ${sessionId} with ${studentsInGroup.length} students`,
+        'MEBBISTransferManager'
+      );
+
+      // Emit session start with group info
+      this.emitSessionStart(transferId, {
+        sessionId: sessionId,
+        studentNo: `Grup (${studentsInGroup.length} öğrenci)`,
+        studentName: studentsInGroup.map(s => s.studentName).join(', ')
+      });
+
+      // Switch to group mode
+      await this.automation.selectGroupMode();
+
+      // Prepare students with class info
+      const studentsWithClass = studentsInGroup.map(s => ({
+        studentNo: s.studentNo,
+        className: s.studentClass || ''
+      }));
+
+      // Add all students to the group
+      const { added, failed } = await this.automation.addStudentsToGroupSession(studentsWithClass);
+
+      if (added.length === 0) {
+        throw new Error(`Hiçbir öğrenci gruba eklenemedi. Başarısız: ${failed.join(', ')}`);
+      }
+
+      if (failed.length > 0) {
+        logger.warn(`Some students could not be added to group: ${failed.join(', ')}`, 'MEBBISTransferManager');
+      }
+
+      // Click continue to go to form
+      await this.automation.clickContinueButton();
+
+      // Map session data and fill the form
+      const mebbisData = this.mapper.mapSessionToMEBBIS(firstStudent);
+      const result = await this.automation.fillGroupSessionForm(mebbisData);
+      const sessionDuration = Date.now() - sessionStartTime;
+
+      if (result.success) {
+        await this.markAsTransferred(sessionId, transferState.schoolId);
+        transferState.progress.completed++;
+
+        logger.info(
+          `[${index}/${total}] Group session ${sessionId} completed in ${sessionDuration}ms (${added.length} students)`,
+          'MEBBISTransferManager'
+        );
+
+        this.emitSessionCompleted(transferId, {
+          sessionId: sessionId,
+          studentNo: `Grup (${added.length} öğrenci)`,
+          success: true
+        });
+      } else {
+        transferState.progress.failed++;
+        await this.logError(sessionId, result.error || 'Grup kaydı başarısız', transferState.schoolId);
+
+        const error: MEBBISTransferError = {
+          sessionId: sessionId,
+          studentNo: `Grup (${studentsInGroup.length} öğrenci)`,
+          error: result.error || 'Grup kaydı başarısız',
+          timestamp: new Date().toISOString()
+        };
+        transferState.errors.push(error);
+        this.emitSessionFailed(transferId, error);
+      }
+    } catch (error) {
+      const err = error as Error;
+      const sessionDuration = Date.now() - sessionStartTime;
+
+      logger.error(
+        `[${index}/${total}] Group session ${sessionId} failed after ${sessionDuration}ms: ${err.message}`,
+        'MEBBISTransferManager',
+        error
+      );
+
+      transferState.progress.failed++;
+      await this.logError(sessionId, err.message, transferState.schoolId);
+
+      const errorObj: MEBBISTransferError = {
+        sessionId: sessionId,
+        studentNo: `Grup (${studentsInGroup.length} öğrenci)`,
+        error: err.message,
+        timestamp: new Date().toISOString()
+      };
+      transferState.errors.push(errorObj);
+      this.emitSessionFailed(transferId, errorObj);
+    }
+
+    this.emitProgress(transferId);
+  }
+
   private getSessionsToTransfer(request: StartTransferRequest): any[] {
     if (!request.schoolId) {
       throw new Error('schoolId is required for MEBBIS transfer - security violation');
@@ -242,6 +379,7 @@ export class MEBBISTransferManager {
     let query = `
       SELECT 
         cs.id,
+        cs.sessionType,
         cs.sessionDate,
         cs.entryTime,
         cs.exitTime,
@@ -254,7 +392,8 @@ export class MEBBISTransferManager {
         cs.drpIkiId,
         cs.drpUcId,
         s.id as studentNo,
-        (s.name || ' ' || s.surname) as studentName
+        (s.name || ' ' || s.surname) as studentName,
+        s.class as studentClass
       FROM counseling_sessions cs
       INNER JOIN counseling_session_students css ON cs.id = css.sessionId
       INNER JOIN students s ON css.studentId = s.id

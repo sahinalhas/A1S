@@ -861,6 +861,493 @@ export class MEBBISAutomationService {
     }
   }
 
+  // ==================== GROUP SESSION METHODS ====================
+
+  /**
+   * Converts flexible class format to MEBBIS dropdown format.
+   * Examples: "7A" -> "7. Sınıf / A Şubesi", "7-B" -> "7. Sınıf / B Şubesi"
+   */
+  private parseClassToMEBBISFormat(className: string): { grade: string; section: string; searchPattern: string } {
+    // Normalize: remove extra spaces, convert to uppercase
+    const normalized = className.trim().toUpperCase();
+
+    // Pattern 1: "7A", "7B", "8C" (no separator)
+    let match = normalized.match(/^(\d+)([A-ZÇĞİÖŞÜ]+)$/);
+    if (match) {
+      return {
+        grade: match[1],
+        section: match[2],
+        searchPattern: `${match[1]}. Sınıf / ${match[2]} Şubesi`
+      };
+    }
+
+    // Pattern 2: "7-A", "7/A", "7 A" (with separator)
+    match = normalized.match(/^(\d+)[-\/\s]([A-ZÇĞİÖŞÜ]+)$/);
+    if (match) {
+      return {
+        grade: match[1],
+        section: match[2],
+        searchPattern: `${match[1]}. Sınıf / ${match[2]} Şubesi`
+      };
+    }
+
+    // Pattern 3: Special education formats like "7-Hafif Zihinsel-A"
+    match = normalized.match(/^(\d+)[-\/\s](.+)[-\/\s]([A-ZÇĞİÖŞÜ])$/);
+    if (match) {
+      return {
+        grade: match[1],
+        section: match[3],
+        searchPattern: `${match[1]}. Sınıf-${match[2]} / ${match[3]} Şubesi`
+      };
+    }
+
+    // Fallback: return as-is, will try fuzzy matching
+    logger.warn(`Could not parse class format: ${className}, using fuzzy match`, 'MEBBISAutomation');
+    return {
+      grade: '',
+      section: '',
+      searchPattern: className
+    };
+  }
+
+  /**
+   * Clicks the "Küçük Grup Görüşmesi" button to switch to group mode.
+   */
+  async selectGroupMode(): Promise<void> {
+    if (!this.page) throw new Error('Browser not initialized');
+
+    try {
+      logger.info('Switching to group session mode...', 'MEBBISAutomation');
+
+      // Wait for page to fully load after navigating to data entry
+      await this.wait(2000);
+      await this.waitForLoadingOverlay();
+
+      // The MEBBIS interface uses radio buttons inside .secenekler.ozelradio2
+      // Click the label to trigger the radio button change
+      logger.info('Looking for Küçük Grup Görüşmesi radio button...', 'MEBBISAutomation');
+
+      // Try to find and click the radio button - use simple selectors to avoid strict mode issues
+      const clicked = await this.page.evaluate(() => {
+        // Method 1: Click the label for sec2 (most reliable)
+        const label = document.querySelector('label[for="sec2"]');
+        if (label) {
+          (label as HTMLElement).click();
+          return 'label';
+        }
+
+        // Method 2: Click the span containing the label
+        const span = document.querySelector('span[title*="Küçük Grup"]');
+        if (span) {
+          (span as HTMLElement).click();
+          return 'span';
+        }
+
+        // Method 3: Click the radio button directly
+        const radio = document.getElementById('sec2');
+        if (radio) {
+          (radio as HTMLInputElement).checked = true;
+          (radio as HTMLElement).click();
+          return 'radio';
+        }
+
+        // Method 4: Find radio inside secenekic div
+        const secenekDivs = document.querySelectorAll('.secenekic');
+        if (secenekDivs.length > 1) {
+          (secenekDivs[1] as HTMLElement).click();
+          return 'secenekic';
+        }
+
+        return null;
+      });
+
+      if (clicked) {
+        logger.info(`Clicked group session element via: ${clicked}`, 'MEBBISAutomation');
+      } else {
+        throw new Error('Küçük Grup Görüşmesi butonu bulunamadı');
+      }
+
+      // Wait for the page to update (ASP.NET postback)
+      await this.wait(2000);
+      await this.waitForLoadingOverlay();
+
+      // For group mode, we should now see the class/student selection UI
+      // Wait for either Sınıf/Şube dropdown or student list
+      try {
+        await this.page.waitForSelector('#drpsinifsube, #lstOgrenciler', { timeout: 10000 });
+        logger.info('✅ Switched to group session mode successfully', 'MEBBISAutomation');
+      } catch (e) {
+        // Log current page state for debugging
+        const pageContent = await this.page.content();
+        const hasClassDropdown = pageContent.includes('drpsinifsube') || pageContent.includes('Sınıf');
+        logger.info(`Page has class dropdown elements: ${hasClassDropdown}`, 'MEBBISAutomation');
+
+        if (!hasClassDropdown) {
+          throw new Error('Grup modu açıldı ama sınıf seçimi görünmedi');
+        }
+        logger.info('✅ Switched to group session mode (class elements found in page)', 'MEBBISAutomation');
+      }
+    } catch (error) {
+      const err = error as Error;
+      logger.error('Failed to switch to group mode', 'MEBBISAutomation', error);
+      throw new Error(`Grup görüşmesi moduna geçilemedi: ${err.message}`);
+    }
+  }
+
+  /**
+   * Selects a class/section from the drpsinifsube dropdown.
+   * @param className - Class name in any format (e.g., "7A", "7-B", "7/C")
+   */
+  async selectClassSection(className: string): Promise<void> {
+    if (!this.page) throw new Error('Browser not initialized');
+
+    try {
+      const parsed = this.parseClassToMEBBISFormat(className);
+      logger.info(`Selecting class: ${className} -> searching for: ${parsed.searchPattern}`, 'MEBBISAutomation');
+
+      await this.page.waitForSelector('#drpsinifsube', { timeout: 5000 });
+
+      // Find matching option
+      const matchedValue = await this.page.evaluate((searchPattern: string, grade: string, section: string) => {
+        const dropdown = document.getElementById('drpsinifsube') as HTMLSelectElement;
+        if (!dropdown) return null;
+
+        const options = Array.from(dropdown.options);
+        const searchLower = searchPattern.toLowerCase();
+
+        // Try exact match first
+        for (const opt of options) {
+          if (opt.value !== '-1' && opt.text.toLowerCase().includes(searchLower)) {
+            return opt.value;
+          }
+        }
+
+        // Try grade + section match
+        if (grade && section) {
+          for (const opt of options) {
+            const text = opt.text.toLowerCase();
+            if (opt.value !== '-1' &&
+              text.includes(`${grade}. sınıf`) &&
+              text.includes(`${section.toLowerCase()} şubesi`)) {
+              return opt.value;
+            }
+          }
+        }
+
+        // Try partial grade match
+        if (grade) {
+          for (const opt of options) {
+            const text = opt.text.toLowerCase();
+            if (opt.value !== '-1' && text.includes(`${grade}. sınıf`)) {
+              return opt.value;
+            }
+          }
+        }
+
+        return null;
+      }, parsed.searchPattern, parsed.grade, parsed.section);
+
+      if (!matchedValue) {
+        throw new Error(`Sınıf bulunamadı: ${className}`);
+      }
+
+      // Select the class
+      await this.page.evaluate((value) => {
+        const dropdown = document.getElementById('drpsinifsube') as HTMLSelectElement;
+        if (dropdown) {
+          dropdown.value = value;
+          dropdown.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }, matchedValue);
+
+      // Trigger ASP.NET postback
+      await this.page.evaluate(() => {
+        const dropdown = document.getElementById('drpsinifsube') as HTMLSelectElement;
+        if (dropdown && dropdown.onchange) {
+          dropdown.onchange(new Event('change') as any);
+        }
+      });
+
+      await this.wait(1500);
+      await this.waitForLoadingOverlay();
+
+      // Wait for student list to populate
+      await this.page.waitForSelector('#lstOgrenciler', { timeout: 10000 });
+      await this.waitForDropdownPopulated('#lstOgrenciler');
+
+      logger.info(`✅ Class selected: ${className}`, 'MEBBISAutomation');
+    } catch (error) {
+      const err = error as Error;
+      logger.error(`Failed to select class: ${className}`, 'MEBBISAutomation', error);
+      throw new Error(`Sınıf seçilemedi (${className}): ${err.message}`);
+    }
+  }
+
+  /**
+   * Finds and adds a student to the group by their student number.
+   * @param studentNo - Student number to find in the list
+   */
+  async addStudentToGroup(studentNo: string): Promise<boolean> {
+    if (!this.page) throw new Error('Browser not initialized');
+
+    try {
+      logger.info(`Adding student ${studentNo} to group...`, 'MEBBISAutomation');
+
+      // Find the student in the list by number
+      const studentFound = await this.page.evaluate((searchNo: string) => {
+        const list = document.getElementById('lstOgrenciler') as HTMLSelectElement;
+        if (!list) return false;
+
+        const options = Array.from(list.options);
+
+        for (const opt of options) {
+          // Text format: "8 Toprak BULUT" - number is at the start
+          const text = opt.text.trim();
+          const match = text.match(/^(\d+)\s/);
+          if (match && match[1] === searchNo) {
+            opt.selected = true;
+            return true;
+          }
+        }
+
+        return false;
+      }, studentNo);
+
+      if (!studentFound) {
+        logger.warn(`Student ${studentNo} not found in current class list`, 'MEBBISAutomation');
+        return false;
+      }
+
+      // Click "Ekle" button
+      await this.page.click('#btnListeyeEkle');
+      await this.wait(1000);
+      await this.waitForLoadingOverlay();
+
+      // Verify student was added to selected list
+      const addedSuccessfully = await this.page.evaluate((searchNo: string) => {
+        const selectedList = document.getElementById('lstSecilenOgrenciler') as HTMLSelectElement;
+        if (!selectedList) return false;
+
+        const options = Array.from(selectedList.options);
+        for (const opt of options) {
+          const text = opt.text.trim();
+          const match = text.match(/^(\d+)\s/);
+          if (match && match[1] === searchNo) {
+            return true;
+          }
+        }
+        return false;
+      }, studentNo);
+
+      if (addedSuccessfully) {
+        logger.info(`✅ Student ${studentNo} added to group`, 'MEBBISAutomation');
+        return true;
+      } else {
+        logger.warn(`Student ${studentNo} may not have been added correctly`, 'MEBBISAutomation');
+        return false;
+      }
+    } catch (error) {
+      const err = error as Error;
+      logger.error(`Failed to add student ${studentNo} to group`, 'MEBBISAutomation', error);
+      return false;
+    }
+  }
+
+  /**
+   * Adds multiple students to a group session.
+   * Groups students by class and processes each class separately.
+   * @param students - Array of { studentNo, className } objects
+   */
+  async addStudentsToGroupSession(students: Array<{ studentNo: string; className: string }>): Promise<{ added: string[]; failed: string[] }> {
+    const added: string[] = [];
+    const failed: string[] = [];
+
+    // Group students by class
+    const studentsByClass = new Map<string, string[]>();
+    for (const student of students) {
+      const classKey = student.className.trim().toUpperCase();
+      if (!studentsByClass.has(classKey)) {
+        studentsByClass.set(classKey, []);
+      }
+      studentsByClass.get(classKey)!.push(student.studentNo);
+    }
+
+    logger.info(`Processing ${students.length} students from ${studentsByClass.size} class(es)`, 'MEBBISAutomation');
+
+    // Process each class
+    for (const [className, studentNos] of studentsByClass) {
+      try {
+        // Select the class
+        await this.selectClassSection(className);
+
+        // Add each student from this class
+        for (const studentNo of studentNos) {
+          const success = await this.addStudentToGroup(studentNo);
+          if (success) {
+            added.push(studentNo);
+          } else {
+            failed.push(studentNo);
+          }
+        }
+      } catch (error) {
+        logger.error(`Failed to process class ${className}`, 'MEBBISAutomation', error);
+        // Mark all students from this class as failed
+        failed.push(...studentNos.filter(no => !added.includes(no)));
+      }
+    }
+
+    logger.info(`Group student selection complete: ${added.length} added, ${failed.length} failed`, 'MEBBISAutomation');
+    return { added, failed };
+  }
+
+  /**
+   * Clicks the "Devam" button after students are added.
+   */
+  async clickContinueButton(): Promise<void> {
+    if (!this.page) throw new Error('Browser not initialized');
+
+    try {
+      logger.info('Clicking Continue button...', 'MEBBISAutomation');
+
+      await this.page.waitForSelector('#btnDevam', { timeout: 5000 });
+      await this.page.click('#btnDevam');
+
+      await this.wait(2000);
+      await this.waitForLoadingOverlay();
+
+      // Wait for form to appear (same as individual session form)
+      await this.page.waitForSelector('#drp_hizmet_alani', { timeout: 10000 });
+
+      logger.info('✅ Navigated to session form', 'MEBBISAutomation');
+    } catch (error) {
+      const err = error as Error;
+      logger.error('Failed to click continue button', 'MEBBISAutomation', error);
+      throw new Error(`Devam butonuna tıklanamadı: ${err.message}`);
+    }
+  }
+
+  /**
+   * Fills the session form for a group session.
+   * This is called after students are added to the group.
+   * @param data - Session data (same as individual, but studentNo is not used here)
+   */
+  async fillGroupSessionForm(data: MEBBISSessionData): Promise<{ success: boolean; error?: string }> {
+    if (!this.page) throw new Error('Browser not initialized');
+
+    try {
+      logger.info('Filling group session form...', 'MEBBISAutomation');
+      logger.info(`Session Data: ${JSON.stringify(data, null, 2)}`, 'MEBBISAutomation');
+
+      // Select service area dropdowns (same as individual)
+      await this.retry(async () => {
+        await this.selectDropdownOption('#drp_hizmet_alani', data.hizmetAlani);
+        await this.waitForDropdownPopulated('#drp_bir');
+      }, 2, 1000, 'Service area selection');
+
+      await this.retry(async () => {
+        await this.selectDropdownOption('#drp_bir', data.birinci);
+        await this.waitForDropdownPopulated('#drp_iki');
+      }, 2, 1000, 'Primary category selection');
+
+      await this.retry(async () => {
+        await this.selectDropdownOption('#drp_iki', data.ikinci);
+        await this.waitForDropdownPopulated('#drp_uc');
+      }, 2, 1000, 'Secondary category selection');
+
+      if (data.ucuncu) {
+        try {
+          await this.selectDropdownOption('#drp_uc', data.ucuncu);
+          await this.wait(800);
+        } catch (e) {
+          logger.debug('Third category not available or not required', 'MEBBISAutomation');
+        }
+      }
+
+      // Date entry
+      logger.info(`Entering date: ${data.gorusmeTarihi}`, 'MEBBISAutomation');
+      await this.page.click('#txtgorusmetarihi', { clickCount: 3 });
+      await this.page.keyboard.press('Backspace');
+      await this.wait(200);
+      await this.page.type('#txtgorusmetarihi', data.gorusmeTarihi, { delay: 100 });
+      await this.page.evaluate(() => {
+        const el = document.getElementById('txtgorusmetarihi') as HTMLInputElement;
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+        el.dispatchEvent(new Event('blur', { bubbles: true }));
+      });
+      await this.wait(500);
+
+      // Start time
+      logger.info(`Entering start time: ${data.gorusmeSaati}`, 'MEBBISAutomation');
+      await this.page.click('#txtgorusmesaati', { clickCount: 3 });
+      await this.page.keyboard.press('Backspace');
+      await this.wait(200);
+      await this.page.type('#txtgorusmesaati', data.gorusmeSaati, { delay: 100 });
+      await this.page.evaluate(() => {
+        const el = document.getElementById('txtgorusmesaati') as HTMLInputElement;
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+        el.dispatchEvent(new Event('blur', { bubbles: true }));
+      });
+      await this.wait(500);
+
+      // End time
+      logger.info(`Entering end time: ${data.gorusmeBitisSaati}`, 'MEBBISAutomation');
+      await this.page.click('#txtgorusmebitissaati', { clickCount: 3 });
+      await this.page.keyboard.press('Backspace');
+      await this.wait(200);
+      await this.page.type('#txtgorusmebitissaati', data.gorusmeBitisSaati, { delay: 100 });
+      await this.page.evaluate(() => {
+        const el = document.getElementById('txtgorusmebitissaati') as HTMLInputElement;
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+        el.dispatchEvent(new Event('blur', { bubbles: true }));
+      });
+      await this.wait(500);
+
+      // Workplace
+      await this.retry(async () => {
+        await this.selectDropdownOption('#cmbCalismaYeri', data.calismaYeri);
+        await this.wait(800);
+      }, 2, 1000, 'Workplace selection');
+
+      // Session count
+      await this.wait(500);
+      await this.retry(async () => {
+        await this.page!.waitForSelector('#txtOturumSayisi', { timeout: 5000, visible: true });
+        await this.page!.click('#txtOturumSayisi', { clickCount: 3 });
+        await this.page!.keyboard.press('Backspace');
+        await this.wait(100);
+        await this.page!.type('#txtOturumSayisi', String(data.oturumSayisi), { delay: 100 });
+        await this.wait(500);
+      }, 2, 1000, 'Session count entry');
+
+      // Save
+      await this.wait(500);
+      await this.page.click('#ramToolBar1_imgButtonKaydet');
+      await this.wait(1500);
+
+      const successMessage = await this.page.$eval(
+        '#ramToolBar1_lblBilgi',
+        el => el.textContent?.trim()
+      ).catch(() => '');
+
+      if (successMessage && (successMessage === 'Bilgiler Kaydedilmiştir.' || successMessage.includes('Kaydedilmiştir'))) {
+        logger.info(`✅ Group session saved successfully (Msg: ${successMessage})`, 'MEBBISAutomation');
+
+        // Click new for next session
+        await this.page.click('#ramToolBar1_imgButtonyeni');
+        await this.wait(1000);
+
+        return { success: true };
+      } else {
+        logger.warn(`Group session save failed: ${successMessage}`, 'MEBBISAutomation');
+        return { success: false, error: successMessage || 'Kayıt başarısız' };
+      }
+    } catch (error) {
+      const err = error as Error;
+      logger.error('Error filling group session form', 'MEBBISAutomation', error);
+      return { success: false, error: err.message };
+    }
+  }
+
   async close(): Promise<void> {
     try {
       logger.info('Closing MEBBIS browser...', 'MEBBISAutomation');

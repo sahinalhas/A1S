@@ -19,10 +19,10 @@ import { Label } from "@/components/atoms/Label";
 import { cn } from "@/lib/utils";
 import { SESSION_MODES } from "@shared/constants/common.constants";
 
-import { 
-  individualSessionSchema, 
+import {
+  individualSessionSchema,
   groupSessionSchema,
-  type IndividualSessionFormValues, 
+  type IndividualSessionFormValues,
   type GroupSessionFormValues,
   type Student,
 } from "./types";
@@ -90,6 +90,15 @@ export default function NewSessionDialog({
   const selectedStudentId = sessionType === 'individual' ? individualForm.watch("studentId") : null;
   const selectedStudent = selectedStudentId ? students.find(s => s.id === selectedStudentId) : null;
 
+  // Sync selectedStudents with groupForm.studentIds
+  // This ensures the form validation knows about the selected students
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useMemo(() => {
+    if (sessionType === 'group') {
+      groupForm.setValue('studentIds', selectedStudents.map(s => s.id), { shouldValidate: true });
+    }
+  }, [selectedStudents, sessionType]);
+
   const handleClose = () => {
     onOpenChange(false);
     individualForm.reset();
@@ -101,17 +110,17 @@ export default function NewSessionDialog({
     onSubmit(data);
   };
 
-  const sessionModeValue = sessionType === 'individual' 
-    ? individualForm.watch("sessionMode") 
+  const sessionModeValue = sessionType === 'individual'
+    ? individualForm.watch("sessionMode")
     : groupForm.watch("sessionMode");
-  const participantType = sessionType === 'individual' 
-    ? individualForm.watch("participantType") 
+  const participantType = sessionType === 'individual'
+    ? individualForm.watch("participantType")
     : groupForm.watch("participantType");
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent 
-        hideCloseButton 
+      <DialogContent
+        hideCloseButton
         className="max-w-lg p-0 gap-0 border-0 bg-white dark:bg-slate-950 overflow-hidden rounded-2xl shadow-2xl"
       >
         {/* Minimal Header */}
@@ -123,7 +132,7 @@ export default function NewSessionDialog({
           >
             <X className="h-4 w-4" />
           </button>
-          
+
           <h2 className="text-lg font-semibold text-white">Yeni Görüşme</h2>
           <p className="text-white/70 text-sm mt-0.5">Görüşme bilgilerini girin</p>
         </div>
@@ -163,7 +172,7 @@ export default function NewSessionDialog({
         {/* Form Content */}
         <Form {...(activeForm as any)}>
           <form onSubmit={activeForm.handleSubmit(handleSubmit as any)} className="px-6 py-5 space-y-5 max-h-[60vh] overflow-y-auto">
-            
+
             {/* Student Selection */}
             <div className="space-y-4">
               <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
@@ -186,8 +195,8 @@ export default function NewSessionDialog({
                               type="button"
                               className={cn(
                                 "w-full h-11 flex items-center justify-between px-3 rounded-lg border bg-white dark:bg-slate-900 transition-all text-left group",
-                                field.value 
-                                  ? "border-indigo-300 dark:border-indigo-700 ring-2 ring-indigo-100 dark:ring-indigo-900/30" 
+                                field.value
+                                  ? "border-indigo-300 dark:border-indigo-700 ring-2 ring-indigo-100 dark:ring-indigo-900/30"
                                   : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                               )}
                             >
@@ -205,8 +214,8 @@ export default function NewSessionDialog({
                             </button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent 
-                          className="p-0 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden" 
+                        <PopoverContent
+                          className="p-0 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden"
                           align="start"
                           sideOffset={4}
                           style={{ width: 'var(--radix-popover-trigger-width)' }}
@@ -228,8 +237,8 @@ export default function NewSessionDialog({
                                     }}
                                     className={cn(
                                       "py-2 px-2 rounded-md cursor-pointer flex items-center gap-2 text-[13px] transition-colors",
-                                      field.value === student.id 
-                                        ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300" 
+                                      field.value === student.id
+                                        ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300"
                                         : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
                                     )}
                                   >
@@ -263,8 +272,8 @@ export default function NewSessionDialog({
                               type="button"
                               className={cn(
                                 "w-full h-11 flex items-center justify-between px-3 rounded-lg border bg-white dark:bg-slate-900 transition-all text-left group",
-                                selectedStudents.length > 0 
-                                  ? "border-indigo-300 dark:border-indigo-700 ring-2 ring-indigo-100 dark:ring-indigo-900/30" 
+                                selectedStudents.length > 0
+                                  ? "border-indigo-300 dark:border-indigo-700 ring-2 ring-indigo-100 dark:ring-indigo-900/30"
                                   : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                               )}
                             >
@@ -282,8 +291,8 @@ export default function NewSessionDialog({
                             </button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent 
-                          className="p-0 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden" 
+                        <PopoverContent
+                          className="p-0 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden"
                           align="start"
                           sideOffset={4}
                           style={{ width: 'var(--radix-popover-trigger-width)' }}
@@ -310,15 +319,15 @@ export default function NewSessionDialog({
                                       }}
                                       className={cn(
                                         "py-2 px-2 rounded-md cursor-pointer flex items-center gap-2 text-[13px] transition-colors",
-                                        isSelected 
-                                          ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300" 
+                                        isSelected
+                                          ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300"
                                           : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
                                       )}
                                     >
                                       <div className={cn(
                                         "w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-colors",
-                                        isSelected 
-                                          ? "border-indigo-500 bg-indigo-500" 
+                                        isSelected
+                                          ? "border-indigo-500 bg-indigo-500"
                                           : "border-slate-300 dark:border-slate-600"
                                       )}>
                                         {isSelected && (
@@ -381,9 +390,9 @@ export default function NewSessionDialog({
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input 
-                              {...field} 
-                              placeholder="Veli adı" 
+                            <Input
+                              {...field}
+                              placeholder="Veli adı"
                               className="h-11 rounded-xl border-2"
                             />
                           </FormControl>
@@ -429,9 +438,9 @@ export default function NewSessionDialog({
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input 
-                              {...field} 
-                              placeholder="Öğretmen adı" 
+                            <Input
+                              {...field}
+                              placeholder="Öğretmen adı"
                               className="h-11 rounded-xl border-2"
                             />
                           </FormControl>
@@ -445,9 +454,9 @@ export default function NewSessionDialog({
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input 
-                              {...field} 
-                              placeholder="Branş" 
+                            <Input
+                              {...field}
+                              placeholder="Branş"
                               className="h-11 rounded-xl border-2"
                             />
                           </FormControl>
@@ -484,7 +493,7 @@ export default function NewSessionDialog({
                             >
                               <Calendar className="h-5 w-5 text-slate-400" />
                               <span className={field.value ? "text-slate-900 dark:text-white" : "text-slate-400"}>
-                                {field.value 
+                                {field.value
                                   ? format(field.value, "d MMM", { locale: tr })
                                   : "Tarih"}
                               </span>
@@ -596,8 +605,8 @@ export default function NewSessionDialog({
                         <input
                           {...field}
                           placeholder={
-                            sessionModeValue === SESSION_MODES.ONLINE 
-                              ? "Zoom, Teams, vb." 
+                            sessionModeValue === SESSION_MODES.ONLINE
+                              ? "Zoom, Teams, vb."
                               : sessionModeValue === SESSION_MODES.TELEFON
                                 ? "Telefon görüşmesi"
                                 : "Rehberlik Servisi"
@@ -617,16 +626,16 @@ export default function NewSessionDialog({
         {/* Footer */}
         <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
           <div className="flex items-center justify-between gap-3">
-            <Button 
-              type="button" 
-              variant="ghost" 
+            <Button
+              type="button"
+              variant="ghost"
               onClick={handleClose}
               className="text-slate-500 hover:text-slate-700"
             >
               İptal
             </Button>
 
-            <Button 
+            <Button
               type="button"
               onClick={() => activeForm.handleSubmit(handleSubmit as any)()}
               disabled={isPending}
