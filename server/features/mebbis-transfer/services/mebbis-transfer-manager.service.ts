@@ -121,6 +121,7 @@ export class MEBBISTransferManager {
 
         const session = sessions[i];
         transferState.progress.current = i + 1;
+        this.emitProgress(transferId); // Emit progress immediately to update "Processing: X" in UI
         const sessionStartTime = Date.now();
 
         try {

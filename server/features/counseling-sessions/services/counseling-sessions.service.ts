@@ -14,6 +14,24 @@ function safeParseJSON<T = unknown>(jsonString: string | null | undefined, fallb
 }
 
 /**
+ * Normalizes session data for client by converting snake_case DB fields to camelCase.
+ */
+function normalizeSession(session: CounselingSession): CounselingSession & {
+  mebbisTransferred?: boolean;
+  mebbisTransferDate?: string;
+  mebbisTransferError?: string;
+  mebbisRetryCount?: number;
+} {
+  return {
+    ...session,
+    mebbisTransferred: session.mebbis_transferred === 1,
+    mebbisTransferDate: session.mebbis_transfer_date || undefined,
+    mebbisTransferError: session.mebbis_transfer_error || undefined,
+    mebbisRetryCount: session.mebbis_retry_count || 0,
+  };
+}
+
+/**
  * @deprecated Bu fonksiyon schoolId filtresi kullanmıyor ve veri sızıntısına yol açabilir.
  * Bunun yerine getSessionsBySchoolWithStudents(schoolId) kullanın.
  * Bu fonksiyon KALDIRILACAKTIR - lütfen kullanmayın!
@@ -25,15 +43,16 @@ export function getAllSessionsWithStudents(): CounselingSessionWithStudents[] {
 
 export function getSessionsBySchoolWithStudents(schoolId: string): CounselingSessionWithStudents[] {
   const sessions = repository.getSessionsBySchool(schoolId);
-  
+
   return sessions.map((session) => {
     const parsedTags = safeParseJSON<string[]>(session.sessionTags, []);
+    const normalized = normalizeSession(session);
     if (session.sessionType === 'group') {
       const students = repository.getStudentsBySessionId(session.id);
-      return { ...session, sessionTags: parsedTags, students };
+      return { ...normalized, sessionTags: parsedTags, students };
     } else {
       const student = repository.getStudentBySessionId(session.id);
-      return { ...session, sessionTags: parsedTags, student };
+      return { ...normalized, sessionTags: parsedTags, student };
     }
   });
 }
@@ -49,15 +68,16 @@ export function getActiveSessionsWithStudents(): CounselingSessionWithStudents[]
 
 export function getActiveSessionsBySchoolWithStudents(schoolId: string): CounselingSessionWithStudents[] {
   const sessions = repository.getActiveSessionsBySchool(schoolId);
-  
+
   return sessions.map((session) => {
     const parsedTags = safeParseJSON<string[]>(session.sessionTags, []);
+    const normalized = normalizeSession(session);
     if (session.sessionType === 'group') {
       const students = repository.getStudentsBySessionId(session.id);
-      return { ...session, sessionTags: parsedTags, students };
+      return { ...normalized, sessionTags: parsedTags, students };
     } else {
       const student = repository.getStudentBySessionId(session.id);
-      return { ...session, sessionTags: parsedTags, student };
+      return { ...normalized, sessionTags: parsedTags, student };
     }
   });
 }
@@ -65,9 +85,9 @@ export function getActiveSessionsBySchoolWithStudents(schoolId: string): Counsel
 export function getSessionByIdWithStudents(id: string): CounselingSessionWithStudents | null {
   const sanitizedId = sanitizeString(id);
   const session = repository.getSessionById(sanitizedId);
-  
+
   if (!session) return null;
-  
+
   const parsedTags = safeParseJSON(session.sessionTags, []);
   if (session.sessionType === 'group') {
     const students = repository.getStudentsBySessionId(sanitizedId);
@@ -81,16 +101,17 @@ export function getSessionByIdWithStudents(id: string): CounselingSessionWithStu
 export function getSessionByIdAndSchoolWithStudents(id: string, schoolId: string): CounselingSessionWithStudents | null {
   const sanitizedId = sanitizeString(id);
   const session = repository.getSessionByIdAndSchool(sanitizedId, schoolId);
-  
+
   if (!session) return null;
-  
+
   const parsedTags = safeParseJSON(session.sessionTags, []);
+  const normalized = normalizeSession(session);
   if (session.sessionType === 'group') {
     const students = repository.getStudentsBySessionId(sanitizedId);
-    return { ...session, sessionTags: parsedTags, students };
+    return { ...normalized, sessionTags: parsedTags, students };
   } else {
     const student = repository.getStudentBySessionId(sanitizedId);
-    return { ...session, sessionTags: parsedTags, student };
+    return { ...normalized, sessionTags: parsedTags, student };
   }
 }
 
@@ -98,7 +119,7 @@ export function createCounselingSession(data: Omit<CounselingSession, 'groupName
   if (!data.schoolId) {
     throw new Error('schoolId is required for createCounselingSession');
   }
-  
+
   const session: CounselingSession = {
     id: data.id,
     sessionType: data.sessionType,
@@ -127,9 +148,9 @@ export function createCounselingSession(data: Omit<CounselingSession, 'groupName
     drpUcId: data.drpUcId,
     completed: 0
   };
-  
+
   const sanitizedStudentIds = data.studentIds.map((id: string) => sanitizeString(id));
-  
+
   repository.createSession(session, sanitizedStudentIds);
   return { success: true, id: session.id };
 }
@@ -165,10 +186,10 @@ export function completeCounselingSession(
   const sanitizedNotes = completionData.detailedNotes ? sanitizeString(completionData.detailedNotes) : null;
   const sanitizedOutcomes = completionData.achievedOutcomes ? sanitizeString(completionData.achievedOutcomes) : null;
   const sanitizedFollowUpPlan = completionData.followUpPlan ? sanitizeString(completionData.followUpPlan) : null;
-  
+
   const sessionTags = completionData.sessionTags ? JSON.stringify(completionData.sessionTags) : null;
   const actionItems = completionData.actionItems ? JSON.stringify(completionData.actionItems) : null;
-  
+
   const result = repository.completeSession(
     sanitizedId,
     sanitizedTopic,
@@ -192,11 +213,11 @@ export function completeCounselingSession(
     completionData.drpIkiId || null,
     completionData.drpUcId || null
   );
-  
+
   if (result.changes === 0) {
     return { success: false, notFound: true };
   }
-  
+
   return { success: true };
 }
 
@@ -231,10 +252,10 @@ export function completeCounselingSessionBySchool(
   const sanitizedNotes = completionData.detailedNotes ? sanitizeString(completionData.detailedNotes) : null;
   const sanitizedOutcomes = completionData.achievedOutcomes ? sanitizeString(completionData.achievedOutcomes) : null;
   const sanitizedFollowUpPlan = completionData.followUpPlan ? sanitizeString(completionData.followUpPlan) : null;
-  
+
   const sessionTags = completionData.sessionTags ? JSON.stringify(completionData.sessionTags) : null;
   const actionItems = completionData.actionItems ? JSON.stringify(completionData.actionItems) : null;
-  
+
   const result = repository.completeSessionBySchool(
     sanitizedId,
     schoolId,
@@ -259,11 +280,11 @@ export function completeCounselingSessionBySchool(
     completionData.drpIkiId || null,
     completionData.drpUcId || null
   );
-  
+
   if (result.changes === 0) {
     return { success: false, notFound: true };
   }
-  
+
   return { success: true };
 }
 
@@ -271,32 +292,32 @@ export function extendCounselingSession(id: string): { success: boolean; notFoun
   console.warn('[DEPRECATED] extendCounselingSession() called without schoolId. Use extendCounselingSessionBySchool() instead.');
   const sanitizedId = sanitizeString(id);
   const result = repository.extendSession(sanitizedId);
-  
+
   if (result.changes === 0) {
     return { success: false, notFound: true };
   }
-  
+
   return { success: true };
 }
 
 export function extendCounselingSessionBySchool(id: string, schoolId: string): { success: boolean; notFound?: boolean } {
   const sanitizedId = sanitizeString(id);
   const result = repository.extendSessionBySchool(sanitizedId, schoolId);
-  
+
   if (result.changes === 0) {
     return { success: false, notFound: true };
   }
-  
+
   return { success: true };
 }
 
 export function autoCompleteSessions(): { success: boolean; completedCount: number } {
   const now = new Date();
   const currentTime = now.toTimeString().slice(0, 5);
-  
+
   const sessionsToComplete = repository.getSessionsToAutoComplete();
   const completedCount = sessionsToComplete.length;
-  
+
   if (completedCount > 0) {
     console.log(`⏰ Auto-completing ${completedCount} session(s) that exceeded time limit...`);
     for (const session of sessionsToComplete) {
@@ -308,17 +329,17 @@ export function autoCompleteSessions(): { success: boolean; completedCount: numb
       }
     }
   }
-  
+
   return { success: true, completedCount };
 }
 
 export function autoCompleteSessionsBySchool(schoolId: string): { success: boolean; completedCount: number } {
   const now = new Date();
   const currentTime = now.toTimeString().slice(0, 5);
-  
+
   const sessionsToComplete = repository.getSessionsToAutoCompleteBySchool(schoolId);
   const completedCount = sessionsToComplete.length;
-  
+
   if (completedCount > 0) {
     console.log(`⏰ Auto-completing ${completedCount} session(s) for school ${schoolId} that exceeded time limit...`);
     for (const session of sessionsToComplete) {
@@ -330,42 +351,42 @@ export function autoCompleteSessionsBySchool(schoolId: string): { success: boole
       }
     }
   }
-  
+
   return { success: true, completedCount };
 }
 
 export function deleteCounselingSession(id: string): { success: boolean; notFound?: boolean } {
   const sanitizedId = sanitizeString(id);
   const result = repository.deleteSession(sanitizedId);
-  
+
   if (result.changes === 0) {
     return { success: false, notFound: true };
   }
-  
+
   return { success: true };
 }
 
 export function deleteCounselingSessionBySchool(id: string, schoolId: string): { success: boolean; notFound?: boolean } {
   const sanitizedId = sanitizeString(id);
   const result = repository.deleteSessionBySchool(sanitizedId, schoolId);
-  
+
   if (result.changes === 0) {
     return { success: false, notFound: true };
   }
-  
+
   return { success: true };
 }
 
 export function getClassHours(): ClassHour[] {
   const settingsRow = repository.getAppSettings();
-  
+
   if (!settingsRow || !settingsRow.settings) {
     return [];
   }
-  
+
   const settings = JSON.parse(settingsRow.settings);
   const periods = settings?.school?.periods || [];
-  
+
   return periods.map((period: { start: string; end: string }, index: number) => ({
     id: index + 1,
     name: `${index + 1}. Ders`,
@@ -381,10 +402,10 @@ export function getCounselingTopics(): CounselingTopic[] {
 export function getStudentSessionStats(studentId: string): unknown {
   const sanitizedStudentId = sanitizeString(studentId);
   const rawHistory = repository.getStudentSessionHistory(sanitizedStudentId);
-  
+
   const allTopics = getIndividualTopicsFlat();
   const topicMap = new Map(allTopics.map(t => [t.id, t.title]));
-  
+
   return {
     sessionCount: rawHistory.sessionCount,
     lastSessionDate: rawHistory.lastSessionDate,
@@ -398,45 +419,45 @@ export function getStudentSessionStats(studentId: string): unknown {
 
 export function getFilteredSessionsWithStudents(filters: Partial<SessionFilters>): CounselingSessionWithStudents[] {
   const sanitizedFilters: SessionFilters = {};
-  
+
   if (filters.startDate && typeof filters.startDate === 'string' && filters.startDate.trim() !== '') {
     sanitizedFilters.startDate = sanitizeString(filters.startDate);
   }
-  
+
   if (filters.endDate && typeof filters.endDate === 'string' && filters.endDate.trim() !== '') {
     sanitizedFilters.endDate = sanitizeString(filters.endDate);
   }
-  
+
   if (filters.topic && typeof filters.topic === 'string' && filters.topic.trim() !== '') {
     sanitizedFilters.topic = sanitizeString(filters.topic);
   }
-  
+
   if (filters.className && typeof filters.className === 'string' && filters.className.trim() !== '') {
     sanitizedFilters.className = sanitizeString(filters.className);
   }
-  
+
   if (filters.status && (filters.status === 'completed' || filters.status === 'active' || filters.status === 'all')) {
     sanitizedFilters.status = filters.status;
   }
-  
+
   if (filters.participantType && typeof filters.participantType === 'string' && filters.participantType.trim() !== '') {
     sanitizedFilters.participantType = sanitizeString(filters.participantType);
   }
-  
+
   if (filters.sessionType && (filters.sessionType === 'individual' || filters.sessionType === 'group' || filters.sessionType === 'all')) {
     sanitizedFilters.sessionType = filters.sessionType;
   }
-  
+
   if (filters.sessionMode && typeof filters.sessionMode === 'string' && filters.sessionMode.trim() !== '') {
     sanitizedFilters.sessionMode = sanitizeString(filters.sessionMode);
   }
-  
+
   if (filters.studentId && typeof filters.studentId === 'string' && filters.studentId.trim() !== '') {
     sanitizedFilters.studentId = sanitizeString(filters.studentId);
   }
-  
+
   const sessions = repository.getFilteredSessions(sanitizedFilters);
-  
+
   return sessions.map((session) => {
     const parsedTags = safeParseJSON<string[]>(session.sessionTags, []);
     if (session.sessionType === 'group') {
@@ -451,45 +472,45 @@ export function getFilteredSessionsWithStudents(filters: Partial<SessionFilters>
 
 export function getFilteredSessionsBySchoolWithStudents(schoolId: string, filters: Partial<SessionFilters>): CounselingSessionWithStudents[] {
   const sanitizedFilters: SessionFilters = {};
-  
+
   if (filters.startDate && typeof filters.startDate === 'string' && filters.startDate.trim() !== '') {
     sanitizedFilters.startDate = sanitizeString(filters.startDate);
   }
-  
+
   if (filters.endDate && typeof filters.endDate === 'string' && filters.endDate.trim() !== '') {
     sanitizedFilters.endDate = sanitizeString(filters.endDate);
   }
-  
+
   if (filters.topic && typeof filters.topic === 'string' && filters.topic.trim() !== '') {
     sanitizedFilters.topic = sanitizeString(filters.topic);
   }
-  
+
   if (filters.className && typeof filters.className === 'string' && filters.className.trim() !== '') {
     sanitizedFilters.className = sanitizeString(filters.className);
   }
-  
+
   if (filters.status && (filters.status === 'completed' || filters.status === 'active' || filters.status === 'all')) {
     sanitizedFilters.status = filters.status;
   }
-  
+
   if (filters.participantType && typeof filters.participantType === 'string' && filters.participantType.trim() !== '') {
     sanitizedFilters.participantType = sanitizeString(filters.participantType);
   }
-  
+
   if (filters.sessionType && (filters.sessionType === 'individual' || filters.sessionType === 'group' || filters.sessionType === 'all')) {
     sanitizedFilters.sessionType = filters.sessionType;
   }
-  
+
   if (filters.sessionMode && typeof filters.sessionMode === 'string' && filters.sessionMode.trim() !== '') {
     sanitizedFilters.sessionMode = sanitizeString(filters.sessionMode);
   }
-  
+
   if (filters.studentId && typeof filters.studentId === 'string' && filters.studentId.trim() !== '') {
     sanitizedFilters.studentId = sanitizeString(filters.studentId);
   }
-  
+
   const sessions = repository.getFilteredSessionsBySchool(schoolId, sanitizedFilters);
-  
+
   return sessions.map((session) => {
     const parsedTags = safeParseJSON<string[]>(session.sessionTags, []);
     if (session.sessionType === 'group') {

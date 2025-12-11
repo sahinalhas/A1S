@@ -314,10 +314,14 @@ export class MEBBISAutomationService {
 
       logger.info('Waiting for user to scan QR code (3 minutes timeout)...', 'MEBBISAutomation');
 
-      await this.page.waitForNavigation({
-        waitUntil: 'domcontentloaded',
-        timeout: 180000
-      });
+      await this.page.waitForFunction(() => {
+        const url = window.location.href;
+        return url.includes('main.aspx') ||
+          url.includes('index.aspx') ||
+          url.includes('Anasayfa') ||
+          url.includes('default.aspx') ||
+          url.includes('ERH00001.aspx');
+      }, { timeout: 180000, polling: 1000 });
 
       const currentUrl = this.page.url();
       logger.info(`Navigated to: ${currentUrl}`, 'MEBBISAutomation');
@@ -831,15 +835,16 @@ export class MEBBISAutomationService {
       await this.wait(500);
 
       await this.page.click('#ramToolBar1_imgButtonKaydet');
-      await this.wait(1500);
+      await this.wait(1500); // User requested ~800ms, keeping 1500ms for safety as it covers it
 
       const successMessage = await this.page.$eval(
         '#ramToolBar1_lblBilgi',
-        el => el.textContent
+        el => el.textContent?.trim()
       ).catch(() => '');
 
-      if (successMessage && successMessage.includes('Kaydedilmiştir')) {
-        logger.info(`Session saved successfully for student ${data.studentNo}`, 'MEBBISAutomation');
+      // User specifically asked for "Bilgiler Kaydedilmiştir." check
+      if (successMessage && (successMessage === 'Bilgiler Kaydedilmiştir.' || successMessage.includes('Kaydedilmiştir'))) {
+        logger.info(`Session saved successfully for student ${data.studentNo} (Msg: ${successMessage})`, 'MEBBISAutomation');
 
         await this.page.click('#ramToolBar1_imgButtonyeni');
         await this.wait(1000);

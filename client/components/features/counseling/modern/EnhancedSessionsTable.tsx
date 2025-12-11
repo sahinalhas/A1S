@@ -11,7 +11,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/components/organisms/DropdownMenu';
-import { Download, Eye, Columns, ArrowUpDown, ArrowUp, ArrowDown, FileText } from 'lucide-react';
+import { Download, Eye, Columns, ArrowUpDown, ArrowUp, ArrowDown, FileText, CheckCircle2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale/tr';
 import type { CounselingSession, CounselingTopic, CompleteSessionFormValues } from '../types';
@@ -61,6 +61,7 @@ export default function EnhancedSessionsTable({
     { key: 'mode', label: 'Çalışma Yöntemi', visible: true },
     { key: 'location', label: 'Görüşme Yeri', visible: true },
     { key: 'discipline', label: 'Disiplin/Davranış', visible: true },
+    { key: 'mebbis', label: 'MEBBİS', visible: true },
     { key: 'notes', label: 'Açıklama', visible: false },
     { key: 'actions', label: 'İşlemler', visible: true },
   ]);
@@ -284,6 +285,9 @@ export default function EnhancedSessionsTable({
                 {columns.find(c => c.key === 'discipline')?.visible && (
                   <th className="text-left px-4 py-3">Disiplin/Davranış</th>
                 )}
+                {columns.find(c => c.key === 'mebbis')?.visible && (
+                  <th className="text-center px-4 py-3 w-16">MEBBİS</th>
+                )}
                 {columns.find(c => c.key === 'notes')?.visible && (
                   <th className="text-left px-4 py-3">Açıklama</th>
                 )}
@@ -462,6 +466,19 @@ export default function EnhancedSessionsTable({
                     {columns.find(c => c.key === 'discipline')?.visible && (
                       <td className="px-4 py-3 text-sm whitespace-nowrap">
                         {session.disciplineStatus ? (DISCIPLINE_STATUS_LABELS[session.disciplineStatus] || session.disciplineStatus) : '-'}
+                      </td>
+                    )}
+                    {columns.find(c => c.key === 'mebbis')?.visible && (
+                      <td className="px-4 py-3 text-center">
+                        {session.mebbisTransferred ? (
+                          <div className="flex justify-center" title={session.mebbisTransferDate ? `Aktarım Tarihi: ${format(new Date(session.mebbisTransferDate), 'dd MMM yyyy HH:mm')}` : 'MEBBİS\'e Aktarıldı'}>
+                            <CheckCircle2 className="h-5 w-5 text-green-600" />
+                          </div>
+                        ) : (
+                          <div className="flex justify-center" title="Henüz aktarılmadı">
+                            <span className="w-2 h-2 rounded-full bg-gray-300 block" />
+                          </div>
+                        )}
                       </td>
                     )}
                     {columns.find(c => c.key === 'notes')?.visible && (

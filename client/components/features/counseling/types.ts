@@ -235,6 +235,9 @@ export interface CounselingSession {
     autoCompleted: boolean;
     extensionGranted: boolean;
     completed: boolean;
+    mebbisTransferred?: boolean | number;
+    mebbisTransferDate?: string;
+    mebbisTransferError?: string;
     created_at: string;
     updated_at: string;
     student?: Student;

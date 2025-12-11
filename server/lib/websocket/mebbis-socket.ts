@@ -41,12 +41,15 @@ export function initializeMEBBISWebSocket(httpServer: HTTPServer): SocketIOServe
           return;
         }
 
-        socket.join(`transfer-${transferId}-${schoolId}`);
+        // Fix: Use transfer-{transferId} room name to match MEBBISTransferManager
+        socket.join(`transfer-${transferId}`);
         logger.info(`Client ${socket.id} subscribed to transfer: ${transferId} for school: ${schoolId}`, 'MEBBISSocket');
-        
+
         const status = mebbisTransferManager.getStatus(transferId);
         if (status) {
           socket.emit('mebbis:progress', status.progress);
+          // Sync status immediately in case client missed the transition
+          socket.emit('mebbis:status', { status: status.status });
         }
       } catch (error) {
         logger.error('Error in mebbis:subscribe', 'MEBBISSocket', error);
@@ -55,7 +58,7 @@ export function initializeMEBBISWebSocket(httpServer: HTTPServer): SocketIOServe
     });
 
     socket.on('mebbis:unsubscribe', (transferId: string, schoolId: string) => {
-      socket.leave(`transfer-${transferId}-${schoolId}`);
+      socket.leave(`transfer-${transferId}`);
       logger.info(`Client ${socket.id} unsubscribed from transfer: ${transferId}`, 'MEBBISSocket');
     });
 

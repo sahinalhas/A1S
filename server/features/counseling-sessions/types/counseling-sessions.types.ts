@@ -59,7 +59,7 @@ export interface CounselingSession {
   institutionalCooperation?: string;
   sessionDetails?: string;
   detailedNotes?: string;
-  
+
   sessionFlow?: SessionFlow;
   studentParticipationLevel?: ParticipationLevel;
   cooperationLevel?: number;
@@ -72,10 +72,14 @@ export interface CounselingSession {
   followUpPlan?: string;
   actionItems?: string;
   aiAnalysisData?: string;
-  
+
   completed: number;
   autoCompleted?: number;
   extensionGranted?: number;
+  mebbis_transferred?: number;
+  mebbis_transfer_date?: string;
+  mebbis_transfer_error?: string;
+  mebbis_retry_count?: number;
   created_at?: string;
   updated_at?: string;
 }
