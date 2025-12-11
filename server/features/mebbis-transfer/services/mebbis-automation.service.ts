@@ -770,30 +770,49 @@ export class MEBBISAutomationService {
         }
       }
 
-      await this.page.evaluate((date) => {
-        const input = document.getElementById('txtgorusmetarihi') as HTMLInputElement;
-        if (input) input.value = date;
-      }, data.gorusmeTarihi);
+      // Tarih Girişi - Klavye simülasyonu ile
+      logger.info(`Entering date: ${data.gorusmeTarihi}`, 'MEBBISAutomation');
+      await this.page.click('#txtgorusmetarihi', { clickCount: 3 });
+      await this.page.keyboard.press('Backspace');
+      await this.wait(200);
+      await this.page.type('#txtgorusmetarihi', data.gorusmeTarihi, { delay: 100 });
+      await this.page.evaluate(() => {
+        const el = document.getElementById('txtgorusmetarihi') as HTMLInputElement;
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+        el.dispatchEvent(new Event('blur', { bubbles: true }));
+      });
+      await this.wait(500);
 
-      await this.page.evaluate((time) => {
-        const input = document.getElementById('txtgorusmesaati') as HTMLInputElement;
-        if (input) input.value = time;
-      }, data.gorusmeSaati);
+      // Başlangıç Saati - Klavye simülasyonu ile
+      logger.info(`Entering start time: ${data.gorusmeSaati}`, 'MEBBISAutomation');
+      await this.page.click('#txtgorusmesaati', { clickCount: 3 });
+      await this.page.keyboard.press('Backspace');
+      await this.wait(200);
+      await this.page.type('#txtgorusmesaati', data.gorusmeSaati, { delay: 100 });
+      await this.page.evaluate(() => {
+        const el = document.getElementById('txtgorusmesaati') as HTMLInputElement;
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+        el.dispatchEvent(new Event('blur', { bubbles: true }));
+      });
+      await this.wait(500);
 
-      await this.page.evaluate((time) => {
-        const input = document.getElementById('txtgorusmebitissaati') as HTMLInputElement;
-        if (input) input.value = time;
-      }, data.gorusmeBitisSaati);
+      // Bitiş Saati - Klavye simülasyonu ile
+      logger.info(`Entering end time: ${data.gorusmeBitisSaati}`, 'MEBBISAutomation');
+      await this.page.click('#txtgorusmebitissaati', { clickCount: 3 });
+      await this.page.keyboard.press('Backspace');
+      await this.wait(200);
+      await this.page.type('#txtgorusmebitissaati', data.gorusmeBitisSaati, { delay: 100 });
+      await this.page.evaluate(() => {
+        const el = document.getElementById('txtgorusmebitissaati') as HTMLInputElement;
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+        el.dispatchEvent(new Event('blur', { bubbles: true }));
+      });
+      await this.wait(500);
 
       await this.retry(async () => {
         await this.selectDropdownOption('#cmbCalismaYeri', data.calismaYeri);
         await this.wait(800);
       }, 2, 1000, 'Workplace selection');
-
-      await this.page.evaluate((time) => {
-        const input = document.getElementById('txtgorusmebitissaati') as HTMLInputElement;
-        if (input) input.value = time;
-      }, data.gorusmeBitisSaati);
 
       // Kaydetmeden önce kısa bir bekle, DOM iyice otursun
       await this.wait(500);
