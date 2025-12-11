@@ -416,6 +416,32 @@ export default function Students() {
     }
   };
 
+  const downloadTemplate = () => {
+    // Create template with headers and 2 example rows
+    const templateData = [
+      ['Öğrenci No', 'Ad', 'Soyad', 'Sınıf', 'Şube', 'Cinsiyet'],
+      ['12345', 'Ahmet', 'Yılmaz', '7', 'A', 'E'],
+      ['12346', 'Ayşe', 'Demir', '8', 'B', 'K'],
+    ];
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(templateData);
+
+    // Set column widths
+    ws['!cols'] = [
+      { wch: 12 }, // Öğrenci No
+      { wch: 15 }, // Ad
+      { wch: 15 }, // Soyad
+      { wch: 10 }, // Sınıf
+      { wch: 8 },  // Şube
+      { wch: 10 }, // Cinsiyet
+    ];
+
+    XLSX.utils.book_append_sheet(wb, ws, 'Öğrenciler');
+    XLSX.writeFile(wb, 'ogrenci_sablonu.xlsx');
+    toast.success('Şablon indirildi!');
+  };
+
   const statsCardsData = [
     {
       title: "Toplam Öğrenci",
@@ -507,6 +533,16 @@ export default function Students() {
                   </span>
                 </Button>
               </label>
+
+              <Button
+                variant="outline"
+                size="default"
+                className="border-white/50 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm"
+                onClick={downloadTemplate}
+              >
+                <FileSpreadsheet className="mr-2 h-4 w-4" />
+                Şablon İndir
+              </Button>
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
