@@ -328,6 +328,14 @@ export default function CounselingSessions() {
       />
 
       <div className="space-y-6 max-w-7xl mx-auto">
+        {/* Stats Cards - Global */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <SessionStatsCards stats={stats} isLoading={sessionsLoading} />
+        </motion.div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
           <motion.div
@@ -363,14 +371,6 @@ export default function CounselingSessions() {
           </motion.div>
 
           <TabsContent value="dashboard" className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              <SessionStatsCards stats={stats} isLoading={sessionsLoading} />
-            </motion.div>
-
             <motion.div
               className="flex items-center justify-between"
               initial={{ opacity: 0 }}

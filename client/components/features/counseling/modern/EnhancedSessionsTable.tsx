@@ -11,6 +11,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/components/organisms/DropdownMenu';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/organisms/Table';
 import { Download, Eye, Columns, ArrowUpDown, ArrowUp, ArrowDown, FileText, CheckCircle2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale/tr';
@@ -155,7 +163,7 @@ export default function EnhancedSessionsTable({
   const SortButton = ({ field, label }: { field: SortField; label: string }) => (
     <button
       onClick={() => handleSort(field)}
-      className="flex items-center gap-1"
+      className="flex items-center gap-1 hover:text-foreground transition-colors"
     >
       {label}
       {sortField === field && (
@@ -235,68 +243,68 @@ export default function EnhancedSessionsTable({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="border-b text-sm font-medium text-muted-foreground">
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
+              <TableRow>
                 {columns.find(c => c.key === 'sessionNumber')?.visible && (
-                  <th className="text-center px-3 py-3 w-16">
+                  <TableHead className="text-center w-16">
                     #
-                  </th>
+                  </TableHead>
                 )}
                 {columns.find(c => c.key === 'date')?.visible && (
-                  <th className="text-left px-4 py-3">
+                  <TableHead>
                     <SortButton field="date" label="Tarih" />
-                  </th>
+                  </TableHead>
                 )}
                 {columns.find(c => c.key === 'time')?.visible && (
-                  <th className="text-left px-4 py-3">
+                  <TableHead>
                     <SortButton field="time" label="Saat" />
-                  </th>
+                  </TableHead>
                 )}
                 {columns.find(c => c.key === 'student')?.visible && (
-                  <th className="text-left px-4 py-3">
+                  <TableHead>
                     <SortButton field="student" label="Öğrenci/Grup" />
-                  </th>
+                  </TableHead>
                 )}
                 {columns.find(c => c.key === 'type')?.visible && (
-                  <th className="text-left px-4 py-3">
+                  <TableHead>
                     <SortButton field="type" label="Tip" />
-                  </th>
+                  </TableHead>
                 )}
                 {columns.find(c => c.key === 'topic1')?.visible && (
-                  <th className="text-left px-4 py-3">RPD Hizmet Türü</th>
+                  <TableHead>RPD Hizmet Türü</TableHead>
                 )}
                 {columns.find(c => c.key === 'topic2')?.visible && (
-                  <th className="text-left px-4 py-3">1. Aşama</th>
+                  <TableHead>1. Aşama</TableHead>
                 )}
                 {columns.find(c => c.key === 'topic3')?.visible && (
-                  <th className="text-left px-4 py-3">2. Aşama</th>
+                  <TableHead>2. Aşama</TableHead>
                 )}
                 {columns.find(c => c.key === 'topic')?.visible && (
-                  <th className="text-left px-4 py-3">Konu</th>
+                  <TableHead>Konu</TableHead>
                 )}
                 {columns.find(c => c.key === 'mode')?.visible && (
-                  <th className="text-left px-4 py-3">Çalışma Yöntemi</th>
+                  <TableHead>Çalışma Yöntemi</TableHead>
                 )}
                 {columns.find(c => c.key === 'location')?.visible && (
-                  <th className="text-left px-4 py-3">Görüşme Yeri</th>
+                  <TableHead>Görüşme Yeri</TableHead>
                 )}
                 {columns.find(c => c.key === 'discipline')?.visible && (
-                  <th className="text-left px-4 py-3">Disiplin/Davranış</th>
+                  <TableHead>Disiplin/Davranış</TableHead>
                 )}
                 {columns.find(c => c.key === 'mebbis')?.visible && (
-                  <th className="text-center px-4 py-3 w-16">MEBBİS</th>
+                  <TableHead className="text-center w-16">MEBBİS</TableHead>
                 )}
                 {columns.find(c => c.key === 'notes')?.visible && (
-                  <th className="text-left px-4 py-3">Açıklama</th>
+                  <TableHead>Açıklama</TableHead>
                 )}
                 {columns.find(c => c.key === 'actions')?.visible && (
-                  <th className="text-center px-4 py-3 w-24">İşlemler</th>
+                  <TableHead className="text-center w-24">İşlemler</TableHead>
                 )}
-              </tr>
-            </thead>
-            <tbody>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {sortedSessions.map((session, index) => {
                 const studentName = session.sessionType === 'individual' && session.student
                   ? `${session.student.name} ${session.student.surname || ''}`.trim()
@@ -360,51 +368,48 @@ export default function EnhancedSessionsTable({
                 };
 
                 return (
-                  <motion.tr
+                  <TableRow
                     key={session.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: index * 0.02 }}
-                    className="border-b cursor-pointer"
+                    className="cursor-pointer hover:bg-muted/50"
                     onClick={() => onSelectSession(session)}
                   >
                     {columns.find(c => c.key === 'sessionNumber')?.visible && (
-                      <td className="px-3 py-3 text-center">
+                      <TableCell className="text-center">
                         <Badge
                           variant="secondary"
                           className="text-xs font-semibold px-2 min-w-[2rem]"
                         >
                           {sessionNumber}
                         </Badge>
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'date')?.visible && (
-                      <td className="px-4 py-3 text-sm whitespace-nowrap">
+                      <TableCell className="text-sm whitespace-nowrap">
                         {format(new Date(session.sessionDate), 'dd MMM yyyy', { locale: tr })}
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'time')?.visible && (
-                      <td className="px-4 py-3 text-sm whitespace-nowrap">
+                      <TableCell className="text-sm whitespace-nowrap">
                         {session.entryTime}{session.exitTime ? ` - ${session.exitTime}` : ''}
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'student')?.visible && (
-                      <td className="px-4 py-3 text-sm font-medium max-w-xs truncate">
+                      <TableCell className="text-sm font-medium max-w-xs truncate">
                         {studentName}
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'type')?.visible && (
-                      <td className="px-4 py-3 whitespace-nowrap">
+                      <TableCell className="whitespace-nowrap">
                         <Badge
                           variant="outline"
                           className="text-xs"
                         >
                           {session.sessionType === 'individual' ? 'Bireysel' : 'Grup'}
                         </Badge>
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'topic1')?.visible && (
-                      <td className="px-4 py-3 whitespace-nowrap">
+                      <TableCell className="whitespace-nowrap">
                         {getTopicHierarchy(session.topic)[0] && (
                           <Badge
                             variant="outline"
@@ -413,10 +418,10 @@ export default function EnhancedSessionsTable({
                             {getTopicHierarchy(session.topic)[0]}
                           </Badge>
                         )}
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'topic2')?.visible && (
-                      <td className="px-4 py-3 whitespace-nowrap">
+                      <TableCell className="whitespace-nowrap">
                         {getTopicHierarchy(session.topic)[1] && (
                           <Badge
                             variant="outline"
@@ -425,10 +430,10 @@ export default function EnhancedSessionsTable({
                             {getTopicHierarchy(session.topic)[1]}
                           </Badge>
                         )}
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'topic3')?.visible && (
-                      <td className="px-4 py-3 whitespace-nowrap">
+                      <TableCell className="whitespace-nowrap">
                         {getTopicHierarchy(session.topic)[2] && (
                           <Badge
                             variant="outline"
@@ -437,10 +442,10 @@ export default function EnhancedSessionsTable({
                             {getTopicHierarchy(session.topic)[2]}
                           </Badge>
                         )}
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'topic')?.visible && (
-                      <td className="px-4 py-3 text-sm">
+                      <TableCell className="text-sm">
                         <span className="truncate block max-w-xs">
                           {(() => {
                             const topic = topicsMap.get(session.topic || '');
@@ -451,25 +456,25 @@ export default function EnhancedSessionsTable({
                             return topic.title;
                           })()}
                         </span>
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'mode')?.visible && (
-                      <td className="px-4 py-3 text-sm whitespace-nowrap">
+                      <TableCell className="text-sm whitespace-nowrap">
                         {SESSION_MODE_LABELS[session.sessionMode as keyof typeof SESSION_MODE_LABELS] || session.sessionMode}
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'location')?.visible && (
-                      <td className="px-4 py-3 text-sm whitespace-nowrap">
+                      <TableCell className="text-sm whitespace-nowrap">
                         {session.sessionLocation ? (SESSION_LOCATION_LABELS[session.sessionLocation] || session.sessionLocation) : '-'}
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'discipline')?.visible && (
-                      <td className="px-4 py-3 text-sm whitespace-nowrap">
+                      <TableCell className="text-sm whitespace-nowrap">
                         {session.disciplineStatus ? (DISCIPLINE_STATUS_LABELS[session.disciplineStatus] || session.disciplineStatus) : '-'}
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'mebbis')?.visible && (
-                      <td className="px-4 py-3 text-center">
+                      <TableCell className="text-center">
                         {session.mebbisTransferred ? (
                           <div className="flex justify-center" title={session.mebbisTransferDate ? `Aktarım Tarihi: ${format(new Date(session.mebbisTransferDate), 'dd MMM yyyy HH:mm')}` : 'MEBBİS\'e Aktarıldı'}>
                             <CheckCircle2 className="h-5 w-5 text-green-600" />
@@ -479,18 +484,18 @@ export default function EnhancedSessionsTable({
                             <span className="w-2 h-2 rounded-full bg-gray-300 block" />
                           </div>
                         )}
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'notes')?.visible && (
-                      <td className="px-4 py-3 max-w-md">
+                      <TableCell className="max-w-md">
                         <p className="text-xs text-muted-foreground truncate">
                           {session.detailedNotes || session.sessionDetails || '-'}
                         </p>
-                      </td>
+                      </TableCell>
                     )}
                     {columns.find(c => c.key === 'actions')?.visible && (
-                      <td
-                        className="px-4 py-3 text-center"
+                      <TableCell
+                        className="text-center"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Button
@@ -502,13 +507,13 @@ export default function EnhancedSessionsTable({
                         >
                           <FileText className="h-4 w-4 text-muted-foreground hover:text-primary" />
                         </Button>
-                      </td>
+                      </TableCell>
                     )}
-                  </motion.tr>
+                  </TableRow>
                 );
               })}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       </CardContent>
     </Card>
