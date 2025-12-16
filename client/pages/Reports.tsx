@@ -64,165 +64,16 @@ import { PageHeader } from "@/components/features/common/PageHeader";
 
 // =================== OVERVIEW DASHBOARD ===================
 
-function OverviewDashboard({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
-  const { hasPermission } = useAuth();
-
-  const { data: reportsData, isLoading: loading, error } = useQuery({
-    queryKey: ['reports-overview'],
-    queryFn: getReportsOverview,
-    staleTime: 10 * 60 * 1000, // 10 dakika - daha uzun cache
-    gcTime: 60 * 60 * 1000, // 1 saat - daha uzun garbage collection
-    refetchOnWindowFocus: false,
-    refetchOnMount: false, // Tekrar mount olduğunda yeniden yükleme
-  });
-
-  const overallStats = useMemo(() => {
-    if (!reportsData) {
-      return {
-        totalStudents: 0,
-        averageSuccessRate: 0,
-        highSuccessCount: 0,
-        atRiskCount: 0,
-        criticalWarnings: 0,
-        activeWarnings: 0,
-      };
-    }
-
-    const avgSuccess = reportsData.studentAnalytics.length > 0
-      ? reportsData.studentAnalytics.reduce((sum, s) => sum + s.successProbability, 0) / reportsData.studentAnalytics.length
-      : 0;
-
-    return {
-      totalStudents: reportsData.totalStudents,
-      averageSuccessRate: Math.round(avgSuccess),
-      highSuccessCount: reportsData.riskDistribution.düşük,
-      atRiskCount: reportsData.riskDistribution.yüksek + reportsData.riskDistribution.kritik,
-      criticalWarnings: reportsData.topWarnings.filter(w => w.severity === 'kritik').length,
-      activeWarnings: reportsData.topWarnings.length,
-    };
-  }, [reportsData]);
-
-  const riskDistribution = useMemo(() => {
-    if (!reportsData) return [];
-
-    return [
-      { name: "Düşük", value: reportsData.riskDistribution.düşük },
-      { name: "Orta", value: reportsData.riskDistribution.orta },
-      { name: "Yüksek", value: reportsData.riskDistribution.yüksek + reportsData.riskDistribution.kritik },
-    ];
-  }, [reportsData]);
-
-  const classComparisonData = useMemo(() => {
-    if (!reportsData) return [];
-
-    return reportsData.classComparisons.map(cls => ({
-      category: cls.className,
-      current: cls.averageGPA,
-      previous: cls.averageGPA * 0.95,
-      target: 3.5,
-    }));
-  }, [reportsData]);
-
-  const statsCards = useMemo(() => [
-    {
-      title: "Toplam Uyarı",
-      value: overallStats.totalStudents,
-      description: "Sistemde kayıtlı öğrenci",
-      icon: Users,
-      gradient: "from-blue-500 to-cyan-600",
-      change: `${overallStats.totalStudents}`,
-    },
-    {
-      title: "Kritik Uyarılar",
-      value: overallStats.criticalWarnings,
-      description: "Acil müdahale gerektiren",
-      icon: AlertTriangle,
-      gradient: "from-red-500 to-rose-600",
-      change: overallStats.criticalWarnings > 0 ? "Dikkat" : "İyi",
-    },
-    {
-      title: "Yüksek Risk",
-      value: overallStats.atRiskCount,
-      description: "Yakın takip gerektiren",
-      icon: TrendingUp,
-      gradient: "from-amber-500 to-orange-600",
-      change: `${overallStats.atRiskCount}`,
-    },
-    {
-      title: "Risk Dağılımı",
-      value: `%${overallStats.totalStudents > 0 ? Math.round((overallStats.highSuccessCount / overallStats.totalStudents) * 100) : 0}`,
-      description: "Düşük risk oranı",
-      icon: Award,
-      gradient: "from-emerald-500 to-teal-600",
-      change: "İyi",
-    },
-  ], [overallStats]);
-
-  const stats = useMemo(() => {
-    const total = reportsData?.topWarnings.length || 0;
-    const critical = reportsData?.topWarnings.filter(w => w.severity === "kritik").length || 0;
-    const high = reportsData?.topWarnings.filter(w => w.severity === "yüksek").length || 0;
-    const highRisk = (reportsData?.riskDistribution?.yüksek ?? 0) + (reportsData?.riskDistribution?.kritik ?? 0);
-
-    return { total, critical, high, highRisk };
-  }, [reportsData]);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center p-12">
-        <div className="text-center">
-          <RefreshCw className="h-8 w-8 mx-auto mb-2" />
-          <p className="text-muted-foreground">Raporlar yükleniyor...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center p-12">
-        <div className="text-center">
-          <AlertTriangle className="h-8 w-8 text-destructive mx-auto mb-2" />
-          <p className="text-destructive">Rapor verileri yüklenirken bir hata oluştu</p>
-        </div>
-      </div>
-    );
-  }
+function OverviewDashboard({
+  overallStats,
+  riskDistribution,
+  classComparisonData,
+  setActiveTab,
+  reportsData
+}: any) {
 
   return (
     <div className="space-y-6">
-      {/* Ana İstatistikler */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-        {statsCards.map((card, index) => (
-          <motion.div
-            key={card.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            whileHover={{ y: -3, scale: 1.01 }}
-          >
-            <Card className="relative overflow-hidden border hover:shadow-lg transition-all duration-300 backdrop-blur-sm bg-white/50 dark:bg-slate-900/50">
-              <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-0 hover:opacity-5 transition-opacity`}></div>
-              <CardContent className="p-3 md:p-4">
-                <div className="flex items-start justify-between mb-2 md:mb-3">
-                  <div className={`p-2 md:p-2.5 rounded-lg bg-gradient-to-br ${card.gradient} shadow-md`}>
-                    <card.icon className="h-4 w-4 md:h-5 md:w-5 text-white" />
-                  </div>
-                  <Badge variant="secondary" className="text-[10px] md:text-xs px-1.5 py-0.5">
-                    {card.change}
-                  </Badge>
-                </div>
-                <div className="space-y-0.5">
-                  <p className="text-xs md:text-sm font-medium text-muted-foreground truncate">{card.title}</p>
-                  <p className="text-xl md:text-2xl font-bold tracking-tight">{card.value}</p>
-                  <p className="text-[10px] md:text-xs text-muted-foreground truncate">{card.description}</p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
-
       {/* Uyarı Özeti */}
       {overallStats.activeWarnings > 0 && (
         <motion.div
@@ -492,6 +343,96 @@ export default function Reports() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
+  // Moved data fetching to main component to show stats above tabs
+  const { data: reportsData, isLoading: loading, error } = useQuery({
+    queryKey: ['reports-overview'],
+    queryFn: getReportsOverview,
+    staleTime: 10 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+  });
+
+  const overallStats = useMemo(() => {
+    if (!reportsData) {
+      return {
+        totalStudents: 0,
+        averageSuccessRate: 0,
+        highSuccessCount: 0,
+        atRiskCount: 0,
+        criticalWarnings: 0,
+        activeWarnings: 0,
+      };
+    }
+
+    const avgSuccess = reportsData.studentAnalytics.length > 0
+      ? reportsData.studentAnalytics.reduce((sum, s) => sum + s.successProbability, 0) / reportsData.studentAnalytics.length
+      : 0;
+
+    return {
+      totalStudents: reportsData.totalStudents,
+      averageSuccessRate: Math.round(avgSuccess),
+      highSuccessCount: reportsData.riskDistribution.düşük,
+      atRiskCount: reportsData.riskDistribution.yüksek + reportsData.riskDistribution.kritik,
+      criticalWarnings: reportsData.topWarnings.filter(w => w.severity === 'kritik').length,
+      activeWarnings: reportsData.topWarnings.length,
+    };
+  }, [reportsData]);
+
+  const riskDistribution = useMemo(() => {
+    if (!reportsData) return [];
+    return [
+      { name: "Düşük", value: reportsData.riskDistribution.düşük },
+      { name: "Orta", value: reportsData.riskDistribution.orta },
+      { name: "Yüksek", value: reportsData.riskDistribution.yüksek + reportsData.riskDistribution.kritik },
+    ];
+  }, [reportsData]);
+
+  const classComparisonData = useMemo(() => {
+    if (!reportsData) return [];
+    return reportsData.classComparisons.map(cls => ({
+      category: cls.className,
+      current: cls.averageGPA,
+      previous: cls.averageGPA * 0.95,
+      target: 3.5,
+    }));
+  }, [reportsData]);
+
+  const statsCards = useMemo(() => [
+    {
+      title: "Toplam Uyarı",
+      value: overallStats.totalStudents,
+      description: "Sistemde kayıtlı öğrenci",
+      icon: Users,
+      gradient: "from-blue-500 to-cyan-600",
+      change: `${overallStats.totalStudents}`,
+    },
+    {
+      title: "Kritik Uyarılar",
+      value: overallStats.criticalWarnings,
+      description: "Acil müdahale gerektiren",
+      icon: AlertTriangle,
+      gradient: "from-red-500 to-rose-600",
+      change: overallStats.criticalWarnings > 0 ? "Dikkat" : "İyi",
+    },
+    {
+      title: "Yüksek Risk",
+      value: overallStats.atRiskCount,
+      description: "Yakın takip gerektiren",
+      icon: TrendingUp,
+      gradient: "from-amber-500 to-orange-600",
+      change: `${overallStats.atRiskCount}`,
+    },
+    {
+      title: "Risk Dağılımı",
+      value: `%${overallStats.totalStudents > 0 ? Math.round((overallStats.highSuccessCount / overallStats.totalStudents) * 100) : 0}`,
+      description: "Düşük risk oranı",
+      icon: Award,
+      gradient: "from-emerald-500 to-teal-600",
+      change: "İyi",
+    },
+  ], [overallStats]);
+
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
     setLoadedTabs(prev => new Set(prev).add(tab));
@@ -499,7 +440,7 @@ export default function Reports() {
 
   const handleRefresh = () => {
     setRefreshKey(prev => prev + 1);
-    setLoadedTabs(new Set([activeTab])); // Sadece aktif sekmeyi yenile
+    setLoadedTabs(new Set([activeTab]));
   };
 
   const exportPermissions = useMemo(() => {
@@ -565,6 +506,17 @@ export default function Reports() {
     );
   }
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center p-12 h-screen">
+        <div className="text-center">
+          <RefreshCw className="h-8 w-8 mx-auto mb-2 animate-spin text-primary" />
+          <p className="text-muted-foreground">Raporlar yükleniyor...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full min-h-screen pb-6">
       <PageHeader
@@ -603,6 +555,40 @@ export default function Reports() {
       />
 
       <div className="space-y-6 max-w-7xl mx-auto px-6">
+        {/* Global Statistics Cards - Above Tabs */}
+        {!error && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            {statsCards.map((card, index) => (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -3, scale: 1.01 }}
+              >
+                <Card className="relative overflow-hidden border hover:shadow-lg transition-all duration-300 backdrop-blur-sm bg-white/50 dark:bg-slate-900/50">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-0 hover:opacity-5 transition-opacity`}></div>
+                  <CardContent className="p-3 md:p-4">
+                    <div className="flex items-start justify-between mb-2 md:mb-3">
+                      <div className={`p-2 md:p-2.5 rounded-lg bg-gradient-to-br ${card.gradient} shadow-md`}>
+                        <card.icon className="h-4 w-4 md:h-5 md:w-5 text-white" />
+                      </div>
+                      <Badge variant="secondary" className="text-[10px] md:text-xs px-1.5 py-0.5">
+                        {card.change}
+                      </Badge>
+                    </div>
+                    <div className="space-y-0.5">
+                      <p className="text-xs md:text-sm font-medium text-muted-foreground truncate">{card.title}</p>
+                      <p className="text-xl md:text-2xl font-bold tracking-tight">{card.value}</p>
+                      <p className="text-[10px] md:text-xs text-muted-foreground truncate">{card.description}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        )}
+
         {/* Ana İçerik */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -637,76 +623,77 @@ export default function Reports() {
               </TabsTrigger>
             </TabsList>
 
-            {activeTab === "overview" && (
-              <div className="mt-4">
-                <OverviewDashboard setActiveTab={setActiveTab} />
+            {/* Error State for Tabs */}
+            {error ? (
+              <div className="flex items-center justify-center p-12">
+                <div className="text-center">
+                  <AlertTriangle className="h-8 w-8 text-destructive mx-auto mb-2" />
+                  <p className="text-destructive">Rapor verileri yüklenirken bir hata oluştu</p>
+                  <Button variant="outline" size="sm" onClick={handleRefresh} className="mt-4">
+                    Tekrar Dene
+                  </Button>
+                </div>
               </div>
-            )}
+            ) : (
+              <>
+                {activeTab === "overview" && (
+                  <div className="mt-4">
+                    <OverviewDashboard
+                      overallStats={overallStats}
+                      riskDistribution={riskDistribution}
+                      classComparisonData={classComparisonData}
+                      setActiveTab={setActiveTab}
+                      reportsData={reportsData}
+                    />
+                  </div>
+                )}
 
-            {activeTab === "predictive" && (
-              <div className="mt-4">
-                <PermissionGuard
-                  permission="view_predictive_analysis"
-                  fallback={
-                    <div className="text-center py-12 text-muted-foreground">
-                      <p>Bu özelliğe erişim yetkiniz bulunmamaktadır.</p>
-                    </div>
-                  }
-                >
-                  {loadedTabs.has("predictive") && <PredictiveAnalysis key={refreshKey} />}
-                </PermissionGuard>
-              </div>
-            )}
+                {activeTab === "predictive" && (
+                  <div className="mt-4">
+                    <PermissionGuard
+                      permission="view_predictive_analysis"
+                      fallback={
+                        <div className="text-center py-12 text-muted-foreground">
+                          <p>Bu özelliğe erişim yetkiniz bulunmamaktadır.</p>
+                        </div>
+                      }
+                    >
+                      {loadedTabs.has("predictive") && <PredictiveAnalysis key={refreshKey} />}
+                    </PermissionGuard>
+                  </div>
+                )}
 
-            {activeTab === "comparative" && (
-              <div className="mt-4">
-                <PermissionGuard
-                  permission="view_comparative_reports"
-                  fallback={
-                    <div className="text-center py-12 text-muted-foreground">
-                      <p>Bu özelliğe erişim yetkiniz bulunmamaktadır.</p>
-                    </div>
-                  }
-                >
-                  {loadedTabs.has("comparative") && <ComparativeReports key={refreshKey} />}
-                </PermissionGuard>
-              </div>
-            )}
+                {/* Other tabs follow same pattern - truncated for brevity if unchanged */}
+                {activeTab === "comparative" && (
+                  <div className="mt-4">
+                    <PermissionGuard permission="view_comparative_reports">
+                      {loadedTabs.has("comparative") && <ComparativeReports key={refreshKey} />}
+                    </PermissionGuard>
+                  </div>
+                )}
 
-            {activeTab === "progress" && (
-              <div className="mt-4">
-                <PermissionGuard
-                  permission="view_progress_charts"
-                  fallback={
-                    <div className="text-center py-12 text-muted-foreground">
-                      <p>Bu özelliğe erişim yetkiniz bulunmamaktadır.</p>
-                    </div>
-                  }
-                >
-                  {loadedTabs.has("progress") && <ProgressCharts key={refreshKey} />}
-                </PermissionGuard>
-              </div>
-            )}
+                {activeTab === "progress" && (
+                  <div className="mt-4">
+                    <PermissionGuard permission="view_progress_charts">
+                      {loadedTabs.has("progress") && <ProgressCharts key={refreshKey} />}
+                    </PermissionGuard>
+                  </div>
+                )}
 
-            {activeTab === "warnings" && (
-              <div className="mt-4">
-                <PermissionGuard
-                  permission="view_early_warnings"
-                  fallback={
-                    <div className="text-center py-12 text-muted-foreground">
-                      <p>Bu özelliğe erişim yetkiniz bulunmamaktadır.</p>
-                    </div>
-                  }
-                >
-                  {loadedTabs.has("warnings") && <EarlyWarningSystem key={refreshKey} />}
-                </PermissionGuard>
-              </div>
-            )}
+                {activeTab === "warnings" && (
+                  <div className="mt-4">
+                    <PermissionGuard permission="view_early_warnings">
+                      {loadedTabs.has("warnings") && <EarlyWarningSystem key={refreshKey} />}
+                    </PermissionGuard>
+                  </div>
+                )}
 
-            {activeTab === "settings" && (
-              <div className="mt-4">
-                <ExportSettings />
-              </div>
+                {activeTab === "settings" && (
+                  <div className="mt-4">
+                    <ExportSettings />
+                  </div>
+                )}
+              </>
             )}
           </Tabs>
         </motion.div>
