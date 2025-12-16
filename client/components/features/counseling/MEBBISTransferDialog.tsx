@@ -11,7 +11,7 @@ import { Alert, AlertDescription } from '@/components/atoms/Alert';
 import { ScrollArea } from '@/components/organisms/ScrollArea';
 import { Loader2, CheckCircle2, XCircle, AlertCircle, Upload } from 'lucide-react';
 import { useMEBBISTransfer } from '@/hooks/features/useMEBBISTransfer';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/utils/toast.utils';
 import { useEffect, useRef } from 'react';
 import type { StartTransferRequest } from '@shared/types/mebbis-transfer.types';
 
