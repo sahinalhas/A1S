@@ -38,6 +38,8 @@ import GuidanceTipBalloon from "@/components/features/guidance-tips/GuidanceTipB
 import { useGuidanceTipQueue } from "@/hooks/useGuidanceTipQueue";
 import SchoolSwitcher from "@/components/features/school/SchoolSwitcher";
 import { CollapsibleMenuItem } from "@/components/organisms/Sidebar/CollapsibleMenuItem";
+import { SidebarGroup } from "@/components/organisms/Sidebar/SidebarGroup";
+import { ApplicationBreadcrumb } from "@/components/features/common/ApplicationBreadcrumb";
 import { SidebarSearch } from "@/components/organisms/Sidebar/SidebarSearch";
 import { SidebarUserProfile } from "@/components/organisms/Sidebar/SidebarUserProfile";
 
@@ -74,18 +76,45 @@ function AppLogo({ collapsed }: { collapsed?: boolean }) {
   );
 }
 
-// Navigation Items
-const navigationItems = [
-  { label: "Gösterge Paneli", icon: Home, to: "/", end: true },
-  { label: "Öğrenci Yönetimi", icon: Users2, to: "/ogrenci" },
-  { label: "Görüşme & Randevu", icon: CalendarDays, to: "/gorusmeler" },
-  { label: 'AI Asistanım', icon: Brain, to: '/ai-araclari' },
-  { label: "Analiz & Raporlar", icon: FileText, to: "/raporlar" },
-  { label: "Sınav & Denemeler", icon: ClipboardList, to: "/olcme-degerlendirme" },
-  { label: "Ölçek & Anketler", icon: MessageSquare, to: "/anketler" },
-  { label: "İçerik Kütüphanesi", icon: BookOpen, to: "/icerik-yonetimi" },
-  { label: "Profil & Ayarlar", icon: Settings, to: "/ayarlar" },
+// Navigation Structure
+const navigationGroups = [
+  {
+    key: 'general',
+    label: 'Genel',
+    items: [
+      { label: "Gösterge Paneli", icon: Home, to: "/", end: true },
+    ]
+  },
+  {
+    key: 'management',
+    label: 'Öğrenci & Okul',
+    items: [
+      { label: "Öğrenci Yönetimi", icon: Users2, to: "/ogrenci" },
+      { label: "Görüşme & Randevu", icon: CalendarDays, to: "/gorusmeler" },
+    ]
+  },
+  {
+    key: 'analysis',
+    label: 'Analiz & Akademik',
+    items: [
+      { label: "Analiz & Raporlar", icon: FileText, to: "/raporlar" },
+      { label: "Sınav & Denemeler", icon: ClipboardList, to: "/olcme-degerlendirme" },
+      { label: "Ölçek & Anketler", icon: MessageSquare, to: "/anketler" },
+    ]
+  },
+  {
+    key: 'tools',
+    label: 'Araçlar',
+    items: [
+      { label: 'AI Asistanım', icon: Brain, to: '/ai-araclari' },
+      { label: "İçerik Kütüphanesi", icon: BookOpen, to: "/icerik-yonetimi" },
+      { label: "Profil & Ayarlar", icon: Settings, to: "/ayarlar" },
+    ]
+  }
 ];
+
+// Flatten for mobile usage if needed
+const navigationItems = navigationGroups.flatMap(g => g.items);
 
 export default function Rehber360Layout() {
   const { isAuthenticated, isLoading, logout } = useAuth(); // Added logout here if needed
@@ -173,29 +202,33 @@ export default function Rehber360Layout() {
           </div>
 
           {/* Sidebar Content */}
-          <ScrollArea className="flex-1 px-3 py-6">
-            <div className={cn("mb-6 transition-all duration-300", !sidebarOpen && "px-1")}>
+          <ScrollArea className={cn("flex-1 py-4", sidebarOpen ? "px-3" : "px-0")}>
+            <div className={cn("mb-2 transition-all duration-300", !sidebarOpen ? "px-0" : "px-0")}>
               <SidebarSearch collapsed={!sidebarOpen} />
             </div>
 
-            <nav className="space-y-1.5 font-medium">
-              {navigationItems.map((item) => (
-                <CollapsibleMenuItem
-                  key={item.to}
-                  icon={item.icon}
-                  label={item.label}
-                  to={item.to}
-                  end={item.end}
-                  collapsed={!sidebarOpen}
-                  isOpen={openMenuItem === item.to}
-                  onToggle={handleMenuToggle}
-                />
+            <nav className={cn("transition-all duration-300", sidebarOpen ? "space-y-4" : "space-y-2")}>
+              {navigationGroups.map((group) => (
+                <SidebarGroup key={group.key} label={group.label} collapsed={!sidebarOpen}>
+                  {group.items.map((item) => (
+                    <CollapsibleMenuItem
+                      key={item.to}
+                      icon={item.icon}
+                      label={item.label}
+                      to={item.to}
+                      end={item.end}
+                      collapsed={!sidebarOpen}
+                      isOpen={openMenuItem === item.to}
+                      onToggle={handleMenuToggle}
+                    />
+                  ))}
+                </SidebarGroup>
               ))}
             </nav>
           </ScrollArea>
 
           {/* Sidebar Footer */}
-          <div className="p-4 border-t border-border/40 space-y-4">
+          <div className="p-4 border-t border-border/40 space-y-3">
             <div className="bg-primary/5 rounded-xl p-3 border border-primary/10">
               <AIStatusIndicator collapsed={!sidebarOpen} />
             </div>
@@ -212,30 +245,37 @@ export default function Rehber360Layout() {
       <div className="flex-1 flex flex-col relative z-10 overflow-hidden">
 
         {/* Header (Glassmorphism) */}
-        <header className="h-20 px-6 flex items-center justify-between z-20">
+        <header className="h-16 px-6 flex items-center justify-between z-20 gap-4 border-b border-border/40 bg-background/50 backdrop-blur-md supports-[backdrop-filter]:bg-background/20">
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-1">
             {isMobile && (
               <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(true)}>
-                <Menu className="w-6 h-6" />
+                <Menu className="w-5 h-5" />
               </Button>
             )}
 
-            {/* Dynamic Page Title / Breadcrumb Placeholder */}
-            {!isMobile && (
-              <div className="flex flex-col animate-fade-in-up">
-                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">
-                  {/* Could use a breadcrumb hook here */}
-                  Rehberlik Servisi
-                </span>
-                <h1 className="text-xl font-bold text-foreground tracking-tight">
-                  Hoş Geldiniz, {account?.displayName?.split(' ')[0] || 'Danışman'}
-                </h1>
-              </div>
-            )}
+            {/* Breadcrumb Navigation */}
+            <div className="flex-1 overflow-hidden pointer-events-auto">
+              <ApplicationBreadcrumb />
+            </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            {/* Global Search Trigger - Compact */}
+            <Button
+              variant="outline"
+              className="hidden md:flex h-9 text-muted-foreground bg-muted/40 hover:bg-muted border-border/50 gap-2 px-3 text-xs font-normal"
+              onClick={() => { /* Trigger Command Palette */ }}
+            >
+              <Search className="h-3.5 w-3.5" />
+              <span className="hidden lg:inline">Ara...</span>
+              <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                <span className="text-xs">⌘</span>K
+              </kbd>
+            </Button>
+
+            <div className="hidden md:block w-px h-6 bg-border/60 mx-1" />
+
             <div className="hidden md:block">
               <SchoolSwitcher mode="header" />
             </div>
@@ -243,9 +283,9 @@ export default function Rehber360Layout() {
             <NotificationCenter />
 
             <Button
-              variant="outline"
+              variant="ghost"
               size="icon"
-              className="rounded-full w-10 h-10 border-border/60 bg-white/50 dark:bg-black/20 hover:bg-white dark:hover:bg-black/40 transition-all"
+              className="rounded-full w-9 h-9 text-muted-foreground hover:text-foreground"
               onClick={() => {
                 const next = !dark;
                 setDark(next);
@@ -258,7 +298,7 @@ export default function Rehber360Layout() {
         </header>
 
         {/* Page Content Container */}
-        <main className="flex-1 overflow-auto px-4 pb-4 md:px-8 md:pb-8">
+        <main className="flex-1 overflow-auto px-4 pb-4 md:px-8 md:pb-8 pt-6">
           <div className="w-full h-full max-w-[1600px] mx-auto animate-fade-in-up">
             <Outlet />
           </div>

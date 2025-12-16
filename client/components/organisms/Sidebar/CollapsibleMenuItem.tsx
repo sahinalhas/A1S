@@ -1,8 +1,18 @@
-import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { prefetchRoute } from "@/hooks/usePrefetchRoutes";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, LucideIcon, Circle } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/organisms/Tooltip/tooltip';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/organisms/Collapsible";
 
 interface SubMenuItem {
   label: string;
@@ -10,218 +20,185 @@ interface SubMenuItem {
 }
 
 interface CollapsibleMenuItemProps {
-  icon: React.ElementType;
+  icon: LucideIcon;
   label: string;
-  to: string;
+  to?: string;
   end?: boolean;
-  subItems?: SubMenuItem[];
+  items?: SubMenuItem[];
   collapsed?: boolean;
-  onNavigate?: () => void;
   isOpen?: boolean;
   onToggle?: (to: string) => void;
+  onNavigate?: () => void;
 }
+
+// Helper for exact path matching
+const isPathActive = (currentPath: string, itemPath: string, end: boolean = false) => {
+  if (end) return currentPath === itemPath;
+  return currentPath.startsWith(itemPath);
+};
 
 export function CollapsibleMenuItem({
   icon: Icon,
   label,
   to,
   end,
-  subItems,
+  items,
   collapsed,
-  onNavigate,
-  isOpen: isOpenProp,
+  isOpen,
   onToggle,
+  onNavigate,
 }: CollapsibleMenuItemProps) {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const isOpenState = isOpenProp !== undefined ? isOpenProp : isOpen;
-  const hasSubItems = subItems && subItems.length > 0;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const hasSubMenu = items && items.length > 0;
 
-  if (!hasSubItems) {
+  // Determine if this item or any sub-item is active
+  const isActive = to
+    ? isPathActive(location.pathname, to, end)
+    : items?.some((sub) => isPathActive(location.pathname, sub.to));
+
+  // --- Collapsed Mode ---
+  if (collapsed) {
+    if (hasSubMenu) {
+      // Only show tooltip in collapsed mode
+      // Clicking expands the main sidebar? Or acts as link to first item?
+      // For now, let's link to the first item if exists
+      return (
+        <TooltipProvider delayDuration={0}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                onClick={() => {
+                  if (onNavigate) onNavigate();
+                  // For collapsed submenus, maybe navigate to first item
+                  if (items && items[0]) navigate(items[0].to);
+                }}
+                className={cn(
+                  "flex items-center justify-center w-10 h-10 rounded-lg mx-auto transition-colors",
+                  isActive
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                )}
+              >
+                <Icon className="w-5 h-5" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="right" className="font-medium">
+              {label}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    }
+
+    return (
+      <TooltipProvider delayDuration={0}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <NavLink
+              to={to!}
+              onClick={onNavigate}
+              end={end}
+              className={({ isActive }) =>
+                cn(
+                  "flex items-center justify-center w-10 h-10 rounded-lg mx-auto transition-colors",
+                  isActive
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                )
+              }
+            >
+              <Icon className="w-5 h-5" />
+            </NavLink>
+          </TooltipTrigger>
+          <TooltipContent side="right" className="font-medium">
+            {label}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+  }
+
+  // --- Expanded Mode ---
+
+  // 1. Simple Link
+  if (!hasSubMenu && to) {
     return (
       <NavLink
         to={to}
         end={end}
-        onMouseEnter={() => prefetchRoute(to)}
         onClick={onNavigate}
         className={({ isActive }) =>
           cn(
-            "group flex items-center gap-2.5 px-2.5 py-2 rounded-lg", // Reduced padding
-            "text-sm font-medium text-sidebar-foreground/80",
-            "transition-all duration-300 ease-out",
-            "hover:text-sidebar-foreground hover:bg-sidebar-accent/50",
-            "relative overflow-hidden",
-            isActive && [
-              "bg-gradient-to-r from-primary/10 via-primary/5 to-transparent",
-              "text-sidebar-foreground font-semibold",
-              "shadow-sm"
-            ],
-            collapsed && "justify-center px-2 py-2.5"
+            "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm font-medium",
+            isActive
+              ? "bg-primary/10 text-primary"
+              : "text-muted-foreground hover:bg-muted hover:text-foreground"
           )
         }
       >
-        {({ isActive }) => (
-          <>
-            {/* Active indicator with gradient */}
-            <div
-              className={cn(
-                "absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 rounded-r-full",
-                "bg-gradient-to-b from-primary via-primary to-chart-2",
-                "transition-all duration-300",
-                isActive ? "opacity-100 scale-100" : "opacity-0 scale-50",
-                collapsed && "left-1/2 -translate-x-1/2 top-0 translate-y-0 w-4 h-0.5 rounded-b-full"
-              )}
-            />
-
-            {/* Hover glow effect */}
-            <div
-              className={cn(
-                "absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0",
-                "opacity-0 group-hover:opacity-100 transition-opacity duration-300",
-                "rounded-lg"
-              )}
-            />
-
-            <Icon
-              className={cn(
-                "shrink-0 transition-all duration-300 relative z-10",
-                collapsed ? "h-5 w-5" : "h-4.5 w-4.5",
-                isActive && "text-primary"
-              )}
-            />
-            <span
-              className={cn(
-                "truncate whitespace-nowrap overflow-hidden transition-all duration-300 relative z-10",
-                collapsed ? "opacity-0 w-0" : "opacity-100 w-auto"
-              )}
-            >
-              {label}
-            </span>
-          </>
+        <Icon className="w-4 h-4 shrink-0" />
+        <span className="truncate">{label}</span>
+        {/* Active Indicator Dot */}
+        {useLocation().pathname === to && (
+          <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
         )}
       </NavLink>
     );
   }
 
+  // 2. Collapsible Submenu
   return (
-    <div className="relative">
-      <button
-        onClick={() => {
-          if (onToggle) {
-            onToggle(to);
-          } else {
-            setIsOpen(!isOpen);
-          }
-        }}
-        className={cn(
-          "w-full group flex items-center gap-2.5 px-2.5 py-2 rounded-lg", // Reduced padding
-          "text-sm font-medium text-sidebar-foreground/80",
-          "transition-all duration-300 ease-out",
-          "hover:text-sidebar-foreground hover:bg-sidebar-accent/50",
-          "relative overflow-hidden",
-          isOpenState && "bg-sidebar-accent/30",
-          collapsed && "justify-center px-2 py-2.5"
-        )}
-      >
-        {/* Hover glow effect */}
-        <div
+    <Collapsible open={isOpen} onOpenChange={() => onToggle && onToggle(to || label)} className="space-y-1">
+      <CollapsibleTrigger asChild>
+        <button
           className={cn(
-            "absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0",
-            "opacity-0 group-hover:opacity-100 transition-opacity duration-300",
-            "rounded-lg"
-          )}
-        />
-
-        <Icon
-          className={cn(
-            "shrink-0 transition-all duration-300 relative z-10",
-            collapsed ? "h-5 w-5" : "h-4.5 w-4.5",
-            isOpenState && "text-primary"
-          )}
-        />
-        <span
-          className={cn(
-            "flex-1 text-left truncate whitespace-nowrap overflow-hidden transition-all duration-300 relative z-10",
-            collapsed ? "opacity-0 w-0" : "opacity-100 w-auto"
+            "w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors text-sm font-medium group",
+            isActive
+              ? "text-foreground bg-muted/50"
+              : "text-muted-foreground hover:bg-muted hover:text-foreground"
           )}
         >
-          {label}
-        </span>
-
-        {!collapsed && (
+          <div className="flex items-center gap-3">
+            <Icon className="w-4 h-4 shrink-0" />
+            <span className="truncate">{label}</span>
+          </div>
           <ChevronRight
             className={cn(
-              "h-3.5 w-3.5 shrink-0 transition-all duration-300 relative z-10",
-              "text-sidebar-foreground/40",
-              isOpenState && "rotate-90 text-primary"
+              "w-4 h-4 transition-transform duration-200",
+              isOpen && "rotate-90"
             )}
           />
-        )}
-      </button>
+        </button>
+      </CollapsibleTrigger>
 
-      <div
-        className={cn(
-          "overflow-hidden transition-all duration-300 ease-out",
-          isOpenState ? "max-h-[200px] opacity-100 mt-0.5" : "max-h-0 opacity-0"
-        )}
-      >
-        <div
-          className={cn(
-            "relative ml-3.5 pl-3 border-l border-sidebar-border/40",
-            "py-0.5 overflow-y-auto max-h-[190px] space-y-0.5",
-            collapsed && "ml-0 pl-0 border-l-0"
-          )}
-        >
-          {subItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              onMouseEnter={() => prefetchRoute(item.to)}
-              onClick={onNavigate}
-              className={({ isActive }) =>
-                cn(
-                  "flex items-center h-8 px-2.5 rounded-md relative overflow-hidden group/sub",
-                  "text-[11px] font-medium text-sidebar-foreground/60",
-                  "transition-all duration-200 ease-out",
-                  "hover:text-sidebar-foreground hover:bg-sidebar-accent/40",
-                  isActive && [
-                    "text-sidebar-foreground bg-sidebar-accent/50 font-semibold",
-                    "shadow-sm"
-                  ]
-                )
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  {/* Sub-item active indicator */}
-                  <div
-                    className={cn(
-                      "absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 rounded-r-full",
-                      "bg-primary transition-all duration-200",
-                      isActive ? "opacity-100" : "opacity-0"
-                    )}
-                  />
+      <CollapsibleContent className="space-y-1 relative">
+        {/* Connecting line for tree view effect */}
+        <div className="absolute left-[1.15rem] top-0 bottom-2 w-px bg-border/40" />
 
-                  {/* Hover effect */}
-                  <div
-                    className={cn(
-                      "absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent",
-                      "opacity-0 group-hover/sub:opacity-100 transition-opacity duration-200"
-                    )}
-                  />
+        {items?.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            onClick={onNavigate}
+            className={({ isActive }) =>
+              cn(
+                "flex items-center gap-3 pl-9 pr-3 py-2 rounded-lg transition-colors text-sm font-medium block relative",
+                isActive
+                  ? "text-primary bg-primary/5"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              )
+            }
+          >
+            {/* Dot for bullet point */}
+            {isActive && (
+              <div className="absolute left-[1rem] w-1.5 h-1.5 rounded-full bg-primary -ml-[3px]" />
+            )}
 
-                  <span className="truncate relative z-10">{item.label}</span>
-                </>
-              )}
-            </NavLink>
-          ))}
-
-          {subItems.length > 4 && (
-            <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-sidebar via-sidebar/80 to-transparent pointer-events-none rounded-b-lg" />
-          )}
-        </div>
-      </div>
-    </div>
+            {item.label}
+          </NavLink>
+        ))}
+      </CollapsibleContent>
+    </Collapsible>
   );
 }
-
-export default CollapsibleMenuItem;

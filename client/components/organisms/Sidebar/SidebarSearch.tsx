@@ -203,34 +203,36 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
       <button
         onClick={handleOpenSearch}
         className={cn(
-          "w-full group flex items-center gap-2.5 px-2.5 py-2 rounded-lg",
-          "text-xs font-medium text-sidebar-foreground/80",
-          "transition-all duration-300 ease-out",
-          "hover:text-sidebar-foreground hover:bg-sidebar-accent/50",
-          "relative overflow-hidden",
-          collapsed && "justify-center px-2 py-2.5"
+          "group flex items-center transition-all duration-300 ease-out relative overflow-hidden",
+          collapsed
+            ? "justify-center w-10 h-10 rounded-lg mx-auto text-muted-foreground hover:bg-muted hover:text-foreground"
+            : "w-full gap-2.5 px-2.5 py-2 rounded-lg text-xs font-medium text-sidebar-foreground/80 hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
         )}
       >
-        {/* Hover glow effect */}
-        <div
-          className={cn(
-            "absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0",
-            "opacity-0 group-hover:opacity-100 transition-opacity duration-300",
-            "rounded-lg"
-          )}
-        />
+        {/* Hover glow effect only when expanded */}
+        {!collapsed && (
+          <div
+            className={cn(
+              "absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0",
+              "opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+              "rounded-lg"
+            )}
+          />
+        )}
 
         <div className="relative z-10 shrink-0">
           <Search className={cn(
-            "text-sidebar-foreground/70 group-hover:text-primary transition-colors",
-            collapsed ? "h-4.5 w-4.5" : "h-4 w-4"
+            "transition-colors",
+            collapsed
+              ? "h-5 w-5"
+              : "text-sidebar-foreground/70 group-hover:text-primary h-4 w-4"
           )} />
         </div>
 
         <span
           className={cn(
             "flex-1 text-left truncate whitespace-nowrap overflow-hidden transition-all duration-300 relative z-10",
-            collapsed ? "opacity-0 w-0" : "opacity-100 w-auto"
+            collapsed ? "opacity-0 w-0 hidden" : "opacity-100 w-auto"
           )}
         >
           Hızlı Arama
