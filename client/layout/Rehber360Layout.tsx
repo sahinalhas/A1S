@@ -89,26 +89,26 @@ const navigationGroups = [
     key: 'management',
     label: 'Öğrenci & Okul',
     items: [
-      { label: "Öğrenci Yönetimi", icon: Users2, to: "/ogrenci" },
-      { label: "Görüşme & Randevu", icon: CalendarDays, to: "/gorusmeler" },
+      { label: "Öğrenci Yönetimi", icon: Users2, to: "/ogrenci", end: false },
+      { label: "Görüşme & Randevu", icon: CalendarDays, to: "/gorusmeler", end: false },
     ]
   },
   {
     key: 'analysis',
     label: 'Analiz & Akademik',
     items: [
-      { label: "Analiz & Raporlar", icon: FileText, to: "/raporlar" },
-      { label: "Sınav & Denemeler", icon: ClipboardList, to: "/olcme-degerlendirme" },
-      { label: "Ölçek & Anketler", icon: MessageSquare, to: "/anketler" },
+      { label: "Analiz & Raporlar", icon: FileText, to: "/raporlar", end: false },
+      { label: "Sınav & Denemeler", icon: ClipboardList, to: "/olcme-degerlendirme", end: false },
+      { label: "Ölçek & Anketler", icon: MessageSquare, to: "/anketler", end: false },
     ]
   },
   {
     key: 'tools',
     label: 'Araçlar',
     items: [
-      { label: 'AI Asistanım', icon: Brain, to: '/ai-araclari' },
-      { label: "İçerik Kütüphanesi", icon: BookOpen, to: "/icerik-yonetimi" },
-      { label: "Profil & Ayarlar", icon: Settings, to: "/ayarlar" },
+      { label: 'AI Asistanım', icon: Brain, to: '/ai-araclari', end: false },
+      { label: "İçerik Kütüphanesi", icon: BookOpen, to: "/icerik-yonetimi", end: false },
+      { label: "Profil & Ayarlar", icon: Settings, to: "/ayarlar", end: false },
     ]
   }
 ];
@@ -185,7 +185,7 @@ export default function Rehber360Layout() {
           className={cn(
             "relative z-30 flex flex-col my-4 ml-4 rounded-2xl border transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]",
             "bg-card/80 backdrop-blur-xl shadow-2xl shadow-black/5 dark:shadow-black/20",
-            sidebarOpen ? "w-[280px]" : "w-[90px]"
+            sidebarOpen ? "w-[280px]" : "w-[80px]"
           )}
         >
           {/* Sidebar Header */}
@@ -202,7 +202,7 @@ export default function Rehber360Layout() {
           </div>
 
           {/* Sidebar Content */}
-          <ScrollArea className={cn("flex-1 py-4", sidebarOpen ? "px-3" : "px-0")}>
+          <ScrollArea className={cn("flex-1 py-4", sidebarOpen ? "px-3" : "px-2")}>
             <div className={cn("mb-2 transition-all duration-300", !sidebarOpen ? "px-0" : "px-0")}>
               <SidebarSearch collapsed={!sidebarOpen} />
             </div>

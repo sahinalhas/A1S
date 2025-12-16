@@ -74,10 +74,10 @@ export function CollapsibleMenuItem({
                   if (items && items[0]) navigate(items[0].to);
                 }}
                 className={cn(
-                  "flex items-center justify-center w-10 h-10 rounded-lg mx-auto transition-colors",
+                  "flex items-center justify-center w-10 h-10 rounded-xl mx-auto transition-all duration-200",
                   isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground hover:scale-105"
                 )}
               >
                 <Icon className="w-5 h-5" />
@@ -101,10 +101,10 @@ export function CollapsibleMenuItem({
               end={end}
               className={({ isActive }) =>
                 cn(
-                  "flex items-center justify-center w-10 h-10 rounded-lg mx-auto transition-colors",
+                  "flex items-center justify-center w-10 h-10 rounded-xl mx-auto transition-all duration-200",
                   isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground hover:scale-105"
                 )
               }
             >
