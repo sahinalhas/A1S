@@ -49,23 +49,23 @@ export async function login(data: LoginRequest): Promise<LoginResponse> {
   try {
     const sanitizedEmail = sanitizeString(data.email).toLowerCase();
     const user = repository.getUserByEmail(sanitizedEmail);
-    
+
     if (!user) {
       return {
         success: false,
         message: 'E-posta veya şifre hatalı'
       };
     }
-    
+
     const passwordMatch = await bcrypt.compare(data.password, user.passwordHash);
-    
+
     if (!passwordMatch) {
       return {
         success: false,
         message: 'E-posta veya şifre hatalı'
       };
     }
-    
+
     return {
       success: true,
       user: userToPublic(user)
@@ -83,8 +83,7 @@ export async function createUser(data: CreateUserRequest): Promise<{ success: bo
   try {
     const sanitizedEmail = sanitizeString(data.email).toLowerCase();
     const sanitizedName = sanitizeString(data.name);
-    const sanitizedInstitution = sanitizeString(data.institution);
-    
+
     const existingUser = repository.getUserByEmail(sanitizedEmail);
     if (existingUser) {
       return {
@@ -92,28 +91,27 @@ export async function createUser(data: CreateUserRequest): Promise<{ success: bo
         message: 'Bu e-posta adresi zaten kullanılıyor'
       };
     }
-    
+
     const userId = randomBytes(16).toString('hex');
     const passwordHash = await bcrypt.hash(data.password, 10);
-    
+
     repository.insertUser(
       userId,
       sanitizedName,
       sanitizedEmail,
       passwordHash,
-      data.role,
-      sanitizedInstitution
+      data.role
     );
-    
+
     const newUser = repository.getUserById(userId);
-    
+
     if (!newUser) {
       return {
         success: false,
         message: 'Kullanıcı oluşturulamadı'
       };
     }
-    
+
     return {
       success: true,
       user: userToPublic(newUser)
@@ -141,9 +139,9 @@ export function getUserById(id: string): UserPublic | null {
   try {
     const sanitizedId = sanitizeString(id);
     const user = repository.getUserById(sanitizedId);
-    
+
     if (!user) return null;
-    
+
     return userToPublic(user);
   } catch (error) {
     console.error('Get user by id error:', error);
@@ -155,9 +153,9 @@ export async function updateUserPassword(userId: string, newPassword: string): P
   try {
     const sanitizedUserId = sanitizeString(userId);
     const passwordHash = await bcrypt.hash(newPassword, 10);
-    
+
     repository.updateUserPassword(sanitizedUserId, passwordHash);
-    
+
     return {
       success: true
     };
@@ -170,15 +168,15 @@ export async function updateUserPassword(userId: string, newPassword: string): P
   }
 }
 
-export function updateUser(userId: string, name: string, email: string, role: string, institution: string): { success: boolean; message?: string } {
+export function updateUser(userId: string, name: string, email: string, role: string): { success: boolean; message?: string } {
   try {
     const sanitizedUserId = sanitizeString(userId);
     const sanitizedName = sanitizeString(name);
     const sanitizedEmail = sanitizeString(email).toLowerCase();
-    const sanitizedInstitution = sanitizeString(institution);
-    
-    repository.updateUser(sanitizedUserId, sanitizedName, sanitizedEmail, role, sanitizedInstitution);
-    
+
+
+    repository.updateUser(sanitizedUserId, sanitizedName, sanitizedEmail, role);
+
     return {
       success: true
     };
@@ -195,7 +193,7 @@ export function deactivateUser(userId: string): { success: boolean; message?: st
   try {
     const sanitizedUserId = sanitizeString(userId);
     repository.deactivateUser(sanitizedUserId);
-    
+
     return {
       success: true
     };

@@ -161,27 +161,7 @@ function validateStudent(student: Student): boolean {
   return true;
 }
 
-/**
- * @deprecated Bu fonksiyon schoolId filtresi kullanmıyor ve veri karışıklığına yol açabilir.
- * Bunun yerine loadStudentsBySchool(schoolId) kullanın.
- * Bu fonksiyon sadece migration ve admin işlemleri için kalmalıdır.
- */
-export function loadStudents(): Student[] {
-  logger.warn('loadStudents() called without schoolId - this may cause data leakage between schools', 'StudentsRepository');
-  console.warn('[DEPRECATED] loadStudents() called without schoolId. Use loadStudentsBySchool(schoolId) instead.');
 
-  try {
-    ensureInitialized();
-    const db = getDatabase();
-    const stmt = db.prepare('SELECT * FROM students ORDER BY name, surname');
-    const rows = stmt.all() as Record<string, unknown>[];
-    const students = rows.map(parseStudentRow);
-    return students.filter(validateStudent);
-  } catch (error) {
-    console.error('Database error in loadStudents:', error);
-    return [];
-  }
-}
 
 /**
  * Belirli bir okula ait öğrencileri yükler.
@@ -239,38 +219,7 @@ export function getStudentById(studentId: string): Student | null {
   }
 }
 
-/**
- * @deprecated Bu fonksiyon tehlikelidir - bir okulun öğrencileri kaydedilirken diğer okulların öğrencilerini silebilir.
- * Bunun yerine saveStudentsForSchool(students, schoolId) kullanın.
- */
-export function saveStudents(students: Student[]): void {
-  logger.warn('saveStudents() called without schoolId scope - this is dangerous!', 'StudentsRepository');
-  console.warn('[DEPRECATED] saveStudents() is dangerous. Use saveStudentsForSchool(students, schoolId) instead.');
 
-  if (!Array.isArray(students)) {
-    throw new Error('Students parameter must be an array');
-  }
-
-  // Sadece öğrencileri kaydet, silme işlemi yapma
-  try {
-    ensureInitialized();
-    const transaction = getDatabase().transaction(() => {
-      for (const student of students) {
-        if (!student.id || !student.name || !student.surname) {
-          throw new Error(`Invalid student data: missing required fields (id: ${student.id}, name: ${student.name}, surname: ${student.surname})`);
-        }
-
-        const values = getStudentFieldValues(student);
-        statements!.upsertStudent.run(...values);
-      }
-    });
-
-    transaction();
-  } catch (error) {
-    console.error('Database error in saveStudents:', error);
-    throw error;
-  }
-}
 
 /**
  * Belirli bir okula ait öğrencileri güvenli şekilde kaydeder.
@@ -407,22 +356,7 @@ export function saveStudent(student: Student): void {
   }
 }
 
-/**
- * @deprecated Bu fonksiyon schoolId kontrolü yapmıyor.
- * Bunun yerine deleteStudentBySchool(id, schoolId) kullanın.
- */
-export function deleteStudent(id: string): void {
-  logger.warn('deleteStudent() called without schoolId - this may affect other schools', 'StudentsRepository');
-  console.warn('[DEPRECATED] deleteStudent() called without schoolId. Use deleteStudentBySchool(id, schoolId) instead.');
 
-  try {
-    ensureInitialized();
-    statements!.deleteStudent.run(id);
-  } catch (error) {
-    console.error('Error deleting student:', error);
-    throw error;
-  }
-}
 
 /**
  * Belirli bir okula ait öğrenciyi güvenli şekilde siler.

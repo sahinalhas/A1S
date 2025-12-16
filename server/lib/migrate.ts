@@ -1,6 +1,7 @@
 import {
-  loadStudents,
-  saveStudents
+  loadStudentsBySchool,
+  saveStudentsForSchool,
+  getStudentById
 } from '../features/students/repository/students.repository.js';
 import type { Student } from '../features/students/types/students.types.js';
 
@@ -18,14 +19,28 @@ import type { Progress } from '../features/progress/types/progress.types.js';
 import { upsertAcademicGoal } from '../features/coaching/repository/coaching.repository.js';
 import type { AcademicGoal } from '../features/coaching/types/coaching.types.js';
 
-export function migrateFromLocalStorage(localStorageData: any) {
-  console.log('Starting migration from localStorage to SQLite...');
-  
+import getDatabase from './database.js';
+
+/**
+ * Migration işlemi artık schoolId gerektirir.
+ * LocalStorage'dan gelen veriler belirtilen schoolId'ye atanır.
+ */
+export function migrateFromLocalStorage(localStorageData: any, schoolId: string) {
+  if (!schoolId) {
+    throw new Error('schoolId is required for migration');
+  }
+
+  console.log(`Starting migration from localStorage to SQLite for school: ${schoolId}...`);
+
   try {
-    // Students migration
+    // Students migration - assign to school
     if (localStorageData.students && Array.isArray(localStorageData.students)) {
-      console.log(`Migrating ${localStorageData.students.length} students...`);
-      saveStudents(localStorageData.students);
+      console.log(`Migrating ${localStorageData.students.length} students to school ${schoolId}...`);
+      const studentsWithSchool = localStorageData.students.map((s: Student) => ({
+        ...s,
+        schoolId
+      }));
+      saveStudentsForSchool(studentsWithSchool, schoolId);
     }
 
     // Subjects migration
@@ -62,12 +77,33 @@ export function migrateFromLocalStorage(localStorageData: any) {
   }
 }
 
-export function getMigrationStatus() {
+/**
+ * Migration durumunu kontrol eder.
+ * @param schoolId - Kontrol edilecek okul ID'si (opsiyonel, verilmezse ilk okul kullanılır)
+ */
+export function getMigrationStatus(schoolId?: string) {
+  // Eğer schoolId verilmemişse, ilk okulu bul
+  if (!schoolId) {
+    const db = getDatabase();
+    const firstSchool = db.prepare('SELECT id FROM schools LIMIT 1').get() as { id: string } | undefined;
+    if (!firstSchool) {
+      return {
+        hasData: false,
+        counts: {
+          students: 0,
+          subjects: 0,
+          topics: 0
+        }
+      };
+    }
+    schoolId = firstSchool.id;
+  }
+
   // Check if database has any data
-  const students = loadStudents();
+  const students = loadStudentsBySchool(schoolId);
   const subjects = loadSubjects();
   const topics = loadTopics();
-  
+
   return {
     hasData: students.length > 0 || subjects.length > 0 || topics.length > 0,
     counts: {

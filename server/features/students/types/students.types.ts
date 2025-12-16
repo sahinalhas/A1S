@@ -75,16 +75,16 @@ export interface Student {
   bloodType?: string;
 
   // Additional Profile Information
-  languageSkills?: string;
-  hobbiesDetailed?: string;
-  extracurricularActivities?: string;
-  studentExpectations?: string;
-  familyExpectations?: string;
+  languageSkills?: string[];
+  hobbiesDetailed?: string[];
+  extracurricularActivities?: string[];
+  studentExpectations?: string[];
+  familyExpectations?: string[];
 
   // Health Information
-  chronicDiseases?: string;
-  allergies?: string;
-  medications?: string;
+  chronicDiseases?: string[];
+  allergies?: string[];
+  medications?: string[];
   medicalHistory?: string;
   specialNeeds?: string;
   physicalLimitations?: string;
@@ -99,12 +99,12 @@ export interface Student {
   healthAdditionalNotes?: string;
 
   // Talents & Interests
-  creativeTalents?: string;
-  physicalTalents?: string;
-  primaryInterests?: string;
-  exploratoryInterests?: string;
-  clubMemberships?: string;
-  competitionsParticipated?: string;
+  creativeTalents?: string[];
+  physicalTalents?: string[];
+  primaryInterests?: string[];
+  exploratoryInterests?: string[];
+  clubMemberships?: string[];
+  competitionsParticipated?: string[];
   talentsAdditionalNotes?: string;
 
   // Legacy fields for compatibility

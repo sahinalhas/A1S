@@ -49,7 +49,7 @@ export function normalizeStudentData(student: StudentInput): Student {
     name: student.name ? String(student.name).trim() : '',
     surname: student.surname ? String(student.surname).trim() : '',
     enrollmentDate: (student.enrollmentDate as string | undefined) || new Date().toISOString().split('T')[0],
-    
+
     // Education Information
     class: student.class ? String(student.class).trim() : undefined,
     studentNumber: student.studentNumber ? String(student.studentNumber).trim() : undefined,
@@ -57,14 +57,14 @@ export function normalizeStudentData(student: StudentInput): Student {
     birthDate: (student.birthDate as string | undefined) || undefined,
     birthPlace: student.birthPlace ? String(student.birthPlace).trim() : undefined,
     tcIdentityNo: student.tcIdentityNo ? String(student.tcIdentityNo).trim() : undefined,
-    
+
     // Contact Information
     phone: student.phone ? String(student.phone).trim() : undefined,
     email: student.email ? String(student.email).trim() : undefined,
     address: student.address ? String(student.address).trim() : undefined,
     province: student.province ? String(student.province).trim() : undefined,
     district: student.district ? String(student.district).trim() : undefined,
-    
+
     // Mother Information
     motherName: student.motherName ? String(student.motherName).trim() : undefined,
     motherEducation: student.motherEducation ? String(student.motherEducation).trim() : undefined,
@@ -73,7 +73,7 @@ export function normalizeStudentData(student: StudentInput): Student {
     motherPhone: student.motherPhone ? String(student.motherPhone).trim() : undefined,
     motherVitalStatus: (student.motherVitalStatus as 'Sağ' | 'Vefat Etmiş' | undefined) || undefined,
     motherLivingStatus: (student.motherLivingStatus as 'Birlikte' | 'Ayrı' | undefined) || undefined,
-    
+
     // Father Information
     fatherName: student.fatherName ? String(student.fatherName).trim() : undefined,
     fatherEducation: student.fatherEducation ? String(student.fatherEducation).trim() : undefined,
@@ -82,47 +82,47 @@ export function normalizeStudentData(student: StudentInput): Student {
     fatherPhone: student.fatherPhone ? String(student.fatherPhone).trim() : undefined,
     fatherVitalStatus: (student.fatherVitalStatus as 'Sağ' | 'Vefat Etmiş' | undefined) || undefined,
     fatherLivingStatus: (student.fatherLivingStatus as 'Birlikte' | 'Ayrı' | undefined) || undefined,
-    
+
     // Guardian Information
     guardianName: student.guardianName ? String(student.guardianName).trim() : undefined,
     guardianRelation: student.guardianRelation ? String(student.guardianRelation).trim() : undefined,
     guardianPhone: student.guardianPhone ? String(student.guardianPhone).trim() : undefined,
     guardianEmail: student.guardianEmail ? String(student.guardianEmail).trim() : undefined,
-    
+
     // Family Structure
     numberOfSiblings: typeof student.numberOfSiblings === 'number' ? student.numberOfSiblings : undefined,
-    
+
     // Living Situation
     livingWith: student.livingWith ? String(student.livingWith).trim() : undefined,
     homeRentalStatus: student.homeRentalStatus ? String(student.homeRentalStatus).trim() : undefined,
     homeHeatingType: student.homeHeatingType ? String(student.homeHeatingType).trim() : undefined,
     transportationToSchool: student.transportationToSchool ? String(student.transportationToSchool).trim() : undefined,
     studentWorkStatus: student.studentWorkStatus ? String(student.studentWorkStatus).trim() : undefined,
-    
+
     // System Information
     status: normalizeStatus(student.status),
     avatar: (student.avatar as string | undefined) || undefined,
     parentContact: student.parentContact ? String(student.parentContact).trim() : undefined,
     notes: student.notes ? String(student.notes).trim() : undefined,
     schoolId: (student.schoolId as string | undefined) || undefined,
-    
+
     // Assessment Information
     risk: normalizeRisk(student.risk),
     counselor: student.counselor ? String(student.counselor).trim() : undefined,
     tags: Array.isArray(student.tags) ? student.tags : undefined,
-    
+
     // General Information
     interests: Array.isArray(student.interests) ? student.interests : undefined,
     healthNote: student.healthNote ? String(student.healthNote).trim() : undefined,
     bloodType: student.bloodType ? String(student.bloodType).trim() : undefined,
-    
+
     // Additional Profile Information
-    languageSkills: student.languageSkills ? String(student.languageSkills).trim() : undefined,
-    hobbiesDetailed: student.hobbiesDetailed ? String(student.hobbiesDetailed).trim() : undefined,
-    extracurricularActivities: student.extracurricularActivities ? String(student.extracurricularActivities).trim() : undefined,
-    studentExpectations: student.studentExpectations ? String(student.studentExpectations).trim() : undefined,
-    familyExpectations: student.familyExpectations ? String(student.familyExpectations).trim() : undefined,
-    
+    languageSkills: Array.isArray(student.languageSkills) ? student.languageSkills : undefined,
+    hobbiesDetailed: Array.isArray(student.hobbiesDetailed) ? student.hobbiesDetailed : undefined,
+    extracurricularActivities: Array.isArray(student.extracurricularActivities) ? student.extracurricularActivities : undefined,
+    studentExpectations: Array.isArray(student.studentExpectations) ? student.studentExpectations : undefined,
+    familyExpectations: Array.isArray(student.familyExpectations) ? student.familyExpectations : undefined,
+
     // Health extended fields
     chronicDiseases: Array.isArray(student.chronicDiseases) ? student.chronicDiseases : undefined,
     allergies: Array.isArray(student.allergies) ? student.allergies : undefined,
@@ -137,7 +137,7 @@ export function normalizeStudentData(student: StudentInput): Student {
     emergencyContact2Phone: student.emergencyContact2Phone ? String(student.emergencyContact2Phone).trim() : undefined,
     emergencyContact2Relation: student.emergencyContact2Relation ? String(student.emergencyContact2Relation).trim() : undefined,
     healthAdditionalNotes: student.healthAdditionalNotes ? String(student.healthAdditionalNotes).trim() : undefined,
-    
+
     // Talents & Interests fields
     creativeTalents: Array.isArray(student.creativeTalents) ? student.creativeTalents : undefined,
     physicalTalents: Array.isArray(student.physicalTalents) ? student.physicalTalents : undefined,
@@ -146,12 +146,12 @@ export function normalizeStudentData(student: StudentInput): Student {
     clubMemberships: Array.isArray(student.clubMemberships) ? student.clubMemberships : undefined,
     competitionsParticipated: Array.isArray(student.competitionsParticipated) ? student.competitionsParticipated : undefined,
     talentsAdditionalNotes: student.talentsAdditionalNotes ? String(student.talentsAdditionalNotes).trim() : undefined,
-    
+
     // Legacy fields
     primaryLearningStyle: student.primaryLearningStyle ? String(student.primaryLearningStyle).trim() : undefined,
     englishScore: typeof student.englishScore === 'number' ? student.englishScore : undefined,
   };
-  
+
   return normalized;
 }
 
@@ -159,21 +159,21 @@ export function validateStudent(student: unknown): { valid: boolean; error?: str
   if (!student || typeof student !== 'object') {
     return { valid: false, error: "Geçersiz öğrenci verisi" };
   }
-  
+
   const studentObj = student as Record<string, unknown>;
-  
+
   if (!studentObj.id || typeof studentObj.id !== 'string' || studentObj.id.trim().length === 0) {
     return { valid: false, error: "Öğrenci ID zorunludur" };
   }
-  
+
   if (!studentObj.name || typeof studentObj.name !== 'string' || studentObj.name.trim().length === 0) {
     return { valid: false, error: "Öğrenci adı zorunludur" };
   }
-  
+
   if (!studentObj.surname || typeof studentObj.surname !== 'string' || studentObj.surname.trim().length === 0) {
     return { valid: false, error: "Öğrenci soyadı zorunludur" };
   }
-  
+
   return { valid: true };
 }
 
@@ -181,24 +181,18 @@ export function validateAcademic(academic: unknown): { valid: boolean; error?: s
   if (!academic || typeof academic !== 'object') {
     return { valid: false, error: "Geçersiz akademik kayıt verisi" };
   }
-  
+
   const academicObj = academic as Record<string, unknown>;
-  
+
   if (!academicObj.studentId || !academicObj.semester || academicObj.year === undefined) {
     return { valid: false, error: "studentId, semester ve year alanları zorunludur" };
   }
-  
+
   return { valid: true };
 }
 
-/**
- * @deprecated Bu fonksiyon schoolId filtresi kullanmıyor.
- * Bunun yerine getStudentsBySchool(schoolId) kullanın.
- */
-export function getAllStudents(): Student[] {
-  console.warn('[DEPRECATED] getAllStudents() called. Use getStudentsBySchool(schoolId) instead.');
-  return repository.loadStudents();
-}
+
+
 
 /**
  * Belirli bir okula ait öğrencileri getirir.
@@ -240,7 +234,7 @@ export function createOrUpdateStudent(student: unknown): void {
   if (!validation.valid) {
     throw new Error(validation.error);
   }
-  
+
   const studentInput = student as StudentInput;
   console.log('[DEBUG] Incoming student parent data:', {
     motherName: studentInput.motherName,
@@ -248,20 +242,20 @@ export function createOrUpdateStudent(student: unknown): void {
     fatherName: studentInput.fatherName,
     fatherPhone: studentInput.fatherPhone,
   });
-  
+
   const normalizedStudent = normalizeStudentData(studentInput);
-  
+
   console.log('[DEBUG] Normalized student parent data:', {
     motherName: normalizedStudent.motherName,
     motherPhone: normalizedStudent.motherPhone,
     fatherName: normalizedStudent.fatherName,
     fatherPhone: normalizedStudent.fatherPhone,
   });
-  
+
   if (!normalizedStudent.schoolId) {
     throw new Error('schoolId is required for creating/updating students');
   }
-  
+
   repository.saveStudent(normalizedStudent);
 }
 
@@ -273,7 +267,7 @@ export function bulkSaveStudents(students: unknown[], schoolId?: string): void {
   if (!Array.isArray(students)) {
     throw new Error('Expected array of students');
   }
-  
+
   const invalidIndices: number[] = [];
   for (let i = 0; i < students.length; i++) {
     const validation = validateStudent(students[i]);
@@ -281,11 +275,11 @@ export function bulkSaveStudents(students: unknown[], schoolId?: string): void {
       invalidIndices.push(i);
     }
   }
-  
+
   if (invalidIndices.length > 0) {
     throw new Error(`Geçersiz öğrenci verileri (indeksler: ${invalidIndices.join(', ')})`);
   }
-  
+
   const normalizedStudents = students.map(student => {
     const normalized = normalizeStudentData(student as StudentInput);
     // schoolId parametresi verilmişse, tüm öğrencilere uygula
@@ -294,14 +288,12 @@ export function bulkSaveStudents(students: unknown[], schoolId?: string): void {
     }
     return normalized;
   });
-  
+
   // Eğer schoolId verilmişse, güvenli şekilde kaydet
   if (schoolId) {
     repository.saveStudentsForSchool(normalizedStudents, schoolId);
   } else {
-    // Eski davranış (deprecate edilmeli)
-    console.warn('[DEPRECATED] bulkSaveStudents called without schoolId. This may cause data issues.');
-    repository.saveStudents(normalizedStudents);
+    throw new Error('schoolId is required for bulkSaveStudents');
   }
 }
 
@@ -314,11 +306,11 @@ export function bulkSaveStudentsForSchool(students: unknown[], schoolId: string)
   if (!schoolId) {
     throw new Error('schoolId is required for bulkSaveStudentsForSchool');
   }
-  
+
   if (!Array.isArray(students)) {
     throw new Error('Expected array of students');
   }
-  
+
   const invalidIndices: number[] = [];
   for (let i = 0; i < students.length; i++) {
     const validation = validateStudent(students[i]);
@@ -326,17 +318,17 @@ export function bulkSaveStudentsForSchool(students: unknown[], schoolId: string)
       invalidIndices.push(i);
     }
   }
-  
+
   if (invalidIndices.length > 0) {
     throw new Error(`Geçersiz öğrenci verileri (indeksler: ${invalidIndices.join(', ')})`);
   }
-  
+
   const normalizedStudents = students.map(student => {
     const normalized = normalizeStudentData(student as StudentInput);
     normalized.schoolId = schoolId;
     return normalized;
   });
-  
+
   repository.saveStudentsForSchool(normalizedStudents, schoolId);
 }
 
@@ -351,29 +343,29 @@ export function removeStudent(id: string, schoolId: string, confirmationName?: s
   if (!schoolId) {
     throw new Error('schoolId is required for removeStudent');
   }
-  
+
   // Bu okula ait öğrenciyi bul
   const student = repository.getStudentByIdAndSchool(id, schoolId);
-  
+
   if (!student) {
     throw new Error("Öğrenci bulunamadı veya bu okula ait değil");
   }
-  
+
   if (confirmationName) {
     const expectedName = `${student.name} ${student.surname}`.trim();
     const sanitizedConfirmationName = (confirmationName || '').trim();
-    
+
     if (sanitizedConfirmationName !== expectedName) {
       throw new Error("Silme işlemini onaylamak için öğrencinin tam adını doğru yazmalısınız");
     }
   }
-  
+
   const deleted = repository.deleteStudentBySchool(id, schoolId);
-  
+
   if (!deleted) {
     throw new Error("Öğrenci silinemedi");
   }
-  
+
   return { studentName: `${student.name} ${student.surname}` };
 }
 
@@ -389,7 +381,7 @@ export function getStudentAcademics(studentId: string): AcademicRecord[] {
   if (!studentId || typeof studentId !== 'string' || studentId.length > 50) {
     throw new Error("Geçersiz öğrenci ID");
   }
-  
+
   return repository.getAcademicsByStudent(studentId);
 }
 
@@ -398,9 +390,9 @@ export function createAcademic(academic: unknown): void {
   if (!validation.valid) {
     throw new Error(validation.error);
   }
-  
+
   const academicObj = academic as Record<string, unknown>;
-  
+
   const sanitizedAcademic: AcademicRecord = {
     studentId: academicObj.studentId as string,
     semester: academicObj.semester as string,
@@ -409,7 +401,7 @@ export function createAcademic(academic: unknown): void {
     exams: (academicObj.exams as AcademicRecord['exams']) || [],
     notes: (academicObj.notes as string | undefined) || undefined
   };
-  
+
   repository.addAcademic(sanitizedAcademic);
 }
 
@@ -417,7 +409,7 @@ export function getStudentProgress(studentId: string): Progress[] {
   if (!studentId || typeof studentId !== 'string' || studentId.length > 50) {
     throw new Error("Geçersiz öğrenci ID");
   }
-  
+
   repository.ensureProgressForStudent(studentId);
   return repository.getProgressByStudent(studentId);
 }

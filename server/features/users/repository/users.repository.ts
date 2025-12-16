@@ -1,7 +1,21 @@
 import getDatabase from '../../../lib/database.js';
 import type { User } from '../types/users.types.js';
+import type Database from 'better-sqlite3';
 
-let statements: any = null;
+interface PreparedStatements {
+  getUserByEmail: Database.Statement;
+  getUserById: Database.Statement;
+  getAllUsers: Database.Statement;
+  getUserSchools: Database.Statement;
+  insertUser: Database.Statement;
+  updateUser: Database.Statement;
+  updateUserPassword: Database.Statement;
+  deactivateUser: Database.Statement;
+  countUsers: Database.Statement;
+  addUserToSchool: Database.Statement;
+}
+
+let statements: PreparedStatements | null = null;
 let isInitialized = false;
 
 function ensureInitialized(): void {
@@ -42,56 +56,56 @@ function ensureInitialized(): void {
 
 export function getUserByEmail(email: string): User | null {
   ensureInitialized();
-  const user = statements.getUserByEmail.get(email) as User | null;
+  const user = statements!.getUserByEmail.get(email) as User | null;
   return user;
 }
 
 export function getUserById(id: string): User | null {
   ensureInitialized();
-  const user = statements.getUserById.get(id) as User | null;
+  const user = statements!.getUserById.get(id) as User | null;
   return user;
 }
 
 export function getAllUsers(): User[] {
   ensureInitialized();
-  const users = statements.getAllUsers.all() as User[];
+  const users = statements!.getAllUsers.all() as User[];
   return users;
 }
 
 export function getUserSchools(userId: string): any[] {
   ensureInitialized();
-  const schools = statements.getUserSchools.all(userId) as any[];
+  const schools = statements!.getUserSchools.all(userId) as any[];
   return schools;
 }
 
 export function insertUser(id: string, name: string, email: string, passwordHash: string, role: string): void {
   ensureInitialized();
-  statements.insertUser.run(id, name, email, passwordHash, role);
+  statements!.insertUser.run(id, name, email, passwordHash, role);
 }
 
 export function updateUser(id: string, name: string, email: string, role: string): void {
   ensureInitialized();
-  statements.updateUser.run(name, email, role, id);
+  statements!.updateUser.run(name, email, role, id);
 }
 
 export function updateUserPassword(id: string, passwordHash: string): void {
   ensureInitialized();
-  statements.updateUserPassword.run(passwordHash, id);
+  statements!.updateUserPassword.run(passwordHash, id);
 }
 
 export function deactivateUser(id: string): void {
   ensureInitialized();
-  statements.deactivateUser.run(id);
+  statements!.deactivateUser.run(id);
 }
 
 export function addUserToSchool(userId: string, schoolId: string): void {
   ensureInitialized();
   const id = `user-school-${Date.now()}`;
-  statements.addUserToSchool.run(id, userId, schoolId);
+  statements!.addUserToSchool.run(id, userId, schoolId);
 }
 
 export function countUsers(): number {
   ensureInitialized();
-  const result = statements.countUsers.get() as { count: number };
+  const result = statements!.countUsers.get() as { count: number };
   return result.count;
 }
