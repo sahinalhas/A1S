@@ -8,9 +8,9 @@ import { SETTINGS_TABS } from "@/config/tabs";
 import { useToast } from "@/hooks/utils/toast.utils";
 import { Badge } from "@/components/atoms/Badge";
 import {
- loadSettings,
- saveSettings,
- defaultSettings,
+  loadSettings,
+  saveSettings,
+  defaultSettings,
 } from "@/lib/app-settings";
 import { useSearchParams, useLocation } from "react-router-dom";
 import GeneralSettingsTab from "@/components/features/settings/GeneralSettingsTab";
@@ -19,188 +19,156 @@ import NotificationsSettingsTab from "@/components/features/settings/Notificatio
 import AISettingsTab from "@/components/features/settings/AISettingsTab";
 import SecuritySettingsTab from "@/components/features/settings/SecuritySettingsTab";
 import BackupSettingsTab from "@/components/features/settings/BackupSettingsTab";
+import { PageHeader } from "@/components/features/common/PageHeader";
 
 // Settings Tab Dirty Context - centralized save management
 export const SettingsTabDirtyContext = createContext<{
- registerTabSubmit?: (id: string, callback: () => Promise<void>) => void;
- unregisterTabSubmit?: (id: string) => void;
+  registerTabSubmit?: (id: string, callback: () => Promise<void>) => void;
+  unregisterTabSubmit?: (id: string) => void;
 } | null>(null);
 
 export function useSettingsTabDirty() {
- return useContext(SettingsTabDirtyContext);
+  return useContext(SettingsTabDirtyContext);
 }
 
 export default function SettingsPage() {
- const { toast } = useToast();
- const [searchParams, setSearchParams] = useSearchParams();
- const initialTab = useMemo(() => {
-   const t = searchParams.get("tab") || "genel";
-   const allowed = new Set([
-     "genel",
-     "okullar",
-     "bildirim",
-     "ai",
-     "guvenlik",
-     "yedekleme",
-   ]);
-   return allowed.has(t) ? t : "genel";
- }, [searchParams]);
- const [tab, setTab] = useState<string>(initialTab);
+  const { toast } = useToast();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialTab = useMemo(() => {
+    const t = searchParams.get("tab") || "genel";
+    const allowed = new Set([
+      "genel",
+      "okullar",
+      "bildirim",
+      "ai",
+      "guvenlik",
+      "yedekleme",
+    ]);
+    return allowed.has(t) ? t : "genel";
+  }, [searchParams]);
+  const [tab, setTab] = useState<string>(initialTab);
 
- // Tab submit callbacks - tüm sekmeler submit handler'larını register eder
- const tabSubmitCallbacksRef = useRef<Map<string, () => Promise<void>>>(new Map());
+  // Tab submit callbacks - tüm sekmeler submit handler'larını register eder
+  const tabSubmitCallbacksRef = useRef<Map<string, () => Promise<void>>>(new Map());
 
- const registerTabSubmit = (id: string, callback: () => Promise<void>) => {
-   tabSubmitCallbacksRef.current.set(id, callback);
- };
+  const registerTabSubmit = (id: string, callback: () => Promise<void>) => {
+    tabSubmitCallbacksRef.current.set(id, callback);
+  };
 
- const unregisterTabSubmit = (id: string) => {
-   tabSubmitCallbacksRef.current.delete(id);
- };
+  const unregisterTabSubmit = (id: string) => {
+    tabSubmitCallbacksRef.current.delete(id);
+  };
 
- useEffect(() => {
-   setTab(initialTab);
- }, [initialTab]);
+  useEffect(() => {
+    setTab(initialTab);
+  }, [initialTab]);
 
- const location = useLocation();
- useEffect(() => {
-   if (location.hash) {
-     const id = location.hash.slice(1);
-     const el = document.getElementById(id);
-     if (el) {
-       setTimeout(
-         () => el.scrollIntoView({ behavior: "smooth", block: "start" }),
-         0,
-       );
-     }
-   }
- }, [location.hash, tab]);
+  const location = useLocation();
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        setTimeout(
+          () => el.scrollIntoView({ behavior: "smooth", block: "start" }),
+          0,
+        );
+      }
+    }
+  }, [location.hash, tab]);
 
- const onReset = async () => {
-   const def = defaultSettings();
-   await saveSettings(def);
-   window.location.reload();
- };
+  const onReset = async () => {
+    const def = defaultSettings();
+    await saveSettings(def);
+    window.location.reload();
+  };
 
- const onExport = () => {
-   loadSettings().then(settings => {
-     const data = JSON.stringify(settings, null, 2);
-     const blob = new Blob([data], { type: "application/json" });
-     const url = URL.createObjectURL(blob);
-     const a = document.createElement("a");
-     a.href = url;
-     a.download = "rehber360-settings.json";
-     a.click();
-     URL.revokeObjectURL(url);
-   });
- };
+  const onExport = () => {
+    loadSettings().then(settings => {
+      const data = JSON.stringify(settings, null, 2);
+      const blob = new Blob([data], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "rehber360-settings.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  };
 
- return (
-   <SettingsTabDirtyContext.Provider value={{ registerTabSubmit, unregisterTabSubmit }}>
-     <div className="w-full min-h-screen pb-6">
-       {/* Modern Gradient Header */}
-       <motion.div
-         initial={{ opacity: 0, y: 20 }}
-         animate={{ opacity: 1, y: 0 }}
-         className="relative overflow-hidden rounded-2xl mb-6 bg-gradient-to-br from-cyan-500 via-teal-500 to-blue-600 p-5 md:p-6 shadow-xl"
-       >
-         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-         <div className="absolute bottom-0 left-0 w-56 h-56 bg-cyan-500/20 rounded-full blur-3xl"></div>
+  return (
+    <SettingsTabDirtyContext.Provider value={{ registerTabSubmit, unregisterTabSubmit }}>
+      <div className="w-full min-h-screen pb-6">
+        <PageHeader
+          title="Sistem Ayarları"
+          description="Uygulama genel tercihleri ve yapılandırma seçenekleri"
+          icon={SettingsIcon}
+        />
 
-         <div className="relative z-10 max-w-full flex items-center justify-between">
-           <motion.div
-             initial={{ opacity: 0, y: 20 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ duration: 0.6 }}
-             className="flex-1"
-           >
-             <Badge className="mb-2 bg-white/20 text-white border-white/30 backdrop-blur-sm text-xs">
-               <Sparkles className="h-3 w-3 mr-1" />
-               Sistem Yapılandırma
-             </Badge>
-             <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">
-               Sistem Ayarları
-             </h1>
-             <p className="text-sm md:text-base text-white/90 mb-4 max-w-xl leading-relaxed">
-               Uygulama genel tercihleri ve yapılandırma seçenekleri
-             </p>
-           </motion.div>
+        <div className="space-y-6 max-w-7xl mx-auto px-6">
+          {/* Modern Tabs */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Tabs
+              value={tab}
+              onValueChange={(v) => {
+                setTab(v);
+                setSearchParams((p) => {
+                  const np = new URLSearchParams(p);
+                  np.set("tab", v);
+                  return np;
+                });
+              }}
+              className="space-y-4"
+            >
+              <TabsList variant="minimal" className="w-full justify-start sm:justify-center">
+                {SETTINGS_TABS.map((tabConfig) => (
+                  <TabsTrigger
+                    key={tabConfig.value}
+                    value={tabConfig.value}
+                    variant="minimal"
+                    title={tabConfig.description}
+                  >
+                    {tabConfig.icon && <tabConfig.icon className="h-4 w-4" />}
+                    <span className="hidden sm:inline">{tabConfig.label}</span>
+                  </TabsTrigger>
+                ))}
+              </TabsList>
 
-           <motion.div
-             className="hidden md:block opacity-30"
-             animate={{ rotate: 360 }}
-             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-           >
-             <SettingsIcon className="h-20 w-20 text-white" />
-           </motion.div>
-         </div>
-       </motion.div>
+              <TabsContent value="genel">
+                <GeneralSettingsTab />
+              </TabsContent>
 
-       <div className="space-y-6 max-w-7xl mx-auto px-6">
-         {/* Modern Tabs */}
-         <motion.div
-           initial={{ opacity: 0, y: -10 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: 0.3 }}
-         >
-           <Tabs
-             value={tab}
-             onValueChange={(v) => {
-               setTab(v);
-               setSearchParams((p) => {
-                 const np = new URLSearchParams(p);
-                 np.set("tab", v);
-                 return np;
-               });
-             }}
-             className="space-y-4"
-           >
-             <TabsList variant="minimal" className="w-full justify-start sm:justify-center">
-               {SETTINGS_TABS.map((tabConfig) => (
-                 <TabsTrigger
-                   key={tabConfig.value}
-                   value={tabConfig.value}
-                   variant="minimal"
-                   title={tabConfig.description}
-                 >
-                   {tabConfig.icon && <tabConfig.icon className="h-4 w-4" />}
-                   <span className="hidden sm:inline">{tabConfig.label}</span>
-                 </TabsTrigger>
-               ))}
-             </TabsList>
+              <TabsContent value="okullar">
+                <SchoolSettingsTab />
+              </TabsContent>
 
-             <TabsContent value="genel">
-               <GeneralSettingsTab />
-             </TabsContent>
+              <TabsContent value="bildirim">
+                <NotificationsSettingsTab />
+              </TabsContent>
 
-             <TabsContent value="okullar">
-               <SchoolSettingsTab />
-             </TabsContent>
+              <TabsContent value="ai">
+                <AISettingsTab />
+              </TabsContent>
 
-             <TabsContent value="bildirim">
-               <NotificationsSettingsTab />
-             </TabsContent>
+              <TabsContent value="guvenlik">
+                <SecuritySettingsTab
+                  onReset={onReset}
+                  onExport={onExport}
+                />
+              </TabsContent>
 
-             <TabsContent value="ai">
-               <AISettingsTab />
-             </TabsContent>
+              <TabsContent value="yedekleme">
+                <BackupSettingsTab />
+              </TabsContent>
 
-             <TabsContent value="guvenlik">
-               <SecuritySettingsTab
-                 onReset={onReset}
-                 onExport={onExport}
-               />
-             </TabsContent>
-
-             <TabsContent value="yedekleme">
-               <BackupSettingsTab />
-             </TabsContent>
-
-           </Tabs>
-         </motion.div>
-       </div>
-     </div>
-   </SettingsTabDirtyContext.Provider>
- );
+            </Tabs>
+          </motion.div>
+        </div>
+      </div>
+    </SettingsTabDirtyContext.Provider>
+  );
 }

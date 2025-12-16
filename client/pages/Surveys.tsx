@@ -4,28 +4,28 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/atoms/Button";
 import { Badge } from "@/components/atoms/Badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/organisms/Tabs";
-import { 
-  Plus, 
-  ClipboardList, 
-  FileText, 
-  Send, 
-  MessageSquare, 
-  BarChart3, 
+import {
+  Plus,
+  ClipboardList,
+  FileText,
+  Send,
+  MessageSquare,
+  BarChart3,
   Brain,
   Sparkles,
   RotateCcw
 } from "lucide-react";
-import { PageHeader } from "@/components/molecules/PageHeader";
-import { 
-  useSurveyTemplates, 
-  useSurveyDistributions, 
+import { PageHeader } from "@/components/features/common/PageHeader";
+import {
+  useSurveyTemplates,
+  useSurveyDistributions,
   useTemplateQuestions,
   useCreateTemplate,
   useUpdateTemplate,
   useDeleteTemplate,
   useCreateDistribution,
   useUpdateDistribution,
-  useDeleteDistribution 
+  useDeleteDistribution
 } from "@/hooks/features/surveys";
 import { useToast } from "@/hooks/utils/toast.utils";
 import { SurveyTemplate, SurveyResponse } from "@/lib/survey-types";
@@ -58,7 +58,7 @@ export default function Surveys() {
   const { toast } = useToast();
   const { data: templates = [], isLoading: templatesLoading } = useSurveyTemplates();
   const { data: distributions = [], isLoading: distributionsLoading } = useSurveyDistributions();
-  
+
   const { data: allResponses = [] } = useQuery<SurveyResponse[]>({
     queryKey: ['survey-responses-all'],
     queryFn: () => apiClient.get('/api/surveys/responses'),
@@ -69,7 +69,7 @@ export default function Surveys() {
   const [selectedTemplate, setSelectedTemplate] = useState<SurveyTemplate | null>(null);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
   const { data: questions = [] } = useTemplateQuestions(selectedTemplateId, !!selectedTemplateId);
-  
+
   const [selectedDistributionForAI, setSelectedDistributionForAI] = useState<any>(null);
   const [showTemplateSelector, setShowTemplateSelector] = useState(false);
   const [showDistributionDialog, setShowDistributionDialog] = useState(false);
@@ -78,7 +78,7 @@ export default function Surveys() {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [resetDialogOpen, setResetDialogOpen] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
-  
+
   const queryClient = useQueryClient();
 
   const createTemplate = useCreateTemplate();
@@ -143,7 +143,7 @@ export default function Surveys() {
     try {
       setIsResetting(true);
       const response = await apiClient.post<{ success: boolean; message?: string; error?: string }>('/api/surveys/survey-templates/reset');
-      
+
       if (response.success) {
         await queryClient.invalidateQueries({ queryKey: ['survey-templates'] });
         await queryClient.invalidateQueries({ queryKey: ['survey-questions'] });
@@ -181,59 +181,32 @@ export default function Surveys() {
   return (
     <div className="w-full min-h-screen pb-6">
       {/* Modern Gradient Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-2xl mb-6 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 p-5 md:p-6 shadow-xl"
-      >
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-56 h-56 bg-teal-500/20 rounded-full blur-3xl"></div>
-
-        <div className="relative z-10 max-w-full flex items-center justify-between">
-          <div className="flex-1">
-            <Badge className="mb-2 bg-white/20 text-white border-white/30 backdrop-blur-sm text-xs">
-              <Sparkles className="h-3 w-3 mr-1" />
-              Ölçek & Anket Sistemi
-            </Badge>
-            <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">
-              Ölçek & Anketler
-            </h1>
-            <p className="text-sm md:text-base text-white/90 mb-4 max-w-xl leading-relaxed">
-              Modern ölçek ve anket yönetimi sistemi
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <SurveyCreationDialog>
-                <Button 
-                  size="default" 
-                  className="bg-white text-emerald-600 hover:bg-white/90 shadow-lg"
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  Yeni Anket Oluştur
-                </Button>
-              </SurveyCreationDialog>
-              
-              <Button 
-                size="default" 
-                variant="outline"
-                onClick={() => setResetDialogOpen(true)}
-                className="bg-white/10 text-white border-white/30 hover:bg-white/20 shadow-lg backdrop-blur-sm"
+      <PageHeader
+        title="Ölçek & Anketler"
+        description="Modern ölçek ve anket yönetimi sistemi"
+        icon={ClipboardList}
+        actions={
+          <div className="flex flex-wrap gap-2">
+            <SurveyCreationDialog>
+              <Button
+                size="default"
               >
-                <RotateCcw className="mr-2 h-4 w-4" />
-                Varsayılana Sıfırla
+                <Plus className="mr-2 h-4 w-4" />
+                Yeni Anket Oluştur
               </Button>
-            </div>
-          </div>
+            </SurveyCreationDialog>
 
-          <motion.div
-            className="hidden md:block opacity-30"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          >
-            <ClipboardList className="h-20 w-20 text-white" />
-          </motion.div>
-        </div>
-      </motion.div>
+            <Button
+              size="default"
+              variant="outline"
+              onClick={() => setResetDialogOpen(true)}
+            >
+              <RotateCcw className="mr-2 h-4 w-4" />
+              Varsayılana Sıfırla
+            </Button>
+          </div>
+        }
+      />
 
       <div className="space-y-6 max-w-7xl mx-auto px-6">
         {/* Stats Cards */}
@@ -276,8 +249,8 @@ export default function Surveys() {
             </TabsList>
 
             <TabsContent value="templates" className="space-y-4">
-              <TemplatesList 
-                templates={templates} 
+              <TemplatesList
+                templates={templates}
                 onDistribute={handleCreateDistribution}
                 onEdit={handleEditTemplate}
                 onDuplicate={handleDuplicateTemplate}
@@ -286,7 +259,7 @@ export default function Surveys() {
             </TabsContent>
 
             <TabsContent value="distributions" className="space-y-4">
-              <DistributionsList 
+              <DistributionsList
                 distributions={distributions}
                 onNewDistribution={handleNewDistribution}
                 onEdit={(distribution) => setEditingDistribution(distribution)}

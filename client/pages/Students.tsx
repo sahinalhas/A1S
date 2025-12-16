@@ -77,6 +77,7 @@ import { StudentCard } from '@/components/features/students/StudentCard';
 import { EmptyState } from '@/components/features/students/EmptyState';
 import { TableSkeleton } from '@/components/features/students/TableSkeleton';
 import { parseImportedRows, mergeStudents, sortStudents } from '@/lib/utils/student-helpers';
+import { PageHeader } from '@/components/features/common/PageHeader';
 
 export default function Students() {
   const { students, isLoading, invalidate } = useStudents();
@@ -479,131 +480,105 @@ export default function Students() {
 
   return (
     <div className="w-full min-h-screen">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-2xl mb-6 bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-700 p-5 md:p-6 shadow-xl"
-      >
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-56 h-56 bg-cyan-500/20 rounded-full blur-3xl"></div>
-
-        <div className="relative z-10 max-w-3xl flex items-center justify-between">
-          <div className="flex-1">
-            <Badge className="mb-2 bg-white/20 text-white border-white/30 backdrop-blur-sm text-xs">
-              <Sparkles className="h-3 w-3 mr-1" />
-              Öğrenci Yönetim Sistemi
-            </Badge>
-            <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">
-              Öğrenci Yönetimi
-            </h1>
-            <p className="text-sm md:text-base text-white/90 mb-4 max-w-xl leading-relaxed">
-              Tüm öğrenci kayıtlarını görüntüleyin, yönetin ve analiz edin.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>
-                  <Button size="default" className="bg-white text-blue-600 hover:bg-white/90 shadow-lg">
-                    <UserPlus className="mr-2 h-4 w-4" />
-                    Yeni Öğrenci Ekle
-                  </Button>
-                </DialogTrigger>
-                <StudentFormDialog
-                  onSubmit={handleSubmit(onCreate)}
-                  register={register}
-                  setValue={setValue}
-                  watch={watch}
-                  errors={errors}
-                  title="Yeni Öğrenci Ekle"
-                  submitText="Kaydet"
-                />
-              </Dialog>
-
-              <label className="inline-flex items-center">
-                <input
-                  type="file"
-                  accept=".xlsx,.xls,.csv"
-                  className="hidden"
-                  onChange={(e) => e.target.files && importSheet(e.target.files[0])}
-                />
-                <Button variant="outline" size="default" className="border-white/50 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm" asChild>
-                  <span>
-                    <Upload className="mr-2 h-4 w-4" />
-                    İçe Aktar
-                  </span>
+      <PageHeader
+        title="Öğrenci Yönetimi"
+        description="Tüm öğrenci kayıtlarını görüntüleyin, yönetin ve analiz edin."
+        icon={Users}
+        actions={
+          <div className="flex flex-wrap gap-2">
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogTrigger asChild>
+                <Button size="default">
+                  <UserPlus className="mr-2 h-4 w-4" />
+                  Yeni Öğrenci Ekle
                 </Button>
-              </label>
+              </DialogTrigger>
+              <StudentFormDialog
+                onSubmit={handleSubmit(onCreate)}
+                register={register}
+                setValue={setValue}
+                watch={watch}
+                errors={errors}
+                title="Yeni Öğrenci Ekle"
+                submitText="Kaydet"
+              />
+            </Dialog>
 
-              <Button
-                variant="outline"
-                size="default"
-                className="border-white/50 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm"
-                onClick={downloadTemplate}
-              >
-                <FileSpreadsheet className="mr-2 h-4 w-4" />
-                Şablon İndir
+            <label className="inline-flex items-center">
+              <input
+                type="file"
+                accept=".xlsx,.xls,.csv"
+                className="hidden"
+                onChange={(e) => e.target.files && importSheet(e.target.files[0])}
+              />
+              <Button variant="outline" size="default" asChild>
+                <span>
+                  <Upload className="mr-2 h-4 w-4" />
+                  İçe Aktar
+                </span>
               </Button>
+            </label>
 
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="default" className="border-white/50 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm">
-                    <Download className="mr-2 h-4 w-4" />
-                    Dışa Aktar
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>Dışa Aktarma Formatı</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={() =>
-                      exportToCSV(
-                        selectedStudentIds.size > 0
-                          ? students.filter((s) => selectedStudentIds.has(s.id))
-                          : filters.filteredStudents
-                      )
-                    }
-                  >
-                    <FileText className="mr-2 h-4 w-4" />
-                    CSV Dosyası
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() =>
-                      exportToExcel(
-                        selectedStudentIds.size > 0
-                          ? students.filter((s) => selectedStudentIds.has(s.id))
-                          : filters.filteredStudents
-                      )
-                    }
-                  >
-                    <FileSpreadsheet className="mr-2 h-4 w-4" />
-                    Excel Dosyası
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() =>
-                      exportToPDF(
-                        selectedStudentIds.size > 0
-                          ? students.filter((s) => selectedStudentIds.has(s.id))
-                          : filters.filteredStudents
-                      )
-                    }
-                  >
-                    <FileText className="mr-2 h-4 w-4" />
-                    PDF Dosyası
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+            <Button
+              variant="outline"
+              size="default"
+              onClick={downloadTemplate}
+            >
+              <FileSpreadsheet className="mr-2 h-4 w-4" />
+              Şablon İndir
+            </Button>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="default">
+                  <Download className="mr-2 h-4 w-4" />
+                  Dışa Aktar
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Dışa Aktarma Formatı</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() =>
+                    exportToCSV(
+                      selectedStudentIds.size > 0
+                        ? students.filter((s) => selectedStudentIds.has(s.id))
+                        : filters.filteredStudents
+                    )
+                  }
+                >
+                  <FileText className="mr-2 h-4 w-4" />
+                  CSV Dosyası
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() =>
+                    exportToExcel(
+                      selectedStudentIds.size > 0
+                        ? students.filter((s) => selectedStudentIds.has(s.id))
+                        : filters.filteredStudents
+                    )
+                  }
+                >
+                  <FileSpreadsheet className="mr-2 h-4 w-4" />
+                  Excel Dosyası
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() =>
+                    exportToPDF(
+                      selectedStudentIds.size > 0
+                        ? students.filter((s) => selectedStudentIds.has(s.id))
+                        : filters.filteredStudents
+                    )
+                  }
+                >
+                  <FileText className="mr-2 h-4 w-4" />
+                  PDF Dosyası
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-
-          <motion.div
-            className="hidden md:block opacity-30"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          >
-            <Users className="h-20 w-20 text-white" />
-          </motion.div>
-        </div>
-      </motion.div>
+        }
+      />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
         {statsCardsData.map((stat, index) => (

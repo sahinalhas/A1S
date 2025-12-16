@@ -62,6 +62,7 @@ import { apiClient } from "@/lib/api/core/client";
 import { fetchWithSchool } from "@/lib/api/core/fetch-helpers";
 import { COUNSELING_ENDPOINTS, STUDENT_ENDPOINTS } from "@/lib/constants/api-endpoints";
 import { useAuth } from "@/lib/auth-context";
+import { PageHeader } from "@/components/features/common/PageHeader";
 import { QUERY_KEYS } from "@/lib/school-context";
 
 export default function CounselingSessions() {
@@ -292,66 +293,39 @@ export default function CounselingSessions() {
 
   return (
     <div className="w-full min-h-screen">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-2xl mb-6 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 p-5 md:p-6 shadow-xl"
-      >
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-56 h-56 bg-teal-500/20 rounded-full blur-3xl"></div>
-
-        <div className="relative z-10 max-w-3xl flex items-center justify-between">
-          <div className="flex-1">
-            <Badge className="mb-2 bg-white/20 text-white border-white/30 backdrop-blur-sm text-xs">
-              <Sparkles className="h-3 w-3 mr-1" />
-              Görüşme & Randevu Sistemi
-            </Badge>
-            <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">
-              Görüşme & Randevu
-            </h1>
-            <p className="text-sm md:text-base text-white/90 mb-4 max-w-xl leading-relaxed">
-              Modern görüşme yönetimi ve analiz sistemi.
-            </p>
-            <div className="flex gap-3 flex-wrap">
-              <Button
-                onClick={() => setDialogOpen(true)}
-                size="default"
-                className="bg-white text-emerald-600 hover:bg-white/90 shadow-lg"
-              >
-                <Plus className="mr-2 h-4 w-4" />
-                Yeni Görüşme
-              </Button>
-              <Button
-                onClick={() => setSearchOpen(true)}
-                size="default"
-                variant="outline"
-                className="border-white/50 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm"
-              >
-                <SearchIcon className="mr-2 h-4 w-4" />
-                Ara (⌘K)
-              </Button>
-              <Button
-                onClick={() => setReportDialogOpen(true)}
-                size="default"
-                variant="outline"
-                className="border-white/50 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm"
-              >
-                <Download className="mr-2 h-4 w-4" />
-                Rapor
-              </Button>
-            </div>
+      <PageHeader
+        title="Görüşme & Randevu"
+        description="Modern görüşme yönetimi ve analiz sistemi."
+        icon={MessageSquare}
+        actions={
+          <div className="flex flex-wrap gap-2">
+            <Button
+              onClick={() => setDialogOpen(true)}
+              size="default"
+              className="bg-primary hover:bg-primary/90"
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Yeni Görüşme
+            </Button>
+            <Button
+              onClick={() => setSearchOpen(true)}
+              size="default"
+              variant="outline"
+            >
+              <SearchIcon className="mr-2 h-4 w-4" />
+              Ara (⌘K)
+            </Button>
+            <Button
+              onClick={() => setReportDialogOpen(true)}
+              size="default"
+              variant="outline"
+            >
+              <Download className="mr-2 h-4 w-4" />
+              Rapor
+            </Button>
           </div>
-
-          <motion.div
-            className="hidden md:block opacity-30"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          >
-            <MessageSquare className="h-20 w-20 text-white" />
-          </motion.div>
-        </div>
-      </motion.div>
+        }
+      />
 
       <div className="space-y-6 max-w-7xl mx-auto">
 
