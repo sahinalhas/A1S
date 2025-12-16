@@ -16,6 +16,7 @@ export interface SessionTokenPayload {
   userId: string;
   issuedAt: number;
   expiresAt: number;
+  sessionStartAt: number;  // Track original session start for max duration
 }
 
 /**
@@ -32,11 +33,24 @@ export interface VerifiedToken extends SessionTokenPayload {
 export class SessionTokenService {
   private readonly secret: string;
   private readonly algorithm = 'sha256';
-  
+
   /**
    * Token validity duration in milliseconds (24 hours)
+   * This is the initial token lifetime
    */
   private readonly tokenValidityMs = 24 * 60 * 60 * 1000;
+
+  /**
+   * Renewal threshold - token will be renewed if remaining time is less than this
+   * (12 hours)
+   */
+  private readonly renewalThresholdMs = 12 * 60 * 60 * 1000;
+
+  /**
+   * Maximum session duration - even with renewals, session cannot exceed this
+   * (7 days)
+   */
+  private readonly maxSessionDurationMs = 7 * 24 * 60 * 60 * 1000;
 
   constructor() {
     // In production, SESSION_SECRET is mandatory
@@ -45,10 +59,10 @@ export class SessionTokenService {
       logger.error(error, 'SessionTokenService');
       throw new Error(error);
     }
-    
+
     // Get secret from environment or generate a random one (development only)
     this.secret = process.env.SESSION_SECRET || this.generateDevelopmentSecret();
-    
+
     if (!process.env.SESSION_SECRET) {
       logger.warn(
         'SESSION_SECRET not set in environment, using generated secret (development only)',
@@ -71,26 +85,32 @@ export class SessionTokenService {
    * Creates a signed session token for a user
    * 
    * @param userId - User identifier
+   * @param existingSessionStart - Optional: timestamp of original session start (for renewal)
    * @returns Signed session token
    * 
    * @example
    * ```typescript
+   * // New session
    * const token = sessionTokenService.createToken('user123');
-   * res.cookie('session_token', token, { httpOnly: true, secure: true });
+   * 
+   * // Renew existing session
+   * const renewed = sessionTokenService.createToken('user123', existingPayload.sessionStartAt);
    * ```
    */
-  createToken(userId: string): string {
+  createToken(userId: string, existingSessionStart?: number): string {
     const now = Date.now();
-    
+    const sessionStartAt = existingSessionStart || now;
+
     const payload: SessionTokenPayload = {
       userId,
       issuedAt: now,
       expiresAt: now + this.tokenValidityMs,
+      sessionStartAt,
     };
 
     const payloadString = JSON.stringify(payload);
     const payloadBase64 = Buffer.from(payloadString).toString('base64url');
-    
+
     // Create HMAC signature
     const signature = crypto
       .createHmac(this.algorithm, this.secret)
@@ -99,12 +119,14 @@ export class SessionTokenService {
 
     // Token format: payload.signature
     const token = `${payloadBase64}.${signature}`;
-    
+
     logger.debug('Session token created', 'SessionTokenService', {
       userId,
       expiresAt: new Date(payload.expiresAt).toISOString(),
+      sessionAge: now - sessionStartAt,
+      isRenewal: !!existingSessionStart,
     });
-    
+
     return token;
   }
 
@@ -184,12 +206,57 @@ export class SessionTokenService {
    */
   refreshToken(token: string): string | null {
     const verified = this.verifyToken(token);
-    
+
     if (!verified) {
       return null;
     }
 
-    return this.createToken(verified.userId);
+    // Preserve original session start time
+    return this.createToken(verified.userId, verified.sessionStartAt);
+  }
+
+  /**
+   * Determines if a token should be renewed based on remaining time and max session
+   * 
+   * @param payload - Verified token payload
+   * @returns Object with renewal decision and reason
+   */
+  shouldRenewToken(payload: SessionTokenPayload): {
+    shouldRenew: boolean;
+    reason?: string;
+    timeRemaining?: number;
+    sessionAge?: number;
+  } {
+    const now = Date.now();
+    const timeRemaining = payload.expiresAt - now;
+    const sessionAge = now - payload.sessionStartAt;
+
+    // Check if session exceeded maximum duration
+    if (sessionAge >= this.maxSessionDurationMs) {
+      return {
+        shouldRenew: false,
+        reason: 'MAX_SESSION_EXCEEDED',
+        timeRemaining,
+        sessionAge,
+      };
+    }
+
+    // Check if token needs renewal (< 12 hours remaining)
+    if (timeRemaining < this.renewalThresholdMs) {
+      return {
+        shouldRenew: true,
+        reason: 'APPROACHING_EXPIRATION',
+        timeRemaining,
+        sessionAge,
+      };
+    }
+
+    return {
+      shouldRenew: false,
+      reason: 'NOT_NEEDED',
+      timeRemaining,
+      sessionAge,
+    };
   }
 }
 

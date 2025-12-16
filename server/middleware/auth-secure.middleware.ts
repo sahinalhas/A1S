@@ -39,8 +39,8 @@ export interface AuthenticatedRequest extends Request {
 export function requireSecureAuth(req: Request, res: Response, next: NextFunction): void {
   try {
     // Extract token from cookie or Authorization header
-    const token = 
-      req.cookies?.session_token || 
+    const token =
+      req.cookies?.session_token ||
       req.headers.authorization?.replace('Bearer ', '');
 
     if (!token) {
@@ -49,18 +49,18 @@ export function requireSecureAuth(req: Request, res: Response, next: NextFunctio
 
     // Verify token signature and expiration
     const verified = sessionTokenService.verifyToken(token);
-    
+
     if (!verified) {
       throw new AuthenticationError('Invalid or expired session token');
     }
 
     // Get user data from database
     const user = getUserById(verified.userId);
-    
+
     if (!user) {
       throw new AuthenticationError('User not found');
     }
-    
+
     // Attach verified user to request
     (req as AuthenticatedRequest).user = {
       id: user.id,
@@ -71,26 +71,51 @@ export function requireSecureAuth(req: Request, res: Response, next: NextFunctio
       institution: user.institution
     };
 
-    // Only log in development for debugging
-    // logger.debug('Authentication successful', 'SecureAuthMiddleware', {
-    //   userId: verified.userId,
-    //   method: req.cookies?.session_token ? 'cookie' : 'header'
-    // });
+    // Check if token should be renewed (sliding session)
+    const renewalCheck = sessionTokenService.shouldRenewToken(verified);
+
+    if (renewalCheck.shouldRenew) {
+      const newToken = sessionTokenService.refreshToken(token);
+
+      if (newToken) {
+        // Set new token in cookie
+        res.cookie('session_token', newToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict',
+          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        });
+
+        logger.info('Session token renewed', 'SecureAuthMiddleware', {
+          userId: verified.userId,
+          reason: renewalCheck.reason,
+          sessionAge: renewalCheck.sessionAge,
+        });
+      }
+    } else if (renewalCheck.reason === 'MAX_SESSION_EXCEEDED') {
+      // Maximum session duration reached, force logout
+      logger.warn('Maximum session duration exceeded', 'SecureAuthMiddleware', {
+        userId: verified.userId,
+        sessionAge: renewalCheck.sessionAge,
+      });
+
+      throw new AuthenticationError('Session expired due to maximum duration limit');
+    }
 
     next();
   } catch (error) {
     if (error instanceof AuthenticationError) {
-      logger.warn('Authentication failed', 'SecureAuthMiddleware', { 
+      logger.warn('Authentication failed', 'SecureAuthMiddleware', {
         error: error.message,
         path: req.path
       });
-      res.status(error.statusCode).json({ 
+      res.status(error.statusCode).json({
         error: error.message,
         code: error.code
       });
     } else {
       logger.error('Unexpected authentication error', 'SecureAuthMiddleware', error);
-      res.status(401).json({ 
+      res.status(401).json({
         error: 'Authentication failed',
         code: 'AUTHENTICATION_ERROR'
       });
@@ -104,9 +129,9 @@ export function requireSecureAuth(req: Request, res: Response, next: NextFunctio
 export function requirePermissionSecure(permission: string) {
   return (req: Request, res: Response, next: NextFunction) => {
     const authReq = req as AuthenticatedRequest;
-    
+
     if (!authReq.user) {
-      return res.status(401).json({ 
+      return res.status(401).json({
         error: 'Authentication required',
         code: 'AUTHENTICATION_ERROR'
       });
@@ -118,8 +143,8 @@ export function requirePermissionSecure(permission: string) {
         required: permission,
         has: authReq.user.permissions
       });
-      
-      return res.status(403).json({ 
+
+      return res.status(403).json({
         error: 'Insufficient permissions',
         required: permission,
         code: 'AUTHORIZATION_ERROR'
@@ -136,24 +161,24 @@ export function requirePermissionSecure(permission: string) {
 export function requireRoleSecure(allowedRoles: string | string[]) {
   return (req: Request, res: Response, next: NextFunction) => {
     const authReq = req as AuthenticatedRequest;
-    
+
     if (!authReq.user) {
-      return res.status(401).json({ 
+      return res.status(401).json({
         error: 'Authentication required',
         code: 'AUTHENTICATION_ERROR'
       });
     }
 
     const roles = Array.isArray(allowedRoles) ? allowedRoles : [allowedRoles];
-    
+
     if (!roles.includes(authReq.user.role)) {
       logger.warn('Role check failed', 'SecureAuthMiddleware', {
         userId: authReq.user.id,
         userRole: authReq.user.role,
         required: roles
       });
-      
-      return res.status(403).json({ 
+
+      return res.status(403).json({
         error: 'Insufficient permissions',
         required: roles.join(' or '),
         code: 'AUTHORIZATION_ERROR'
