@@ -389,25 +389,61 @@ export default function AIAssistant() {
             ];
         }
 
-        return [
-            { icon: '📊', text: 'Kapsamlı Profil Analizi', disabled: !hasStudent },
-            { icon: '⚠️', text: 'Derin Risk Analizi', disabled: !hasStudent },
-            { icon: '📈', text: 'Pattern ve Trend Analizi', disabled: !hasStudent },
-            { icon: '🎯', text: 'Müdahale Planı Oluştur', disabled: !hasStudent },
-            { icon: '👨‍👩‍👧', text: 'Veli Görüşmesi Hazırlığı', disabled: !hasStudent },
-            { icon: '👨‍🏫', text: 'Öğretmen Toplantısı Hazırlığı', disabled: !hasStudent },
-            { icon: '⭐', text: 'Güçlü Yönler ve Potansiyel', disabled: !hasStudent },
+        // Öğrenci Analizi kategorisi
+        const analysisPrompts = [
+            { icon: '📊', text: 'Kapsamlı Profil Analizi', disabled: !hasStudent, category: 'Öğrenci Analizi' },
+            { icon: '⚠️', text: 'Derin Risk Analizi', disabled: !hasStudent, category: 'Öğrenci Analizi' },
+            { icon: '📈', text: 'Pattern ve Trend Analizi', disabled: !hasStudent, category: 'Öğrenci Analizi' },
+            { icon: '⭐', text: 'Güçlü Yönler ve Potansiyel', disabled: !hasStudent, category: 'Öğrenci Analizi' },
+            { icon: '🧠', text: 'Öğrenme Stili ve Akademik Profil', disabled: !hasStudent, category: 'Öğrenci Analizi' },
         ];
+
+        // Toplantı ve Görüşmeler kategorisi
+        const meetingPrompts = [
+            { icon: '👨‍👩‍👧', text: 'Veli Görüşmesi Hazırlığı', disabled: !hasStudent, category: 'Toplantı & Görüşme' },
+            { icon: '👨‍🏫', text: 'Öğretmen Toplantısı Hazırlığı', disabled: !hasStudent, category: 'Toplantı & Görüşme' },
+        ];
+
+        // Müdahale ve Planlama kategorisi
+        const interventionPrompts = [
+            { icon: '🎯', text: 'Müdahale Planı Oluştur', disabled: !hasStudent, category: 'Müdahale & Planlama' },
+            { icon: '📚', text: 'Akademik Destek Planı', disabled: !hasStudent, category: 'Müdahale & Planlama' },
+            { icon: '💭', text: 'Sosyal-Duygusal Gelişim Planı', disabled: !hasStudent, category: 'Müdahale & Planlama' },
+            { icon: '🤝', text: 'Akran İlişkileri ve Sosyal Beceriler', disabled: !hasStudent, category: 'Müdahale & Planlama' },
+        ];
+
+        // Özel Durumlar kategorisi
+        const specialPrompts = [
+            { icon: '🎓', text: 'Kariyer ve Gelecek Planlaması', disabled: !hasStudent, category: 'Özel Durum' },
+            { icon: '🏠', text: 'Aile İşbirliği Stratejileri', disabled: !hasStudent, category: 'Özel Durum' },
+        ];
+
+        return [...analysisPrompts, ...meetingPrompts, ...interventionPrompts, ...specialPrompts];
     }, [selectedStudent, messages.length]);
 
     const promptTemplates: Record<string, string> = {
+        // Öğrenci Analizi
         'Kapsamlı Profil Analizi': 'Bu öğrencinin kapsamlı bir profilini çıkar. Akademik, sosyal-duygusal, davranışsal tüm boyutları değerlendir. Güçlü yönler, riskler ve öneriler sun.',
         'Derin Risk Analizi': 'Bu öğrencinin risklerini derinlemesine analiz et. Akademik, davranışsal, sosyal-duygusal risk faktörlerini belirle. Erken uyarı sinyallerini ve koruyucu faktörleri göster.',
-        'Pattern ve Trend Analizi': 'Son 6 aydaki verilerden pattern\'leri çıkar. Akademik trendler, davranış döngüleri, devamsızlık patternleri neler? Hangi faktörler birbirleriyle ilişkili?',
-        'Müdahale Planı Oluştur': 'Bu öğrenci için kanıta dayalı, somut, adım adım müdahale planı hazırla. Kısa, orta ve uzun vadeli hedefler belirle. Akademik, davranışsal, sosyal-duygusal odak alanlarını belirt.',
-        'Veli Görüşmesi Hazırlığı': 'Veli görüşmesi için detaylı hazırlık notları hazırla. Öğrencinin mevcut durumu, güçlü yönleri, gelişim alanları, aileyle iş birliği önerileri ve görüşme stratejileri sun.',
+        'Pattern ve Trend Analizi': 'Son 6 aydaki verilerden patternleri çıkar. Akademik trendler, davranış döngüleri, devamsızlık patternleri neler? Hangi faktörler birbirleriyle ilişkili? Tekrarlayan örüntüler var mı?',
+        'Güçlü Yönler ve Potansiyel': 'Öğrencinin güçlü yönlerini, yeteneklerini, ilgi alanlarını vurgula. Bu güçlü yönler nasıl daha fazla kullanılabilir? Potansiyeli nasıl geliştirebiliriz? Hangi alanlarda öne çıkıyor?',
+        'Öğrenme Stili ve Akademik Profil': 'Bu öğrencinin öğrenme stilini, akademik güçlü ve zayıf yönlerini analiz et. Hangi öğretim yöntemleri daha etkili olur? Ders başarısını artırmak için öneriler sun.',
+
+        // Toplantı ve Görüşmeler
+        'Veli Görüşmesi Hazırlığı': 'Veli görüşmesi için detaylı hazırlık notları hazırla. Öğrencinin mevcut durumu, güçlü yönleri, gelişim alanları, aileyle iş birliği önerileri ve görüşme stratejileri sun. Veliye nasıl yaklaşmalıyız?',
         'Öğretmen Toplantısı Hazırlığı': 'Öğretmen toplantısı için detaylı brifing hazırla. Öğrencinin akademik durumu, sınıf içi davranışları, ders performansları, öğretmenlerle iş birliği stratejileri ve somut öneriler sun.',
-        'Güçlü Yönler ve Potansiyel': 'Öğrencinin güçlü yönlerini, yeteneklerini, ilgi alanlarını vurgula. Bu güçlü yönler nasıl daha fazla kullanılabilir? Potansiyeli nasıl geliştirebiliriz?',
+
+        // Müdahale ve Planlama
+        'Müdahale Planı Oluştur': 'Bu öğrenci için kanıta dayalı, somut, adım adım müdahale planı hazırla. Kısa, orta ve uzun vadeli hedefler belirle. Akademik, davranışsal, sosyal-duygusal odak alanlarını belirt. Ölçülebilir hedefler koy.',
+        'Akademik Destek Planı': 'Öğrencinin akademik başarısını artırmak için özel destek planı hazırla. Hangi derslerde zorlanıyor? Öğrenme güçlükleri var mı? Somut çalışma stratejileri ve destek önerileri sun.',
+        'Sosyal-Duygusal Gelişim Planı': 'Öğrencinin sosyal-duygusal gelişimini desteklemek için plan hazırla. Duygusal farkındalık, öz düzenleme, sosyal beceriler gibi alanlarda somut aktivite ve stratejiler öner.',
+        'Akran İlişkileri ve Sosyal Beceriler': 'Öğrencinin akran ilişkilerini ve sosyal becerilerini analiz et. Arkadaşlık ilişkileri nasıl? Sosyal problem çözme becerileri gelişmiş mi? İyileştirme stratejileri öner.',
+
+        // Özel Durumlar
+        'Kariyer ve Gelecek Planlaması': 'Öğrencinin ilgi alanları, yetenekleri ve kariyer hedeflerini değerlendir. Hangi meslek grupları uygun? Lise/üniversite seçimi için öneriler sun. Kariyer gelişim yol haritası oluştur.',
+        'Aile İşbirliği Stratejileri': 'Öğrencinin gelişimi için aile ile nasıl iş birliği yapılmalı? Evde hangi destekler sağlanabilir? Aile-okul iletişimi nasıl güçlendirilir? Pratik öneriler sun.',
+
+        // Genel yardımcılar
         'Daha detaylı analiz et': 'Lütfen son yanıtını daha detaylı açıkla ve derinleştir.',
         'Özetler ve verilendiri': 'Şu ana kadar konuştuklarımızı özetle ve ana noktaları vurgula.',
         'Ek öneriler sun': 'Bu konunda ek öneriler ve farklı bakış açıları sun.',
@@ -602,39 +638,149 @@ export default function AIAssistant() {
                                 <CardContent className="space-y-4">
                                     <ScrollArea className="h-[500px] pr-4">
                                         {filteredMessages.length === 0 && !searchQuery ? (
-                                            <div className="flex flex-col items-center justify-center h-full text-center p-8">
-                                                <div className="relative mb-6">
-                                                    <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl"></div>
-                                                    <Bot className="h-20 w-20 text-primary relative z-10" />
+                                            <div className="flex flex-col items-center justify-center h-full text-center py-4">
+                                                <div className="relative mb-4">
+                                                    <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl"></div>
+                                                    <Bot className="h-16 w-16 text-primary relative z-10" />
                                                 </div>
-                                                <h3 className="text-xl font-semibold mb-2 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                                                <h3 className="text-lg font-semibold mb-1 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                                                     AI Rehber Asistanınıza Hoş Geldiniz
                                                 </h3>
-                                                <p className="text-sm text-muted-foreground max-w-md mb-6">
-                                                    Öğrencileriniz hakkında sorular sorun, risk analizi yapın,
-                                                    görüşme özetleri oluşturun veya rehberlik önerileri alın.
+                                                <p className="text-xs text-muted-foreground max-w-md mb-6">
+                                                    Öğrencileriniz hakkında sorular sorun, analiz yapın ve rehberlik önerileri alın
                                                 </p>
-                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full max-w-4xl">
-                                                    {suggestedPrompts.map((prompt, idx) => (
-                                                        <Button
-                                                            key={idx}
-                                                            variant="outline"
-                                                            size="sm"
-                                                            disabled={prompt.disabled}
-                                                            onClick={() => {
-                                                                const template = promptTemplates[prompt.text];
-                                                                if (template) setInput(template);
-                                                            }}
-                                                            className="justify-start h-auto py-3 px-4"
-                                                        >
-                                                            <span className="text-lg mr-2">{prompt.icon}</span>
-                                                            <span className="text-left text-xs font-medium">{prompt.text}</span>
-                                                        </Button>
-                                                    ))}
+                                                <div className="space-y-5 w-full max-w-2xl">
+                                                    {/* Öğrenci Analizi Kategorisi */}
+                                                    {suggestedPrompts.filter(p => p.category === 'Öğrenci Analizi').length > 0 && (
+                                                        <div className="text-left">
+                                                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/50">
+                                                                <span className="text-lg">📊</span>
+                                                                <h4 className="text-sm font-bold text-foreground uppercase tracking-wide">
+                                                                    Öğrenci Analizi
+                                                                </h4>
+                                                            </div>
+                                                            <div className="flex flex-col gap-2">
+                                                                {suggestedPrompts
+                                                                    .filter(p => p.category === 'Öğrenci Analizi')
+                                                                    .map((prompt, idx) => (
+                                                                        <Button
+                                                                            key={idx}
+                                                                            variant="outline"
+                                                                            size="sm"
+                                                                            disabled={prompt.disabled}
+                                                                            onClick={() => {
+                                                                                const template = promptTemplates[prompt.text];
+                                                                                if (template) setInput(template);
+                                                                            }}
+                                                                            className="justify-start h-auto py-2.5 px-3 hover:bg-primary/5 hover:border-primary/50 transition-colors"
+                                                                        >
+                                                                            <span className="text-base mr-2.5">{prompt.icon}</span>
+                                                                            <span className="text-left text-xs font-medium">{prompt.text}</span>
+                                                                        </Button>
+                                                                    ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* Toplantı & Görüşme Kategorisi */}
+                                                    {suggestedPrompts.filter(p => p.category === 'Toplantı & Görüşme').length > 0 && (
+                                                        <div className="text-left">
+                                                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/50">
+                                                                <span className="text-lg">👥</span>
+                                                                <h4 className="text-sm font-bold text-foreground uppercase tracking-wide">
+                                                                    Toplantı & Görüşme
+                                                                </h4>
+                                                            </div>
+                                                            <div className="flex flex-col gap-2">
+                                                                {suggestedPrompts
+                                                                    .filter(p => p.category === 'Toplantı & Görüşme')
+                                                                    .map((prompt, idx) => (
+                                                                        <Button
+                                                                            key={idx}
+                                                                            variant="outline"
+                                                                            size="sm"
+                                                                            disabled={prompt.disabled}
+                                                                            onClick={() => {
+                                                                                const template = promptTemplates[prompt.text];
+                                                                                if (template) setInput(template);
+                                                                            }}
+                                                                            className="justify-start h-auto py-2.5 px-3 hover:bg-primary/5 hover:border-primary/50 transition-colors"
+                                                                        >
+                                                                            <span className="text-base mr-2.5">{prompt.icon}</span>
+                                                                            <span className="text-left text-xs font-medium">{prompt.text}</span>
+                                                                        </Button>
+                                                                    ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* Müdahale & Planlama Kategorisi */}
+                                                    {suggestedPrompts.filter(p => p.category === 'Müdahale & Planlama').length > 0 && (
+                                                        <div className="text-left">
+                                                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/50">
+                                                                <span className="text-lg">🎯</span>
+                                                                <h4 className="text-sm font-bold text-foreground uppercase tracking-wide">
+                                                                    Müdahale & Planlama
+                                                                </h4>
+                                                            </div>
+                                                            <div className="flex flex-col gap-2">
+                                                                {suggestedPrompts
+                                                                    .filter(p => p.category === 'Müdahale & Planlama')
+                                                                    .map((prompt, idx) => (
+                                                                        <Button
+                                                                            key={idx}
+                                                                            variant="outline"
+                                                                            size="sm"
+                                                                            disabled={prompt.disabled}
+                                                                            onClick={() => {
+                                                                                const template = promptTemplates[prompt.text];
+                                                                                if (template) setInput(template);
+                                                                            }}
+                                                                            className="justify-start h-auto py-2.5 px-3 hover:bg-primary/5 hover:border-primary/50 transition-colors"
+                                                                        >
+                                                                            <span className="text-base mr-2.5">{prompt.icon}</span>
+                                                                            <span className="text-left text-xs font-medium">{prompt.text}</span>
+                                                                        </Button>
+                                                                    ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* Özel Durum Kategorisi */}
+                                                    {suggestedPrompts.filter(p => p.category === 'Özel Durum').length > 0 && (
+                                                        <div className="text-left">
+                                                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/50">
+                                                                <span className="text-lg">🌟</span>
+                                                                <h4 className="text-sm font-bold text-foreground uppercase tracking-wide">
+                                                                    Özel Durum
+                                                                </h4>
+                                                            </div>
+                                                            <div className="flex flex-col gap-2">
+                                                                {suggestedPrompts
+                                                                    .filter(p => p.category === 'Özel Durum')
+                                                                    .map((prompt, idx) => (
+                                                                        <Button
+                                                                            key={idx}
+                                                                            variant="outline"
+                                                                            size="sm"
+                                                                            disabled={prompt.disabled}
+                                                                            onClick={() => {
+                                                                                const template = promptTemplates[prompt.text];
+                                                                                if (template) setInput(template);
+                                                                            }}
+                                                                            className="justify-start h-auto py-2.5 px-3 hover:bg-primary/5 hover:border-primary/50 transition-colors"
+                                                                        >
+                                                                            <span className="text-base mr-2.5">{prompt.icon}</span>
+                                                                            <span className="text-left text-xs font-medium">{prompt.text}</span>
+                                                                        </Button>
+                                                                    ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
                                                 {!selectedStudent && (
-                                                    <p className="text-sm text-muted-foreground mt-6 px-4 py-2 bg-muted/50 rounded-lg">
-                                                        Öğrenci bazlı analizler için önce sol taraftan bir öğrenci seçin
+                                                    <p className="text-xs text-muted-foreground mt-6 px-3 py-2 bg-muted/30 rounded-md">
+                                                        💡 Öğrenci bazlı analizler için önce sol taraftan bir öğrenci seçin
                                                     </p>
                                                 )}
                                             </div>
