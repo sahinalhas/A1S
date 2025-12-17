@@ -1,6 +1,5 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Separator } from "@/components/atoms/Separator";
 
 interface SidebarGroupProps {
     label: string;
@@ -16,15 +15,15 @@ export function SidebarGroup({
     className
 }: SidebarGroupProps) {
     return (
-        <div className={cn("flex flex-col gap-1", collapsed ? "py-2" : "py-2", className)}>
+        <div className={cn("flex flex-col gap-1", className)}>
             {!collapsed && (
-                <div className="px-3 py-2">
-                    <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/70 font-heading">
+                <div className="px-3 py-1.5">
+                    <h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
                         {label}
                     </h3>
                 </div>
             )}
-            <div className={cn(collapsed ? "space-y-3 flex flex-col items-center" : "space-y-1")}>
+            <div className={cn(collapsed ? "flex flex-col items-center gap-1.5" : "space-y-0.5")}>
                 {children}
             </div>
         </div>

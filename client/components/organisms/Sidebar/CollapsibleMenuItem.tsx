@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { ChevronRight, LucideIcon, Circle } from "lucide-react";
+import { ChevronRight, LucideIcon } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -31,7 +30,7 @@ interface CollapsibleMenuItemProps {
   onNavigate?: () => void;
 }
 
-// Helper for exact path matching
+// Yol eşleştirme yardımcı fonksiyonu
 const isPathActive = (currentPath: string, itemPath: string, end: boolean = false) => {
   if (end) return currentPath === itemPath;
   return currentPath.startsWith(itemPath);
@@ -43,7 +42,7 @@ export function CollapsibleMenuItem({
   to,
   end,
   items,
-  collapsed,
+  collapsed = false,
   isOpen,
   onToggle,
   onNavigate,
@@ -52,12 +51,12 @@ export function CollapsibleMenuItem({
   const navigate = useNavigate();
   const hasSubMenu = items && items.length > 0;
 
-  // Determine if this item or any sub-item is active
+  // Bu öğe veya alt öğelerinden herhangi biri aktif mi?
   const isActive = to
     ? isPathActive(location.pathname, to, end)
     : items?.some((sub) => isPathActive(location.pathname, sub.to));
 
-  // --- Collapsed Mode ---
+  // --- KAPALI MOD (Collapsed) ---
   if (collapsed) {
     if (hasSubMenu) {
       return (
@@ -70,13 +69,13 @@ export function CollapsibleMenuItem({
                   if (items && items[0]) navigate(items[0].to);
                 }}
                 className={cn(
-                  "flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-200 border-2",
+                  "flex items-center justify-center w-10 h-10 rounded-lg transition-colors",
                   isActive
-                    ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/30"
-                    : "bg-card text-foreground/90 border-foreground/20 hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-105 hover:shadow-md"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 )}
               >
-                <Icon className="w-5 h-5 shrink-0 stroke-[2.5]" />
+                <Icon className="w-5 h-5" strokeWidth={2} />
               </button>
             </TooltipTrigger>
             <TooltipContent side="right" className="font-medium">
@@ -97,14 +96,14 @@ export function CollapsibleMenuItem({
               end={end}
               className={({ isActive }) =>
                 cn(
-                  "flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-200 border-2",
+                  "flex items-center justify-center w-10 h-10 rounded-lg transition-colors",
                   isActive
-                    ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/30"
-                    : "bg-card text-foreground/90 border-foreground/20 hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-105 hover:shadow-md"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 )
               }
             >
-              <Icon className="w-5 h-5 shrink-0 stroke-[2.5]" />
+              <Icon className="w-5 h-5" strokeWidth={2} />
             </NavLink>
           </TooltipTrigger>
           <TooltipContent side="right" className="font-medium">
@@ -115,9 +114,9 @@ export function CollapsibleMenuItem({
     );
   }
 
-  // --- Expanded Mode ---
+  // --- AÇIK MOD (Expanded) ---
 
-  // 1. Simple Link
+  // Basit Link
   if (!hasSubMenu && to) {
     return (
       <NavLink
@@ -129,49 +128,43 @@ export function CollapsibleMenuItem({
             "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm font-medium",
             isActive
               ? "bg-primary/10 text-primary"
-              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              : "text-muted-foreground hover:text-foreground hover:bg-muted"
           )
         }
       >
-        <Icon className="w-4 h-4 shrink-0" />
-        <span className="truncate">{label}</span>
-        {/* Active Indicator Dot */}
-        {useLocation().pathname === to && (
-          <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-        )}
+        <Icon className="w-4 h-4" strokeWidth={2} />
+        <span className="truncate flex-1">{label}</span>
       </NavLink>
     );
   }
 
-  // 2. Collapsible Submenu
+  // Açılabilir Alt Menü
   return (
-    <Collapsible open={isOpen} onOpenChange={() => onToggle && onToggle(to || label)} className="space-y-1">
+    <Collapsible open={isOpen} onOpenChange={() => onToggle && onToggle(to || label)} className="space-y-0.5">
       <CollapsibleTrigger asChild>
         <button
           className={cn(
-            "w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors text-sm font-medium group",
+            "w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors text-sm font-medium",
             isActive
-              ? "text-foreground bg-muted/50"
-              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              ? "text-foreground bg-muted"
+              : "text-muted-foreground hover:text-foreground hover:bg-muted"
           )}
         >
           <div className="flex items-center gap-3">
-            <Icon className="w-4 h-4 shrink-0" />
+            <Icon className="w-4 h-4" strokeWidth={2} />
             <span className="truncate">{label}</span>
           </div>
           <ChevronRight
             className={cn(
-              "w-4 h-4 transition-transform duration-200",
+              "w-4 h-4 transition-transform",
               isOpen && "rotate-90"
             )}
+            strokeWidth={2}
           />
         </button>
       </CollapsibleTrigger>
 
-      <CollapsibleContent className="space-y-1 relative">
-        {/* Connecting line for tree view effect */}
-        <div className="absolute left-[1.15rem] top-0 bottom-2 w-px bg-border/40" />
-
+      <CollapsibleContent className="space-y-0.5 pl-7">
         {items?.map((item) => (
           <NavLink
             key={item.to}
@@ -179,18 +172,13 @@ export function CollapsibleMenuItem({
             onClick={onNavigate}
             className={({ isActive }) =>
               cn(
-                "flex items-center gap-3 pl-9 pr-3 py-2 rounded-lg transition-colors text-sm font-medium block relative",
+                "flex items-center px-3 py-1.5 rounded-md transition-colors text-sm",
                 isActive
-                  ? "text-primary bg-primary/5"
+                  ? "text-primary bg-primary/5 font-medium"
                   : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
               )
             }
           >
-            {/* Dot for bullet point */}
-            {isActive && (
-              <div className="absolute left-[1rem] w-1.5 h-1.5 rounded-full bg-primary -ml-[3px]" />
-            )}
-
             {item.label}
           </NavLink>
         ))}
