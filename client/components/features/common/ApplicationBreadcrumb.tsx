@@ -42,7 +42,7 @@ export function ApplicationBreadcrumb() {
     }
 
     return (
-        <Breadcrumb className="hidden md:flex">
+        <Breadcrumb>
             <BreadcrumbList>
                 <BreadcrumbItem>
                     <BreadcrumbLink asChild>

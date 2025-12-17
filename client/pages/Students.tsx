@@ -486,11 +486,12 @@ export default function Students() {
         icon={Users}
         actions={
           <div className="flex flex-wrap gap-2">
+            {/* Birincil Aksiyon */}
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button size="default">
                   <UserPlus className="mr-2 h-4 w-4" />
-                  Yeni Öğrenci Ekle
+                  Yeni Öğrenci
                 </Button>
               </DialogTrigger>
               <StudentFormDialog
@@ -504,52 +505,35 @@ export default function Students() {
               />
             </Dialog>
 
-            <label className="inline-flex items-center">
-              <input
-                type="file"
-                accept=".xlsx,.xls,.csv"
-                className="hidden"
-                onChange={(e) => e.target.files && importSheet(e.target.files[0])}
-              />
-              <Button variant="outline" size="default" asChild>
-                <span>
-                  <Upload className="mr-2 h-4 w-4" />
-                  İçe Aktar
-                </span>
-              </Button>
-            </label>
-
-            <Button
-              variant="outline"
-              size="default"
-              onClick={downloadTemplate}
-            >
-              <FileSpreadsheet className="mr-2 h-4 w-4" />
-              Şablon İndir
-            </Button>
-
+            {/* İçe/Dışa Aktarma Grubu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="default">
-                  <Download className="mr-2 h-4 w-4" />
-                  Dışa Aktar
+                  <FileSpreadsheet className="mr-2 h-4 w-4" />
+                  İçe/Dışa Aktar
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Dışa Aktarma Formatı</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={() =>
-                    exportToCSV(
-                      selectedStudentIds.size > 0
-                        ? students.filter((s) => selectedStudentIds.has(s.id))
-                        : filters.filteredStudents
-                    )
-                  }
-                >
-                  <FileText className="mr-2 h-4 w-4" />
-                  CSV Dosyası
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>İçe Aktarma</DropdownMenuLabel>
+                <DropdownMenuItem asChild>
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="file"
+                      accept=".xlsx,.xls,.csv"
+                      className="hidden"
+                      onChange={(e) => e.target.files && importSheet(e.target.files[0])}
+                    />
+                    <Upload className="mr-2 h-4 w-4" />
+                    Excel/CSV Yükle
+                  </label>
                 </DropdownMenuItem>
+                <DropdownMenuItem onClick={downloadTemplate}>
+                  <Download className="mr-2 h-4 w-4" />
+                  Şablon İndir
+                </DropdownMenuItem>
+
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>Dışa Aktarma</DropdownMenuLabel>
                 <DropdownMenuItem
                   onClick={() =>
                     exportToExcel(
@@ -561,6 +545,18 @@ export default function Students() {
                 >
                   <FileSpreadsheet className="mr-2 h-4 w-4" />
                   Excel Dosyası
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() =>
+                    exportToCSV(
+                      selectedStudentIds.size > 0
+                        ? students.filter((s) => selectedStudentIds.has(s.id))
+                        : filters.filteredStudents
+                    )
+                  }
+                >
+                  <FileText className="mr-2 h-4 w-4" />
+                  CSV Dosyası
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() =>

@@ -42,6 +42,7 @@ import { SidebarGroup } from "@/components/organisms/Sidebar/SidebarGroup";
 import { ApplicationBreadcrumb } from "@/components/features/common/ApplicationBreadcrumb";
 import { SidebarSearch } from "@/components/organisms/Sidebar/SidebarSearch";
 import { SidebarUserProfile } from "@/components/organisms/Sidebar/SidebarUserProfile";
+import { useSidebarState } from "@/hooks/utils/sidebar-state.utils";
 
 // --- Enhanced Logo Component ---
 function AppLogo({ collapsed }: { collapsed?: boolean }) {
@@ -121,8 +122,8 @@ export default function Rehber360Layout() {
   const [dark, setDark] = useState(false);
   const [account, setAccount] = useState<AppSettings["account"] | undefined>(undefined);
 
-  // Sidebar State - Floating logic
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  // Sidebar State - Persisted in localStorage
+  const { sidebarOpen, setSidebarOpen } = useSidebarState();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openMenuItem, setOpenMenuItem] = useState<string | null>(null);
 
@@ -148,17 +149,16 @@ export default function Rehber360Layout() {
     else root.classList.remove("dark");
   }, [dark]);
 
-  // Sidebar Auto-collapse on smaller desktop screens
+  // Sidebar responsive behavior - respects user preference from localStorage
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1280 && window.innerWidth > 768) {
-        setSidebarOpen(false);
-      } else if (window.innerWidth >= 1280) {
-        setSidebarOpen(true);
+      // Only auto-adjust on very small screens, otherwise respect user preference
+      if (window.innerWidth < 768) {
+        // Mobile - sidebar should be hidden by default
+        // (mobile uses drawer instead)
       }
     };
 
-    // Initial check
     if (!isMobile) handleResize();
 
     window.addEventListener('resize', handleResize);
@@ -318,25 +318,29 @@ export default function Rehber360Layout() {
             </div>
 
             <ScrollArea className="flex-1 -mx-2 px-2">
-              <nav className="space-y-1">
-                {navigationItems.map((item) => (
-                  <CollapsibleMenuItem
-                    key={item.to}
-                    icon={item.icon}
-                    label={item.label}
-                    to={item.to}
-                    end={item.end}
-                    collapsed={false}
-                    isOpen={openMenuItem === item.to}
-                    onToggle={handleMenuToggle}
-                    onNavigate={() => setMobileMenuOpen(false)}
-                  />
+              <nav className="space-y-4">
+                {navigationGroups.map((group) => (
+                  <SidebarGroup key={group.key} label={group.label} collapsed={false}>
+                    {group.items.map((item) => (
+                      <CollapsibleMenuItem
+                        key={item.to}
+                        icon={item.icon}
+                        label={item.label}
+                        to={item.to}
+                        end={item.end}
+                        collapsed={false}
+                        isOpen={openMenuItem === item.to}
+                        onToggle={handleMenuToggle}
+                        onNavigate={() => setMobileMenuOpen(false)}
+                      />
+                    ))}
+                  </SidebarGroup>
                 ))}
               </nav>
             </ScrollArea>
 
             <div className="mt-4 pt-4 border-t space-y-4">
-              <SchoolSwitcher collapsed={false} />
+              <AIStatusIndicator collapsed={false} />
               <SidebarUserProfile displayName={account?.displayName} collapsed={false} />
             </div>
           </div>

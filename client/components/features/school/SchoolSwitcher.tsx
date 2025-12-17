@@ -32,10 +32,8 @@ export default function SchoolSwitcher({ collapsed = false, mode = 'sidebar' }: 
     selectSchool(school);
     setOpen(false);
 
-    // Hard refresh to reload with new school data
-    setTimeout(() => {
-      window.location.href = '/';
-    }, 100);
+    // Note: selectSchool already invalidates queries via auth-context
+    // No need for hard refresh - queries will refetch automatically
   };
 
   const handleManageSchools = () => {
