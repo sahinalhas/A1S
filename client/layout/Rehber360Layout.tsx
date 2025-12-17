@@ -195,19 +195,22 @@ export default function Rehber360Layout() {
               variant="ghost"
               size="icon"
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="hidden xl:flex text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full w-8 h-8"
+              className={cn(
+                "hidden xl:flex rounded-lg w-8 h-8 transition-colors",
+                "text-muted-foreground hover:text-foreground hover:bg-muted"
+              )}
             >
               <PanelLeftClose className={cn("w-4 h-4 transition-transform duration-300", !sidebarOpen && "rotate-180")} />
             </Button>
           </div>
 
           {/* Sidebar Content */}
-          <ScrollArea className={cn("flex-1 py-4", sidebarOpen ? "px-3" : "px-1")}>
-            <div className={cn("mb-2 transition-all duration-300", !sidebarOpen ? "px-0" : "px-0")}>
+          <ScrollArea className={cn("flex-1", sidebarOpen ? "px-3 py-4" : "px-2 py-4")}>
+            <div className={cn(sidebarOpen ? "mb-4" : "mb-3")}>
               <SidebarSearch collapsed={!sidebarOpen} />
             </div>
 
-            <nav className={cn("transition-all duration-300", sidebarOpen ? "space-y-4" : "space-y-2")}>
+            <nav className={cn(sidebarOpen ? "space-y-4" : "space-y-2")}>
               {navigationGroups.map((group) => (
                 <SidebarGroup key={group.key} label={group.label} collapsed={!sidebarOpen}>
                   {group.items.map((item) => (
@@ -228,10 +231,8 @@ export default function Rehber360Layout() {
           </ScrollArea>
 
           {/* Sidebar Footer */}
-          <div className="p-4 border-t border-border/40 space-y-3">
-            <div className="bg-primary/5 rounded-xl p-3 border border-primary/10">
-              <AIStatusIndicator collapsed={!sidebarOpen} />
-            </div>
+          <div className={cn("border-t border-border/40", sidebarOpen ? "p-4 space-y-3" : "p-2 space-y-2")}>
+            <AIStatusIndicator collapsed={!sidebarOpen} />
 
             <SidebarUserProfile
               collapsed={!sidebarOpen}

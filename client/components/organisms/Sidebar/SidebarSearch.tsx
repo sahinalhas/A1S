@@ -203,43 +203,27 @@ export function SidebarSearch({ collapsed }: SidebarSearchProps) {
       <button
         onClick={handleOpenSearch}
         className={cn(
-          "group flex items-center transition-all duration-300 ease-out relative overflow-hidden",
+          "flex items-center transition-colors",
           collapsed
-            ? "justify-center w-10 h-10 rounded-lg mx-auto text-muted-foreground hover:bg-muted hover:text-foreground"
+            ? "justify-center w-10 h-10 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
             : "w-full gap-2.5 px-2.5 py-2 rounded-lg text-xs font-medium text-sidebar-foreground/80 hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
         )}
       >
-        {/* Hover glow effect only when expanded */}
-        {!collapsed && (
-          <div
-            className={cn(
-              "absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0",
-              "opacity-0 group-hover:opacity-100 transition-opacity duration-300",
-              "rounded-lg"
-            )}
-          />
-        )}
-
-        <div className="relative z-10 shrink-0">
-          <Search className={cn(
-            "transition-colors",
-            collapsed
-              ? "h-5 w-5"
-              : "text-sidebar-foreground/70 group-hover:text-primary h-4 w-4"
-          )} />
-        </div>
+        <Search className={cn(
+          collapsed ? "h-5 w-5" : "h-4 w-4"
+        )} />
 
         <span
           className={cn(
-            "flex-1 text-left truncate whitespace-nowrap overflow-hidden transition-all duration-300 relative z-10",
-            collapsed ? "opacity-0 w-0 hidden" : "opacity-100 w-auto"
+            "flex-1 text-left truncate",
+            collapsed ? "hidden" : ""
           )}
         >
           Hızlı Arama
         </span>
 
         {!collapsed && (
-          <div className="relative z-10 flex items-center gap-0.5 ml-auto">
+          <div className="flex items-center gap-0.5 ml-auto">
             <kbd className="hidden sm:inline-flex h-4 items-center gap-1 rounded border border-sidebar-border/40 bg-sidebar/50 px-1 font-mono text-[10px] font-medium text-sidebar-foreground/40">
               <span className="text-xs">⌘</span>K
             </kbd>
