@@ -128,34 +128,19 @@ function expressPlugin(): Plugin {
       // Lazy-load Express app only when a request comes in
       let expressApp: Express | null = null;
       let isInitializing = false;
-      
+
       server.middlewares.use(async (req, res, next) => {
         // Skip initialization for Vite's internal requests
         if (req.url?.startsWith('/@') || req.url?.includes('node_modules')) {
           return next();
         }
-        
+
         if (!expressApp && !isInitializing) {
           isInitializing = true;
           try {
             const { createServer } = await import('./server/index.js');
             expressApp = await createServer();
-            
-            // Initialize WebSocket server for MEBBIS transfers
-            if (server.httpServer) {
-              import('./server/lib/websocket/mebbis-socket.js')
-                .then(({ initializeMEBBISWebSocket }) => {
-                  initializeMEBBISWebSocket(server.httpServer as any);
-                })
-                .catch((error) => {
-                  import('./server/utils/logger.js').then(({ logger }) => {
-                    logger.error('Failed to initialize MEBBIS WebSocket', 'VitePlugin', error);
-                  }).catch(() => {
-                    console.error('Failed to initialize MEBBIS WebSocket:', error);
-                  });
-                });
-            }
-            
+
             // Start schedulers after Express app is ready
             Promise.all([
               import('./server/features/analytics/services/analytics-scheduler.service.js')
@@ -181,7 +166,7 @@ function expressPlugin(): Plugin {
             return next();
           }
         }
-        
+
         if (expressApp) {
           expressApp(req as any, res as any, next);
         } else {
@@ -195,7 +180,7 @@ function expressPlugin(): Plugin {
           }, 100);
         }
       });
-      
+
       // Cleanup on server close (dev server shutdown)
       server.httpServer?.on('close', async () => {
         const { logger } = await import('./server/utils/logger.js').catch(() => ({ logger: console }));
@@ -212,7 +197,7 @@ function expressPlugin(): Plugin {
             import('./server/features/guidance-tips/index.js'),
             import('./server/lib/database/connection.js')
           ]);
-          
+
           stopAnalyticsScheduler();
           stopAutoCompleteScheduler();
           stopGuidanceTipsScheduler();

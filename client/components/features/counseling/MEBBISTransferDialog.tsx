@@ -66,12 +66,12 @@ export function MEBBISTransferDialog({
         });
       }
 
-      // Auto-close after 2 seconds
+      // Auto-close after 5 seconds
       setTimeout(() => {
         resetTransfer();
         onOpenChange(false);
         hasShownToast.current = false;
-      }, 2000);
+      }, 5000);
     }
   }, [transferState.status, transferState.progress, toast, resetTransfer, onOpenChange]);
 

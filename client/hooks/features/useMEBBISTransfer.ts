@@ -1,174 +1,13 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import type {
     MEBBISTransferState,
-    MEBBISTransferProgress,
     StartTransferRequest,
-    SessionCompletedEvent,
-    MEBBISTransferError,
-    TransferResultSummary
 } from '@shared/types/mebbis-transfer.types';
 import { toast } from 'sonner';
 import { fetchWithSchool } from '@/lib/api/core/fetch-helpers';
-import { useAuth } from '@/lib/auth-context';
 import { useQueryClient } from '@tanstack/react-query';
 
-const SOCKET_URL = window.location.origin;
-
-interface SocketManager {
-    socket: Socket;
-    subscribe: (transferId: string, userId: string, schoolId: string) => void;
-    teardown: () => void;
-}
-
-function createTransferSocket(
-    setTransferState: React.Dispatch<React.SetStateAction<MEBBISTransferState>>,
-    onTeardown: () => void
-): SocketManager {
-    const socket = io(SOCKET_URL, {
-        path: '/socket.io',
-        transports: ['websocket', 'polling'],
-        reconnection: true,
-        reconnectionAttempts: 10,
-        reconnectionDelay: 1000,
-        reconnectionDelayMax: 5000,
-        rejectUnauthorized: false,
-        secure: true,
-        upgrade: true,
-        forceNew: false,
-        autoConnect: false
-    });
-
-    let currentTransferId: string | null = null;
-    let currentUserId: string | null = null;
-    let currentSchoolId: string | null = null;
-    let isFirstConnect = true;
-
-    const handleConnect = () => {
-        console.log('[Socket] Connected');
-        if (currentTransferId && currentUserId && currentSchoolId) {
-            console.log('[Socket] Subscribing to transfer:', currentTransferId);
-            socket.emit('mebbis:subscribe', currentTransferId, currentUserId, currentSchoolId);
-        }
-        if (!isFirstConnect) {
-            toast.success('Bağlantı yeniden kuruldu');
-        }
-        isFirstConnect = false;
-    };
-
-    const handleDisconnect = (reason: string) => {
-        console.log('[Socket] Disconnected:', reason);
-    };
-
-    const handleReconnectAttempt = (attemptNumber: number) => {
-        console.log(`[Socket] Reconnection attempt ${attemptNumber}`);
-        toast.warning(`Bağlantı koptu. Yeniden bağlanılıyor... (${attemptNumber}/5)`);
-    };
-
-    const handleReconnectFailed = () => {
-        console.error('[Socket] All reconnection attempts failed');
-        toast.error('Bağlantı kurulamadı. Lütfen sayfayı yenileyin.');
-        setTransferState(prev => ({ ...prev, status: 'error' }));
-    };
-
-    const handleConnectError = (error: Error) => {
-        console.error('[Socket] Connection error:', error);
-    };
-
-    const handleProgress = (progress: MEBBISTransferProgress) => {
-        setTransferState(prev => ({ ...prev, progress }));
-    };
-
-    const handleStatus = ({ status, message }: { status: MEBBISTransferState['status']; message?: string }) => {
-        setTransferState(prev => ({ ...prev, status }));
-        if (message) {
-            toast.info(message);
-        }
-    };
-
-    const handleSessionStart = (session: { id: string; studentNo: string; studentName: string }) => {
-        setTransferState(prev => ({ ...prev, currentSession: session }));
-    };
-
-    const handleSessionCompleted = (event: SessionCompletedEvent) => {
-        if (event.success) {
-            toast.success(`Öğrenci ${event.studentNo} başarıyla aktarıldı`);
-        }
-    };
-
-    const handleSessionFailed = (error: MEBBISTransferError) => {
-        setTransferState(prev => ({ ...prev, errors: [...prev.errors, error] }));
-        toast.error(`Öğrenci ${error.studentNo} aktarılamadı: ${error.error}`);
-    };
-
-    const handleTransferCompleted = (summary: TransferResultSummary) => {
-        setTransferState(prev => ({ ...prev, status: 'completed' }));
-        toast.success(`Aktarım tamamlandı! ${summary.successful} başarılı, ${summary.failed} başarısız`);
-        onTeardown();
-    };
-
-    const handleTransferError = ({ error }: { error: string }) => {
-        setTransferState(prev => ({ ...prev, status: 'error' }));
-        toast.error(`Aktarım hatası: ${error}`);
-        onTeardown();
-    };
-
-    const handleMebbisError = ({ error }: { error: string }) => {
-        console.error('[Socket] MEBBIS Error:', error);
-        setTransferState(prev => ({ ...prev, status: 'error', errors: [...prev.errors, { sessionId: 'SYSTEM', studentNo: 'SİSTEM', error, timestamp: new Date().toISOString() }] }));
-        toast.error(`Sistem hatası: ${error}`);
-    };
-
-    socket.on('connect', handleConnect);
-    socket.on('disconnect', handleDisconnect);
-    socket.on('reconnect_attempt', handleReconnectAttempt);
-    socket.on('reconnect_failed', handleReconnectFailed);
-    socket.on('connect_error', handleConnectError);
-    socket.on('mebbis:progress', handleProgress);
-    socket.on('mebbis:status', handleStatus);
-    socket.on('mebbis:session-start', handleSessionStart);
-    socket.on('mebbis:session-completed', handleSessionCompleted);
-    socket.on('mebbis:session-failed', handleSessionFailed);
-    socket.on('mebbis:transfer-completed', handleTransferCompleted);
-    socket.on('mebbis:transfer-error', handleTransferError);
-    socket.on('mebbis:error', handleMebbisError);
-
-    return {
-        socket,
-        subscribe: (transferId: string, userId: string, schoolId: string) => {
-            currentTransferId = transferId;
-            currentUserId = userId;
-            currentSchoolId = schoolId;
-            if (socket.connected) {
-                socket.emit('mebbis:subscribe', transferId, userId, schoolId);
-            }
-            socket.connect();
-        },
-        teardown: () => {
-            console.log('[Socket] Tearing down');
-            currentTransferId = null;
-            isFirstConnect = true;
-            socket.off('connect', handleConnect);
-            socket.off('disconnect', handleDisconnect);
-            socket.off('reconnect_attempt', handleReconnectAttempt);
-            socket.off('reconnect_failed', handleReconnectFailed);
-            socket.off('connect_error', handleConnectError);
-            socket.off('mebbis:progress', handleProgress);
-            socket.off('mebbis:status', handleStatus);
-            socket.off('mebbis:session-start', handleSessionStart);
-            socket.off('mebbis:session-completed', handleSessionCompleted);
-            socket.off('mebbis:session-failed', handleSessionFailed);
-            socket.off('mebbis:transfer-completed', handleTransferCompleted);
-            socket.off('mebbis:transfer-error', handleTransferError);
-            socket.off('mebbis:error', handleMebbisError);
-            socket.disconnect();
-            socket.close();
-        }
-    };
-}
-
 export function useMEBBISTransfer() {
-    const { user } = useAuth();
     const queryClient = useQueryClient();
     const [transferState, setTransferState] = useState<MEBBISTransferState>({
         transferId: null,
@@ -177,39 +16,72 @@ export function useMEBBISTransfer() {
         errors: []
     });
 
-    const socketManagerRef = useRef<SocketManager | null>(null);
+    const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+    const isPollingRef = useRef(false);
 
-    const teardown = useCallback(() => {
-        if (socketManagerRef.current) {
-            socketManagerRef.current.teardown();
-            socketManagerRef.current = null;
-        }
-        // Invalidate queries when tearing down if completed
-        if (transferState.status === 'completed') {
-            queryClient.invalidateQueries({ queryKey: ['counseling-sessions'] });
-        }
-    }, [transferState.status, queryClient]);
+    // Start polling for transfer status
+    const startPolling = useCallback((transferId: string) => {
+        if (isPollingRef.current) return;
 
-    const ensureSocketManager = useCallback(() => {
-        if (!socketManagerRef.current) {
-            socketManagerRef.current = createTransferSocket(setTransferState, teardown);
-        }
-        return socketManagerRef.current;
-    }, [teardown]);
+        isPollingRef.current = true;
 
-    useEffect(() => {
-        ensureSocketManager();
+        const pollStatus = async () => {
+            try {
+                const response = await fetchWithSchool(`/api/mebbis/status/${transferId}`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
 
-        return () => {
-            teardown();
-            socketManagerRef.current = null;
+                const data = await response.json();
+
+                if (data.success) {
+                    setTransferState(prev => ({
+                        ...prev,
+                        status: data.status,
+                        progress: data.progress,
+                        currentSession: data.currentSession,
+                        errors: data.errors || []
+                    }));
+
+                    // Stop polling if transfer is finished
+                    if (data.status === 'completed' || data.status === 'error' || data.status === 'cancelled') {
+                        stopPolling();
+
+                        // Invalidate queries when completed
+                        if (data.status === 'completed') {
+                            queryClient.invalidateQueries({ queryKey: ['counseling-sessions'] });
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('[Polling] Error fetching transfer status:', error);
+                // Don't stop polling on error, just log it
+            }
         };
-    }, [ensureSocketManager, teardown]);
+
+        // Poll immediately, then every 1 second
+        pollStatus();
+        pollingIntervalRef.current = setInterval(pollStatus, 1000);
+    }, [queryClient]);
+
+    // Stop polling
+    const stopPolling = useCallback(() => {
+        if (pollingIntervalRef.current) {
+            clearInterval(pollingIntervalRef.current);
+            pollingIntervalRef.current = null;
+        }
+        isPollingRef.current = false;
+    }, []);
+
+    // Cleanup on unmount
+    useEffect(() => {
+        return () => {
+            stopPolling();
+        };
+    }, [stopPolling]);
 
     const startTransfer = useCallback(async (request: StartTransferRequest) => {
         try {
-            const manager = ensureSocketManager();
-
             setTransferState(prev => ({ ...prev, status: 'connecting' }));
 
             const response = await fetchWithSchool('/api/mebbis/start-transfer', {
@@ -235,16 +107,18 @@ export function useMEBBISTransfer() {
                 currentSession: undefined
             });
 
-            manager.subscribe(transferId, user?.id || '', request.schoolId);
+            // Start polling for status updates
+            startPolling(transferId);
 
             return { success: true, transferId };
         } catch (error) {
             const err = error as Error;
             setTransferState(prev => ({ ...prev, status: 'error' }));
             toast.error(err.message);
+            stopPolling();
             return { success: false, error: err.message };
         }
-    }, [ensureSocketManager]);
+    }, [startPolling, stopPolling]);
 
     const cancelTransfer = useCallback(async () => {
         if (!transferState.transferId) return;
@@ -257,17 +131,17 @@ export function useMEBBISTransfer() {
                 credentials: 'include'
             });
 
-            teardown();
+            stopPolling();
             setTransferState(prev => ({ ...prev, status: 'cancelled' }));
             toast.info('Aktarım iptal edildi');
         } catch (error) {
             const err = error as Error;
             toast.error(`İptal hatası: ${err.message}`);
         }
-    }, [transferState.transferId, teardown]);
+    }, [transferState.transferId, stopPolling]);
 
     const resetTransfer = useCallback(() => {
-        teardown();
+        stopPolling();
         setTransferState({
             transferId: null,
             status: 'idle',
@@ -276,7 +150,7 @@ export function useMEBBISTransfer() {
         });
         // Explicit invalidation on reset just in case
         queryClient.invalidateQueries({ queryKey: ['counseling-sessions'] });
-    }, [teardown, queryClient]);
+    }, [stopPolling, queryClient]);
 
     return {
         transferState,

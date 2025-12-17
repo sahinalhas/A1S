@@ -13,12 +13,12 @@ router.post('/start-transfer', async (req, res) => {
   try {
     const schoolId = (req as SchoolScopedRequest).schoolId!;
     const bodyRequest = req.body as Omit<StartTransferRequest, 'schoolId'>;
-    
+
     const request: StartTransferRequest = {
       ...bodyRequest,
       schoolId
     };
-    
+
     if (!request.sessionIds || request.sessionIds.length === 0) {
       return res.status(400).json({
         success: false,
@@ -27,11 +27,11 @@ router.post('/start-transfer', async (req, res) => {
     }
 
     const transferId = uuidv4();
-    
+
     logger.info(`Starting MEBBIS transfer ${transferId} for ${request.sessionIds.length} sessions (school: ${schoolId})`, 'MEBBISRoutes');
-    
+
     mebbisTransferManager.startTransfer(transferId, request);
-    
+
     res.json({
       success: true,
       transferId,
@@ -51,7 +51,7 @@ router.post('/start-transfer', async (req, res) => {
 router.post('/cancel-transfer', async (req, res) => {
   try {
     const { transferId } = req.body;
-    
+
     if (!transferId) {
       return res.status(400).json({
         success: false,
@@ -60,9 +60,9 @@ router.post('/cancel-transfer', async (req, res) => {
     }
 
     logger.info(`Cancelling MEBBIS transfer ${transferId}`, 'MEBBISRoutes');
-    
+
     await mebbisTransferManager.cancelTransfer(transferId);
-    
+
     res.json({
       success: true,
       message: 'Aktarım iptal edildi'
@@ -80,7 +80,7 @@ router.post('/cancel-transfer', async (req, res) => {
 router.get('/status/:transferId', async (req, res) => {
   try {
     const { transferId } = req.params;
-    
+
     if (!transferId) {
       return res.status(400).json({
         success: false,
@@ -89,19 +89,20 @@ router.get('/status/:transferId', async (req, res) => {
     }
 
     const status = mebbisTransferManager.getStatus(transferId);
-    
+
     if (!status) {
       return res.status(404).json({
         success: false,
         error: 'Aktarım bulunamadı'
       });
     }
-    
+
     res.json({
       success: true,
       transferId,
       status: status.status,
       progress: status.progress,
+      currentSession: status.currentSession,
       errors: status.errors
     });
   } catch (error) {
@@ -117,14 +118,14 @@ router.get('/status/:transferId', async (req, res) => {
 router.get('/qr-code', async (req, res) => {
   try {
     const qrPath = './data/mebbis-qr-code.png';
-    
+
     if (!existsSync(qrPath)) {
       return res.status(404).json({
         success: false,
         error: 'QR code bulunamadı'
       });
     }
-    
+
     const imageBuffer = readFileSync(qrPath);
     res.set('Content-Type', 'image/png');
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate');

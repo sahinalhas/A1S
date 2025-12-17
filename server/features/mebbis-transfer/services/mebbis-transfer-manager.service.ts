@@ -8,13 +8,17 @@ import type {
   StartTransferRequest
 } from '@shared/types/mebbis-transfer.types';
 import { logger } from '../../../utils/logger.js';
-import type { Server as SocketIOServer } from 'socket.io';
 
 interface TransferState {
   transferId: string;
   schoolId: string;
-  status: 'pending' | 'running' | 'completed' | 'cancelled' | 'error';
+  status: 'pending' | 'waiting_qr' | 'running' | 'completed' | 'cancelled' | 'error';
   progress: MEBBISTransferProgress;
+  currentSession?: {
+    sessionId: string;
+    studentNo: string;
+    studentName: string;
+  };
   errors: MEBBISTransferError[];
   startTime: number;
   cancelled: boolean;
@@ -24,15 +28,10 @@ export class MEBBISTransferManager {
   private activeTransfers = new Map<string, TransferState>();
   private automation: MEBBISAutomationService;
   private mapper: MEBBISDataMapper;
-  private io: SocketIOServer | null = null;
 
   constructor() {
     this.automation = new MEBBISAutomationService();
     this.mapper = new MEBBISDataMapper();
-  }
-
-  setSocketIO(io: SocketIOServer): void {
-    this.io = io;
   }
 
   async startTransfer(transferId: string, request: StartTransferRequest): Promise<void> {
@@ -63,7 +62,6 @@ export class MEBBISTransferManager {
       const err = error as Error;
       logger.error(`Transfer ${transferId} failed`, 'MEBBISTransferManager', error);
       transferState.status = 'error';
-      this.emitError(transferId, err.message);
     });
   }
 
@@ -74,7 +72,6 @@ export class MEBBISTransferManager {
     const startTime = Date.now();
     try {
       transferState.status = 'running';
-      this.emitProgress(transferId);
 
       logger.info(
         `Starting transfer ${transferId} for ${sessions.length} sessions`,
@@ -100,11 +97,11 @@ export class MEBBISTransferManager {
       logger.info('Initializing browser...', 'MEBBISTransferManager');
       await this.automation.initialize();
 
-      this.emitStatus(transferId, 'waiting_qr', 'QR kod girişi bekleniyor...');
+      transferState.status = 'waiting_qr';
       logger.info('Waiting for QR code login...', 'MEBBISTransferManager');
       await this.automation.waitForLogin();
 
-      this.emitStatus(transferId, 'running', 'Veri giriş sayfasına yönlendiriliyor...');
+      transferState.status = 'running';
       logger.info('Navigating to data entry page...', 'MEBBISTransferManager');
       await this.automation.navigateToDataEntry();
 
@@ -135,7 +132,6 @@ export class MEBBISTransferManager {
 
         operationIndex++;
         transferState.progress.current = operationIndex;
-        this.emitProgress(transferId);
 
         await this.processIndividualSession(transferId, session, operationIndex, totalOperations, transferState);
       }
@@ -149,7 +145,6 @@ export class MEBBISTransferManager {
 
         operationIndex++;
         transferState.progress.current = operationIndex;
-        this.emitProgress(transferId);
 
         await this.processGroupSession(transferId, sessionId, studentsInGroup, operationIndex, totalOperations, transferState);
       }
@@ -168,8 +163,6 @@ export class MEBBISTransferManager {
         duration: totalDuration
       };
 
-      this.emitTransferCompleted(transferId, summary);
-
       await this.automation.close();
 
       logger.info(
@@ -182,7 +175,6 @@ export class MEBBISTransferManager {
       const err = error as Error;
       logger.error(`Transfer ${transferId} failed`, 'MEBBISTransferManager', error);
       transferState.status = 'error';
-      this.emitError(transferId, err.message);
       await this.automation.close();
     }
   }
@@ -205,13 +197,14 @@ export class MEBBISTransferManager {
         'MEBBISTransferManager'
       );
 
-      const mebbisData = this.mapper.mapSessionToMEBBIS(session);
-
-      this.emitSessionStart(transferId, {
+      // Update current session in state for polling
+      transferState.currentSession = {
         sessionId: session.id,
         studentNo: session.studentNo,
         studentName: session.studentName
-      });
+      };
+
+      const mebbisData = this.mapper.mapSessionToMEBBIS(session);
 
       const result = await this.automation.fillSessionData(mebbisData);
       const sessionDuration = Date.now() - sessionStartTime;
@@ -224,12 +217,6 @@ export class MEBBISTransferManager {
           `[${index}/${total}] Individual session ${session.id} completed in ${sessionDuration}ms`,
           'MEBBISTransferManager'
         );
-
-        this.emitSessionCompleted(transferId, {
-          sessionId: session.id,
-          studentNo: session.studentNo,
-          success: true
-        });
       } else {
         transferState.progress.failed++;
         await this.logError(session.id, result.error || 'Bilinmeyen hata', transferState.schoolId);
@@ -241,7 +228,6 @@ export class MEBBISTransferManager {
           timestamp: new Date().toISOString()
         };
         transferState.errors.push(error);
-        this.emitSessionFailed(transferId, error);
       }
     } catch (error) {
       const err = error as Error;
@@ -255,10 +241,7 @@ export class MEBBISTransferManager {
         timestamp: new Date().toISOString()
       };
       transferState.errors.push(errorObj);
-      this.emitSessionFailed(transferId, errorObj);
     }
-
-    this.emitProgress(transferId);
   }
 
   /**
@@ -281,12 +264,12 @@ export class MEBBISTransferManager {
         'MEBBISTransferManager'
       );
 
-      // Emit session start with group info
-      this.emitSessionStart(transferId, {
+      // Update current session in state for polling
+      transferState.currentSession = {
         sessionId: sessionId,
         studentNo: `Grup (${studentsInGroup.length} öğrenci)`,
         studentName: studentsInGroup.map(s => s.studentName).join(', ')
-      });
+      };
 
       // Switch to group mode
       await this.automation.selectGroupMode();
@@ -324,12 +307,6 @@ export class MEBBISTransferManager {
           `[${index}/${total}] Group session ${sessionId} completed in ${sessionDuration}ms (${added.length} students)`,
           'MEBBISTransferManager'
         );
-
-        this.emitSessionCompleted(transferId, {
-          sessionId: sessionId,
-          studentNo: `Grup (${added.length} öğrenci)`,
-          success: true
-        });
       } else {
         transferState.progress.failed++;
         await this.logError(sessionId, result.error || 'Grup kaydı başarısız', transferState.schoolId);
@@ -341,7 +318,6 @@ export class MEBBISTransferManager {
           timestamp: new Date().toISOString()
         };
         transferState.errors.push(error);
-        this.emitSessionFailed(transferId, error);
       }
     } catch (error) {
       const err = error as Error;
@@ -363,10 +339,7 @@ export class MEBBISTransferManager {
         timestamp: new Date().toISOString()
       };
       transferState.errors.push(errorObj);
-      this.emitSessionFailed(transferId, errorObj);
     }
-
-    this.emitProgress(transferId);
   }
 
   private getSessionsToTransfer(request: StartTransferRequest): any[] {
@@ -472,48 +445,6 @@ export class MEBBISTransferManager {
     return this.activeTransfers.get(transferId) || null;
   }
 
-  private emitProgress(transferId: string): void {
-    const state = this.activeTransfers.get(transferId);
-    if (this.io && state) {
-      this.io.to(`transfer-${transferId}`).emit('mebbis:progress', state.progress);
-    }
-  }
-
-  private emitStatus(transferId: string, status: string, message: string): void {
-    if (this.io) {
-      this.io.to(`transfer-${transferId}`).emit('mebbis:status', { status, message });
-    }
-  }
-
-  private emitSessionStart(transferId: string, data: any): void {
-    if (this.io) {
-      this.io.to(`transfer-${transferId}`).emit('mebbis:session-start', data);
-    }
-  }
-
-  private emitSessionCompleted(transferId: string, data: any): void {
-    if (this.io) {
-      this.io.to(`transfer-${transferId}`).emit('mebbis:session-completed', data);
-    }
-  }
-
-  private emitSessionFailed(transferId: string, error: MEBBISTransferError): void {
-    if (this.io) {
-      this.io.to(`transfer-${transferId}`).emit('mebbis:session-failed', error);
-    }
-  }
-
-  private emitTransferCompleted(transferId: string, summary: any): void {
-    if (this.io) {
-      this.io.to(`transfer-${transferId}`).emit('mebbis:transfer-completed', summary);
-    }
-  }
-
-  private emitError(transferId: string, error: string): void {
-    if (this.io) {
-      this.io.to(`transfer-${transferId}`).emit('mebbis:transfer-error', { error });
-    }
-  }
 }
 
 export const mebbisTransferManager = new MEBBISTransferManager();
