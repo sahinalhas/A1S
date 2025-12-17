@@ -100,7 +100,7 @@ export default function SettingsPage() {
     <SettingsTabDirtyContext.Provider value={{ registerTabSubmit, unregisterTabSubmit }}>
       <div className="w-full min-h-screen pb-6">
         <PageHeader
-          title="Sistem Ayarları"
+          title="Profil & Ayarlar"
           description="Uygulama genel tercihleri ve yapılandırma seçenekleri"
           icon={SettingsIcon}
         />
