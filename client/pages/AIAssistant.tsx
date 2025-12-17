@@ -649,13 +649,13 @@ export default function AIAssistant() {
                                                 <p className="text-xs text-muted-foreground max-w-md mb-6">
                                                     Öğrencileriniz hakkında sorular sorun, analiz yapın ve rehberlik önerileri alın
                                                 </p>
-                                                <div className="space-y-5 w-full max-w-2xl">
+                                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
                                                     {/* Öğrenci Analizi Kategorisi */}
                                                     {suggestedPrompts.filter(p => p.category === 'Öğrenci Analizi').length > 0 && (
                                                         <div className="text-left">
-                                                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/50">
-                                                                <span className="text-lg">📊</span>
-                                                                <h4 className="text-sm font-bold text-foreground uppercase tracking-wide">
+                                                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border">
+                                                                <span className="text-base">📊</span>
+                                                                <h4 className="text-xs font-bold text-foreground uppercase tracking-wide">
                                                                     Öğrenci Analizi
                                                                 </h4>
                                                             </div>
@@ -672,10 +672,10 @@ export default function AIAssistant() {
                                                                                 const template = promptTemplates[prompt.text];
                                                                                 if (template) setInput(template);
                                                                             }}
-                                                                            className="justify-start h-auto py-2.5 px-3 hover:bg-primary/5 hover:border-primary/50 transition-colors"
+                                                                            className="justify-start h-auto py-2 px-2.5 hover:bg-primary/5 hover:border-primary/50 transition-colors text-left"
                                                                         >
-                                                                            <span className="text-base mr-2.5">{prompt.icon}</span>
-                                                                            <span className="text-left text-xs font-medium">{prompt.text}</span>
+                                                                            <span className="text-sm mr-2">{prompt.icon}</span>
+                                                                            <span className="text-[11px] font-medium leading-tight">{prompt.text}</span>
                                                                         </Button>
                                                                     ))}
                                                             </div>
@@ -685,9 +685,9 @@ export default function AIAssistant() {
                                                     {/* Toplantı & Görüşme Kategorisi */}
                                                     {suggestedPrompts.filter(p => p.category === 'Toplantı & Görüşme').length > 0 && (
                                                         <div className="text-left">
-                                                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/50">
-                                                                <span className="text-lg">👥</span>
-                                                                <h4 className="text-sm font-bold text-foreground uppercase tracking-wide">
+                                                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border">
+                                                                <span className="text-base">👥</span>
+                                                                <h4 className="text-xs font-bold text-foreground uppercase tracking-wide">
                                                                     Toplantı & Görüşme
                                                                 </h4>
                                                             </div>
@@ -704,10 +704,10 @@ export default function AIAssistant() {
                                                                                 const template = promptTemplates[prompt.text];
                                                                                 if (template) setInput(template);
                                                                             }}
-                                                                            className="justify-start h-auto py-2.5 px-3 hover:bg-primary/5 hover:border-primary/50 transition-colors"
+                                                                            className="justify-start h-auto py-2 px-2.5 hover:bg-primary/5 hover:border-primary/50 transition-colors text-left"
                                                                         >
-                                                                            <span className="text-base mr-2.5">{prompt.icon}</span>
-                                                                            <span className="text-left text-xs font-medium">{prompt.text}</span>
+                                                                            <span className="text-sm mr-2">{prompt.icon}</span>
+                                                                            <span className="text-[11px] font-medium leading-tight">{prompt.text}</span>
                                                                         </Button>
                                                                     ))}
                                                             </div>
@@ -717,9 +717,9 @@ export default function AIAssistant() {
                                                     {/* Müdahale & Planlama Kategorisi */}
                                                     {suggestedPrompts.filter(p => p.category === 'Müdahale & Planlama').length > 0 && (
                                                         <div className="text-left">
-                                                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/50">
-                                                                <span className="text-lg">🎯</span>
-                                                                <h4 className="text-sm font-bold text-foreground uppercase tracking-wide">
+                                                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border">
+                                                                <span className="text-base">🎯</span>
+                                                                <h4 className="text-xs font-bold text-foreground uppercase tracking-wide">
                                                                     Müdahale & Planlama
                                                                 </h4>
                                                             </div>
@@ -736,10 +736,10 @@ export default function AIAssistant() {
                                                                                 const template = promptTemplates[prompt.text];
                                                                                 if (template) setInput(template);
                                                                             }}
-                                                                            className="justify-start h-auto py-2.5 px-3 hover:bg-primary/5 hover:border-primary/50 transition-colors"
+                                                                            className="justify-start h-auto py-2 px-2.5 hover:bg-primary/5 hover:border-primary/50 transition-colors text-left"
                                                                         >
-                                                                            <span className="text-base mr-2.5">{prompt.icon}</span>
-                                                                            <span className="text-left text-xs font-medium">{prompt.text}</span>
+                                                                            <span className="text-sm mr-2">{prompt.icon}</span>
+                                                                            <span className="text-[11px] font-medium leading-tight">{prompt.text}</span>
                                                                         </Button>
                                                                     ))}
                                                             </div>
@@ -749,9 +749,9 @@ export default function AIAssistant() {
                                                     {/* Özel Durum Kategorisi */}
                                                     {suggestedPrompts.filter(p => p.category === 'Özel Durum').length > 0 && (
                                                         <div className="text-left">
-                                                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/50">
-                                                                <span className="text-lg">🌟</span>
-                                                                <h4 className="text-sm font-bold text-foreground uppercase tracking-wide">
+                                                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border">
+                                                                <span className="text-base">🌟</span>
+                                                                <h4 className="text-xs font-bold text-foreground uppercase tracking-wide">
                                                                     Özel Durum
                                                                 </h4>
                                                             </div>
@@ -768,10 +768,10 @@ export default function AIAssistant() {
                                                                                 const template = promptTemplates[prompt.text];
                                                                                 if (template) setInput(template);
                                                                             }}
-                                                                            className="justify-start h-auto py-2.5 px-3 hover:bg-primary/5 hover:border-primary/50 transition-colors"
+                                                                            className="justify-start h-auto py-2 px-2.5 hover:bg-primary/5 hover:border-primary/50 transition-colors text-left"
                                                                         >
-                                                                            <span className="text-base mr-2.5">{prompt.icon}</span>
-                                                                            <span className="text-left text-xs font-medium">{prompt.text}</span>
+                                                                            <span className="text-sm mr-2">{prompt.icon}</span>
+                                                                            <span className="text-[11px] font-medium leading-tight">{prompt.text}</span>
                                                                         </Button>
                                                                     ))}
                                                             </div>
