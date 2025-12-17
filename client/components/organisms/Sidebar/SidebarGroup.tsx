@@ -16,7 +16,7 @@ export function SidebarGroup({
     className
 }: SidebarGroupProps) {
     return (
-        <div className={cn("flex flex-col gap-1", collapsed ? "py-1" : "py-2", className)}>
+        <div className={cn("flex flex-col gap-1", collapsed ? "py-2" : "py-2", className)}>
             {!collapsed && (
                 <div className="px-3 py-2">
                     <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/70 font-heading">
@@ -24,7 +24,7 @@ export function SidebarGroup({
                     </h3>
                 </div>
             )}
-            <div className={cn(collapsed ? "space-y-2" : "space-y-1")}>
+            <div className={cn(collapsed ? "space-y-3 flex flex-col items-center" : "space-y-1")}>
                 {children}
             </div>
         </div>

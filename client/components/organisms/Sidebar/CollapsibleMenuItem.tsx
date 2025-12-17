@@ -60,9 +60,6 @@ export function CollapsibleMenuItem({
   // --- Collapsed Mode ---
   if (collapsed) {
     if (hasSubMenu) {
-      // Only show tooltip in collapsed mode
-      // Clicking expands the main sidebar? Or acts as link to first item?
-      // For now, let's link to the first item if exists
       return (
         <TooltipProvider delayDuration={0}>
           <Tooltip>
@@ -70,17 +67,16 @@ export function CollapsibleMenuItem({
               <button
                 onClick={() => {
                   if (onNavigate) onNavigate();
-                  // For collapsed submenus, maybe navigate to first item
                   if (items && items[0]) navigate(items[0].to);
                 }}
                 className={cn(
-                  "flex items-center justify-center w-10 h-10 rounded-xl mx-auto transition-all duration-200",
+                  "flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-200 border-2",
                   isActive
-                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground hover:scale-105"
+                    ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/30"
+                    : "bg-card text-foreground/90 border-foreground/20 hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-105 hover:shadow-md"
                 )}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className="w-5 h-5 shrink-0 stroke-[2.5]" />
               </button>
             </TooltipTrigger>
             <TooltipContent side="right" className="font-medium">
@@ -101,14 +97,14 @@ export function CollapsibleMenuItem({
               end={end}
               className={({ isActive }) =>
                 cn(
-                  "flex items-center justify-center w-10 h-10 rounded-xl mx-auto transition-all duration-200",
+                  "flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-200 border-2",
                   isActive
-                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground hover:scale-105"
+                    ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/30"
+                    : "bg-card text-foreground/90 border-foreground/20 hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-105 hover:shadow-md"
                 )
               }
             >
-              <Icon className="w-5 h-5" />
+              <Icon className="w-5 h-5 shrink-0 stroke-[2.5]" />
             </NavLink>
           </TooltipTrigger>
           <TooltipContent side="right" className="font-medium">

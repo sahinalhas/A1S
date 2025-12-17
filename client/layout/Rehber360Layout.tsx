@@ -185,7 +185,7 @@ export default function Rehber360Layout() {
           className={cn(
             "relative z-30 flex flex-col my-4 ml-4 rounded-2xl border transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]",
             "bg-card/80 backdrop-blur-xl shadow-2xl shadow-black/5 dark:shadow-black/20",
-            sidebarOpen ? "w-[280px]" : "w-[80px]"
+            sidebarOpen ? "w-[280px]" : "w-[88px]"
           )}
         >
           {/* Sidebar Header */}
@@ -202,7 +202,7 @@ export default function Rehber360Layout() {
           </div>
 
           {/* Sidebar Content */}
-          <ScrollArea className={cn("flex-1 py-4", sidebarOpen ? "px-3" : "px-2")}>
+          <ScrollArea className={cn("flex-1 py-4", sidebarOpen ? "px-3" : "px-1")}>
             <div className={cn("mb-2 transition-all duration-300", !sidebarOpen ? "px-0" : "px-0")}>
               <SidebarSearch collapsed={!sidebarOpen} />
             </div>
